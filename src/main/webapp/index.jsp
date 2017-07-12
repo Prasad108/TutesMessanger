@@ -9,5 +9,9 @@
 <body>
 <h1>Hello from index page </h1>
 <a href="hello">go to hello page</a>
+<%
+String name="Abhishek";
+session.setAttribute("name", name);
+%>
 </body>
 </html>

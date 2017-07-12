@@ -9,5 +9,9 @@
 <body>
 <h1>hello from hello page</h1>
 <h1> ${message} </h1>
+
+<% String name=(String) session.getAttribute("name");
+out.print("HEllo  "+name);
+%>
 </body>
 </html>
