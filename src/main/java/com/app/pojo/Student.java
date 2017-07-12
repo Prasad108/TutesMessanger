@@ -1,16 +1,30 @@
 package com.app.pojo;
 
+import java.io.Serializable;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.GenericGenerator;
+
 @Entity  
 @Table(name= "student")  
-public class Student {
+public class Student  implements Serializable {
 
 	
 	@Id  
-	private int id;  
+	@GenericGenerator(name="id",strategy="increment")
+	@GeneratedValue(generator="id")
+	@Column
+	private int id;
+	public Student(String fName, String lName) {
+		super();
+		this.fName = fName;
+		this.lName = lName;
+	}
 	private String fName,lName;
 	public int getId() {
 		return id;

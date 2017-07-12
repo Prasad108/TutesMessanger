@@ -21,7 +21,7 @@ public class HelloController {
   
 		System.out.println("this is from hello controller");
 		
-		Student s= new Student(1, "Prasad", "dukale");
+		Student s= new Student("Prasad", "dukale");
 		int i= save.save(s);
 	    String message = "";  
 		if(i>0)

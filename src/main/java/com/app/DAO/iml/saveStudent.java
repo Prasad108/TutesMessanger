@@ -11,20 +11,16 @@ import org.springframework.transaction.annotation.Transactional;
 import com.app.pojo.Student;
 
 @Repository
-
 public class saveStudent {
 
 	 @Autowired
 	 SessionFactory sessionFactory;
 	 
-	 private Session getCurrentSession() {
-
-	        return sessionFactory.getCurrentSession();
-	    }
-
+	
+	 @Transactional
 	 public int save(Student student)
-	 {
-		 int integer =(int) getCurrentSession().save(student); 
-		return integer;
+	 {	Session sess = this.sessionFactory.getCurrentSession(); 
+		 int num = (int) sess.save(student);
+		return num;
 	}
 }
