@@ -8,6 +8,7 @@
 </head>
 <body>
 <h1>Hello from index page </h1>
+<h3>just to show commit and push</h3>
 <a href="hello">go to hello page</a>
 <%
 String name="Abhishek Patwa";
