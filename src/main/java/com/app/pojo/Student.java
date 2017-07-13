@@ -12,7 +12,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 @Entity  
 @Table(name= "student")  
-public class Student  implements Serializable {
+public class Student {
 
 	
 	@Id  
@@ -54,10 +54,6 @@ public class Student  implements Serializable {
 		this.fName = fName;
 		this.lName = lName;
 	}
-	public Student() {
-		super();
-		// TODO Auto-generated constructor stub
-	}  
 	
 	
 }
