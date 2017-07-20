@@ -34,7 +34,7 @@
     <div class="container">
     <div class="card card-container">
     
-  <form:form class="login-form"  method="post" action="login.html" modelAttribute="Login" >        
+  <form:form class="login-form"  method="post" action="Checklogin" modelAttribute="Login" >        
         <div class="login-wrap">
             <p class="login-img"><i class="icon_lock_alt"></i></p>
             <div class="input-group">
@@ -45,6 +45,16 @@
                 <span class="input-group-addon"><i class="icon_key_alt"></i></span>
                 <form:input type="password" path="password" class="form-control" placeholder="Password" />
             </div>
+            
+           <c:if test="${!empty ErrorMessage}">
+  					  <div class="alert alert-block alert-danger fade in">
+                                  <button data-dismiss="alert" class="close close-sm" type="button">
+                                      <i class="icon-remove"></i>
+                                  </button>
+                                  ${ErrorMessage}
+                              </div>
+		</c:if>
+            
             <label class="checkbox">
                 <input type="checkbox" value="remember-me"> Remember me1
                 <span class="pull-right"> <a href="#"> Forgot Password?</a></span>
