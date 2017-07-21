@@ -60,6 +60,40 @@
                       </section>
                   </div>
               </div>
+              
+              
+              <div class="row">
+                  <div class="col-sm-6">
+                      <section class="panel">
+                          <header class="panel-heading no-border">
+                              Border Table
+                          </header>
+                          <table class="table table-bordered">
+                              <thead>
+                              <tr>
+                                  <th>Sr.No</th>
+                                  <th>Institute Name</th>
+                                  
+                                 
+                              </tr>
+                              </thead>
+                              <tbody>
+                              <c:set var="count" value="1" scope="page" />
+                              <c:forEach items="${instituteList}" var="institute" >
+                        
+                              <tr>
+                                  <td>${count}</td>
+                                  <td>${institute.name}</td>
+                                  <c:set var="count" value="${count + 1}" scope="page"/>
+                                  
+                              </tr>
+                             
+                              </c:forEach>
+                              </tbody>
+                          </table>
+                      </section>
+                  </div>
+               </div>
               <!-- page end-->
  </section>
  

@@ -1,5 +1,7 @@
 package com.app.controller;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -78,13 +80,13 @@ public class HelloController {
 	  
 	  //***********************app Admin******************
 	  
-	  @RequestMapping(value="/Admin/GoToAddInstitute",method = RequestMethod.GET)  
-	    public String  goToAddInstitute(Model model,Institute inst) {  
+	  @RequestMapping(value="/GoToAddInstitute",method = RequestMethod.GET)  
+	    public String  goToAddInstitute(Model model,Institute inst,Map<String,Object> map) {  
 		  model.addAttribute("Institute",inst);
 		  
 	  
 			System.out.println("this is from AppAdmin/GoToAddInstitute controller");
-			
+			map.put("instituteList", instituteService.getall());
 			
 			String output="appAdmin/addInstitute";
 			
@@ -92,13 +94,14 @@ public class HelloController {
 	    }  
 	    
 	    @RequestMapping(value="/RegisterInstitute",method = RequestMethod.POST)  
-	    public String  RegisterInstitute(Model model,@ModelAttribute("Institute") Institute inst) {  
+	    public String  RegisterInstitute(Model model,@ModelAttribute("Institute") Institute inst,Map<String,Object> map) {  
 	    	
 	    	System.out.println("this is RegisterInstitute controller");
 			
 			System.out.println(inst);
 			instituteService.create(inst);
 			model.addAttribute("Message", "institute Saved");
+			map.put("instituteList", instituteService.getall());
 			String output="appAdmin/addInstitute";
 			
 	        return output;  
