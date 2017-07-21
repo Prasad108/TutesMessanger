@@ -1,5 +1,5 @@
 package com.app.pojo;
-// Generated 19 Jul, 2017 9:56:38 AM by Hibernate Tools 5.2.3.Final
+// Generated 21 Jul, 2017 11:53:29 AM by Hibernate Tools 5.2.3.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -22,12 +22,6 @@ public class Role implements java.io.Serializable {
 	private Integer id;
 	private String name;
 	private Set<Login> logins = new HashSet<Login>(0);
-
-	
-	@Override
-	public String toString() {
-		return "Role [id=" + id + ", name=" + name + "]";
-	}
 
 	public Role() {
 	}
