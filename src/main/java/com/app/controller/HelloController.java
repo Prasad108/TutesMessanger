@@ -40,33 +40,6 @@ public class HelloController {
 	    }
 	  
 	
-	@RequestMapping("/hello")  
-    public ModelAndView helloWorld() {  
-  
-		System.out.println("this is from hello controller");
-		
-		
-		
-		
-		Teacher t= new Teacher("Prasad", "Dukale", "pdukale9@gmail.com", "9657939975");
-		save.saveTeacher(1, "Prasad", "Dukale", t);
-		
-		Login l= new Login("Prasad", "Dukale");
-		int i=save.findlogin(l);
-		
-		System.out.println("teacher saved");
-	    String message = "";  
-		if(i>0)
-		{
-			message+="teacher saved";
-		}
-		else {
-			message+="error teacher not saved ";
-		}
-		
-    
-        return new ModelAndView("hello", "message", message);  
-    }  
 	
 	  @RequestMapping(value="/Checklogin",method = RequestMethod.POST)  
     public String  login(Model model,@ModelAttribute("login") Login login,Login l) {  
@@ -105,7 +78,7 @@ public class HelloController {
 	  
 	  //***********************app Admin******************
 	  
-	  @RequestMapping(value="/GoToAddInstitute",method = RequestMethod.GET)  
+	  @RequestMapping(value="/Admin/GoToAddInstitute",method = RequestMethod.GET)  
 	    public String  goToAddInstitute(Model model,Institute inst) {  
 		  model.addAttribute("Institute",inst);
 		  
