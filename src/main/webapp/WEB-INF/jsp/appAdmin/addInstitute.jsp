@@ -21,7 +21,7 @@
 
  
  <!-- Default Containt -->
-
+   <aside>
   <section id="main-content">
           <section class="wrapper">  
            <c:if test="${!empty Message}">
@@ -32,6 +32,15 @@
                                   <strong>Institute saved successfully</strong> 
                               </div>
 		</c:if>
+		<c:if test="${!empty ErrorMessage}">
+  					  <div class="alert alert-block alert-danger fade in">
+                                  <button data-dismiss="alert" class="close close-sm" type="button">
+                                      <i class="icon-remove"></i>
+                                  </button>
+                                <strong> ${ErrorMessage} </strong> 
+                              </div>
+		</c:if>
+		
   
               <div class="row">
                   <div class="col-lg-12">
@@ -94,6 +103,7 @@
                       </section>
                   </div>
                </div>
+               </aside>
               <!-- page end-->
  </section>
  

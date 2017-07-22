@@ -2,7 +2,9 @@ package com.app.controller;
 
 import java.util.Map;
 
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -17,6 +19,7 @@ import com.app.pojo.Role;
 import com.app.pojo.Teacher;
 import com.app.service.InstituteService;
 import com.app.service.LoginService;
+import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
 
 
 
@@ -99,9 +102,21 @@ public class HelloController {
 	    	System.out.println("this is RegisterInstitute controller");
 			
 			System.out.println(inst);
-			instituteService.create(inst);
-			model.addAttribute("Message", "institute Saved");
-			map.put("instituteList", instituteService.getall());
+			try{
+				instituteService.create(inst);
+				model.addAttribute("Message", "institute Saved");
+		    	System.out.println("institue saved");
+			}
+			catch(ConstraintViolationException e)
+			{
+				model.addAttribute("ErrorMessage", "Duplicate entry Name of the enistitute already exist");
+		    	System.out.println("duplicate key unique key voilation");
+			}
+				
+				
+		    	
+			
+		    map.put("instituteList", instituteService.getall());
 			String output="appAdmin/addInstitute";
 			
 	        return output;  
