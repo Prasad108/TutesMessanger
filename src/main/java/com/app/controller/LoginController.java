@@ -24,7 +24,7 @@ import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
 
 
 @Controller
-public class HelloController {
+public class LoginController {
 	
 	@Autowired
 	saveStudent save;
@@ -32,8 +32,7 @@ public class HelloController {
 	@Autowired
 	LoginService loginService;
 	
-	@Autowired
-	InstituteService instituteService;
+	
 	
 	 @RequestMapping(value="/gologin",method = RequestMethod.GET)  
 	 public String goToLogin(Model mod,Login l){
@@ -57,15 +56,25 @@ public class HelloController {
 			System.out.println("**********such a user exists ");
 			Login userLogin=loginService.find_By_Uname_pwd(login);
 			Role userRole=userLogin.getRole();
-			if(userRole.getId()==4)
-			{
-				output="appAdmin/dashboard";
-			}
-			else{
-				model.addAttribute("message", login.toString());
-				output="hello";
-			}
-			
+			int roleId=userRole.getId();
+			switch (roleId) {
+				case 1:output="hello";//student
+				System.out.println("student logged in");
+					break;
+				case 2:output="Teacher/home";//teacher
+				System.out.println("teacher logged in");
+					break;
+				case 3:output="appAdmin/dashboard";//** institute admin
+					System.out.println("institute admin logged in");
+					break;
+				case 4:output="appAdmin/dashboard";//app Admin
+					System.out.println("admin logged in");
+					break;
+				default:model.addAttribute("message", login.toString());
+					System.out.println("error in login incorect role logged in");	
+					output="hello";
+					break;
+			}		
 		}
 		else {
 			System.out.println("**************no such a user");
@@ -74,52 +83,8 @@ public class HelloController {
 			 model.addAttribute("Login",l);
 			output="login";
 		}
-		
-		
         return output;  
     }  
 	  
-	  
-	  
-	  //***********************app Admin******************
-	  
-	  @RequestMapping(value="/GoToAddInstitute",method = RequestMethod.GET)  
-	    public String  goToAddInstitute(Model model,Institute inst,Map<String,Object> map) {  
-		  model.addAttribute("Institute",inst);
-		  
-	  
-			System.out.println("this is from AppAdmin/GoToAddInstitute controller");
-			map.put("instituteList", instituteService.getall());
-			
-			String output="appAdmin/addInstitute";
-			
-	        return output;  
-	    }  
-	    
-	    @RequestMapping(value="/RegisterInstitute",method = RequestMethod.POST)  
-	    public String  RegisterInstitute(Model model,@ModelAttribute("Institute") Institute inst,Map<String,Object> map) {  
-	    	
-	    	System.out.println("this is RegisterInstitute controller");
-			
-			System.out.println(inst);
-			try{
-				instituteService.create(inst);
-				model.addAttribute("Message", "institute Saved");
-		    	System.out.println("institue saved");
-			}
-			catch(ConstraintViolationException e)
-			{
-				model.addAttribute("ErrorMessage", "Duplicate entry Name of the enistitute already exist");
-		    	System.out.println("duplicate key unique key voilation");
-			}
-				
-				
-		    	
-			
-		    map.put("instituteList", instituteService.getall());
-			String output="appAdmin/addInstitute";
-			
-	        return output;  
-	    }
 	  
 }

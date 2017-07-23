@@ -4,9 +4,9 @@
               <!-- sidebar menu start-->
               <ul class="sidebar-menu">                
                   <li class="active">
-                      <a class="" href="index.html">
+                      <a class="" href="GoToAddInstitute">
                           <i class="icon_house_alt"></i>
-                          <span>Dashboard</span>
+                          <span>ADD Institute</span>
                       </a>
                   </li>
                   

@@ -54,7 +54,7 @@
                                       <div class="form-group ">
                                           <label for="fullname" class="control-label col-lg-2">Institute Name <span class="required">*</span></label>
                                           <div class="col-lg-10">
-                                              <form:input path="name" class=" form-control" id="fullname" name="fullname" type="text" />
+                                              <form:input path="name" class=" form-control" id="fullname" name="fullname" type="text" autocomplete="off" />
                                           </div>
                                       </div>
                                     
