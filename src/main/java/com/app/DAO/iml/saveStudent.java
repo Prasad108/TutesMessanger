@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.app.pojo.Institute;
 import com.app.pojo.Login;
+import com.app.pojo.Permissions;
 import com.app.pojo.Role;
 import com.app.pojo.Student;
 import com.app.pojo.Teacher;
@@ -107,9 +108,11 @@ public class saveStudent {
 		 Institute institute = (Institute) inst.add(Restrictions.eq("id", instid))
 		                              .uniqueResult();
 		 System.out.println("**********istitute is "+institute.toString());
+		 Permissions p=new  
+				 Permissions(1,true, true, true, true, true, true, true, true, true, true, true, true);
 		 
 		 
-		 Teacher teacher= new Teacher(institute, teacherlogin, t.getFname(), t.getLname(), t.getEmail(), t.getContactno());
+		 Teacher teacher= new Teacher(institute, teacherlogin, p,t.getFname(), t.getLname(), t.getEmail(), t.getContactno());
 		 
 		 result=(int)sess.save(teacher);
 		 if(result<=0)

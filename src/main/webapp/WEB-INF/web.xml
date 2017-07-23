@@ -16,6 +16,7 @@
 <servlet-mapping>  
     <servlet-name>spring</servlet-name>  
     <url-pattern>/</url-pattern>  
+    <url-pattern>*.html</url-pattern>
 </servlet-mapping>  
  
  <context-param>

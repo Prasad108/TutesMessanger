@@ -1,5 +1,5 @@
 package com.app.pojo;
-// Generated 21 Jul, 2017 11:53:29 AM by Hibernate Tools 5.2.3.Final
+// Generated Jul 23, 2017 7:06:59 PM by Hibernate Tools 5.2.3.Final
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,6 +21,7 @@ public class Teacher implements java.io.Serializable {
 	private Integer id;
 	private Institute institute;
 	private Login login;
+	private Permissions permissions;
 	private String fname;
 	private String lname;
 	private String email;
@@ -37,9 +38,11 @@ public class Teacher implements java.io.Serializable {
 		this.contactno = contactno;
 	}
 
-	public Teacher(Institute institute, Login login, String fname, String lname, String email, String contactno) {
+	public Teacher(Institute institute, Login login, Permissions permissions, String fname, String lname, String email,
+			String contactno) {
 		this.institute = institute;
 		this.login = login;
+		this.permissions = permissions;
 		this.fname = fname;
 		this.lname = lname;
 		this.email = email;
@@ -76,6 +79,16 @@ public class Teacher implements java.io.Serializable {
 
 	public void setLogin(Login login) {
 		this.login = login;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "permissions")
+	public Permissions getPermissions() {
+		return this.permissions;
+	}
+
+	public void setPermissions(Permissions permissions) {
+		this.permissions = permissions;
 	}
 
 	@Column(name = "fname", nullable = false, length = 50)
