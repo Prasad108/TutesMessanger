@@ -70,6 +70,9 @@ public class LoginController {
 				case 4:output="appAdmin/dashboard";//app Admin
 					System.out.println("admin logged in");
 					break;
+				case 5:output="template/index";//app Admin
+				System.out.println("template logged in");
+				break;
 				default:model.addAttribute("message", login.toString());
 					System.out.println("error in login incorect role logged in");	
 					output="hello";
