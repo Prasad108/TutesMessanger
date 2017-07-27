@@ -9,30 +9,28 @@
   http://www.springframework.org/schema/context 
   http://www.springframework.org/schema/context/spring-context-2.5.xsd
   http://www.springframework.org/schema/tx 
-  http://www.springframework.org/schema/tx/spring-tx-2.5.xsd" >
+  http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+ ">
 	<!-- supply loc -->
-	
-	
-	<bean id="applicationProperties"  class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
- 
-    <property name="location" value="classpath:database.properties" />
-    <property name="ignoreResourceNotFound" value="true" />
-    <property name="ignoreUnresolvablePlaceholders" value="true" />
-    <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
-    <property name="searchSystemEnvironment" value="true" />
- 
-</bean>
-	
-	
-	<!-- DS bean -->
-	<bean id="dataSource" 
-	class="org.apache.commons.dbcp.BasicDataSource"
-		p:driverClassName="${jdbc.driver}" p:url="jdbc:mysql://${jdbc.ip}:${jdbc.port}/${jdbc.database}" 
-		p:username="${jdbc.username}"
-		p:password="${jdbc.password}" 
-		p:initialSize="1" p:maxActive="2"
-		destroy-method="close">
+	<bean id="applicationProperties"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location" value="classpath:database.properties" />
+		<property name="ignoreResourceNotFound" value="true" />
+		<property name="ignoreUnresolvablePlaceholders" value="true" />
+		<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
+		<property name="searchSystemEnvironment" value="true" />
 	</bean>
+
+
+	<!-- DS bean -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		p:driverClassName="${jdbc.driver}"
+		p:url="jdbc:mysql://${jdbc.ip}:${jdbc.port}/${jdbc.database}"
+		p:username="${jdbc.username}" p:password="${jdbc.password}"
+		p:initialSize="1" p:maxActive="2" destroy-method="close">
+	</bean>
+	
+	
 	<!-- configure Hibernate 4 specific local session factory bean -->
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean"
@@ -46,13 +44,18 @@
 			</value>
 		</property>
 	</bean>
+	
+	
 	<!-- configure tx mgr bean -->
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate4.HibernateTransactionManager"
 		p:sessionFactory-ref="sessionFactory">
 	</bean>
-	<!-- enable tx annotation suuport -->
 	
+	
+	<!-- enable tx annotation suuport -->
 	<tx:annotation-driven />
+
+
 
 </beans>

@@ -1,73 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:p="http://www.springframework.org/schema/p"
-       xmlns:aop="http://www.springframework.org/schema/aop"
-       xmlns:tx="http://www.springframework.org/schema/tx"
-       xmlns:mvc="http://www.springframework.org/schema/mvc"
-       xmlns:context="http://www.springframework.org/schema/context"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
-       http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd" >
+       http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 
-        <!--
-                This will automatically locate any and all property files you have
-                within your classpath, provided they fall under the META-INF
-                directory. The located property files are parsed and their values can
-                then be used within application context files in the form of
-                ${propertyKey}.
-        -->
-        <context:property-placeholder location="classpath*:*.properties" />
+	<!-- This will automatically locate any and all property files you have 
+		within your classpath, provided they fall under the META-INF directory. The 
+		located property files are parsed and their values can then be used within 
+		application context files in the form of ${propertyKey}. -->
+
+
+
+	<context:property-placeholder location="classpath*:*.properties" />
 	<context:annotation-config />
 	<context:component-scan base-package="com.app" />
 	<mvc:annotation-driven />
-	   
-    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">  
-        <property name="prefix" value="/WEB-INF/jsp/" />  
-        <property name="suffix" value=".jsp" />  
-    </bean>  
-    
-    
-  <!--   <import resource="classpath:/hibernate-persistence.xml"/> -->
-  
-		
-		<mvc:resources mapping="/css/**" location="/css/" />
-        <mvc:resources mapping="/fonts/**" location="/fonts/" />
-        <mvc:resources mapping="/js/**" location="/js/" />
-        <mvc:resources mapping="/img/**" location="/img/" /> 
-        <mvc:resources mapping="/assets/**" location="/assets/" /> 
-        
-        
-        
-        
-        <!-- supply loc -->
-	<context:property-placeholder 
-	location="classpath:/database.properties" />
-	<!-- DS bean -->
-	
-	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-  <property name="locations">
-    <list>
-        <value>classpath:/defaults.properties</value>    
-    </list>
-  </property>
 
-  <property name="ignoreResourceNotFound" value="true" />
-  <property name="searchSystemEnvironment" value="true" />
-  <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
-</bean>
-	
-	
-	
-	<bean id="dataSource" 
-	class="org.apache.commons.dbcp.BasicDataSource"
-		p:driverClassName="${jdbc.driver}" p:url="jdbc:mysql://${jdbc.ip}:${jdbc.port}/${jdbc.database}" 
-		p:username="${jdbc.username}"
-		p:password="${jdbc.password}" 
-		p:initialSize="1" p:maxActive="2"
-		destroy-method="close">
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/jsp/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+
+
+	<!-- <import resource="classpath:/hibernate-persistence.xml"/> -->
+
+
+	<mvc:resources mapping="/css/**" location="/css/" />
+	<mvc:resources mapping="/fonts/**" location="/fonts/" />
+	<mvc:resources mapping="/js/**" location="/js/" />
+	<mvc:resources mapping="/img/**" location="/img/" />
+	<mvc:resources mapping="/assets/**" location="/assets/" />
+
+
+
+
+	<!-- supply loc -->
+	<context:property-placeholder location="classpath:/database.properties" />
+	<!-- DS bean -->
+
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:/defaults.properties</value>
+			</list>
+		</property>
+
+		<property name="ignoreResourceNotFound" value="true" />
+		<property name="searchSystemEnvironment" value="true" />
+		<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
+	</bean>
+
+
+
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		p:driverClassName="${driver}"
+		p:url="jdbc:mysql://${ip}:${port}/${database}"
+		p:username="${username}" p:password="${password}"
+		p:initialSize="1" p:maxActive="2" destroy-method="close">
 	</bean>
 	<!-- configure Hibernate 4 specific local session factory bean -->
 	<bean id="sessionFactory"
@@ -75,7 +71,7 @@
 		p:packagesToScan="com.app.pojo" p:dataSource-ref="dataSource">
 		<property name="hibernateProperties">
 			<value>
-				hibernate.dialect=${jdbc.dialect}
+				hibernate.dialect=${dialect}
 				hibernate.format_sql=true
 				hibernate.show_sql=true
 				hibernate.hbm2ddl.auto=update
@@ -88,8 +84,8 @@
 		p:sessionFactory-ref="sessionFactory">
 	</bean>
 	<!-- enable tx annotation suuport -->
-<tx:annotation-driven />
-        
-    
+	<tx:annotation-driven />
+
+
 
 </beans>
