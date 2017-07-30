@@ -21,7 +21,7 @@ import com.app.service.InstituteService;
 import com.app.service.LoginService;
 import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
 
-
+//
 
 @Controller
 public class LoginController {
@@ -91,3 +91,5 @@ public class LoginController {
 	  
 	  
 }
+
+//comment by rahul pr
