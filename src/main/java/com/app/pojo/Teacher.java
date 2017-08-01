@@ -1,5 +1,5 @@
 package com.app.pojo;
-// Generated 1 Aug, 2017 4:07:53 PM by Hibernate Tools 5.2.3.Final
+// Generated 1 Aug, 2017 4:22:59 PM by Hibernate Tools 5.2.3.Final
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -47,6 +47,12 @@ public class Teacher implements java.io.Serializable {
 		this.lname = lname;
 		this.email = email;
 		this.contactno = contactno;
+	}
+
+	@Override
+	public String toString() {
+		return "Teacher [permissions=" + permissions + ", fname=" + fname + ", lname=" + lname + ", email=" + email
+				+ ", contactno=" + contactno + "]";
 	}
 
 	@Id

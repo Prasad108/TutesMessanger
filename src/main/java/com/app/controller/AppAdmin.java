@@ -13,10 +13,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
+
 import com.app.pojo.Institute;
+import com.app.pojo.Teacher;
 import com.app.service.InstituteService;
 
 @Controller
+@SessionAttributes({"addInstitute"})
 public class AppAdmin {
 
 	
@@ -26,7 +30,7 @@ public class AppAdmin {
 
 	 
 	    @RequestMapping(value="/AddNewInstitute",method = RequestMethod.GET)  
-	    public String  AddNewInstitute(Model model ) {  
+	    public String  AddNewInstitute(Model model) {  
 	    	
 	    	System.out.println("this is AddNewInstitute controller");
 	    	Institute inst= new Institute();
@@ -41,9 +45,30 @@ public class AppAdmin {
 	    public String  RegisterInstitute(Model model,@ModelAttribute("Institute") Institute inst ) {  
 	    	
 	    	System.out.println("this is RegisterInstitute controller");
-	    	String output="appAdmin/";
+	    	String output="appAdmin/CreateInstituteAdmin";
 	    	System.out.println(inst);
+	    	model.addAttribute("addInstitute", inst);
+	    	Teacher t= new Teacher();
+	    	model.addAttribute("Teacher", t);
+	    	
+			System.out.println("redirecting to the page: "+ output );
+			
+	        return output;  
+	    }
+	    
+	
+
+	    @RequestMapping(value="/SaveInstituteAdmin",method = RequestMethod.POST)  
+	    public String  SaveInstituteAdmin(Model model,@ModelAttribute("addInstitute") Institute inst ,@ModelAttribute("Teacher") Teacher teacher ) {  
+	    	 
+	    	System.out.println("this is SaveInstituteAdmin controller");
+	    	String output="appAdmin/";
+	    	
+	    	System.out.println(inst);
+	    	System.out.println("this is teacher: "+teacher.toString());
+	    	
 			try{
+				
 				instituteService.create(inst);
 				model.addAttribute("SuccessMessage", "institute Saved");
 		    	System.out.println("institue saved");
@@ -57,13 +82,12 @@ public class AppAdmin {
 				model.addAttribute("ErrorMessage", "Duplicate entry Name of the enistitute already exist");
 		    	System.out.println("duplicate key unique key voilation");
 		    	output+="AddNewInstitute";
-			}
-			
-		 
-			System.out.println("redirecting to the page: "+ output );
+			}   	
+			 output="appAdmin/ExistingInstitutes";
 			
 	        return output;  
 	    }
+	    
 	
 	    @RequestMapping(value="/ExistingInstitutes",method = RequestMethod.GET)  
 	    public String  ExistingInstitutes(Model model) {  			

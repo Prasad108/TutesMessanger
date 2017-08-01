@@ -1,5 +1,5 @@
 package com.app.pojo;
-// Generated 1 Aug, 2017 4:07:53 PM by Hibernate Tools 5.2.3.Final
+// Generated 1 Aug, 2017 4:22:59 PM by Hibernate Tools 5.2.3.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -34,6 +34,12 @@ public class Institute implements java.io.Serializable {
 
 	public Institute(String name) {
 		this.name = name;
+	}
+
+	@Override
+	public String toString() {
+		return "Institute [name=" + name + ", address=" + address + ", contactno=" + contactno + ", email=" + email
+				+ "]";
 	}
 
 	public Institute(String name, String address, String contactno, String email, Set<Branch> branches,

@@ -40,15 +40,15 @@
                           </header>
                           <div class="panel-body">
                               <div class="form">
-                                 <form:form class="form-validate form-horizontal " id="register_form" method="post" action="RegisterInstitute" modelAttribute="Institute">
+                                 <form:form class="form-validate form-horizontal " id="register_form" method="post" action="SaveInstituteAdmin" modelAttribute="Teacher">
                                       <div class="form-group ">
-                                          <label for="fullname" class="control-label col-lg-2">Institute Name <span class="required">*</span></label>
+                                          <label for="fullname" class="control-label col-lg-2">First Name <span class="required">*</span></label>
                                           <div class="col-lg-10">
-                                              <form:input path="name" class=" form-control" id="fullname" name="fullname" type="text" autocomplete="off" required="required" maxlength="50"/>
+                                              <form:input path="fname" class=" form-control" id="fname" name="fname" type="text" autocomplete="off" required="required" maxlength="50"/>
                                           </div>
-                                          <label for="fullname" class="control-label col-lg-2">Institute Address <span class="required">*</span></label>
+                                          <label for="fullname" class="control-label col-lg-2">Surname <span class="required">*</span></label>
                                           <div class="col-lg-10">
-                                              <form:input path="address" class=" form-control" id="address" name="address" type="text" autocomplete="off" required="required" maxlength="50"/>
+                                              <form:input path="lname" class=" form-control" id="address" name="address" type="text" autocomplete="off" required="required" maxlength="50"/>
                                           </div>
                                            <label for="fullname" class="control-label col-lg-2">Contact Number <span class="required">*</span></label>
                                           <div class="col-lg-10">
@@ -58,6 +58,15 @@
                                           <div class="col-lg-10">
                                               <form:input path="email" class=" form-control" id="email" name="email" type="email" autocomplete="off" required="required" maxlength="20"/>
                                           </div>
+                                          <div class="alert alert-info fade in">
+                               				   <button data-dismiss="alert" class="close close-sm" type="button">
+                                		    		  <i class="icon-remove"></i>
+                               				   </button>
+                               			   <strong>Note..!!!</strong> For Institute Admin currently Username will be: Email-Id and Password Will be: Contact Number  
+                              </div>
+                                          
+                                          
+                                          
                                       </div>
                                     
                                       <div class="form-group">

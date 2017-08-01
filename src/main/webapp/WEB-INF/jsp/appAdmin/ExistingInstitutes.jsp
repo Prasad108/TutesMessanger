@@ -36,28 +36,42 @@
                           <header class="panel-heading no-border">
                               Institutes
                           </header>
-                          <table class="table table-bordered">
-                              <thead>
+                         
+                           <table class="table table-striped table-advance table-hover">
+                           <tbody>
                               <tr>
-                                  <th>Sr.No</th>
-                                  <th>Institute Name</th>
-   
+                               <th>Sr.No</th>
+                                 <th><i class="icon_profile"></i> Institute Name</th>
+                                  <th><i class="icon_mail_alt"></i> Email</th>
+                                   <th><i class="icon_mobile"></i> Mobile</th>
+                                  <th><i class="icon_pin_alt"></i> Address</th>                                       
+                                  <th><i class="icon_cogs"></i> Action</th>
                               </tr>
-                              </thead>
-                              <tbody>
-                              <c:set var="count" value="1" scope="page" />
                               <c:forEach items="${listOfInstitute}" var="institute" >
                         
                               <tr>
                                   <td>${count}</td>
                                   <td>${institute.name}</td>
+                                   <td>${institute.email}</td>
+                                   <td>${institute.contactno}</td>
+                                   <td>${institute.address}</td>
+                                   <td>
+                                  <div class="btn-group">
+                                      <a class="btn btn-primary" href="#"><i class="icon_plus_alt2"></i></a>
+                                      <a class="btn btn-success" href="#"><i class="icon_check_alt2"></i></a>
+                                      <a class="btn btn-danger" href="#"><i class="icon_close_alt2"></i></a>
+                                  </div>
+                                  </td>
+                                   
+                                  
                                   <c:set var="count" value="${count + 1}" scope="page"/>
                                   
                               </tr>
                              
                               </c:forEach>
-                              </tbody>
-                          </table>
+                                                     
+                           </tbody>
+                        </table>
                       </section>
                   </div>
                </div>
