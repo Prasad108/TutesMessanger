@@ -1,5 +1,5 @@
 package com.app.pojo;
-// Generated Jul 23, 2017 7:06:59 PM by Hibernate Tools 5.2.3.Final
+// Generated 1 Aug, 2017 4:07:53 PM by Hibernate Tools 5.2.3.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -22,6 +22,10 @@ public class Institute implements java.io.Serializable {
 
 	private Integer id;
 	private String name;
+	private String address;
+	private String contactno;
+	private String email;
+	private Set<Branch> branches = new HashSet<Branch>(0);
 	private Set<Teacher> teachers = new HashSet<Teacher>(0);
 	private Set<Student> students = new HashSet<Student>(0);
 
@@ -32,8 +36,13 @@ public class Institute implements java.io.Serializable {
 		this.name = name;
 	}
 
-	public Institute(String name, Set<Teacher> teachers, Set<Student> students) {
+	public Institute(String name, String address, String contactno, String email, Set<Branch> branches,
+			Set<Teacher> teachers, Set<Student> students) {
 		this.name = name;
+		this.address = address;
+		this.contactno = contactno;
+		this.email = email;
+		this.branches = branches;
 		this.teachers = teachers;
 		this.students = students;
 	}
@@ -59,6 +68,42 @@ public class Institute implements java.io.Serializable {
 		this.name = name;
 	}
 
+	@Column(name = "Address", length = 100)
+	public String getAddress() {
+		return this.address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	@Column(name = "contactno", length = 15)
+	public String getContactno() {
+		return this.contactno;
+	}
+
+	public void setContactno(String contactno) {
+		this.contactno = contactno;
+	}
+
+	@Column(name = "email", length = 20)
+	public String getEmail() {
+		return this.email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "institute")
+	public Set<Branch> getBranches() {
+		return this.branches;
+	}
+
+	public void setBranches(Set<Branch> branches) {
+		this.branches = branches;
+	}
+
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "institute")
 	public Set<Teacher> getTeachers() {
 		return this.teachers;
@@ -75,11 +120,6 @@ public class Institute implements java.io.Serializable {
 
 	public void setStudents(Set<Student> students) {
 		this.students = students;
-	}
-
-	@Override
-	public String toString() {
-		return "Institute [id=" + id + ", name=" + name + "]";
 	}
 
 }

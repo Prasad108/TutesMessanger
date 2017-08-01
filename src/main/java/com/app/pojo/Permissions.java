@@ -1,5 +1,5 @@
 package com.app.pojo;
-// Generated Jul 23, 2017 7:06:59 PM by Hibernate Tools 5.2.3.Final
+// Generated 1 Aug, 2017 4:07:53 PM by Hibernate Tools 5.2.3.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -20,76 +20,56 @@ import javax.persistence.Table;
 public class Permissions implements java.io.Serializable {
 
 	private Integer id;
-	private boolean mailStudent;
-	private boolean msgStudent;
-	private boolean mailParent;
-	private boolean fillSchedule;
-	private boolean setExam;
-	private boolean updateResults;
 	private boolean authoriseStudent;
 	private boolean authoriseTeacher;
-	private boolean msgTeacher;
 	private boolean fillAttendance;
-	private boolean msgParent;
+	private boolean fillSchedule;
+	private boolean mailParent;
+	private boolean mailStudent;
 	private boolean mailTeacher;
+	private boolean msgParent;
+	private boolean msgStudent;
+	private boolean msgTeacher;
+	private boolean setExam;
+	private boolean updateResults;
 	private Set<Teacher> teachers = new HashSet<Teacher>(0);
 
 	public Permissions() {
 	}
 
-	public Permissions(boolean mailStudent, boolean msgStudent, boolean mailParent, boolean fillSchedule,
-			boolean setExam, boolean updateResults, boolean authoriseStudent, boolean authoriseTeacher,
-			boolean msgTeacher, boolean fillAttendance, boolean msgParent, boolean mailTeacher) {
-		this.mailStudent = mailStudent;
-		this.msgStudent = msgStudent;
-		this.mailParent = mailParent;
-		this.fillSchedule = fillSchedule;
-		this.setExam = setExam;
-		this.updateResults = updateResults;
+	public Permissions(boolean authoriseStudent, boolean authoriseTeacher, boolean fillAttendance, boolean fillSchedule,
+			boolean mailParent, boolean mailStudent, boolean mailTeacher, boolean msgParent, boolean msgStudent,
+			boolean msgTeacher, boolean setExam, boolean updateResults) {
 		this.authoriseStudent = authoriseStudent;
 		this.authoriseTeacher = authoriseTeacher;
-		this.msgTeacher = msgTeacher;
 		this.fillAttendance = fillAttendance;
-		this.msgParent = msgParent;
+		this.fillSchedule = fillSchedule;
+		this.mailParent = mailParent;
+		this.mailStudent = mailStudent;
 		this.mailTeacher = mailTeacher;
+		this.msgParent = msgParent;
+		this.msgStudent = msgStudent;
+		this.msgTeacher = msgTeacher;
+		this.setExam = setExam;
+		this.updateResults = updateResults;
 	}
 
-	public Permissions(boolean mailStudent, boolean msgStudent, boolean mailParent, boolean fillSchedule,
-			boolean setExam, boolean updateResults, boolean authoriseStudent, boolean authoriseTeacher,
-			boolean msgTeacher, boolean fillAttendance, boolean msgParent, boolean mailTeacher, Set<Teacher> teachers) {
-		this.mailStudent = mailStudent;
-		this.msgStudent = msgStudent;
-		this.mailParent = mailParent;
-		this.fillSchedule = fillSchedule;
-		this.setExam = setExam;
-		this.updateResults = updateResults;
+	public Permissions(boolean authoriseStudent, boolean authoriseTeacher, boolean fillAttendance, boolean fillSchedule,
+			boolean mailParent, boolean mailStudent, boolean mailTeacher, boolean msgParent, boolean msgStudent,
+			boolean msgTeacher, boolean setExam, boolean updateResults, Set<Teacher> teachers) {
 		this.authoriseStudent = authoriseStudent;
 		this.authoriseTeacher = authoriseTeacher;
-		this.msgTeacher = msgTeacher;
 		this.fillAttendance = fillAttendance;
-		this.msgParent = msgParent;
+		this.fillSchedule = fillSchedule;
+		this.mailParent = mailParent;
+		this.mailStudent = mailStudent;
 		this.mailTeacher = mailTeacher;
+		this.msgParent = msgParent;
+		this.msgStudent = msgStudent;
+		this.msgTeacher = msgTeacher;
+		this.setExam = setExam;
+		this.updateResults = updateResults;
 		this.teachers = teachers;
-	}
-
-	
-	public Permissions(Integer id, boolean mailStudent, boolean msgStudent, boolean mailParent, boolean fillSchedule,
-			boolean setExam, boolean updateResults, boolean authoriseStudent, boolean authoriseTeacher,
-			boolean msgTeacher, boolean fillAttendance, boolean msgParent, boolean mailTeacher) {
-		super();
-		this.id = id;
-		this.mailStudent = mailStudent;
-		this.msgStudent = msgStudent;
-		this.mailParent = mailParent;
-		this.fillSchedule = fillSchedule;
-		this.setExam = setExam;
-		this.updateResults = updateResults;
-		this.authoriseStudent = authoriseStudent;
-		this.authoriseTeacher = authoriseTeacher;
-		this.msgTeacher = msgTeacher;
-		this.fillAttendance = fillAttendance;
-		this.msgParent = msgParent;
-		this.mailTeacher = mailTeacher;
 	}
 
 	@Id
@@ -102,60 +82,6 @@ public class Permissions implements java.io.Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	@Column(name = "mail_student", nullable = false)
-	public boolean isMailStudent() {
-		return this.mailStudent;
-	}
-
-	public void setMailStudent(boolean mailStudent) {
-		this.mailStudent = mailStudent;
-	}
-
-	@Column(name = "msg_student", nullable = false)
-	public boolean isMsgStudent() {
-		return this.msgStudent;
-	}
-
-	public void setMsgStudent(boolean msgStudent) {
-		this.msgStudent = msgStudent;
-	}
-
-	@Column(name = "mail_parent", nullable = false)
-	public boolean isMailParent() {
-		return this.mailParent;
-	}
-
-	public void setMailParent(boolean mailParent) {
-		this.mailParent = mailParent;
-	}
-
-	@Column(name = "fill_schedule", nullable = false)
-	public boolean isFillSchedule() {
-		return this.fillSchedule;
-	}
-
-	public void setFillSchedule(boolean fillSchedule) {
-		this.fillSchedule = fillSchedule;
-	}
-
-	@Column(name = "set_exam", nullable = false)
-	public boolean isSetExam() {
-		return this.setExam;
-	}
-
-	public void setSetExam(boolean setExam) {
-		this.setExam = setExam;
-	}
-
-	@Column(name = "update_results", nullable = false)
-	public boolean isUpdateResults() {
-		return this.updateResults;
-	}
-
-	public void setUpdateResults(boolean updateResults) {
-		this.updateResults = updateResults;
 	}
 
 	@Column(name = "authorise_student", nullable = false)
@@ -176,15 +102,6 @@ public class Permissions implements java.io.Serializable {
 		this.authoriseTeacher = authoriseTeacher;
 	}
 
-	@Column(name = "msg_teacher", nullable = false)
-	public boolean isMsgTeacher() {
-		return this.msgTeacher;
-	}
-
-	public void setMsgTeacher(boolean msgTeacher) {
-		this.msgTeacher = msgTeacher;
-	}
-
 	@Column(name = "fill_attendance", nullable = false)
 	public boolean isFillAttendance() {
 		return this.fillAttendance;
@@ -192,6 +109,42 @@ public class Permissions implements java.io.Serializable {
 
 	public void setFillAttendance(boolean fillAttendance) {
 		this.fillAttendance = fillAttendance;
+	}
+
+	@Column(name = "fill_schedule", nullable = false)
+	public boolean isFillSchedule() {
+		return this.fillSchedule;
+	}
+
+	public void setFillSchedule(boolean fillSchedule) {
+		this.fillSchedule = fillSchedule;
+	}
+
+	@Column(name = "mail_parent", nullable = false)
+	public boolean isMailParent() {
+		return this.mailParent;
+	}
+
+	public void setMailParent(boolean mailParent) {
+		this.mailParent = mailParent;
+	}
+
+	@Column(name = "mail_student", nullable = false)
+	public boolean isMailStudent() {
+		return this.mailStudent;
+	}
+
+	public void setMailStudent(boolean mailStudent) {
+		this.mailStudent = mailStudent;
+	}
+
+	@Column(name = "mail_teacher", nullable = false)
+	public boolean isMailTeacher() {
+		return this.mailTeacher;
+	}
+
+	public void setMailTeacher(boolean mailTeacher) {
+		this.mailTeacher = mailTeacher;
 	}
 
 	@Column(name = "msg_parent", nullable = false)
@@ -203,13 +156,40 @@ public class Permissions implements java.io.Serializable {
 		this.msgParent = msgParent;
 	}
 
-	@Column(name = "mail_teacher", nullable = false)
-	public boolean isMailTeacher() {
-		return this.mailTeacher;
+	@Column(name = "msg_student", nullable = false)
+	public boolean isMsgStudent() {
+		return this.msgStudent;
 	}
 
-	public void setMailTeacher(boolean mailTeacher) {
-		this.mailTeacher = mailTeacher;
+	public void setMsgStudent(boolean msgStudent) {
+		this.msgStudent = msgStudent;
+	}
+
+	@Column(name = "msg_teacher", nullable = false)
+	public boolean isMsgTeacher() {
+		return this.msgTeacher;
+	}
+
+	public void setMsgTeacher(boolean msgTeacher) {
+		this.msgTeacher = msgTeacher;
+	}
+
+	@Column(name = "set_exam", nullable = false)
+	public boolean isSetExam() {
+		return this.setExam;
+	}
+
+	public void setSetExam(boolean setExam) {
+		this.setExam = setExam;
+	}
+
+	@Column(name = "update_results", nullable = false)
+	public boolean isUpdateResults() {
+		return this.updateResults;
+	}
+
+	public void setUpdateResults(boolean updateResults) {
+		this.updateResults = updateResults;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "permissions")

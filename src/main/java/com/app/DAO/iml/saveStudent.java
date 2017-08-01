@@ -109,7 +109,7 @@ public class saveStudent {
 		                              .uniqueResult();
 		 System.out.println("**********istitute is "+institute.toString());
 		 Permissions p=new  
-				 Permissions(1,true, true, true, true, true, true, true, true, true, true, true, true);
+				 Permissions(true, true, true, true, true, true, true, true, true, true, true, true);
 		 
 		 
 		 Teacher teacher= new Teacher(institute, teacherlogin, p,t.getFname(), t.getLname(), t.getEmail(), t.getContactno());
