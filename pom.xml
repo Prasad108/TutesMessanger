@@ -141,13 +141,6 @@
 
 
 
-<dependency>
-  <groupId>javax.servlet</groupId>
-  <artifactId>servlet-api</artifactId>
-  <version>2.5</version>
-  <scope>provided</scope>
-</dependency>
-
 
 <dependency>
     <groupId>org.apache.tiles</groupId>
@@ -160,6 +153,14 @@
     <artifactId>hibernate-core</artifactId>
     <version>4.0.1.Final</version>
 </dependency>
+
+
+<dependency>
+  <groupId>javax.servlet</groupId>
+  <artifactId>servlet-api</artifactId>
+  <version>2.5</version>
+</dependency>
+
 
 <dependency> 
 <groupId>javax.servlet</groupId> 
@@ -176,8 +177,10 @@
 <dependency> 
 <groupId>javax.servlet</groupId> 
 <artifactId>jstl</artifactId> 
-<version>1.2</version> 
+<version>1.2</version>
 </dependency>
+
+
 
 <dependency>
     <groupId>mysql</groupId>
@@ -231,6 +234,7 @@
         <artifactId>maven-war-plugin</artifactId>
         <version>3.0.0</version>
       </plugin>
+      
     </plugins>
   </build>
   <profiles>     

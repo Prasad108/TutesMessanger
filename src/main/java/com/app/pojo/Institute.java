@@ -77,4 +77,9 @@ public class Institute implements java.io.Serializable {
 		this.students = students;
 	}
 
+	@Override
+	public String toString() {
+		return "Institute [id=" + id + ", name=" + name + "]";
+	}
+
 }

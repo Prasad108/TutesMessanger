@@ -1,5 +1,8 @@
 package com.app.controller;
 
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.hibernate.exception.ConstraintViolationException;
@@ -7,9 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
 import com.app.pojo.Institute;
 import com.app.service.InstituteService;
 
@@ -21,40 +24,56 @@ public class AppAdmin {
 	@Autowired
 	InstituteService instituteService;
 
-	  @RequestMapping(value="/GoToAddInstitute",method = RequestMethod.GET)  
-	    public String  goToAddInstitute(Model model,Institute inst,Map<String,Object> map) {  
-		  model.addAttribute("Institute",inst);
-		  
-	  
-			System.out.println("this is from AppAdmin/GoToAddInstitute controller");
-			map.put("instituteList", instituteService.getall());
-			
-			String output="appAdmin/addInstitute";
+	 
+	    @RequestMapping(value="/AddNewInstitute",method = RequestMethod.GET)  
+	    public String  AddNewInstitute(Model model ) {  
+	    	
+	    	System.out.println("this is AddNewInstitute controller");
+	    	Institute inst= new Institute();
+	    	model.addAttribute("Institute", inst);
+			String output="appAdmin/AddNewInstitute";
 			
 	        return output;  
-	    }  
+	    }
+	    
 	    
 	    @RequestMapping(value="/RegisterInstitute",method = RequestMethod.POST)  
-	    public String  RegisterInstitute(Model model,@ModelAttribute("Institute") Institute inst,Map<String,Object> map) {  
+	    public String  RegisterInstitute(Model model,@ModelAttribute("Institute") Institute inst ) {  
 	    	
 	    	System.out.println("this is RegisterInstitute controller");
-			
-			System.out.println(inst);
+	    	String output="appAdmin/";
+	    	System.out.println(inst);
 			try{
 				instituteService.create(inst);
-				model.addAttribute("Message", "institute Saved");
+				model.addAttribute("SuccessMessage", "institute Saved");
 		    	System.out.println("institue saved");
+		    	ArrayList<Institute> Institutelist= new ArrayList<Institute>();
+				Institutelist.addAll(instituteService.getall());
+				model.addAttribute("listOfInstitute", Institutelist);
+				output+="ExistingInstitutes";
 			}
 			catch(ConstraintViolationException e)
 			{
 				model.addAttribute("ErrorMessage", "Duplicate entry Name of the enistitute already exist");
 		    	System.out.println("duplicate key unique key voilation");
+		    	output+="AddNewInstitute";
 			}
 			
-		    map.put("instituteList", instituteService.getall());
-			String output="appAdmin/addInstitute";
+		 
+			System.out.println("redirecting to the page: "+ output );
 			
 	        return output;  
 	    }
+	
+	    @RequestMapping(value="/ExistingInstitutes",method = RequestMethod.GET)  
+	    public String  ExistingInstitutes(Model model) {  			
+				System.out.println("this is from AppAdmin/GoToAddInstitute controller");		
+				ArrayList<Institute> Institutelist= new ArrayList<Institute>();
+				Institutelist.addAll(instituteService.getall());
+				model.addAttribute("listOfInstitute", Institutelist);
+		        return "appAdmin/ExistingInstitutes";			
+	} 
+	    
+	   
 	  
 }

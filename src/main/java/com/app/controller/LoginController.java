@@ -32,7 +32,9 @@ public class LoginController {
 	@Autowired
 	LoginService loginService;
 	
-	
+
+	@Autowired
+	InstituteService instituteService;
 	
 	 @RequestMapping(value="/gologin",method = RequestMethod.GET)  
 	 public String goToLogin(Model mod,Login l){
@@ -89,6 +91,7 @@ public class LoginController {
         return output;  
     }  
 	  
+	 
 	  
 }
 

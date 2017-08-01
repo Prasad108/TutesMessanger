@@ -22,7 +22,7 @@
 
 
  <!-- Default Menue -->
-<jsp:include page="/WEB-INF/jsp/appAdmin/components/appAdminMenue.jsp" /> 
+<jsp:include page="/WEB-INF/jsp/appAdmin/components/appAdminMenu.jsp" /> 
 
  <!-- Default Containt -->
 <jsp:include page="/WEB-INF/jsp/components/defaultMainContaint.jsp" /> 

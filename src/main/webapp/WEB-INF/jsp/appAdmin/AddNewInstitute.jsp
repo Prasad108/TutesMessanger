@@ -17,22 +17,14 @@
 
 
  <!-- Default Menue -->
-<jsp:include page="/WEB-INF/jsp/appAdmin/components/appAdminMenue.jsp" /> 
+<jsp:include page="/WEB-INF/jsp/appAdmin/components/appAdminMenu.jsp" /> 
 
  
  <!-- Default Containt -->
    <aside>
   <section id="main-content">
           <section class="wrapper">  
-           <c:if test="${!empty Message}">
-  					  <div class="alert alert-success fade in">
-                                  <button data-dismiss="alert" class="close close-sm" type="button">
-                                      <i class="icon-remove"></i>
-                                  </button>
-                                  <strong>Institute saved successfully</strong> 
-                              </div>
-		</c:if>
-		<c:if test="${!empty ErrorMessage}">
+          <c:if test="${!empty ErrorMessage}">
   					  <div class="alert alert-block alert-danger fade in">
                                   <button data-dismiss="alert" class="close close-sm" type="button">
                                       <i class="icon-remove"></i>
@@ -40,8 +32,6 @@
                                 <strong> ${ErrorMessage} </strong> 
                               </div>
 		</c:if>
-		
-  
               <div class="row">
                   <div class="col-lg-12">
                       <section class="panel">
@@ -54,7 +44,7 @@
                                       <div class="form-group ">
                                           <label for="fullname" class="control-label col-lg-2">Institute Name <span class="required">*</span></label>
                                           <div class="col-lg-10">
-                                              <form:input path="name" class=" form-control" id="fullname" name="fullname" type="text" autocomplete="off" />
+                                              <form:input path="name" class=" form-control" id="fullname" name="fullname" type="text" autocomplete="off" required="required" maxlength="50"/>
                                           </div>
                                       </div>
                                     
@@ -71,38 +61,7 @@
               </div>
               
               
-              <div class="row">
-                  <div class="col-sm-6">
-                      <section class="panel">
-                          <header class="panel-heading no-border">
-                              Border Table
-                          </header>
-                          <table class="table table-bordered">
-                              <thead>
-                              <tr>
-                                  <th>Sr.No</th>
-                                  <th>Institute Name</th>
-                                  
-                                 
-                              </tr>
-                              </thead>
-                              <tbody>
-                              <c:set var="count" value="1" scope="page" />
-                              <c:forEach items="${instituteList}" var="institute" >
-                        
-                              <tr>
-                                  <td>${count}</td>
-                                  <td>${institute.name}</td>
-                                  <c:set var="count" value="${count + 1}" scope="page"/>
-                                  
-                              </tr>
-                             
-                              </c:forEach>
-                              </tbody>
-                          </table>
-                      </section>
-                  </div>
-               </div>
+             
                </aside>
               <!-- page end-->
  </section>
