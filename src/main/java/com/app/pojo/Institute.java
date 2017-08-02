@@ -3,6 +3,8 @@ package com.app.pojo;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -36,10 +38,12 @@ public class Institute implements java.io.Serializable {
 		this.name = name;
 	}
 
+	
+
 	@Override
 	public String toString() {
-		return "Institute [name=" + name + ", address=" + address + ", contactno=" + contactno + ", email=" + email
-				+ "]";
+		return "Institute [id=" + id + ", name=" + name + ", address=" + address + ", contactno=" + contactno
+				+ ", email=" + email + "]";
 	}
 
 	public Institute(String name, String address, String contactno, String email, Set<Branch> branches,
@@ -101,7 +105,7 @@ public class Institute implements java.io.Serializable {
 		this.email = email;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "institute")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "institute",cascade = CascadeType.ALL)
 	public Set<Branch> getBranches() {
 		return this.branches;
 	}
@@ -110,7 +114,7 @@ public class Institute implements java.io.Serializable {
 		this.branches = branches;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "institute")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "institute",cascade = CascadeType.ALL)
 	public Set<Teacher> getTeachers() {
 		return this.teachers;
 	}
@@ -119,7 +123,7 @@ public class Institute implements java.io.Serializable {
 		this.teachers = teachers;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "institute")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "institute",cascade = CascadeType.ALL)
 	public Set<Student> getStudents() {
 		return this.students;
 	}

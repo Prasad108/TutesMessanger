@@ -66,7 +66,7 @@ public class LoginController {
 				case 2:output="Teacher/home";//teacher
 				System.out.println("teacher logged in");
 					break;
-				case 3:output="appAdmin/dashboard";//** institute admin
+				case 3:output="Teacher/home";//** institute admin
 					System.out.println("institute admin logged in");
 					break;
 				case 4:output="appAdmin/dashboard";//app Admin

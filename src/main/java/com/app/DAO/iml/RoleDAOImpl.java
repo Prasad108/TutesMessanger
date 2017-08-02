@@ -9,14 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.app.DAO.InstituteDAO;
-import com.app.pojo.Institute;
-import com.app.pojo.Login;
+import com.app.DAO.RoleDAO;
 import com.app.pojo.Role;
 
-
-@Repository("InstituteDAO")
-public class instituteDAOImpl implements InstituteDAO {
+@Repository("RoleDAO")
+public class RoleDAOImpl implements RoleDAO{
 
 	 @Autowired
 	 SessionFactory sessionFactory;
@@ -24,24 +21,24 @@ public class instituteDAOImpl implements InstituteDAO {
 	 protected Session currentSession() {
 		 return this.sessionFactory.getCurrentSession();
 	 }
-	
-	
-	 @Override
-	 @Transactional
-	public void create(Institute institute) {
-		currentSession().save(institute);
 
+	@Override
+	@Transactional
+	public void create(Role role) {
+		currentSession().save(role);
+		
 	}
 
 	@Override
 	@Transactional
-	public void update(Institute institute) {
-		currentSession().update(institute);
+	public void update(Role role) {
+		currentSession().update(role);
+		
 	}
 
 	@Override
 	@Transactional
-	public Institute edit(int id) {
+	public Role edit(int id) {
 		return find(id);
 	}
 
@@ -49,29 +46,30 @@ public class instituteDAOImpl implements InstituteDAO {
 	@Transactional
 	public void delet(int id) {
 		currentSession().delete(id);
-	}
-
-	@Override
-	@Transactional
-	public Institute find(int id) {
-		return (Institute)currentSession().get(Institute.class,id);
 		
 	}
 
 	@Override
 	@Transactional
-	public List<Institute> getall() {
-		return currentSession().createCriteria(Institute.class).list();
+	public Role find(int id) {
+		return (Role)currentSession().get(Role.class,id);
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional
+	public List<Role> getall() {
+		return currentSession().createCriteria(Role.class).list();
+	}
 
 	@Override
 	@Transactional
-	public Institute find(String name) {
-		Query query=currentSession().createQuery("from Institute  where name = :name");
+	public Role findByName(String name) {
+		Query query=currentSession().createQuery("from Role  where name = :name");
 		query.setParameter("name",name);
 		
-		return (Institute) query.uniqueResult();
+		return (Role) query.uniqueResult();
 	}
 
+	
 }

@@ -52,11 +52,11 @@
                                           </div>
                                            <label for="fullname" class="control-label col-lg-2">Contact Number <span class="required">*</span></label>
                                           <div class="col-lg-10">
-                                              <form:input path="contactno" class=" form-control" id="contactno" name="contactno" type="text" autocomplete="off" required="required" maxlength="100"/>
+                                              <form:input path="contactno" class=" form-control" id="contactno" name="contactno" type="text" pattern="[789][0-9]{9}" title="Please enter Valid contact number" autocomplete="off" required="required" maxlength="12"/>
                                           </div>
                                           <label for="fullname" class="control-label col-lg-2">Email Id <span class="required">*</span></label>
                                           <div class="col-lg-10">
-                                              <form:input path="email" class=" form-control" id="email" name="email" type="email" autocomplete="off" required="required" maxlength="20"/>
+                                              <form:input path="email" class=" form-control" id="email" name="email" type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" autocomplete="off" required="required" maxlength="50"/>
                                           </div>
                                       </div>
                                     

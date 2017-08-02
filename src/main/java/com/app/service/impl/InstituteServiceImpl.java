@@ -52,4 +52,10 @@ public class InstituteServiceImpl implements InstituteService {
 		return InstituteDAO.getall();
 	}
 
+	@Override
+	public Institute find(String name) {
+		
+		return InstituteDAO.find(name);
+	}
+
 }

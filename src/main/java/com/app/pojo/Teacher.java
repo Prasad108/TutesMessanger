@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -49,6 +51,14 @@ public class Teacher implements java.io.Serializable {
 		this.contactno = contactno;
 	}
 
+	public Teacher(String fname, String lname, String email, String contactno) {
+		super();
+		this.fname = fname;
+		this.lname = lname;
+		this.email = email;
+		this.contactno = contactno;
+	}
+
 	@Override
 	public String toString() {
 		return "Teacher [permissions=" + permissions + ", fname=" + fname + ", lname=" + lname + ", email=" + email
@@ -77,7 +87,7 @@ public class Teacher implements java.io.Serializable {
 		this.institute = institute;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
 	@JoinColumn(name = "loginid")
 	public Login getLogin() {
 		return this.login;

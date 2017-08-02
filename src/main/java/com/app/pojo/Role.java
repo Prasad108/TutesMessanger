@@ -3,6 +3,8 @@ package com.app.pojo;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -26,6 +28,17 @@ public class Role implements java.io.Serializable {
 	public Role() {
 	}
 
+	public Role(Integer id, String name) {
+		
+		this.id = id;
+		this.name = name;
+	}
+
+	@Override
+	public String toString() {
+		return "Role [id=" + id + ", name=" + name + ", logins=" + logins + "]";
+	}
+
 	public Role(String name) {
 		this.name = name;
 	}
@@ -34,6 +47,8 @@ public class Role implements java.io.Serializable {
 		this.name = name;
 		this.logins = logins;
 	}
+
+	
 
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
