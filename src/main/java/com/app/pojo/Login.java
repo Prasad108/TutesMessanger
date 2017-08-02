@@ -1,10 +1,8 @@
 package com.app.pojo;
-// Generated 1 Aug, 2017 4:22:59 PM by Hibernate Tools 5.2.3.Final
+// Generated 2 Aug, 2017 6:41:01 PM by Hibernate Tools 5.2.3.Final
 
 import java.util.HashSet;
 import java.util.Set;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -34,13 +32,6 @@ public class Login implements java.io.Serializable {
 	public Login() {
 	}
 
-	public Login(Role role, String username, String password) {
-		super();
-		this.role = role;
-		this.username = username;
-		this.password = password;
-	}
-
 	public Login(String username, String password) {
 		this.username = username;
 		this.password = password;
@@ -52,6 +43,13 @@ public class Login implements java.io.Serializable {
 		this.password = password;
 		this.teachers = teachers;
 		this.students = students;
+	}
+
+	public Login(Role role, String username, String password) {
+		super();
+		this.role = role;
+		this.username = username;
+		this.password = password;
 	}
 
 	@Id
@@ -66,7 +64,7 @@ public class Login implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "role")
 	public Role getRole() {
 		return this.role;
@@ -76,7 +74,7 @@ public class Login implements java.io.Serializable {
 		this.role = role;
 	}
 
-	@Column(name = "username", unique = true, nullable = false, length = 20)
+	@Column(name = "username", unique = true, nullable = false, length = 30)
 	public String getUsername() {
 		return this.username;
 	}
@@ -85,7 +83,7 @@ public class Login implements java.io.Serializable {
 		this.username = username;
 	}
 
-	@Column(name = "password", nullable = false, length = 20)
+	@Column(name = "password", nullable = false, length = 30)
 	public String getPassword() {
 		return this.password;
 	}

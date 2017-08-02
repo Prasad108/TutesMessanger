@@ -1,10 +1,8 @@
 package com.app.pojo;
-// Generated 1 Aug, 2017 4:22:59 PM by Hibernate Tools 5.2.3.Final
+// Generated 2 Aug, 2017 6:41:01 PM by Hibernate Tools 5.2.3.Final
 
 import java.util.HashSet;
 import java.util.Set;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -36,14 +34,6 @@ public class Institute implements java.io.Serializable {
 
 	public Institute(String name) {
 		this.name = name;
-	}
-
-	
-
-	@Override
-	public String toString() {
-		return "Institute [id=" + id + ", name=" + name + ", address=" + address + ", contactno=" + contactno
-				+ ", email=" + email + "]";
 	}
 
 	public Institute(String name, String address, String contactno, String email, Set<Branch> branches,
@@ -96,7 +86,7 @@ public class Institute implements java.io.Serializable {
 		this.contactno = contactno;
 	}
 
-	@Column(name = "email", length = 20)
+	@Column(name = "email", length = 50)
 	public String getEmail() {
 		return this.email;
 	}
@@ -105,7 +95,7 @@ public class Institute implements java.io.Serializable {
 		this.email = email;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "institute",cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "institute")
 	public Set<Branch> getBranches() {
 		return this.branches;
 	}
@@ -114,7 +104,7 @@ public class Institute implements java.io.Serializable {
 		this.branches = branches;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "institute",cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "institute")
 	public Set<Teacher> getTeachers() {
 		return this.teachers;
 	}
@@ -123,7 +113,7 @@ public class Institute implements java.io.Serializable {
 		this.teachers = teachers;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "institute",cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "institute")
 	public Set<Student> getStudents() {
 		return this.students;
 	}

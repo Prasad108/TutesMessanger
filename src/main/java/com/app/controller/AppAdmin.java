@@ -124,7 +124,7 @@ public class AppAdmin {
 		    	output+="AddNewInstitute";
 			}   	
 			
-			
+				
 	        return output;  
 	    }
 	    

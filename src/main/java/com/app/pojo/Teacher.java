@@ -1,13 +1,11 @@
 package com.app.pojo;
-// Generated 1 Aug, 2017 4:22:59 PM by Hibernate Tools 5.2.3.Final
+// Generated 2 Aug, 2017 6:41:01 PM by Hibernate Tools 5.2.3.Final
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -40,6 +38,14 @@ public class Teacher implements java.io.Serializable {
 		this.contactno = contactno;
 	}
 
+	public Teacher(String fname, String lname, String email, String contactno) {
+		super();
+		this.fname = fname;
+		this.lname = lname;
+		this.email = email;
+		this.contactno = contactno;
+	}
+
 	public Teacher(Institute institute, Login login, Permissions permissions, String fname, String lname, String email,
 			String contactno) {
 		this.institute = institute;
@@ -49,20 +55,6 @@ public class Teacher implements java.io.Serializable {
 		this.lname = lname;
 		this.email = email;
 		this.contactno = contactno;
-	}
-
-	public Teacher(String fname, String lname, String email, String contactno) {
-		super();
-		this.fname = fname;
-		this.lname = lname;
-		this.email = email;
-		this.contactno = contactno;
-	}
-
-	@Override
-	public String toString() {
-		return "Teacher [permissions=" + permissions + ", fname=" + fname + ", lname=" + lname + ", email=" + email
-				+ ", contactno=" + contactno + "]";
 	}
 
 	@Id
@@ -87,7 +79,7 @@ public class Teacher implements java.io.Serializable {
 		this.institute = institute;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "loginid")
 	public Login getLogin() {
 		return this.login;
