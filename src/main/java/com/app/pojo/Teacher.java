@@ -88,7 +88,7 @@ public class Teacher implements java.io.Serializable {
 	public void setLogin(Login login) {
 		this.login = login;
 	}
-
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "permissions")
 	public Permissions getPermissions() {

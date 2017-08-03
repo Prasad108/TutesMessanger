@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd" >
+
+<hibernate-reverse-engineering>
+  <table-filter match-catalog="tutesmessanger" match-name="branch" exclude="true"/>
+  <table-filter match-catalog="tutesmessanger" match-name="classes" exclude="true"/>
+  <table-filter match-catalog="tutesmessanger" match-name="division" exclude="true"/>
+  <table-filter match-catalog="tutesmessanger" match-name="institute" exclude="true"/>
+  <table-filter match-catalog="tutesmessanger" match-name="login" exclude="true"/>
+  <table-filter match-catalog="tutesmessanger" match-name="parent" exclude="true"/>
+  <table-filter match-catalog="tutesmessanger" match-name="role" exclude="true"/>
+  <table-filter match-catalog="tutesmessanger" match-name="student" exclude="true"/>
+  <table-filter match-catalog="tutesmessanger" match-name="teacher" exclude="true"/>
+</hibernate-reverse-engineering>

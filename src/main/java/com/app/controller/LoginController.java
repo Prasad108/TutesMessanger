@@ -1,34 +1,25 @@
 package com.app.controller;
 
-import java.util.Map;
-
-import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.app.DAO.iml.saveStudent;
-import com.app.pojo.Institute;
 import com.app.pojo.Login;
 import com.app.pojo.Role;
-import com.app.pojo.Teacher;
 import com.app.service.InstituteService;
 import com.app.service.LoginService;
-import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
 
-//
+
 
 @Controller
+@SessionAttributes({"teacher","appAdmin","student"})
 public class LoginController {
 	
-	@Autowired
-	saveStudent save;
-	
+
 	@Autowired
 	LoginService loginService;
 	

@@ -1,15 +1,11 @@
 package com.app.pojo;
-// Generated 2 Aug, 2017 6:41:01 PM by Hibernate Tools 5.2.3.Final
+// Generated 3 Aug, 2017 3:13:58 PM by Hibernate Tools 5.2.3.Final
 
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -32,14 +28,14 @@ public class Permissions implements java.io.Serializable {
 	private boolean msgTeacher;
 	private boolean setExam;
 	private boolean updateResults;
-	private Set<Teacher> teachers = new HashSet<Teacher>(0);
+	private boolean alterInstituteStructure;
 
 	public Permissions() {
 	}
 
 	public Permissions(boolean authoriseStudent, boolean authoriseTeacher, boolean fillAttendance, boolean fillSchedule,
 			boolean mailParent, boolean mailStudent, boolean mailTeacher, boolean msgParent, boolean msgStudent,
-			boolean msgTeacher, boolean setExam, boolean updateResults) {
+			boolean msgTeacher, boolean setExam, boolean updateResults, boolean alterInstituteStructure) {
 		this.authoriseStudent = authoriseStudent;
 		this.authoriseTeacher = authoriseTeacher;
 		this.fillAttendance = fillAttendance;
@@ -52,24 +48,7 @@ public class Permissions implements java.io.Serializable {
 		this.msgTeacher = msgTeacher;
 		this.setExam = setExam;
 		this.updateResults = updateResults;
-	}
-
-	public Permissions(boolean authoriseStudent, boolean authoriseTeacher, boolean fillAttendance, boolean fillSchedule,
-			boolean mailParent, boolean mailStudent, boolean mailTeacher, boolean msgParent, boolean msgStudent,
-			boolean msgTeacher, boolean setExam, boolean updateResults, Set<Teacher> teachers) {
-		this.authoriseStudent = authoriseStudent;
-		this.authoriseTeacher = authoriseTeacher;
-		this.fillAttendance = fillAttendance;
-		this.fillSchedule = fillSchedule;
-		this.mailParent = mailParent;
-		this.mailStudent = mailStudent;
-		this.mailTeacher = mailTeacher;
-		this.msgParent = msgParent;
-		this.msgStudent = msgStudent;
-		this.msgTeacher = msgTeacher;
-		this.setExam = setExam;
-		this.updateResults = updateResults;
-		this.teachers = teachers;
+		this.alterInstituteStructure = alterInstituteStructure;
 	}
 
 	@Id
@@ -192,13 +171,13 @@ public class Permissions implements java.io.Serializable {
 		this.updateResults = updateResults;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "permissions")
-	public Set<Teacher> getTeachers() {
-		return this.teachers;
+	@Column(name = "alter_institute_structure", nullable = false)
+	public boolean isAlterInstituteStructure() {
+		return this.alterInstituteStructure;
 	}
 
-	public void setTeachers(Set<Teacher> teachers) {
-		this.teachers = teachers;
+	public void setAlterInstituteStructure(boolean alterInstituteStructure) {
+		this.alterInstituteStructure = alterInstituteStructure;
 	}
 
 }
