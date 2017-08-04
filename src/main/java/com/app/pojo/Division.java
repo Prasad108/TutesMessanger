@@ -1,9 +1,11 @@
 package com.app.pojo;
-// Generated 2 Aug, 2017 6:41:01 PM by Hibernate Tools 5.2.3.Final
+// Generated 4 Aug, 2017 10:14:23 AM by Hibernate Tools 5.2.3.Final
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -16,31 +18,27 @@ import javax.persistence.Table;
 @Table(name = "division", catalog = "tutesmessanger")
 public class Division implements java.io.Serializable {
 
-	private int id;
+	private Integer id;
 	private Classes classes;
 	private String name;
 
 	public Division() {
 	}
 
-	public Division(int id) {
-		this.id = id;
-	}
-
-	public Division(int id, Classes classes, String name) {
-		this.id = id;
+	public Division(Classes classes, String name) {
 		this.classes = classes;
 		this.name = name;
 	}
 
 	@Id
+	@GeneratedValue(strategy = IDENTITY)
 
 	@Column(name = "id", unique = true, nullable = false)
-	public int getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

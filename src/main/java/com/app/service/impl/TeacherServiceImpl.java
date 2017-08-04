@@ -49,4 +49,10 @@ public class TeacherServiceImpl implements TeacherService {
 		return TeacherDAO.getall();
 	}
 
+	@Override
+	public Teacher findByLoginId(int id) {
+		
+		return TeacherDAO.findByLoginId(id);
+	}
+
 }

@@ -1,11 +1,13 @@
 package com.app.pojo;
-// Generated 2 Aug, 2017 6:41:01 PM by Hibernate Tools 5.2.3.Final
+// Generated 4 Aug, 2017 10:14:23 AM by Hibernate Tools 5.2.3.Final
 
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -19,7 +21,7 @@ import javax.persistence.Table;
 @Table(name = "branch", catalog = "tutesmessanger")
 public class Branch implements java.io.Serializable {
 
-	private int id;
+	private Integer id;
 	private Institute institute;
 	private String name;
 	private Set<Classes> classeses = new HashSet<Classes>(0);
@@ -27,25 +29,21 @@ public class Branch implements java.io.Serializable {
 	public Branch() {
 	}
 
-	public Branch(int id) {
-		this.id = id;
-	}
-
-	public Branch(int id, Institute institute, String name, Set<Classes> classeses) {
-		this.id = id;
+	public Branch(Institute institute, String name, Set<Classes> classeses) {
 		this.institute = institute;
 		this.name = name;
 		this.classeses = classeses;
 	}
 
 	@Id
+	@GeneratedValue(strategy = IDENTITY)
 
 	@Column(name = "id", unique = true, nullable = false)
-	public int getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

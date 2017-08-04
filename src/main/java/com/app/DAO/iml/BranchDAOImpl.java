@@ -2,19 +2,19 @@ package com.app.DAO.iml;
 
 import java.util.List;
 
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.app.DAO.TeacherDAO;
+import com.app.DAO.BranchDAO;
+import com.app.pojo.Branch;
 import com.app.pojo.Institute;
-import com.app.pojo.Teacher;
 
-@Repository("TeacherDAO")
-public class TeacherDAOImpl implements TeacherDAO {
+
+@Repository("BranchDAO")
+public class BranchDAOImpl implements BranchDAO {
 	
 	 @Autowired
 	 SessionFactory sessionFactory;
@@ -22,24 +22,25 @@ public class TeacherDAOImpl implements TeacherDAO {
 	 protected Session currentSession() {
 		 return this.sessionFactory.getCurrentSession();
 	 }
+	
 
 	@Override
 	 @Transactional
-	public void create(Teacher teacher) {
-		currentSession().save(teacher);
-
+	public void create(Branch branch) {
+		currentSession().save(branch);
+		
 	}
 
 	@Override
 	 @Transactional
-	public void update(Teacher teacher) {
-		currentSession().update(teacher);
-
+	public void update(Branch branch) {
+		currentSession().update(branch);
+		
 	}
 
 	@Override
 	 @Transactional
-	public Teacher edit(int id) {
+	public Branch edit(int id) {
 		return find(id);
 	}
 
@@ -47,28 +48,19 @@ public class TeacherDAOImpl implements TeacherDAO {
 	 @Transactional
 	public void delet(int id) {
 		currentSession().delete(id);
-
-	}
-
-	@Override
-	 @Transactional
-	public Teacher find(int id) {
-		return (Teacher)currentSession().get(Teacher.class,id);
-	}
-
-	@Override
-	 @Transactional
-	public List<Teacher> getall() {
-		return currentSession().createCriteria(Teacher.class).list();
-	}
-
-	@Override
-	 @Transactional
-	public Teacher findByLoginId(int id) {
-		Query query=currentSession().createQuery("from Teacher  where loginid = :id");
-		query.setParameter("id",id);
 		
-		return (Teacher) query.uniqueResult();
+	}
+
+	@Override
+	 @Transactional
+	public Branch find(int id) {
+		return (Branch)currentSession().get(Branch.class,id);
+	}
+
+	@Override
+	 @Transactional
+	public List<Branch> getall() {
+		return currentSession().createCriteria(Branch.class).list();
 	}
 
 }

@@ -11,6 +11,7 @@ public interface TeacherDAO {
 	public Teacher edit(int id);
 	public void delet(int id );
 	public Teacher find(int id);
+	public Teacher findByLoginId(int id);
 	public List<Teacher> getall();
 	
 

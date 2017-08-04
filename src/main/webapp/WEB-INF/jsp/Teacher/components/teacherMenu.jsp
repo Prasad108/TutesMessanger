@@ -33,11 +33,16 @@
                           <span>Attendance</span>
                       </a>
                   </li>
-                   <li>
-                      <a class="" href="widgets.html">
-                          <i class="icon_genius"></i>
-                          <span>Institute Structure</span>
+                   <li class="sub-menu">
+                      <a href="javascript:;" class="">
+                          <i class="icon_desktop"></i>
+                          <span>Inst. Structure</span>
+                          <span class="menu-arrow arrow_carrot-right"></span>
                       </a>
+                      <ul class="sub">
+                          <li><a class="" href="#">View Structure</a></li>
+                          <li><a class="" href="ModifyInstitueStructure">Modify Structure</a></li>                        
+                      </ul>
                   </li>
                   <li>
                       <a class="" href="widgets.html">
