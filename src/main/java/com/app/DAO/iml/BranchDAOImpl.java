@@ -2,6 +2,7 @@ package com.app.DAO.iml;
 
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,6 +62,15 @@ public class BranchDAOImpl implements BranchDAO {
 	 @Transactional
 	public List<Branch> getall() {
 		return currentSession().createCriteria(Branch.class).list();
+	}
+
+
+	@Override
+	 @Transactional
+	public List<Branch> getallOfParticularInstitute(int id) {
+		Query query=currentSession().createQuery("from Branch  where institute = :id");
+		query.setParameter("id",id);
+		return query.list();
 	}
 
 }

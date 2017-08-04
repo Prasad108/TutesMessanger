@@ -13,5 +13,6 @@ public interface BranchDAO {
 	public void delet(int id );
 	public Branch find(int id);
 	public List<Branch> getall();
+	public List<Branch> getallOfParticularInstitute(int id);
 
 }

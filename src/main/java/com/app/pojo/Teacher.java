@@ -57,6 +57,12 @@ public class Teacher implements java.io.Serializable {
 		this.contactno = contactno;
 	}
 
+	@Override
+	public String toString() {
+		return "Teacher [id=" + id + ", fname=" + fname + ", lname=" + lname + ", email=" + email + ", contactno="
+				+ contactno + "]";
+	}
+
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 

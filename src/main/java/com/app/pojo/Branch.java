@@ -35,6 +35,11 @@ public class Branch implements java.io.Serializable {
 		this.classeses = classeses;
 	}
 
+	@Override
+	public String toString() {
+		return "Branch [id=" + id + ", institute=" + institute + ", name=" + name + "]";
+	}
+
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 

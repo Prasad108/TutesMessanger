@@ -62,7 +62,9 @@ public class LoginController {
 
 			case 3:
 				output = "Teacher/home";// ** institute admin
-				model.addAttribute("teacher", teacherService.findByLoginId(userLogin.getId()));
+				Teacher t=teacherService.findByLoginId(userLogin.getId());
+				System.out.println(t.getInstitute());
+				model.addAttribute("teacher",t );
 				model.addAttribute("appAdmin", teacherService.findByLoginId(userLogin.getId()));
 				System.out.println("institute admin logged in");
 				break;

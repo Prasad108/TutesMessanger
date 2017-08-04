@@ -50,4 +50,10 @@ public class BranchServiceImpl implements BranchService {
 		return branchDAO.getall();
 	}
 
+	@Override
+	public List<Branch> getallOfParticularInstitute(int id) {
+		
+		return branchDAO.getallOfParticularInstitute(id);
+	}
+
 }
