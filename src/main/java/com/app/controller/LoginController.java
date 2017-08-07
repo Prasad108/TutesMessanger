@@ -16,7 +16,7 @@ import com.app.service.LoginService;
 import com.app.service.TeacherService;
 
 @Controller
-@SessionAttributes({ "teacher", "appAdmin", "student" })
+@SessionAttributes({ "teacher", "appAdmin", "student","institute" })
 public class LoginController {
 
 	@Autowired
@@ -63,8 +63,9 @@ public class LoginController {
 			case 3:
 				output = "Teacher/home";// ** institute admin
 				Teacher t=teacherService.findByLoginId(userLogin.getId());
-				System.out.println(t.getInstitute());
+				System.out.println(t);
 				model.addAttribute("teacher",t );
+				model.addAttribute("institute",teacherService.GetInstitute(t.getId()) );
 				model.addAttribute("appAdmin", teacherService.findByLoginId(userLogin.getId()));
 				System.out.println("institute admin logged in");
 				break;

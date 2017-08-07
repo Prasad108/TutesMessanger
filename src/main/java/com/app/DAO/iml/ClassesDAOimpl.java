@@ -9,14 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.app.DAO.BranchDAO;
+import com.app.DAO.ClassesDAO;
 import com.app.pojo.Branch;
-import com.app.pojo.Institute;
+import com.app.pojo.Classes;
 
+@Repository("ClassDAO")
+public class ClassesDAOimpl implements ClassesDAO {
 
-@Repository("BranchDAO")
-public class BranchDAOImpl implements BranchDAO {
-	
 	 @Autowired
 	 SessionFactory sessionFactory;
 	 
@@ -24,24 +23,23 @@ public class BranchDAOImpl implements BranchDAO {
 		 return this.sessionFactory.getCurrentSession();
 	 }
 	
-
 	@Override
 	 @Transactional
-	public void create(Branch branch) {
-		currentSession().save(branch);
-		
+	public void create(Classes classes) {
+		currentSession().save(classes);
+
 	}
 
 	@Override
 	 @Transactional
-	public void update(Branch branch) {
-		currentSession().update(branch);
-		
+	public void update(Classes classes) {
+		currentSession().update(classes);
+
 	}
 
 	@Override
 	 @Transactional
-	public Branch edit(int id) {
+	public Classes edit(int id) {
 		return find(id);
 	}
 
@@ -49,27 +47,26 @@ public class BranchDAOImpl implements BranchDAO {
 	 @Transactional
 	public void delet(int id) {
 		currentSession().delete(id);
-		
+
 	}
 
 	@Override
 	 @Transactional
-	public Branch find(int id) {
-		return (Branch)currentSession().get(Branch.class,id);
+	public Classes find(int id) {
+		return (Classes)currentSession().get(Classes.class,id);
 	}
 
 	@Override
 	 @Transactional
-	public List<Branch> getall() {
-		return currentSession().createCriteria(Branch.class).list();
+	public List<Classes> getall() {
+		return currentSession().createCriteria(Classes.class).list();
 	}
-
 
 	@Override
 	 @Transactional
-	public List<Branch> getallOfParticularInstitute(Institute id) {
-		Query query=currentSession().createQuery("from Branch  where institute = :id");
-		query.setParameter("id",id);
+	public List<Classes> getallOfParticularBranch(Branch branch) {
+		Query query=currentSession().createQuery("from Classes  where branch = :branch");
+		query.setParameter("branch",branch);
 		return query.list();
 	}
 

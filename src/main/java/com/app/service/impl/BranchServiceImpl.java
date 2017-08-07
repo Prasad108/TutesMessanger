@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.app.DAO.BranchDAO;
 import com.app.pojo.Branch;
+import com.app.pojo.Institute;
 import com.app.service.BranchService;
 
 @Service("branchService")
@@ -51,7 +52,7 @@ public class BranchServiceImpl implements BranchService {
 	}
 
 	@Override
-	public List<Branch> getallOfParticularInstitute(int id) {
+	public List<Branch> getallOfParticularInstitute(Institute id) {
 		
 		return branchDAO.getallOfParticularInstitute(id);
 	}

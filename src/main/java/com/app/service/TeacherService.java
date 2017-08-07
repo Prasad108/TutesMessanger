@@ -2,6 +2,7 @@ package com.app.service;
 
 import java.util.List;
 
+import com.app.pojo.Institute;
 import com.app.pojo.Teacher;
 
 public interface TeacherService {
@@ -12,6 +13,7 @@ public interface TeacherService {
 	public void delet(int id );
 	public Teacher find(int id);
 	public Teacher findByLoginId(int id);
+	public Institute GetInstitute(int id);
 	public List<Teacher> getall();
 
 }

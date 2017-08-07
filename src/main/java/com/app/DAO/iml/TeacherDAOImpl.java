@@ -71,4 +71,19 @@ public class TeacherDAOImpl implements TeacherDAO {
 		return (Teacher) query.uniqueResult();
 	}
 
+	@Override
+	@Transactional
+	public Institute GetInstitute(int id) {
+		/*Query query=currentSession().createQuery("from Teacher  where loginid = :id");
+		query.setParameter("id",id);
+		
+		return (Institute) query.uniqueResult();*/
+		Query query = currentSession().createQuery("select t.institute from Teacher t where t.id= :id");
+		query.setParameter("id",id);
+		System.out.println((Institute) query.uniqueResult());
+		return (Institute) query.uniqueResult();
+		
+		
+	}
+
 }

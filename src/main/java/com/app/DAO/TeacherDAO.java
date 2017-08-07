@@ -2,7 +2,7 @@ package com.app.DAO;
 
 import java.util.List;
 
-
+import com.app.pojo.Institute;
 import com.app.pojo.Teacher;
 
 public interface TeacherDAO {
@@ -12,6 +12,7 @@ public interface TeacherDAO {
 	public void delet(int id );
 	public Teacher find(int id);
 	public Teacher findByLoginId(int id);
+	public Institute GetInstitute(int id);
 	public List<Teacher> getall();
 	
 

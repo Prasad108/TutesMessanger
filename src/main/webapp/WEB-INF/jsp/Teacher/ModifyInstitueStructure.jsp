@@ -15,23 +15,77 @@
    	
    		$('#disabledInputForClasses').attr('disabled','disabled'); 
 
+   		$('#disabledSelectForClassesInAddDividion').attr('disabled','disabled'); 
+
+   		$('#AddNewClassSaveBTN').attr('disabled','disabled'); 
+
+   	   $('#saveDivisionSubmitBTN').attr('disabled','disabled'); 
+
+   	 $('#disabledInputForDivisionName').attr('disabled','disabled');
+
+   	
    		
-		
+   	//----------------select branch in Add Division-------------- 
+	   	$('#SelectBranch2').change(function() {
+	   	   
+
+	   	 var  others = $(this).find(":selected").val();
+	        if(others != 0){      
+
+	        	 $.getJSON("GetClassesList/"+$(this).find(":selected").val(), function(jsonData){
+	        	     cb = '';
+	        	     $.each(jsonData, function(i,data){
+	        	         cb+='<option value="'+data.value+'">'+data.name+'</option>';
+	        	     });
+	        	     $("#disabledSelectForClassesInAddDividion").html(cb);
+	        	});	
+		        		            
+	   		     $('#disabledSelectForClassesInAddDividion').removeAttr('disabled'); 
+	   		     	                      
+	         }else{
+	         $('#disabledSelectForClassesInAddDividion').attr('disabled','disabled'); 
+	         $('#disabledInputForDivisionName').attr('disabled','disabled'); 
+	         $('#saveDivisionSubmitBTN').attr('disabled','disabled'); 
+	     
+	        }  
+	   	});
+
+
+
+	  //----------------select Class in Add Division-------------- 
+
+	   	$('#disabledSelectForClassesInAddDividion').on('change',function(){
+	   	 var  others = $(this).find(":selected").val();
+
+	   	if(others != 0){           
+   	        $('#saveDivisionSubmitBTN').removeAttr('disabled'); 
+   	     $('#disabledInputForDivisionName').removeAttr('disabled');   
+   	               
+   	         }else{
+   	         $('#saveDivisionSubmitBTN').attr('disabled','disabled'); 
+   	      $('#disabledInputForDivisionName').attr('disabled','disabled'); 
+   	        }  
+	   	 
+	    });
+
+
+	  //----------------select branch in Add Class-------------- 
    		       
    	    $('#SelectBranch').on('change',function(){
-
-   	    	var conceptName = $(this).find(":selected").text();
-   	    	
-   	   	    
-   	   	    
-   	     var  others = $(this).val();
-   	        if(others == "Others"){           
-   	        $('#disabledInputForClasses').removeAttr('disabled');          
+  	   	    
+   	     var  others = $(this).find(":selected").val();
+   	        if(others != 0){           
+   	        $('#disabledInputForClasses').removeAttr('disabled'); 
+   	     $('#AddNewClassSaveBTN').removeAttr('disabled');   
+   	               
    	         }else{
    	         $('#disabledInputForClasses').attr('disabled','disabled'); 
+   	      $('#AddNewClassSaveBTN').attr('disabled','disabled'); 
    	        }  
  
    	      });
+
+ 	      
    	  });
 
  
@@ -55,8 +109,26 @@
  <aside>
   <section id="main-content">
           <section class="wrapper">  
+          
+          <c:if test="${!empty ErrorMessage}">
+  					  <div class="alert alert-block alert-danger fade in">
+                                  <button data-dismiss="alert" class="close close-sm" type="button">
+                                      <i class="icon-remove"></i>
+                                  </button>
+                                <strong> ${ErrorMessage} </strong> 
+                              </div>
+		</c:if>
+		 <c:if test="${!empty SuccessMessage}">
+  					  <div class="alert alert-success fade in">
+                                  <button data-dismiss="alert" class="close close-sm" type="button">
+                                      <i class="icon-remove"></i>
+                                  </button>
+                                  <strong>Institute saved successfully</strong> 
+                              </div>
+		</c:if>	
 
  <!--collapse start-->
+<!-- -----------------------------    Add Branch to Institute  ---------------------------------->  
                       <div class="panel-group m-bot20" id="accordion">
                           <div class="panel panel-primary">
                               <div class="panel-heading">
@@ -91,6 +163,7 @@
                                   </div>
                               </div>
                           </div>
+ <!-- -----------------------------   Add Class into Branch ---------------------------------->                          
                           <div class="panel panel-success">
                               <div class="panel-heading">
                                   <h4 class="panel-title">
@@ -100,28 +173,43 @@
                                   </h4>
                               </div>
                               <div id="collapseTwo" class="panel-collapse collapse">
-                                  <div class="panel-body">
-                         				 	
-                            				  <form class="form-validate form-horizontal " id="SelectBranch" method="post">
-                            				 	<p> Select Branch to which class is to be added</p>
-	                            					
-	                                     		 	 <select class="form-control input-lg m-bot15" onchange="" form="SelectBranch" id="SelectBranch" >
-			                                             <option></option>
-			                                             <c:forEach items="${BranchesOfInst}" var="branch" >			                                              
-			                                              <option value="${branch.id}">${branch.name}</option>
-			                                              </c:forEach>
-	                                          		</select>
-	                                          		
-	                                   <div class="form-group">
-	                                      <label class="col-sm-2 control-label">ADD new Class</label>
-	                                      <div class="col-sm-10">
-	                                          <input class="form-control" id="disabledInputForClasses" type="text" placeholder="Disabled input here..." >
-	                                      </div>
-                                      </div>
-                                          		</form>
-                                  			                               		
-                              </div>
+				                  <div class="panel-body">
+				
+										<form:form modelAttribute="Classes" class="form-validate form-horizontal " id="SelectBranch" action="AddNewClass" method="POST">
+											<div class="form-group ">
+											
+												<label for="fullname" class="control-label col-lg-2">Select The Branch 
+												 <span class="required">*</span>
+												</label>
+												<div class="col-lg-10">
+													<form:select path="branch.id" class="form-control input-lg m-bot15" onchange="" form="SelectBranch" id="SelectBranch">
+														<option value="0">--- Select Branch---</option>
+														<c:forEach items="${BranchesOfInst}" var="branch">
+															<option value="${branch.id}">${branch.name}</option>
+														</c:forEach>
+													</form:select>
+												</div>
+												
+													 <label for="fullname" class="control-label col-lg-2">Add new Class <span class="required">*</span></label>
+													<div class="col-lg-10">
+														<form:input path="name" class="form-control" id="disabledInputForClasses" type="text" placeholder="Add new class" required="required" />
+													</div>								
+											</div>
+											<div class="form-group">
+			                                          <div class="col-lg-offset-2 col-lg-10">
+			                                              <button class="btn btn-primary" id="AddNewClassSaveBTN"type="submit">Add Class</button>
+			                     					 </div>
+			                                </div>
+										</form:form>
+					
+								</div>
                           </div>
+                          </div>
+                          
+                          
+                          
+ <!-- -----------------------------   Add Division into Class ---------------------------------->
+ 
                           <div class="panel panel-warning">
                               <div class="panel-heading">
                                   <h4 class="panel-title">
@@ -132,7 +220,41 @@
                               </div>
                               <div id="collapseThree" class="panel-collapse collapse">
                                   <div class="panel-body">
-                                      Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anemiakeffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                                     
+										<form:form modelAttribute="Division" class="form-validate form-horizontal " id="AddNewDivision" action="AddNewDivision" method="POST">
+											<div class="form-group ">
+											
+												<label for="fullname" class="control-label col-lg-2">Select The Branch 
+												 <span class="required">*</span>
+												</label>
+												<div class="col-lg-10">
+													<form:select path="classes.branch.id" class="form-control input-lg m-bot15 "  form="AddNewDivision" id="SelectBranch2">
+														<option value="0">--- Select Branch---</option>
+														<c:forEach items="${BranchesOfInst}" var="branch">
+															<option value="${branch.id}">${branch.name}</option>
+														</c:forEach>
+													</form:select>
+												</div>
+												
+													 <label for="fullname" class="control-label col-lg-2">Select the Class <span class="required">*</span></label>
+													<div class="col-lg-10">
+														<form:select path="classes.id" class="form-control m-bot15" id="disabledSelectForClassesInAddDividion" type="text" placeholder="Add new class" required="required" >
+															<option value="0">--- Select Class---</option>
+														</form:select>
+													</div>		
+													
+													 <label for="fullname" class="control-label col-lg-2">Add new Division <span class="required">*</span></label>
+													<div class="col-lg-10">
+														<form:input path="name" class="form-control" id="disabledInputForDivisionName" type="text" placeholder="Add new class" required="required" />
+													</div>
+																			
+											</div>
+											<div class="form-group">
+			                                          <div class="col-lg-offset-2 col-lg-10">
+			                                              <button class="btn btn-primary" id="saveDivisionSubmitBTN" type="submit">Add Class</button>
+			                     					 </div>
+			                                </div>
+										</form:form>
                                   </div>
                               </div>
                           </div>

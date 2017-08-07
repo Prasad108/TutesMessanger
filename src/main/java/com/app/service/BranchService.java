@@ -3,6 +3,7 @@ package com.app.service;
 import java.util.List;
 
 import com.app.pojo.Branch;
+import com.app.pojo.Institute;
 
 public interface BranchService {
 
@@ -12,6 +13,6 @@ public interface BranchService {
 	public void delet(int id );
 	public Branch find(int id);
 	public List<Branch> getall();
-	public List<Branch> getallOfParticularInstitute(int id);
+	public List<Branch> getallOfParticularInstitute(Institute id);
 
 }

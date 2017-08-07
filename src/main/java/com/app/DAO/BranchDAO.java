@@ -3,6 +3,7 @@ package com.app.DAO;
 import java.util.List;
 
 import com.app.pojo.Branch;
+import com.app.pojo.Institute;
 
 
 public interface BranchDAO {
@@ -13,6 +14,6 @@ public interface BranchDAO {
 	public void delet(int id );
 	public Branch find(int id);
 	public List<Branch> getall();
-	public List<Branch> getallOfParticularInstitute(int id);
+	public List<Branch> getallOfParticularInstitute(Institute id);
 
 }

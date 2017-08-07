@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.app.DAO.TeacherDAO;
+import com.app.pojo.Institute;
 import com.app.pojo.Teacher;
 import com.app.service.TeacherService;
 
@@ -53,6 +54,12 @@ public class TeacherServiceImpl implements TeacherService {
 	public Teacher findByLoginId(int id) {
 		
 		return TeacherDAO.findByLoginId(id);
+	}
+
+	@Override
+	public Institute GetInstitute(int id) {
+		
+		return TeacherDAO.GetInstitute(id);
 	}
 
 }

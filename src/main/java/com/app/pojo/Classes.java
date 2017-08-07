@@ -26,6 +26,12 @@ public class Classes implements java.io.Serializable {
 	private String name;
 	private Set<Division> divisions = new HashSet<Division>(0);
 
+	public Classes(Branch branch, String name) {
+		super();
+		this.branch = branch;
+		this.name = name;
+	}
+
 	public Classes() {
 	}
 
