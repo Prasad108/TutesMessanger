@@ -2,6 +2,7 @@ package com.app.DAO.iml;
 
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,6 +61,14 @@ public class DivisionDAOImpl implements DivisionDAO {
 	 @Transactional
 	public List<Division> getall() {
 		return currentSession().createCriteria(Division.class).list();
+	}
+
+	@Override
+	 @Transactional
+	public List<Division> getallOfParticularClass(Classes classes) {
+		Query query=currentSession().createQuery("from Division where classes = :classes");
+		query.setParameter("classes",classes);
+		return query.list();
 	}
 
 }

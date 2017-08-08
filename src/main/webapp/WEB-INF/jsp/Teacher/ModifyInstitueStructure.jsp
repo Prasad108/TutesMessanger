@@ -118,12 +118,12 @@
                                 <strong> ${ErrorMessage} </strong> 
                               </div>
 		</c:if>
-		 <c:if test="${!empty SuccessMessage}">
+		 <c:if test="${!empty SaveSuccessMessage}">
   					  <div class="alert alert-success fade in">
                                   <button data-dismiss="alert" class="close close-sm" type="button">
                                       <i class="icon-remove"></i>
                                   </button>
-                                  <strong>Institute saved successfully</strong> 
+                                  <strong>${SaveSuccessMessage}</strong> 
                               </div>
 		</c:if>	
 

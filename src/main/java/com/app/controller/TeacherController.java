@@ -2,7 +2,7 @@ package com.app.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,7 +24,8 @@ import com.app.pojo.Teacher;
 import com.app.service.BranchService;
 import com.app.service.ClassesService;
 import com.app.service.DivisionService;
-import com.app.service.LoginService;
+import com.app.service.InstituteService;
+
 import com.app.service.TeacherService;
 
 @Controller
@@ -42,6 +43,9 @@ public class TeacherController {
 	
 	@Autowired
 	DivisionService divisionService;
+	
+	@Autowired
+	InstituteService instituteService;
 	
 	
 	 @RequestMapping(value="/ModifyInstitueStructure",method = RequestMethod.GET)  
@@ -74,15 +78,37 @@ public class TeacherController {
 	 
 	 
 	 @RequestMapping(value="/AddNewBranch",method = RequestMethod.POST)  
-	    public String  AddNewBranch(Model model,@ModelAttribute("Branch") Branch branch,@ModelAttribute("teacher") Teacher teacher) {  
+	    public String  AddNewBranch(Model model,@ModelAttribute("Branch") Branch branch1,@ModelAttribute("teacher") Teacher teacher) {  
 	    	
 	    	System.out.println("this is AddNewBranch controller");
-	    	branch.setInstitute(teacher.getInstitute());
+	    	branch1.setInstitute(teacher.getInstitute());
 	    	
-	    	branchService.create(branch);
+	    	branchService.create(branch1);
 	    	System.out.println("new Branch is saved ");
+	    	model.addAttribute("SaveSuccessMessage", "New branch is Saved with the name "+branch1.getName());
+	    	
+	    	Branch branch= new Branch();
+			Classes clsess=new Classes();
+			Division division =new Division();
+			model.addAttribute("Branch", branch);
+			model.addAttribute("Classes", clsess);
+			model.addAttribute("Division", division);
+	    	
+	    	
+	    	Institute inst=teacherService.GetInstitute(teacher.getId());
+			System.out.println("institute is :"+inst);
+	    	
+	    	 List <Branch> branchlist=branchService.getallOfParticularInstitute(inst);
+			 System.out.println("we are going to print the branches of current isntitute :");
+			 for (Branch b : branchlist) {
+				    System.out.println(b);
+				}
+				
+		
+				
+			model.addAttribute("BranchesOfInst",branchlist );
 	    				
-	        return "Teacher/ExistingInstituteStructure";
+	        return "Teacher/ModifyInstitueStructure";
 	    }
 	 
 	 
@@ -92,30 +118,53 @@ public class TeacherController {
 	    	
 		 
 	    	System.out.println("this is AddNewClass controller");
-	    	String output="Teacher/";
+	    	
 	    	
 	    	Branch branch= branchService.find(clas.getBranch().getId()) ;
 	    	Classes c=new Classes(branch, clas.getName());
 	    	try{	
 			    	classesService.create(c);	    		
 			    	System.out.println("new Classes is saved ");
-			    	output+="ExistingInstituteStructure";
+			    	model.addAttribute("SaveSuccessMessage", "New Class is Saved with the name "+clas.getName());
+			    	
 	    	}
 			catch(Exception e)
 			{
 				// mostly error will be that their is duplicate entry in record 
-				model.addAttribute("duplicateClassErrorMessage", "Duplicate entry Name of the Class or other attribute already exist try again with unique values");
+				model.addAttribute("ErrorMessage", "Duplicate entry Name of the Class or other attribute already exist try again with unique values");
 		    	System.out.println("duplicate key unique key voilation");
 		    	e.printStackTrace();
-		    	output+="ModifyInstitueStructure";
-			}   		
-	        return output;
+		    	
+			}
+	    	finally {
+	    		
+	    		
+		    	Branch branch1= new Branch();
+				Classes clsess=new Classes();
+				Division division =new Division();
+				model.addAttribute("Branch", branch1);
+				model.addAttribute("Classes", clsess);
+				model.addAttribute("Division", division);
+	    		Institute inst=teacherService.GetInstitute(teacher.getId());
+				System.out.println("institute is :"+inst);
+		    	
+		    	 List <Branch> branchlist=branchService.getallOfParticularInstitute(inst);
+				 System.out.println("we are going to print the branches of current isntitute :");
+				 for (Branch b : branchlist) {
+					    System.out.println(b);
+					}
+					
+			
+					
+				model.addAttribute("BranchesOfInst",branchlist );
+	    	}
+	        return "Teacher/ModifyInstitueStructure";
 	    }
 	 
 	 
 	 @RequestMapping(value = "/GetClassesList/{id}", method = RequestMethod.GET)
 	 @ResponseBody
-	  public String RemoveProductFromCart( @PathVariable("id") int id ){
+	  public String GetClassesList( @PathVariable("id") int id ){
 		 
 			System.out.println("from GetClassesList controller");
 			
@@ -138,33 +187,48 @@ public class TeacherController {
 	 
 
 	 @RequestMapping(value="/AddNewDivision",method = RequestMethod.POST)  
-	    public String  AddNewDivision(Model model,@ModelAttribute("Division") Division div) {  
+	    public String  AddNewDivision(Model model,@ModelAttribute("Division") Division div,@ModelAttribute("teacher") Teacher teacher) {  
 	    	
 		 
-	    	System.out.println("this is AddNewDivision controller");
-	    	String output="Teacher/";
-	    	
-	    	Branch branch= branchService.find(div.getClasses().getBranch().getId()) ;
-	    	
-	    	Classes clas2=classesService.find(div.getClasses().getId());
-	    	
+	    	System.out.println("this is AddNewDivision controller");	    	
+	    	Classes clas2=classesService.find(div.getClasses().getId());	    	
 	    	Division newDiv=new Division(clas2, div.getName());
-	    	
-	    	
+	    		    	
 	    	try{	
 	    		divisionService.create(newDiv);	    		
 			    	System.out.println("new Division is saved ");
-			    	output+="ExistingInstituteStructure";
+			    	model.addAttribute("SaveSuccessMessage", "New Division is Saved with the name "+newDiv.getName());
+			    	
 	    	}
 			catch(Exception e)
 			{
 				// mostly error will be that their is duplicate entry in record 
-				model.addAttribute("duplicateClassErrorMessage", "Duplicate entry Name of the Class or other attribute already exist try again with unique values");
+				model.addAttribute("ErrorMessage", "Duplicate entry Name of the Class or other attribute already exist try again with unique values");
 		    	System.out.println("duplicate key unique key voilation");
 		    	e.printStackTrace();
-		    	output+="ModifyInstitueStructure";
-			}   		
-	        return output;
+		    	
+			} 
+	    	finally {
+	    		Branch branch1= new Branch();
+				Classes clsess=new Classes();
+				Division division =new Division();
+				model.addAttribute("Branch", branch1);
+				model.addAttribute("Classes", clsess);
+				model.addAttribute("Division", division);
+	    		Institute inst=teacherService.GetInstitute(teacher.getId());
+				System.out.println("institute is :"+inst);
+		    	
+		    	 List <Branch> branchlist=branchService.getallOfParticularInstitute(inst);
+				 System.out.println("we are going to print the branches of current isntitute :");
+				 for (Branch b : branchlist) {
+					    System.out.println(b);
+					}
+					
+			
+					
+				model.addAttribute("BranchesOfInst",branchlist );
+	    	}
+	    	 return "Teacher/ModifyInstitueStructure";
 	    }
 
 	 
@@ -174,7 +238,49 @@ public class TeacherController {
 	    public String  ViewInstitueStructure(Model model,@ModelAttribute("teacher") Teacher teacher,@ModelAttribute("institute") Institute institute) {  
 	    	
 		 
-		 String str="";
+		Institute inst=teacherService.GetInstitute(teacher.getId());
+		 String str="<ul><li><a href=\"#\">"+inst.getName()+"</a><ul>";
+		 System.out.println("isntituet is: "+inst);
+		 
+		 
+		
+		 List <Branch> branchlist=branchService.getallOfParticularInstitute(inst);
+		 for(Branch b : branchlist)
+		 {
+			 str+="<li><a href=\"#\">"+b.getName()+"</a><ul>";
+			 System.out.println("Branch is: "+b);
+			 List<Classes> classList=classesService.getallOfParticularBranch(b);
+			 for(Classes c : classList)
+			 {
+				 str+="<li><a href=\"#\">"+c.getName()+"</a><ul>";
+				 System.out.println("Class is: "+c);
+				 
+				 
+				try
+				{
+					 
+					 List<Division>divList=divisionService.getallOfParticularClass(c);
+					 for(Division d :divList)
+					 {
+						 str+="<li><a href=\"#\">"+d.getName()+"</a></li>";
+						 System.out.println("division  is: "+d);
+					 }
+				}catch(Exception e)
+				{
+					System.out.println("no further Division in the class");
+				}
+				 
+				 
+				 str+="</ul></li>";
+				 
+			 }
+			 str+="</ul></li>";
+			 
+		 }
+		 str+="</ul></li></ul>";
+		 System.out.println(str);
+		 model.addAttribute("structure", str);
+		 
 		 
 	        return "Teacher/ExistingInstituteStructure";
 	    }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.app.DAO.ClassesDAO;
 import com.app.DAO.DivisionDAO;
+import com.app.pojo.Classes;
 import com.app.pojo.Division;
 import com.app.service.DivisionService;
 
@@ -49,6 +50,12 @@ public class DivisionServiceImpl implements DivisionService {
 	public List<Division> getall() {
 		
 		return divisionDAO.getall();
+	}
+
+	@Override
+	public List<Division> getallOfParticularClass(Classes classes) {
+		
+		return divisionDAO.getallOfParticularClass(classes);
 	}
 
 }
