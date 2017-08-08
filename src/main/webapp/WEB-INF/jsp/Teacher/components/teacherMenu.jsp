@@ -40,7 +40,7 @@
                           <span class="menu-arrow arrow_carrot-right"></span>
                       </a>
                       <ul class="sub">
-                          <li><a class="" href="ViewInstitueStructure">View Structure</a></li>
+                          <li><a class="" href="#">View Structure</a></li>
                           <li><a class="" href="ModifyInstitueStructure">Modify Structure</a></li>                        
                       </ul>
                   </li>
@@ -50,6 +50,19 @@
                           <span>Request Approver</span>
                       </a>
                   </li>
+                  
+                  <li class="sub-menu">
+                      <a href="javascript:;" class="">
+                          <i class="icon_document_alt"></i>
+                          <span>Profile</span>
+                          <span class="menu-arrow arrow_carrot-right"></span>
+                      </a>
+                      <ul class="sub">
+                          <li><a class="" href="form_component.html">View Profile</a></li>                          
+                          <li><a class="" href="form_validation.html">Edit Profile</a></li>
+                          <li><a class="" href="teacherChangePassword">Change Password</a></li>
+                      </ul>
+                  </li>     
                  
                  
                  

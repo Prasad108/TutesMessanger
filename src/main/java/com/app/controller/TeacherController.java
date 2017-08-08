@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
@@ -178,6 +179,33 @@ public class TeacherController {
 	        return "Teacher/ExistingInstituteStructure";
 	    }
 
+	 @RequestMapping("/teacherChangePassword")
+	 public String changePasswordShow(Model map) 
+	 {
+		 String oldPassword = "a", newPassword = "a";
+		 map.addAttribute("oldPassword",oldPassword);
+		 map.addAttribute("newPassword", newPassword);
+		 return "Teacher/changePassword";
+	 }
 	 
+	 @RequestMapping(value="/teacherChangePassword" , method=RequestMethod.POST)
+	 public String changePassword(Model map ,@RequestParam("oldPassword") String oldPassword ,@RequestParam("newPassword") String newPassword,@ModelAttribute("teacher") Teacher teacher ) 
+	 {
+		
+		System.out.println(teacher.toString());
+		Login login =  teacherService.getLoginIdByEmail(teacher.getEmail());
+		System.out.println(login.getId());
+		teacher.setLogin(login);
+		System.out.println(teacher.getLogin().getId());
+		System.out.println(oldPassword+"taking password");
+		System.out.println(newPassword+"taking password");
+		
+		Boolean flag=  teacherService.checkPassword(oldPassword , login.getId());
+		
+		if(flag)
+			teacherService.changePassword(newPassword , login );
+		
+		 return "Teacher/changePassword";
+	 }
 
 }
