@@ -239,16 +239,19 @@ public class TeacherController {
 	    	
 		 
 		Institute inst=teacherService.GetInstitute(teacher.getId());
+		//institute name
 		 String str="<ul><li><a href=\"#\">"+inst.getName()+"</a><ul>";
 		 System.out.println("isntituet is: "+inst);
 		 
 		 
-		
+		// branches of institute
 		 List <Branch> branchlist=branchService.getallOfParticularInstitute(inst);
 		 for(Branch b : branchlist)
 		 {
 			 str+="<li><a href=\"#\">"+b.getName()+"</a><ul>";
 			 System.out.println("Branch is: "+b);
+			 
+			//classes of branch
 			 List<Classes> classList=classesService.getallOfParticularBranch(b);
 			 for(Classes c : classList)
 			 {
@@ -258,7 +261,7 @@ public class TeacherController {
 				 
 				try
 				{
-					 
+					 // division of Classes
 					 List<Division>divList=divisionService.getallOfParticularClass(c);
 					 for(Division d :divList)
 					 {

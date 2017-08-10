@@ -48,7 +48,7 @@
                                   <th><i class="icon_cogs"></i> Action</th>
                               </tr>
                               <c:forEach items="${listOfInstitute}" var="institute" >
-                        
+                            <c:set var="count" value="${count + 1}" scope="page"/>
                               <tr>
                                   <td>${count}</td>
                                   <td>${institute.name}</td>
@@ -64,7 +64,7 @@
                                   </td>
                                    
                                   
-                                  <c:set var="count" value="${count + 1}" scope="page"/>
+                              
                                   
                               </tr>
                              
