@@ -1,6 +1,7 @@
 package com.app.pojo;
-// Generated 4 Aug, 2017 10:14:23 AM by Hibernate Tools 5.2.3.Final
+// Generated 10 Aug, 2017 2:19:39 PM by Hibernate Tools 5.2.3.Final
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
@@ -11,6 +12,8 @@ import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 
 /**
@@ -25,6 +28,8 @@ public class Institute implements java.io.Serializable {
 	private String address;
 	private String contactno;
 	private String email;
+	private Date sunbscriptionTill;
+	private Boolean enable;
 	private Set<Branch> branches = new HashSet<Branch>(0);
 	private Set<Teacher> teachers = new HashSet<Teacher>(0);
 	private Set<Student> students = new HashSet<Student>(0);
@@ -36,21 +41,17 @@ public class Institute implements java.io.Serializable {
 		this.name = name;
 	}
 
-	public Institute(String name, String address, String contactno, String email, Set<Branch> branches,
-			Set<Teacher> teachers, Set<Student> students) {
+	public Institute(String name, String address, String contactno, String email, Date sunbscriptionTill,
+			Boolean enable, Set<Branch> branches, Set<Teacher> teachers, Set<Student> students) {
 		this.name = name;
 		this.address = address;
 		this.contactno = contactno;
 		this.email = email;
+		this.sunbscriptionTill = sunbscriptionTill;
+		this.enable = enable;
 		this.branches = branches;
 		this.teachers = teachers;
 		this.students = students;
-	}
-
-	@Override
-	public String toString() {
-		return "Institute [id=" + id + ", name=" + name + ", address=" + address + ", contactno=" + contactno
-				+ ", email=" + email + "]";
 	}
 
 	@Id
@@ -99,6 +100,25 @@ public class Institute implements java.io.Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	@Temporal(TemporalType.DATE)
+	@Column(name = "Sunbscription_till", length = 10)
+	public Date getSunbscriptionTill() {
+		return this.sunbscriptionTill;
+	}
+
+	public void setSunbscriptionTill(Date sunbscriptionTill) {
+		this.sunbscriptionTill = sunbscriptionTill;
+	}
+
+	@Column(name = "enable")
+	public Boolean getEnable() {
+		return this.enable;
+	}
+
+	public void setEnable(Boolean enable) {
+		this.enable = enable;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "institute")

@@ -41,10 +41,12 @@ public class LoginController {
 	public String login(Model model, @ModelAttribute("login") Login login, Login l) {
 
 		System.out.println("this is from Checklogin controller");
-		System.out.println("login credentials are " + login.toString());
+		//System.out.println("login credentials are " + login.toString());
 		String output = "";
 		if (loginService.exist(login)) {
 			System.out.println("**********such a user exists ");
+			
+			
 			Login userLogin = loginService.find_By_Uname_pwd(login);
 			Role userRole = userLogin.getRole();
 			int roleId = userRole.getId();
