@@ -111,9 +111,30 @@ public class AppAdmin {
 				ArrayList<Institute> Institutelist= new ArrayList<Institute>();
 				Institutelist.addAll(instituteService.getall());
 				model.addAttribute("listOfInstitute", Institutelist);
+				Institute inst= new Institute();
+				model.addAttribute("Institute", inst);
 		        return "appAdmin/ExistingInstitutes";			
 	} 
 	    
+	    @RequestMapping(value="/updateInstitute",method = RequestMethod.POST)  
+	    public String  updateInstitute(Model model,@ModelAttribute("Institute") Institute inst) {  			
+	    	
+	    	System.out.println(inst);
+				System.out.println("this is from updateInstitute controller");	
+				Institute inst1=instituteService.find(inst.getId());
+				inst.setEnable(inst1.getEnable());
+				inst.setSubscritionEnable(inst1.getSubscritionEnable());
+				instituteService.update(inst);
+				System.out.println("institute is updated");
+				
+				ArrayList<Institute> Institutelist= new ArrayList<Institute>();
+				Institutelist.addAll(instituteService.getall());
+				model.addAttribute("listOfInstitute", Institutelist);
+				Institute inst2= new Institute();
+				model.addAttribute("Institute", inst2);
+				model.addAttribute("SuccessMessage", "institute updated successfully");
+		        return "appAdmin/ExistingInstitutes";			
+	} 
 	   
 	  
 }

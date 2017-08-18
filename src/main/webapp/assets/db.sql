@@ -2,9 +2,7 @@
 SQLyog Professional v12.09 (64 bit)
 MySQL - 5.7.18-log : Database - tutesmessanger
 *********************************************************************
-*/
-
-
+*/ 
 /*!40101 SET NAMES utf8 */;
 
 /*!40101 SET SQL_MODE=''*/;
@@ -80,13 +78,14 @@ CREATE TABLE `institute` (
   `email` varchar(50) DEFAULT NULL,
   `Subscription_till` date DEFAULT NULL,
   `Subscrition_enable` tinyint(1) DEFAULT '0',
+  `enable` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8;
 
 /*Data for the table `institute` */
 
-insert  into `institute`(`id`,`name`,`Address`,`contactno`,`email`,`Subscription_till`,`Subscrition_enable`) values (1,'Sinhgad',NULL,NULL,NULL,NULL,1),(26,'sdf','gasd','gf','f@d',NULL,NULL),(43,'a','a','7777777777','a@a.aa',NULL,1),(44,'b','b','8888888888','b@b.bb',NULL,1),(47,'v','v','9874561230','dasd@sdfas.in',NULL,1),(48,'abcd','ifg','8974563210','sdfas@sdaf.com',NULL,1),(49,'IAM','pune','8605617199','nilnik@gmail.com',NULL,1),(50,'Vidya','Pune','7894561230','vidya@vidya.com',NULL,1),(56,'ddadfas','pune','sdfasd','asdfasdf','2017-08-26',1),(57,'fsdg','gdfgdfsg','dfgdfsg','dfgdfsg','2017-08-01',0),(58,'dsf','dfg','sd','dfg','2017-08-30',1),(59,'cvbh','gfh','fgh','sdf','2017-08-08',0);
+insert  into `institute`(`id`,`name`,`Address`,`contactno`,`email`,`Subscription_till`,`Subscrition_enable`,`enable`) values (1,'Sinhgad',NULL,NULL,NULL,NULL,1,NULL),(26,'sdf','gasd','gf','f@d',NULL,NULL,NULL),(43,'a','a','7777777777','a@a.aa',NULL,1,NULL),(44,'b','b','8888888888','b@b.bb',NULL,1,NULL),(47,'v','v','9874561230','dasd@sdfas.in',NULL,1,NULL),(48,'abcd','ifg','8974563210','sdfas@sdaf.com',NULL,1,NULL),(49,'IAM','pune','8605617199','nilnik@gmail.com',NULL,1,NULL),(50,'Vidya','Pune','7894561230','vidya@vidya.com',NULL,1,NULL),(56,'ddadfas','pune','sdfasd','asdfasdf','2017-08-26',1,NULL),(57,'fsdg','gdfgdfsg','dfgdfsg','dfgdfsg','2017-08-01',0,NULL),(58,'dsf','dfg','sd','dfg','2017-08-30',1,NULL),(59,'cvbh','gfh','fgh','sdf','2017-08-08',0,NULL),(60,'Time','abcd','8547961230','asdf@df.co','2017-08-21',1,NULL);
 
 /*Table structure for table `login` */
 
@@ -103,11 +102,11 @@ CREATE TABLE `login` (
   UNIQUE KEY `username` (`username`),
   KEY `login_ibfk_1` (`role`),
   CONSTRAINT `login_ibfk_1` FOREIGN KEY (`role`) REFERENCES `role` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
 
 /*Data for the table `login` */
 
-insert  into `login`(`id`,`username`,`password`,`role`,`enable_Master`,`enable_Institute`) values (15,'Prasad','Dukale',2,0,0),(16,'Admin','Admin',4,0,0),(25,'a@a.aa','7777777777',3,0,0),(26,'b@b.bb','8888888888',3,0,0),(27,'dasd@sdfas.in','9874561230',3,0,0),(28,'sdfas@sdaf.com','8974563210',3,0,0),(29,'nilnik@gmail.com','8605617199',3,0,0),(30,'vidya@vidya.com','7894561230',3,1,0),(31,'jkbhjk','jlhl',3,0,0),(32,'abcd','efg',3,1,0);
+insert  into `login`(`id`,`username`,`password`,`role`,`enable_Master`,`enable_Institute`) values (15,'Prasad','Dukale',2,0,0),(16,'Admin','Admin',4,1,1),(25,'a@a.aa','7777777777',3,0,0),(26,'b@b.bb','8888888888',3,0,0),(27,'dasd@sdfas.in','9874561230',3,0,0),(28,'sdfas@sdaf.com','8974563210',3,0,0),(29,'nilnik@gmail.com','8605617199',3,0,0),(30,'vidya@vidya.com','7894561230',3,1,1),(31,'jkbhjk','jlhl',3,0,0),(32,'abcd','efg',3,1,0),(33,'asdf@df.co','8547961230',3,1,0);
 
 /*Table structure for table `parent` */
 
@@ -145,11 +144,11 @@ CREATE TABLE `permissions` (
   `alter_institute_structure` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 
 /*Data for the table `permissions` */
 
-insert  into `permissions`(`id`,`authorise_student`,`authorise_teacher`,`fill_attendance`,`fill_schedule`,`mail_parent`,`mail_student`,`mail_teacher`,`msg_parent`,`msg_student`,`msg_teacher`,`set_exam`,`update_results`,`alter_institute_structure`) values (1,1,1,1,1,1,1,1,1,1,1,1,1,0),(8,1,1,1,1,1,1,1,1,1,1,1,1,0),(9,1,1,1,1,1,1,1,1,1,1,1,1,0),(10,1,1,1,1,1,1,1,1,1,1,1,1,0),(11,1,1,1,1,1,1,1,1,1,1,1,1,1),(12,1,1,1,1,1,1,1,1,1,1,1,1,1),(13,1,1,1,1,1,1,1,1,1,1,1,1,1);
+insert  into `permissions`(`id`,`authorise_student`,`authorise_teacher`,`fill_attendance`,`fill_schedule`,`mail_parent`,`mail_student`,`mail_teacher`,`msg_parent`,`msg_student`,`msg_teacher`,`set_exam`,`update_results`,`alter_institute_structure`) values (1,1,1,1,1,1,1,1,1,1,1,1,1,0),(8,1,1,1,1,1,1,1,1,1,1,1,1,0),(9,1,1,1,1,1,1,1,1,1,1,1,1,0),(10,1,1,1,1,1,1,1,1,1,1,1,1,0),(11,1,1,1,1,1,1,1,1,1,1,1,1,1),(12,1,1,1,1,1,1,1,1,1,1,1,1,1),(13,1,1,1,1,1,1,1,1,1,1,1,1,1),(14,1,1,1,1,1,1,1,1,1,1,1,1,1);
 
 /*Table structure for table `role` */
 
@@ -212,11 +211,11 @@ CREATE TABLE `teacher` (
   CONSTRAINT `FKAA31CBE24AD2CFF8` FOREIGN KEY (`permissions`) REFERENCES `permissions` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `instid` FOREIGN KEY (`instid`) REFERENCES `institute` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `loginid` FOREIGN KEY (`loginid`) REFERENCES `login` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
 
 /*Data for the table `teacher` */
 
-insert  into `teacher`(`id`,`fname`,`lname`,`instid`,`email`,`contactno`,`loginid`,`permissions`) values (5,'Prasad','Dukale',1,'pdukale9@gmail.com','9657939975',15,NULL),(20,'a','a',43,'a@a.aa','7777777777',25,8),(21,'b','b',44,'b@b.bb','8888888888',26,9),(22,'dfg','sdgfsd',47,'dasd@sdfas.in','9874561230',27,10),(23,'fasf','asdfasdf',48,'sdfas@sdaf.com','8974563210',28,11),(24,'Anil','Nalawade',49,'nilnik@gmail.com','8605617199',29,12),(25,'Arpit','Sharma',50,'vidya@vidya.com','7894561230',30,13),(27,'demo','adfa',50,'sdfas','sdfasd',32,13);
+insert  into `teacher`(`id`,`fname`,`lname`,`instid`,`email`,`contactno`,`loginid`,`permissions`) values (5,'Prasad','Dukale',1,'pdukale9@gmail.com','9657939975',15,NULL),(20,'a','a',43,'a@a.aa','7777777777',25,8),(21,'b','b',44,'b@b.bb','8888888888',26,9),(22,'dfg','sdgfsd',47,'dasd@sdfas.in','9874561230',27,10),(23,'fasf','asdfasdf',48,'sdfas@sdaf.com','8974563210',28,11),(24,'Anil','Nalawade',49,'nilnik@gmail.com','8605617199',29,12),(25,'Arpit','Sharma',50,'vidya@vidya.com','7894561230',30,13),(27,'demo','adfa',50,'sdfas','sdfasd',32,13),(28,'sdafsd','sdfasdf',60,'asdf@df.co','8547961230',33,14);
 
 /* Trigger structure for table `institute` */
 

@@ -46,48 +46,66 @@ public class LoginController {
 		if (loginService.exist(login)) {
 			System.out.println("**********such a user exists ");
 			
+		
+			
 			
 			Login userLogin = loginService.find_By_Uname_pwd(login);
-			Role userRole = userLogin.getRole();
-			int roleId = userRole.getId();
-			switch (roleId) {
-			case 1:
-				output = "hello";// student
-				System.out.println("student logged in");
-				break;
 
-			case 2:
-				output = "Teacher/home";// teacher
-				model.addAttribute("teacher", teacherService.findByLoginId(userLogin.getId()));
-				System.out.println("teacher logged in");
-				break;
+			if(loginService.Isenabled(userLogin)) {
+				Role userRole = userLogin.getRole();
+				int roleId = userRole.getId();
+				switch (roleId) {
+				case 1:
+					output = "hello";// student
+					System.out.println("student logged in");
+					break;
 
-			case 3:
-				output = "Teacher/home";// ** institute admin
-				Teacher t=teacherService.findByLoginId(userLogin.getId());
-				System.out.println(t);
-				model.addAttribute("teacher",t );
-				model.addAttribute("institute",teacherService.GetInstitute(t.getId()) );
-				model.addAttribute("appAdmin", teacherService.findByLoginId(userLogin.getId()));
-				System.out.println("institute admin logged in");
-				break;
+				case 2:
+					output = "Teacher/home";// teacher
+					model.addAttribute("teacher", teacherService.findByLoginId(userLogin.getId()));
+					System.out.println("teacher logged in");
+					break;
 
-			case 4:
-				output = "appAdmin/dashboard";// app Admin
-				System.out.println("admin logged in");
-				break;
+				case 3:
+					output = "Teacher/home";// ** institute admin
+					Teacher t=teacherService.findByLoginId(userLogin.getId());
+					System.out.println(t);
+					model.addAttribute("teacher",t );
+					model.addAttribute("institute",teacherService.GetInstitute(t.getId()) );
+					model.addAttribute("appAdmin", teacherService.findByLoginId(userLogin.getId()));
+					System.out.println("institute admin logged in");
+					break;
 
-			case 5:
-				output = "template/index";// app Admin
-				System.out.println("template logged in");
-				break;
+				case 4:
+					output = "appAdmin/dashboard";// app Admin
+					System.out.println("admin logged in");
+					break;
 
-			default:
-				model.addAttribute("message", login.toString());
-				System.out.println("error in login incorect role logged in");
-				output = "hello";
-				break;
-			}
+				case 5:
+					output = "template/index";// app Admin
+					System.out.println("template logged in");
+					break;
+
+				default:
+					model.addAttribute("message", login.toString());
+					System.out.println("error in login incorect role logged in");
+					output = "hello";
+					break;
+				}
+						
+						
+						
+					}else
+					{
+						System.out.println("user is blocked due to not having permissions");
+
+						model.addAttribute("ErrorMessage", "Your Accont is not Active Please contact Your Application Admin");
+						model.addAttribute("Login", l);
+						output = "login";
+						
+					}
+					
+			
 		} else {
 			System.out.println("**************no such a user");
 

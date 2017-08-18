@@ -14,5 +14,6 @@ public interface LoginService {
 	public List<Login> getall();
 	public boolean exist(Login login);
 	public Login find_By_Uname_pwd(Login l);
+	public boolean Isenabled(Login login);
 
 }
