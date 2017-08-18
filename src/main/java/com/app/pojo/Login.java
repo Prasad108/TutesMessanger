@@ -1,5 +1,5 @@
 package com.app.pojo;
-// Generated 4 Aug, 2017 10:14:23 AM by Hibernate Tools 5.2.3.Final
+// Generated 16 Aug, 2017 5:21:35 PM by Hibernate Tools 5.2.3.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -26,31 +26,37 @@ public class Login implements java.io.Serializable {
 	private Role role;
 	private String username;
 	private String password;
+	private boolean enableMaster;
+	private boolean enableInstitute;
 	private Set<Teacher> teachers = new HashSet<Teacher>(0);
 	private Set<Student> students = new HashSet<Student>(0);
 
 	public Login() {
 	}
 
-	public Login(String username, String password) {
-		this.username = username;
-		this.password = password;
-	}
-
-	public Login(Role role, String username, String password, Set<Teacher> teachers, Set<Student> students) {
+	public Login(Role role, String username, String password) {
+		super();
 		this.role = role;
 		this.username = username;
 		this.password = password;
-		this.teachers = teachers;
-		this.students = students;
 	}
 
-	public Login(Role r, String email, String contactno) {
-		this.role = r;
-		this.username = email;
-		this.password = contactno;
-	
-		
+	public Login(String username, String password, boolean enableMaster, boolean enableInstitute) {
+		this.username = username;
+		this.password = password;
+		this.enableMaster = enableMaster;
+		this.enableInstitute = enableInstitute;
+	}
+
+	public Login(Role role, String username, String password, boolean enableMaster, boolean enableInstitute,
+			Set<Teacher> teachers, Set<Student> students) {
+		this.role = role;
+		this.username = username;
+		this.password = password;
+		this.enableMaster = enableMaster;
+		this.enableInstitute = enableInstitute;
+		this.teachers = teachers;
+		this.students = students;
 	}
 
 	@Id
@@ -91,6 +97,24 @@ public class Login implements java.io.Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	@Column(name = "enable_Master", nullable = false)
+	public boolean isEnableMaster() {
+		return this.enableMaster;
+	}
+
+	public void setEnableMaster(boolean enableMaster) {
+		this.enableMaster = enableMaster;
+	}
+
+	@Column(name = "enable_Institute", nullable = false)
+	public boolean isEnableInstitute() {
+		return this.enableInstitute;
+	}
+
+	public void setEnableInstitute(boolean enableInstitute) {
+		this.enableInstitute = enableInstitute;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "login")

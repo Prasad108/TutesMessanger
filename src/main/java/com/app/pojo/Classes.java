@@ -1,5 +1,5 @@
 package com.app.pojo;
-// Generated 4 Aug, 2017 10:14:23 AM by Hibernate Tools 5.2.3.Final
+// Generated 16 Aug, 2017 5:21:35 PM by Hibernate Tools 5.2.3.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -26,12 +26,6 @@ public class Classes implements java.io.Serializable {
 	private String name;
 	private Set<Division> divisions = new HashSet<Division>(0);
 
-	public Classes(Branch branch, String name) {
-		super();
-		this.branch = branch;
-		this.name = name;
-	}
-
 	public Classes() {
 	}
 
@@ -39,6 +33,12 @@ public class Classes implements java.io.Serializable {
 		this.branch = branch;
 		this.name = name;
 		this.divisions = divisions;
+	}
+
+	public Classes(Branch branch, String name) {
+		super();
+		this.branch = branch;
+		this.name = name;
 	}
 
 	@Id

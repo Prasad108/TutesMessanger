@@ -1,5 +1,5 @@
 package com.app.pojo;
-// Generated 4 Aug, 2017 10:14:23 AM by Hibernate Tools 5.2.3.Final
+// Generated 16 Aug, 2017 5:21:35 PM by Hibernate Tools 5.2.3.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -33,12 +33,6 @@ public class Branch implements java.io.Serializable {
 		this.institute = institute;
 		this.name = name;
 		this.classeses = classeses;
-	}
-
-	
-	@Override
-	public String toString() {
-		return "Branch [id=" + id + ", name=" + name + "]";
 	}
 
 	@Id

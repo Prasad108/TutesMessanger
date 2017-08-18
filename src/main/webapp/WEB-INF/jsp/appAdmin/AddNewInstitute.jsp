@@ -9,6 +9,11 @@
  	<title>App Admin</title>
  
    <jsp:include page="/WEB-INF/jsp/components/defaultHead.jsp" /> 
+   
+     <link rel="stylesheet" href="css/pikaday.css">
+  
+      
+   
   </head>
 <body>
 <section id="container" class="">
@@ -58,6 +63,10 @@
                                           <div class="col-lg-10">
                                               <form:input path="email" class=" form-control" id="email" name="email" type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" autocomplete="off" required="required" maxlength="50"/>
                                           </div>
+                                          <label for="fullname" class="control-label col-lg-2">Subscription till<span class="required">*</span></label>
+                                          <div class="col-lg-10">
+                                              <form:input path="subscriptionTill" class=" form-control" id="datepicker-topleft-forreal"  name="subscriptionTill" type="text" autocomplete="off" required="required" />
+                                          </div>
                                       </div>
                                     
                                       <div class="form-group">
@@ -84,5 +93,77 @@
 <jsp:include page="/WEB-INF/jsp/components/defaultScript.jsp" />
    </section>
  <!-- container section start -->
+   <script src="js/pikaday.js"></script>
+    <script>
+
+    var picker = new Pikaday(
+    {
+        field: document.getElementById('datepicker'),
+        firstDay: 1,
+        minDate: new Date(),
+        maxDate: new Date(2020, 12, 31),
+        yearRange: [2000,2020]
+    });
+
+    </script>
+    <script>
+
+    // default: bottom left
+    new Pikaday(
+    {
+        field: document.getElementById('datepicker')
+    });
+
+    new Pikaday(
+    {
+        field: document.getElementById('datepicker-topleft'),
+        position: 'top left'
+    });
+
+    new Pikaday(
+    {
+        field: document.getElementById('datepicker-topleft-forreal'),
+        position: 'top left'
+    });
+
+    new Pikaday(
+    {
+        field: document.getElementById('datepicker-topright'),
+        position: 'top right'
+    });
+
+    new Pikaday(
+    {
+        field: document.getElementById('datepicker-topright-forreal'),
+        position: 'top right'
+    });
+
+    new Pikaday(
+    {
+        field: document.getElementById('datepicker-bottomright'),
+        position: 'bottom right'
+    });
+
+    new Pikaday(
+    {
+        field: document.getElementById('datepicker-bottomright-forced'),
+        position: 'bottom right',
+        reposition: false
+    });
+
+    new Pikaday(
+    {
+        field: document.getElementById('datepicker-bottomright-forreal'),
+        position: 'bottom right'
+    });
+
+    new Pikaday(
+    {
+        field: document.getElementById('datepicker-auto'),
+    });
+
+    </script>
+    
+ 
   </body>
 </html>

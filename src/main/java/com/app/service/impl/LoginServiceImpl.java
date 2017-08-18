@@ -62,4 +62,10 @@ public class LoginServiceImpl implements LoginService {
 		return loginDAO.find_By_Uname_pwd(l);
 	}
 
+	@Override
+	public boolean Isenabled(Login login) {
+		
+		return loginDAO.Isenabled(login);
+	}
+
 }

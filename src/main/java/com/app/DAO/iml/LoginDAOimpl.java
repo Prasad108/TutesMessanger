@@ -96,6 +96,18 @@ public class LoginDAOimpl implements LoginDAO {
 	}
 
 
+	@Override
+	@Transactional
+	public boolean Isenabled(Login login) {
+		Query query=currentSession().createQuery("from Login l where l.id = :id and l.enableMaster=TRUE and l.enableInstitute=TRUE");
+		query.setParameter("id",login.getId());		
+		List result=query.list();		
+		return !result.isEmpty();
+	}
+
+
+
+
 	
 
 
