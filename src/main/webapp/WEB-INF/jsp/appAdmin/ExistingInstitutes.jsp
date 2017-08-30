@@ -13,9 +13,13 @@
 <jsp:include page="/WEB-INF/jsp/components/defaultHead.jsp" />
   <link rel="stylesheet" href="css/pikaday.css">
    <script src="js/pikaday.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+ <!--   <script src="js/jquery-1.8.3.min.js"></script>
+    <script src="js/jquery-ui-1.10.4.min.js"></script>
+     -->
+    
+<!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
         <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-
+ -->
 <script type="text/javascript">
 $(document).ready(function(){
 
