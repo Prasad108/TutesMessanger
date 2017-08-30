@@ -6,5 +6,7 @@ import com.app.pojo.Teacher;
 public interface AppAdminService {
 	
 	public void AddInstituteWithAdmin(Institute institute,Teacher teacher); 
+	
+	//public void AddTeacher();
 
 }

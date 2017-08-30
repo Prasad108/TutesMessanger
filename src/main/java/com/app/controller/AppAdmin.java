@@ -88,6 +88,8 @@ public class AppAdmin {
 		    	ArrayList<Institute> Institutelist= new ArrayList<Institute>();
 				Institutelist.addAll(instituteService.getall());
 				model.addAttribute("listOfInstitute", Institutelist);
+				Institute inst1= new Institute();
+				model.addAttribute("Institute", inst1);
 				output+="ExistingInstitutes";
 				
 			}
@@ -137,4 +139,6 @@ public class AppAdmin {
 	} 
 	   
 	  
+	    
+	    	
 }
