@@ -50,11 +50,11 @@
                                       <div class="form-group ">
                                           <label for="firstname" class="control-label col-lg-2">First Name <span class="required">*</span></label>
                                           <div class="col-lg-10">
-                                              <form:input path="name" class=" form-control" id="firstname" name="firstname" type="text" autocomplete="off" required="required" maxlength="50"/>
+                                              <form:input path="fname" class=" form-control" id="firstname" name="firstname" type="text" autocomplete="off" required="required" maxlength="50"/>
                                           </div>
                                            <label for="lastname" class="control-label col-lg-2">Last Name <span class="required">*</span></label>
                                           <div class="col-lg-10">
-                                              <form:input path="name" class=" form-control" id="lastname" name="lastname" type="text" autocomplete="off" required="required" maxlength="50"/>
+                                              <form:input path="lname" class=" form-control" id="lastname" name="lastname" type="text" autocomplete="off" required="required" maxlength="50"/>
                                           </div>
                                            <label for="email" class="control-label col-lg-2">Email Id <span class="required">*</span></label>
                                           <div class="col-lg-10">

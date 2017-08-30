@@ -4,6 +4,8 @@ package com.app.controller;
 
  
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,13 +14,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
- 
+import com.app.pojo.Institute;
 import com.app.pojo.Login;
 import com.app.pojo.Role;
 import com.app.pojo.Teacher;
 import com.app.service.InstituteService;
 import com.app.service.LoginService;
 import com.app.service.TeacherService;
+import com.app.service.impl.TeacherServiceImpl;
 
 @Controller
 @SessionAttributes({ "teacher", "institute" })
@@ -37,7 +40,7 @@ public class SignUpController {
 	//Teacher RegisterTeacher
     
 
-  /*  @RequestMapping(value="/registerTeacher",method = RequestMethod.GET)  
+     @RequestMapping(value="/RegisterTeacher",method = RequestMethod.GET)  
     public String  AddNewTeacher(Model model) {  
     	
     	System.out.println("this is AddNewTeacher controller");
@@ -45,13 +48,13 @@ public class SignUpController {
     	
   
     	model.addAttribute("Teacher", teach);
-		String output="addTeacher";
+		String output="signup/addTeacher";
 		
         return output;  
-    }*/
+    }
     
     
-    @RequestMapping(value="/RegisterTeacher",method = RequestMethod.GET)  
+    @RequestMapping(value="/createTeacher",method = RequestMethod.GET)  
     public String  RegisterTeacher(Model model,@ModelAttribute("Teacher") Teacher teach ) {  
     	
     	System.out.println("this is Register Teacher controller");
@@ -66,10 +69,42 @@ public class SignUpController {
         return output;  
     }
 	
+	/*
+    @RequestMapping(value="/SaveTeacher",method = RequestMethod.POST)  
+    public String  SaveInstituteAdmin(Model model,@ModelAttribute("addInstitute") Institute inst ,@ModelAttribute("Teacher") Teacher teacher ) {  
+    	 
+    	System.out.println("this is SaveInstituteAdmin controller");
+    	String output="signup/";   	 
+		try{	
+			
+			//call to the service which creates the institute with its Admin, uid-pwd and permissions
+		 	appAdminService.AddInstituteWithAdmin(inst, teacher);
+		 	TeacherService.
+	    	model.addAttribute("SuccessMessage", "institute Saved with It's Admin"); 
+	    	
+	    	// add the existing institute into list ans show it on the 
+	    	ArrayList<Institute> Institutelist= new ArrayList<Institute>();
+			Institutelist.addAll(instituteService.getall());
+			model.addAttribute("listOfInstitute", Institutelist);
+			Institute inst1= new Institute();
+			model.addAttribute("Institute", inst1);
+			output+="ExistingInstitutes";
+			
+		}
+		catch(Exception e)
+		{
+			// mostly error will be that their is duplicate entry in record 
+			model.addAttribute("ErrorMessage", "Duplicate entry Name of the Institute or other attribute already exist try again with unique values");
+	    	System.out.println("duplicate key unique key voilation");
+	    	e.printStackTrace();
+	    	output+="AddNewInstitute";
+		}   	
+		
+			
+        return output;  
+    }
 	
-	
-	
-	
+	*/
 	
 	
 	/*
