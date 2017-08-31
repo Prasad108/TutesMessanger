@@ -3,7 +3,7 @@
      <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>    
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
     
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html >
 <html>
 	<head>
  	<title>App Admin</title>
@@ -11,7 +11,51 @@
    <jsp:include page="/WEB-INF/jsp/components/defaultHead.jsp" /> 
    
      <link rel="stylesheet" href="css/pikaday.css">
-  
+      <script src="js/jquery-1.8.3.min.js"></script>
+    <script src="js/jquery-ui-1.10.4.min.js"></script>
+     
+     <script>
+    
+    
+    $(document).ready(function () {
+
+    $('#myform').validate({
+        rules: {
+            BusinessDistrictId: {
+                required: true
+            }
+        },
+        submitHandler: function (form) { // for demo
+            
+            return false;
+        }
+    });
+
+});
+    
+    
+   /*  $(document).ready(function(){
+    	
+    	$('#savebtn').attr('disabled','disabled'); 
+    	
+    	$('#institutelist').change(function() {
+ 	   	   
+
+   	   	 var  others = $(this).find(":selected").val();
+   	        if(others != 0){      	        		            
+   	   		     $('#savebtn').removeAttr('disabled');    	   		     	                      
+   	         }else{   		          
+   		         $('#savebtn').attr('disabled','disabled');   		     
+   		        }  
+   	          
+   	   	});
+
+    	
+    	
+  	}); */
+    </script>	
+    
+   
       
    
   </head>
@@ -22,8 +66,8 @@
 
 
  <!-- Default Menue -->
-<jsp:include page="/WEB-INF/jsp/appAdmin/components/appAdminMenu.jsp" /> 
-
+<%-- <jsp:include page="/WEB-INF/jsp/appAdmin/components/appAdminMenu.jsp" /> 
+ --%>
  
  <!-- Default Containt -->
    <aside>
@@ -41,12 +85,12 @@
                   <div class="col-lg-12">
                       <section class="panel">
                           <header class="panel-heading">
-                            Add Institute
+                           Register Teacher
                           </header>
                           <div class="panel-body">
                               <div class="form">
                             <%--      <form:form class="form-validate form-horizontal " id="register_form" method="post" action="RegisterInstitute" modelAttribute="Institute"> --%>
-                                 <form:form class="form-validate form-horizontal " id="register_form" method="post" action="RegisterTeacher" modelAttribute="Teacher">
+                                 <form:form class="form-validate form-horizontal " id="myform" method="post" action="SaveTeacher" modelAttribute="Teacher">
                                       <div class="form-group ">
                                           <label for="firstname" class="control-label col-lg-2">First Name <span class="required">*</span></label>
                                           <div class="col-lg-10">
@@ -64,13 +108,27 @@
                                           <div class="col-lg-10">
                                               <form:input path="contactno" class=" form-control" id="contactno" name="contactno" type="text" pattern="[789][0-9]{9}" title="Please enter Valid contact number" autocomplete="off" required="required" maxlength="12"/>
                                           </div>
-                                         
+                                          
+                                          
+                                            <label for="contact" class="control-label col-lg-2">Institute <span class="required">*</span></label>
+                                          
+												<div class="col-lg-10">
+													<form:select name="BusinessDistrictId" path="institute.id" id="institutelist" class="form-control" onchange="" form="SelectInstitute" required="required">
+														<option value="">None</option>
+														<c:forEach items="${teacherlist}" var="institute">
+															<option value="${institute.id}">${institute.name}</option>
+														</c:forEach>
+													</form:select>
+												</div>
+												
+                                                                           
+                                      
                                            
                                       </div>
                                     
                                       <div class="form-group">
                                           <div class="col-lg-offset-2 col-lg-10">
-                                              <button class="btn btn-primary" type="submit">Save</button>
+                                              <button id="savebtn" class="btn btn-primary" type="submit">Save</button>
                                                                                       </div>
                                       </div>
                                   </form:form>
@@ -90,7 +148,7 @@
  
      <!-- container section start -->
 <jsp:include page="/WEB-INF/jsp/components/defaultScript.jsp" />
-   </section>
+
  <!-- container section start -->
    <script src="js/pikaday.js"></script>
     <script>

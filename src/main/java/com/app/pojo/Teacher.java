@@ -135,4 +135,9 @@ public class Teacher implements java.io.Serializable {
 		this.contactno = contactno;
 	}
 
+	@Override
+	public String toString() {
+		return "Teacher [fname=" + fname + ", lname=" + lname + ", email=" + email + ", contactno=" + contactno + "]";
+	}
+
 }
