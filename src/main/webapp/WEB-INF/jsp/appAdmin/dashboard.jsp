@@ -7,13 +7,7 @@
  
    <jsp:include page="/WEB-INF/jsp/components/defaultHead.jsp" /> 
    
-   <script>
-    
-   $(document).ready( function () {
-	   alert("hi i'm there ");
-	 });
   
-</script>
   </head>
 <body>
 <section id="container" class="">

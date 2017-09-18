@@ -22,7 +22,7 @@
                       </a>
                   </li>
                   <li>
-                      <a class="" href="widgets.html">
+                      <a class="" href="scheduletree">
                           <i class="icon_genius"></i>
                           <span>Schedule</span>
                       </a>

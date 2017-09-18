@@ -19,5 +19,8 @@ public interface TeacherService {
 	public Login getLoginIdByEmail(String email);
 	public void changePassword(String newPassword , Login login);
 	public Boolean checkPassword(String oldPassword, Integer id);
+	
+	public String InstituteStucture(Teacher teacher);
+	public String InstituteStuctureForSchedule(Teacher teacher);
 
 }

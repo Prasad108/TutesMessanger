@@ -74,8 +74,7 @@ public class TeacherController {
 			
 	        return "Teacher/ModifyInstitueStructure";
 	    }
-	       
-	 
+	       	 
 	 
 	 @RequestMapping(value="/AddNewBranch",method = RequestMethod.POST)  
 	    public String  AddNewBranch(Model model,@ModelAttribute("Branch") Branch branch1,@ModelAttribute("teacher") Teacher teacher) {  
@@ -110,8 +109,7 @@ public class TeacherController {
 	    				
 	        return "Teacher/ModifyInstitueStructure";
 	    }
-	 
-	 
+	 	 
 
 	 @RequestMapping(value="/AddNewClass",method = RequestMethod.POST)  
 	    public String  AddNewClass(Model model,@ModelAttribute("Classes") Classes clas,@ModelAttribute("teacher") Teacher teacher) {  
@@ -185,9 +183,9 @@ public class TeacherController {
 		return JSON;
 }
 	 
-
+	 
 	 @RequestMapping(value="/AddNewDivision",method = RequestMethod.POST)  
-	    public String  AddNewDivision(Model model,@ModelAttribute("Division") Division div,@ModelAttribute("teacher") Teacher teacher) {  
+	   public String  AddNewDivision(Model model,@ModelAttribute("Division") Division div,@ModelAttribute("teacher") Teacher teacher) {  
 	    	
 		 
 	    	System.out.println("this is AddNewDivision controller");	    	
@@ -232,62 +230,19 @@ public class TeacherController {
 	    }
 
 	 
-	 
-
 	 @RequestMapping(value="/ViewInstitueStructure",method = RequestMethod.GET)  
 	    public String  ViewInstitueStructure(Model model,@ModelAttribute("teacher") Teacher teacher,@ModelAttribute("institute") Institute institute) {  
 	    	
 		 
-		Institute inst=teacherService.GetInstitute(teacher.getId());
-		//institute name
-		 String str="<ul><li><a href=\"#\">"+inst.getName()+"</a><ul>";
-		 System.out.println("isntituet is: "+inst);
-		 
-		 
-		// branches of institute
-		 List <Branch> branchlist=branchService.getallOfParticularInstitute(inst);
-		 for(Branch b : branchlist)
-		 {
-			 str+="<li><a href=\"#\">"+b.getName()+"</a><ul>";
-			 System.out.println("Branch is: "+b);
-			 
-			//classes of branch
-			 List<Classes> classList=classesService.getallOfParticularBranch(b);
-			 for(Classes c : classList)
-			 {
-				 str+="<li><a href=\"#\">"+c.getName()+"</a><ul>";
-				 System.out.println("Class is: "+c);
-				 
-				 
-				try
-				{
-					 // division of Classes
-					 List<Division>divList=divisionService.getallOfParticularClass(c);
-					 for(Division d :divList)
-					 {
-						 str+="<li><a href=\"#\">"+d.getName()+"</a></li>";
-						 System.out.println("division  is: "+d);
-					 }
-				}catch(Exception e)
-				{
-					System.out.println("no further Division in the class");
-				}
-				 
-				 
-				 str+="</ul></li>";
-				 
-			 }
-			 str+="</ul></li>";
-			 
-		 }
-		 str+="</ul></li></ul>";
+		 String str=teacherService.InstituteStucture(teacher);
+				
 		 System.out.println(str);
 		 model.addAttribute("structure", str);
-		 
-		 
+		 		 
 	        return "Teacher/ExistingInstituteStructure";
 	    }
 
+	 
 	 @RequestMapping("/teacherChangePassword")
 	 public String changePasswordShow(Model map) 
 	 {
@@ -296,6 +251,7 @@ public class TeacherController {
 		 map.addAttribute("newPassword", newPassword);
 		 return "Teacher/changePassword";
 	 }
+
 	 
 	 @RequestMapping(value="/teacherChangePassword" , method=RequestMethod.POST)
 	 public String changePassword(Model map ,@RequestParam("oldPassword") String oldPassword ,@RequestParam("newPassword") String newPassword,@ModelAttribute("teacher") Teacher teacher ) 
@@ -316,5 +272,33 @@ public class TeacherController {
 		
 		 return "Teacher/changePassword";
 	 }
+
+	 
+	 
+	 @RequestMapping(value="/scheduletree",method = RequestMethod.GET)  
+	    public String  scheduletree(Model model,@ModelAttribute("teacher") Teacher teacher,@ModelAttribute("institute") Institute institute) {  
+	    	
+	    	System.out.println("this is scheduletree controller");
+	    	String str=teacherService.InstituteStuctureForSchedule(teacher);
+			
+			 System.out.println(str);
+			 model.addAttribute("structure", str);
+	    
+			
+	        return "Teacher/InstStructForSchedule";
+	    }
+
+	 
+	 
+	 @RequestMapping("/GetCalender/{DivisionId}")
+		public @ResponseBody
+		String getSubProdCat( @PathVariable("DivisionId") int id){
+
+		 System.out.println("this is GetCalender controller");
+		    
+		    String result="";
+		   
+			return result;
+}
 
 }
