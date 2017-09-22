@@ -8,25 +8,27 @@
 <head>
 
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Creative - Bootstrap 3 Responsive Admin Template">
-    <meta name="author" content="GeeksLabs">
-    <meta name="keyword" content="Creative, Dashboard, Admin, Template, Theme, Bootstrap, Responsive, Retina, Minimal">
-    <link rel="shortcut icon" href="img/favicon.png">
+   <jsp:include page="/WEB-INF/jsp/components/defaultHead.jsp" />
+  
+     <style>
 
-    <title>Login Page 2 | Creative - Bootstrap 3 Responsive Admin Template</title>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+        }
 
-    <!-- Bootstrap CSS -->    
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <!-- bootstrap theme -->
-    <link href="css/bootstrap-theme.css" rel="stylesheet">
-    <!--external css-->
-    <!-- font icon -->
-    <link href="css/elegant-icons-style.css" rel="stylesheet" />
-    <link href="css/font-awesome.css" rel="stylesheet" />
-    <!-- Custom styles -->
-    <link href="css/style.css" rel="stylesheet">
-    <link href="css/style-responsive.css" rel="stylesheet" />
+        body {
+            display: table;
+        }
+
+        .my-block {
+            text-align: center;
+            display: table-cell;
+            vertical-align: middle;
+        }
+        </style>
 </head>
 <body>
 <body class="login-img3-body">
@@ -60,8 +62,10 @@
                 <span class="pull-right"> <a href="#"> Forgot Password?</a></span>
             </label>
             <button class="btn btn-primary btn-lg btn-block" type="submit">Login</button>
-            <a class="btn btn-primary btn-lg btn-block" data-toggle="modal" href="#myModal" >Signup</a>
-             <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <a class="btn btn-info btn-lg btn-block" data-toggle="modal" href="#myModal" > Signup</a>
+            
+             <!-- Modal -->
+                              <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                   <div class="modal-dialog">
                                       <div class="modal-content">
                                           <div class="modal-header">
@@ -69,17 +73,29 @@
                                               <h4 class="modal-title">Modal Tittle</h4>
                                           </div>
                                           <div class="modal-body">
-
-                                              Body goes here...
+													<div class="my-block">
+													            <div class="credits">
+													                <!-- 
+													                    All the links in the footer should remain intact. 
+													                    You can delete the links only if you purchased the pro version.
+													                    Licensing information: https://bootstrapmade.com/license/
+													                    Purchase the pro version form: https://bootstrapmade.com/buy/?theme=NiceAdmin
+													                -->
+													                <a class="btn btn-success"  href="RegisterStudent"> I'm Student</a>&nbsp&nbsp&nbsp&nbsp/&nbsp&nbsp&nbsp&nbsp         
+													                 <a class="btn btn-warning"  href="RegisterTeacher">
+													                               I'm Teacher</a>
+													            </div>
+													        </div>
 
                                           </div>
                                           <div class="modal-footer">
                                               <button data-dismiss="modal" class="btn btn-default" type="button">Close</button>
-                                              <button class="btn btn-success" type="button">Save changes</button>
+                                             
                                           </div>
                                       </div>
                                   </div>
                               </div>
+                              <!-- modal -->
         </div>
         
       </form:form>
@@ -99,6 +115,6 @@
             </div>
         </div>
     </div>
-
+<jsp:include page="/WEB-INF/jsp/components/defaultScript.jsp" />
 </body>
 </html>

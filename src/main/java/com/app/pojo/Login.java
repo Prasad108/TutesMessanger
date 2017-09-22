@@ -1,5 +1,5 @@
 package com.app.pojo;
-// Generated 16 Aug, 2017 5:21:35 PM by Hibernate Tools 5.2.3.Final
+// Generated 18 Sep, 2017 4:17:49 PM by Hibernate Tools 5.2.3.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -34,13 +34,6 @@ public class Login implements java.io.Serializable {
 	public Login() {
 	}
 
-	public Login(Role role, String username, String password) {
-		super();
-		this.role = role;
-		this.username = username;
-		this.password = password;
-	}
-
 	public Login(String username, String password, boolean enableMaster, boolean enableInstitute) {
 		this.username = username;
 		this.password = password;
@@ -57,6 +50,15 @@ public class Login implements java.io.Serializable {
 		this.enableInstitute = enableInstitute;
 		this.teachers = teachers;
 		this.students = students;
+	}
+	
+	
+
+	public Login(Role role, String username, String password) {
+		super();
+		this.role = role;
+		this.username = username;
+		this.password = password;
 	}
 
 	@Id

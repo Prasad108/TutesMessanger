@@ -1,6 +1,8 @@
 package com.app.pojo;
-// Generated 16 Aug, 2017 5:21:35 PM by Hibernate Tools 5.2.3.Final
+// Generated 18 Sep, 2017 4:17:49 PM by Hibernate Tools 5.2.3.Final
 
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,6 +11,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -21,11 +24,27 @@ public class Division implements java.io.Serializable {
 	private Integer id;
 	private Classes classes;
 	private String name;
+	private Set<Schedule> schedules = new HashSet<Schedule>(0);
 
 	public Division() {
 	}
 
+
+	public Division(Classes classes, String name, Set<Schedule> schedules) {
+		this.classes = classes;
+		this.name = name;
+		this.schedules = schedules;
+	}
+
+	public Division(Integer id, Classes classes, String name) {
+		super();
+		this.id = id;
+		this.classes = classes;
+		this.name = name;
+	}
+
 	public Division(Classes classes, String name) {
+		super();
 		this.classes = classes;
 		this.name = name;
 	}
@@ -59,6 +78,15 @@ public class Division implements java.io.Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "division")
+	public Set<Schedule> getSchedules() {
+		return this.schedules;
+	}
+
+	public void setSchedules(Set<Schedule> schedules) {
+		this.schedules = schedules;
 	}
 
 }

@@ -1,5 +1,5 @@
 package com.app.pojo;
-// Generated 16 Aug, 2017 5:21:35 PM by Hibernate Tools 5.2.3.Final
+// Generated 18 Sep, 2017 4:17:49 PM by Hibernate Tools 5.2.3.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -31,7 +31,6 @@ public class Institute implements java.io.Serializable {
 	private Date subscriptionTill;
 	private Boolean subscritionEnable;
 	private Boolean enable;
-	
 	private Set<Branch> branches = new HashSet<Branch>(0);
 	private Set<Teacher> teachers = new HashSet<Teacher>(0);
 	private Set<Student> students = new HashSet<Student>(0);
@@ -43,9 +42,16 @@ public class Institute implements java.io.Serializable {
 		this.name = name;
 	}
 
+	@Override
+	public String toString() {
+		return "Institute [id=" + id + ", name=" + name + ", address=" + address + ", contactno=" + contactno
+				+ ", email=" + email + ", subscriptionTill=" + subscriptionTill + ", subscritionEnable="
+				+ subscritionEnable + ", enable=" + enable + "]";
+	}
+
 	public Institute(String name, String address, String contactno, String email, Date subscriptionTill,
-			Boolean subscritionEnable, Boolean enable,  Set<Branch> branches,
-			Set<Teacher> teachers, Set<Student> students) {
+			Boolean subscritionEnable, Boolean enable, Set<Branch> branches, Set<Teacher> teachers,
+			Set<Student> students) {
 		this.name = name;
 		this.address = address;
 		this.contactno = contactno;
@@ -53,16 +59,9 @@ public class Institute implements java.io.Serializable {
 		this.subscriptionTill = subscriptionTill;
 		this.subscritionEnable = subscritionEnable;
 		this.enable = enable;
-	
 		this.branches = branches;
 		this.teachers = teachers;
 		this.students = students;
-	}
-
-	@Override
-	public String toString() {
-		return "Institute [id=" + id + ", name=" + name + ", address=" + address + ", contactno=" + contactno
-				+ ", email=" + email + ", subscriptionTill=" + subscriptionTill + "]";
 	}
 
 	@Id
@@ -140,7 +139,6 @@ public class Institute implements java.io.Serializable {
 	public void setEnable(Boolean enable) {
 		this.enable = enable;
 	}
-
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "institute")
 	public Set<Branch> getBranches() {

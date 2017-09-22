@@ -18,6 +18,7 @@ import com.app.pojo.Institute;
 import com.app.pojo.Login;
 import com.app.pojo.Role;
 import com.app.pojo.Teacher;
+import com.app.pojo.Student;
 import com.app.service.InstituteService;
 import com.app.service.LoginService;
 import com.app.service.TeacherService;
@@ -72,7 +73,15 @@ public class SignUpController {
 	
 	
 	
-	
+    @RequestMapping(value="/RegisterStudent",method = RequestMethod.GET)  
+    public String  RegisterStudent(Model model) {  
+    	
+    	System.out.println("this is RegisterStudent controller");  
+    	Student s= new Student();
+    	model.addAttribute("Student", s);    	
+		
+        return "signup/StudentSignUpForm";  
+    }
 
 
 }

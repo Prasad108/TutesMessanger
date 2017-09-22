@@ -38,10 +38,10 @@
 
 
 
-	<!-- supply loc -->
+	<!--  supply loc 
 	<context:property-placeholder location="classpath:/database.properties" />
-	<!-- DS bean -->
-
+	DS bean
+ --> 
 	<bean id="propertyConfigurer"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
@@ -83,29 +83,5 @@
 	</bean>
 	<!-- enable tx annotation suuport -->
 	<tx:annotation-driven />
-	<!-- 
-	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalEntityManagerFactoryBean">
-    <property name="persistenceUnitName" value="educationPU" />
-</bean>
-
-<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-    <property name="entityManagerFactory" ref="entityManagerFactory" />
-</bean>
-
-<bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
 	
-	
-	<bean id="entityManagerFactory"
-      class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-		    <property name="dataSource" ref="dataSource"/>
-		    <property name="packagesToScan" value="com.app"/>
-		    <property name="jpaVendorAdapter" ref="hibernateVendorAdapter"/>
-		    <property name="jpaDialect" ref="jpaDialect"/>
-		    <property name="jpaProperties">
-		        <props>
-		            <prop key="hibernate.enable_lazy_load_no_trans">true</prop>
-		        </props>
-		    </property>
-    </bean>
- -->
 </beans>

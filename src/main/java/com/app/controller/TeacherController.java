@@ -2,13 +2,14 @@ package com.app.controller;
 
 import java.util.List;
 
-
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,12 +21,13 @@ import com.app.pojo.Classes;
 import com.app.pojo.Division;
 import com.app.pojo.Institute;
 import com.app.pojo.Login;
+import com.app.pojo.Schedule;
 import com.app.pojo.Teacher;
 import com.app.service.BranchService;
 import com.app.service.ClassesService;
 import com.app.service.DivisionService;
 import com.app.service.InstituteService;
-
+import com.app.service.ScheduleService;
 import com.app.service.TeacherService;
 
 @Controller
@@ -47,6 +49,8 @@ public class TeacherController {
 	@Autowired
 	InstituteService instituteService;
 	
+	@Autowired
+	ScheduleService scheduleService;
 	
 	 @RequestMapping(value="/ModifyInstitueStructure",method = RequestMethod.GET)  
 	    public String  ModifyInstitueStructure(Model model,@ModelAttribute("teacher") Teacher teacher) {  
@@ -280,9 +284,10 @@ public class TeacherController {
 	    	
 	    	System.out.println("this is scheduletree controller");
 	    	String str=teacherService.InstituteStuctureForSchedule(teacher);
-			
-			 System.out.println(str);
+			Schedule schedule= new Schedule();
+					
 			 model.addAttribute("structure", str);
+			 model.addAttribute("Schedule", schedule);
 	    
 			
 	        return "Teacher/InstStructForSchedule";
@@ -290,15 +295,94 @@ public class TeacherController {
 
 	 
 	 
-	 @RequestMapping("/GetCalender/{DivisionId}")
-		public @ResponseBody
-		String getSubProdCat( @PathVariable("DivisionId") int id){
-
-		 System.out.println("this is GetCalender controller");
-		    
-		    String result="";
-		   
-			return result;
-}
-
+	 @RequestMapping(value = "/GetCalender/{id}", method = RequestMethod.GET)
+	 @ResponseBody
+	  public String GetCalender( @PathVariable("id") int id ){
+		 
+		 
+			System.out.println("from GetCalender controller and division id is :"+id );		
+			Division d=divisionService.find(id);
+			System.out.println("division is "+d);
+			Schedule schedule= scheduleService.fordivision(id);
+			
+			System.out.println(schedule);
+			String result="";
+			try {
+				result=schedule.getString();
+				
+				
+			}catch(Exception e)
+			{
+				result="<div class='alert alert-block alert-danger fade in'>";
+				result+="<button data-dismiss='alert' class='close close-sm' type='button'>";
+				result+="<i class='icon-remove'></i>";
+				result+="</button>";
+				result+="<strong>No Calender Saved !</strong> Please save calender for division.";
+				result+="</div> ";
+			}		
+				
+			System.out.println(result);
+			
+			
+		return result;
+	 }
+	 
+	 
+	 
+	 
+	 @RequestMapping(value="/updateDivisionSchedule",method = RequestMethod.POST)  
+	    public @ResponseBody String  updateDivisionSchedule(Model model,@ModelAttribute("Schedule") Schedule schedule,@ModelAttribute("teacher") Teacher teacher) {  
+	    	
+	    	System.out.println("this is updateDivisionSchedule controller");
+	    	System.out.println("teacher is "+teacher +"and institute of the teacher is :"+teacher.getInstitute().getId());
+	    	String str=teacherService.InstituteStuctureForSchedule(teacher);
+	    	
+	    	try {
+	    		
+	    	scheduleService.update(schedule);
+	    	 model.addAttribute("SaveSuccessMessage", "Schedule saved for the division");
+	    	
+	    	}catch(Exception e)
+	    	{
+	    		 model.addAttribute("ErrorMessage", "error in saving Schedule for the division");
+	    		
+	    		
+	    	}
+	    	
+			Schedule schedule2= new Schedule();
+					
+			 model.addAttribute("structure", str);
+			 model.addAttribute("Schedule", schedule2);
+	    
+			
+	        return "Teacher/InstStructForSchedule";
+	    }
+	 
+	 
+	 @RequestMapping(value="/updateDivisionScheduleService",method = RequestMethod.POST)  
+	    public  @ResponseBody  String  updateDivisionScheduleService(@RequestBody Schedule schedule, HttpServletRequest request,@ModelAttribute("teacher") Teacher teacher) {  
+	    	
+	    	System.out.println("this is updateDivisionScheduleService controller");
+	    	
+	    	String result="";
+	    	
+	    	try {
+	    		
+	    	scheduleService.update(schedule);
+	    	System.out.println("shcedule updated successfully");
+	    	result="shcedule updated successfully";
+	    	
+	    	
+	    	}catch(Exception e)
+	    	{
+	    		System.out.println("error in chedule update");
+	    		result="error in updating shcedule";
+	    		
+	    		
+	    	}
+	    	
+			    
+			
+	        return result;
+	    }
 }

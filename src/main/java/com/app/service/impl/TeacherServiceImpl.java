@@ -159,6 +159,8 @@ public class TeacherServiceImpl implements TeacherService {
 
 		Institute inst=GetInstitute(teacher.getId());
 		
+		System.out.println("got the insitute of the teacher :________"+inst);
+		
 		 String str="<ul><li><a href=\"#\">"+inst.getName()+"</a><ul>";
 		 System.out.println("isntituet is: "+inst);
 		 
@@ -184,7 +186,7 @@ public class TeacherServiceImpl implements TeacherService {
 					 List<Division>divList=divisionService.getallOfParticularClass(c);
 					 for(Division d :divList)
 					 {
-						 str+="<li><a class='divisionSchedule' id='"+d.getId()+"' data-toggle='modal' href='#myModal'>"+d.getName()+"</a></li>";
+						 str+="<li><a class='divisionSchedule' id='"+d.getId()+"' data-toggle='modal'  href='#myModal'>"+d.getName()+"</a></li>";
 						 System.out.println("division  is: "+d);
 					 }
 				}catch(Exception e)
