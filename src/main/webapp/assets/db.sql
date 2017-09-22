@@ -2,7 +2,9 @@
 SQLyog Professional v12.09 (64 bit)
 MySQL - 5.7.18-log : Database - tutesmessanger
 *********************************************************************
-*/ 
+*/
+
+
 /*!40101 SET NAMES utf8 */;
 
 /*!40101 SET SQL_MODE=''*/;
@@ -85,7 +87,7 @@ CREATE TABLE `institute` (
 
 /*Data for the table `institute` */
 
-insert  into `institute`(`id`,`name`,`Address`,`contactno`,`email`,`Subscription_till`,`Subscrition_enable`,`enable`) values (1,'Sinhgad',NULL,NULL,NULL,NULL,1,NULL),(26,'sdf','gasd','gf','f@d',NULL,NULL,NULL),(43,'a','a','7777777777','a@a.aa',NULL,1,NULL),(44,'b','b','8888888888','b@b.bb',NULL,1,NULL),(47,'v','v','9874561230','dasd@sdfas.in',NULL,1,NULL),(48,'abcd','ifg','8974563210','sdfas@sdaf.com',NULL,1,NULL),(49,'IAM','pune','8605617199','nilnik@gmail.com',NULL,1,NULL),(50,'Vidya','Pune','7894561230','vidya@vidya.com',NULL,1,NULL),(56,'ddadfas','pune','sdfasd','asdfasdf','2017-08-26',1,NULL),(57,'fsdg','gdfgdfsg','dfgdfsg','dfgdfsg','2017-08-01',0,NULL),(58,'dsf','dfg','sd','dfg','2017-08-30',1,NULL),(59,'cvbh','gfh','fgh','sdf','2017-08-08',0,NULL),(60,'Time','abcd','8547961230','asdf@df.co','2017-08-21',1,NULL);
+insert  into `institute`(`id`,`name`,`Address`,`contactno`,`email`,`Subscription_till`,`Subscrition_enable`,`enable`) values (1,'Sinhgad',NULL,NULL,NULL,NULL,1,NULL),(26,'sdf','gasd','gf','f@d',NULL,NULL,NULL),(43,'a','a','7777777777','a@a.aa',NULL,1,NULL),(44,'b','b','8888888888','b@b.bb',NULL,1,NULL),(47,'v','v','9874561230','dasd@sdfas.in',NULL,1,NULL),(48,'abcd','ifg','8974563210','sdfas@sdaf.com',NULL,1,NULL),(49,'IAM','pune','8605617199','nilnik@gmail.com',NULL,1,NULL),(50,'Vidya','Pune','7894561230','vidya@vidya.com','2017-08-01',1,NULL),(56,'ddadfas','pune','sdfasd','asdfasdf','2017-08-26',1,NULL),(57,'fsdg','gdfgdfsg','dfgdfsg','dfgdfsg','2017-08-01',0,NULL),(58,'dsf','dfg','sd','dfg','2017-08-30',1,NULL),(59,'cvbh','gfh','fgh','sdf','2017-08-08',0,NULL),(60,'Time','abcd','8547961230','asdf@df.co','2017-08-31',1,NULL);
 
 /*Table structure for table `login` */
 
@@ -163,6 +165,23 @@ CREATE TABLE `role` (
 /*Data for the table `role` */
 
 insert  into `role`(`id`,`name`) values (1,'student'),(2,'teacher'),(3,'institute admin'),(4,'app master');
+
+/*Table structure for table `schedule` */
+
+DROP TABLE IF EXISTS `schedule`;
+
+CREATE TABLE `schedule` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `division` int(11) DEFAULT NULL,
+  `string` varchar(1000) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `division` (`division`),
+  CONSTRAINT `division foreign kry` FOREIGN KEY (`division`) REFERENCES `division` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+/*Data for the table `schedule` */
+
+insert  into `schedule`(`id`,`division`,`string`) values (1,8,'<iframe src=\'https://calendar.google.com/calendar/embed?mode=WEEK&amp;height=600&amp;wkst=2&amp;bgcolor=%23FFFFFF&amp;src=ci5fi0t0u5i8927il2ula0kbgs%40group.calendar.google.com&amp;color=%2329527A&amp;ctz=Asia%2FCalcutta\' style=\'border-width:0\' width=\'800\' height=\'600\' frameborder=\'0\' scrolling=\'no\'></iframe>'),(3,6,NULL);
 
 /*Table structure for table `student` */
 
