@@ -31,6 +31,13 @@ public class Schedule implements java.io.Serializable {
 		this.string = string;
 	}
 
+	public Schedule(Integer id, Division division, String string) {
+		super();
+		this.id = id;
+		this.division = division;
+		this.string = string;
+	}
+
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 
@@ -60,6 +67,11 @@ public class Schedule implements java.io.Serializable {
 
 	public void setString(String string) {
 		this.string = string;
+	}
+
+	@Override
+	public String toString() {
+		return "Schedule [id=" + id + ", division=" + division + ", string=" + string + "]";
 	}
 
 }

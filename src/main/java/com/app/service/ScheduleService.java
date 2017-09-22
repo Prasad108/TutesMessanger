@@ -15,5 +15,6 @@ public interface ScheduleService {
 	public Schedule find(int id);
 	public List<Schedule> getall();
 	public Schedule fordivision(int divID);
+	public int updateScheduleOfinstitute(Schedule schedule);
 	
 }

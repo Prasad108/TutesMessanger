@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.app.DAO.DivisionDAO;
 import com.app.pojo.Classes;
 import com.app.pojo.Division;
+import com.app.pojo.Login;
 
 @Repository("DivisionDAO")
 public class DivisionDAOImpl implements DivisionDAO {
@@ -54,7 +55,12 @@ public class DivisionDAOImpl implements DivisionDAO {
 	@Override
 	 @Transactional
 	public Division find(int id) {
-		return (Division)currentSession().get(Division.class,id);
+		
+		Query query=currentSession().createQuery("from Division where id = :id");
+		query.setParameter("id",id);
+		Division d=(Division) query.uniqueResult();
+		System.out.println("division d is "+d);
+		return d;
 	}
 
 	@Override

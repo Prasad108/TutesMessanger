@@ -38,10 +38,10 @@
 
 
 
-	<!--  supply loc 
+	<!--  supply loc --> 
 	<context:property-placeholder location="classpath:/database.properties" />
-	DS bean
- --> 
+<!--	DS bean  --> 
+ 
 	<bean id="propertyConfigurer"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">

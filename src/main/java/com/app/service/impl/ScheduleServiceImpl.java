@@ -59,6 +59,12 @@ public class ScheduleServiceImpl implements ScheduleService {
 		return scheduleDAO.fordivision(divID);
 	}
 
+	@Override
+	public int updateScheduleOfinstitute(Schedule schedule) {
+		
+		return scheduleDAO.updateScheduleOfinstitute(schedule);
+	}
+
 	
 	
 

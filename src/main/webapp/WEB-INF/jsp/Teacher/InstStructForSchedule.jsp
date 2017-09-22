@@ -106,17 +106,20 @@ $(document).ready(function(){
 
 		<style type="text/css"> 
 			
-			.responsiveCal {
-			 
-			position: relative; padding-bottom: 75%; height: 0; overflow: hidden;
-			 
-			}
-			 
-			.responsiveCal iframe {
-			 
-			position: absolute; top:0; left: 0; width: 100%; height: 100%;
-			 
-			}
+						.googleCalendar{
+									  position: relative;
+									  height: 0;
+									  width: 100%;
+									  padding-bottom: 100% ;
+									}
+									
+				.googleCalendar iframe{
+									  position: absolute;
+									  top: 0;
+									  left: 0;
+									  width: 100%;
+									  height: 100%;
+									}
    		
    		
    		</style>
@@ -247,6 +250,25 @@ $(document).ready(function(){
  <section id="main-content">
           <section class="wrapper">
           <div class="row">
+             <c:if test="${!empty ErrorMessage}">
+  					  <div class="alert alert-block alert-danger fade in">
+                                  <button data-dismiss="alert" class="close close-sm" type="button">
+                                      <i class="icon-remove"></i>
+                                  </button>
+                                <strong> ${ErrorMessage} </strong> 
+                              </div>
+			</c:if>
+			<c:if test="${!empty SaveSuccessMessage}">
+  					  <div class="alert alert-success fade in">
+                                  <button data-dismiss="alert" class="close close-sm" type="button">
+                                      <i class="icon-remove"></i>
+                                  </button>
+                                  <strong>${SaveSuccessMessage}</strong> 
+                              </div>
+		</c:if>	
+          
+          
+          
           	<h1> Select division to see or modify schedule </h1>
           	<div class="tree">
           	 ${structure}
@@ -281,7 +303,7 @@ $(document).ready(function(){
 										                                          <label for="fullname" class="control-label col-lg-2">Division Id </label>
 										                                          
 										                                           <div class="col-lg-10">
-										                                              <form:input path="id" class=" form-control" id="divId" name="divid" type="text" autocomplete="off" required="required" maxlength="50" readonly="readonly"  />
+										                                              <form:input path="division.id" class=" form-control" id="divId" name="divid" type="text" autocomplete="off" required="required" maxlength="50" readonly="readonly"  />
 										                                          </div>
 										                                          
 										                                          <label for="fullname" class="control-label col-lg-2">Calendar String </label>
@@ -320,7 +342,7 @@ $(document).ready(function(){
           	</div>
           	
           	          </div>
-          	          <div id="show_calender" class="googleCalendar">
+          	          <div id="show_calender" class="googleCalendar" style="text-align: center;" >
  <!-- <iframe src="https://calendar.google.com/calendar/embed?mode=WEEK&amp;height=600&amp;wkst=1&amp;bgcolor=%23FFFFFF&amp;src=ci5fi0t0u5i8927il2ula0kbgs%40group.calendar.google.com&amp;color=%2329527A&amp;ctz=Asia%2FCalcutta" style="border:solid 1px #777" width="800" height="600" frameborder="0" scrolling="no"></iframe> -->
 </div> 
           	          

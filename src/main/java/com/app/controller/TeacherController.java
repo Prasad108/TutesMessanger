@@ -327,29 +327,56 @@ public class TeacherController {
 		return result;
 	 }
 	 
-	 
-	 
-	 
+	 	 	 
 	 @RequestMapping(value="/updateDivisionSchedule",method = RequestMethod.POST)  
-	    public @ResponseBody String  updateDivisionSchedule(Model model,@ModelAttribute("Schedule") Schedule schedule,@ModelAttribute("teacher") Teacher teacher) {  
+	    public  String  updateDivisionSchedule(Model model,@ModelAttribute("Schedule") Schedule schedule,@ModelAttribute("teacher") Teacher teacher) {  
 	    	
 	    	System.out.println("this is updateDivisionSchedule controller");
-	    	System.out.println("teacher is "+teacher +"and institute of the teacher is :"+teacher.getInstitute().getId());
-	    	String str=teacherService.InstituteStuctureForSchedule(teacher);
 	    	
-	    	try {
+	    	System.out.println(schedule);
+	    	// if the schedule already exist update it 
+	    	try { 
 	    		
-	    	scheduleService.update(schedule);
-	    	 model.addAttribute("SaveSuccessMessage", "Schedule saved for the division");
+	    		
+	    		// get the id of the existing schedule 
+	    		Schedule s1=scheduleService.fordivision(schedule.getDivision().getId());
+	    		s1.setString(schedule.getString());
+	    		
+	    		System.out.println("we are updating the record :"+s1);
+	    		// update the variable for the calender string 
+	    		scheduleService.update(s1);
+	    		System.out.println("------------------------schedule is updated------------------------- ");
+	    		model.addAttribute("SaveSuccessMessage", "Schedule Updated for the division");
 	    	
 	    	}catch(Exception e)
 	    	{
+	    		
+	    		System.out.println("shcedule do not exist for this division creating new ");
+	    		try {
+	    			
+	    			System.out.println("finding the division of the schedule with the id :"+schedule.getDivision().getId());
+	    			
+	    			Division d=divisionService.find(schedule.getDivision().getId());
+	    			
+	    			System.out.println("------devision is :"+d);
+	    			schedule.setDivision(d);
+	    			System.out.println("we are going to create the new shcedule");
+	    			System.out.println("we aer about to save the :"+schedule );
+	    			scheduleService.create(schedule);
+	    			
+	    			System.out.println("------------------------schedule is saved------------------------- ");
+	    			 model.addAttribute("SaveSuccessMessage", "Schedule created for the  division");
+	    			
+	    		}catch(Exception e1)
+	    		{
+	    			
 	    		 model.addAttribute("ErrorMessage", "error in saving Schedule for the division");
-	    		
-	    		
+	    		 System.out.println("------------------------error in schedule creation------------------------- ");
+	    		}
 	    	}
 	    	
 			Schedule schedule2= new Schedule();
+			String str=teacherService.InstituteStuctureForSchedule(teacher);
 					
 			 model.addAttribute("structure", str);
 			 model.addAttribute("Schedule", schedule2);
@@ -360,7 +387,7 @@ public class TeacherController {
 	 
 	 
 	 @RequestMapping(value="/updateDivisionScheduleService",method = RequestMethod.POST)  
-	    public  @ResponseBody  String  updateDivisionScheduleService(@RequestBody Schedule schedule, HttpServletRequest request,@ModelAttribute("teacher") Teacher teacher) {  
+	    public    String  updateDivisionScheduleService(@RequestBody Schedule schedule, HttpServletRequest request,@ModelAttribute("teacher") Teacher teacher) {  
 	    	
 	    	System.out.println("this is updateDivisionScheduleService controller");
 	    	

@@ -177,11 +177,11 @@ CREATE TABLE `schedule` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `division` (`division`),
   CONSTRAINT `division foreign kry` FOREIGN KEY (`division`) REFERENCES `division` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 /*Data for the table `schedule` */
 
-insert  into `schedule`(`id`,`division`,`string`) values (1,8,'<iframe src=\'https://calendar.google.com/calendar/embed?mode=WEEK&amp;height=600&amp;wkst=2&amp;bgcolor=%23FFFFFF&amp;src=ci5fi0t0u5i8927il2ula0kbgs%40group.calendar.google.com&amp;color=%2329527A&amp;ctz=Asia%2FCalcutta\' style=\'border-width:0\' width=\'800\' height=\'600\' frameborder=\'0\' scrolling=\'no\'></iframe>'),(3,6,NULL);
+insert  into `schedule`(`id`,`division`,`string`) values (1,8,'<iframe src=\'https://calendar.google.com/calendar/embed?mode=WEEK&amp;height=600&amp;wkst=2&amp;bgcolor=%23FFFFFF&amp;src=ci5fi0t0u5i8927il2ula0kbgs%40group.calendar.google.com&amp;color=%2329527A&amp;ctz=Asia%2FCalcutta\' style=\'border-width:0\' width=\'800\' height=\'600\' frameborder=\'0\' scrolling=\'no\'></iframe>'),(6,9,'<iframe src=\'https://calendar.google.com/calendar/embed?mode=WEEK&amp;height=600&amp;wkst=2&amp;bgcolor=%23FFFFFF&amp;src=ci5fi0t0u5i8927il2ula0kbgs%40group.calendar.google.com&amp;color=%2329527A&amp;ctz=Asia%2FCalcutta\' style=\'border-width:0\' width=\'800\' height=\'600\' frameborder=\'0\' scrolling=\'no\'></iframe>'),(9,11,'<iframe src=\'https://calendar.google.com/calendar/embed?mode=WEEK&amp;height=600&amp;wkst=2&amp;bgcolor=%23FFFFFF&amp;src=ci5fi0t0u5i8927il2ula0kbgs%40group.calendar.google.com&amp;color=%2329527A&amp;ctz=Asia%2FCalcutta\' style=\'border-width:0\' width=\'800\' height=\'600\' frameborder=\'0\' scrolling=\'no\'></iframe>'),(10,18,'<iframe src=\'https://calendar.google.com/calendar/embed?height=600&amp;wkst=1&amp;bgcolor=%2366ff99&amp;src=ci5fi0t0u5i8927il2ula0kbgs%40group.calendar.google.com&amp;color=%2329527A&amp;ctz=Asia%2FCalcutta\' style=\"border:solid 1px #777\" width=\"800\" height=\"600\" frameborder=\"0\" scrolling=\"no\"></iframe>');
 
 /*Table structure for table `student` */
 

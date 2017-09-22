@@ -33,12 +33,15 @@ public class ScheduleDAOimpl implements ScheduleDAO {
 	
 	
 	@Override
+	@Transactional
 	public void create(Schedule schedule) {
+		
 		currentSession().save(schedule);
 
 	}
 
 	@Override
+	@Transactional
 	public void update(Schedule schedule) {
 		currentSession().update(schedule);
 
@@ -85,6 +88,22 @@ public class ScheduleDAOimpl implements ScheduleDAO {
 		System.out.println("after query ");
 		return s; 
 		
+	}
+
+
+	@Override
+	@Transactional
+	public int updateScheduleOfinstitute(Schedule schedule) {
+		// TODO Auto-generated method stub
+		
+		Division d=divisionService.find(schedule.getDivision().getId());
+		schedule.setDivision(d);
+		Query query=currentSession().createQuery("update Schedule sert string =:url where division = :div");
+		query.setParameter("div",d);
+		query.setParameter("url",schedule.getString());
+		
+		
+		return query.executeUpdate();
 	}
 
 

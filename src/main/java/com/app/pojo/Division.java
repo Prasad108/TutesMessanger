@@ -67,6 +67,12 @@ public class Division implements java.io.Serializable {
 		return this.classes;
 	}
 
+	@Override
+	public String toString() {
+		return "Division [id=" + id + ", classes=" + classes + ", name=" + name + "]";
+	}
+
+
 	public void setClasses(Classes classes) {
 		this.classes = classes;
 	}
@@ -88,5 +94,6 @@ public class Division implements java.io.Serializable {
 	public void setSchedules(Set<Schedule> schedules) {
 		this.schedules = schedules;
 	}
+	
 
 }
