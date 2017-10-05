@@ -9,7 +9,7 @@ public interface LoginService {
 	public void create(Login login);
 	public void update(Login login);
 	public Login edit(int id);
-	public void delet(int id );
+	public void delet(Login login);
 	public Login find(int id);
 	public List<Login> getall();
 	public boolean exist(Login login);

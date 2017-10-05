@@ -23,13 +23,20 @@ import javax.persistence.UniqueConstraint;
 public class Login implements java.io.Serializable {
 
 	private Integer id;
-	private Role role;
+	private transient Role role;
 	private String username;
 	private String password;
 	private boolean enableMaster;
 	private boolean enableInstitute;
-	private Set<Teacher> teachers = new HashSet<Teacher>(0);
-	private Set<Student> students = new HashSet<Student>(0);
+	private transient Set<Teacher> teachers = new HashSet<Teacher>(0);
+	private transient Set<Student> students = new HashSet<Student>(0);
+
+	
+	@Override
+	public String toString() {
+		return "Login [id=" + id + ", username=" + username + ", password=" + password + ", enableMaster="
+				+ enableMaster + ", enableInstitute=" + enableInstitute + "]";
+	}
 
 	public Login() {
 	}

@@ -11,7 +11,7 @@ public interface TeacherService {
 	public void create(Teacher teacher);
 	public void update(Teacher teacher);
 	public Teacher edit(int id);
-	public void delet(int id );
+	public void delet(Teacher teacher);
 	public Teacher find(int id);
 	public Teacher findByLoginId(int id);
 	public Institute GetInstitute(int id);

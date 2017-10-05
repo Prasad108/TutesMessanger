@@ -50,8 +50,8 @@ public class LoginDAOimpl implements LoginDAO {
 
 	@Override
 	@Transactional
-	public void delet(int id) {
-		currentSession().delete(id);
+	public void delet(Login login) {
+		currentSession().delete(login);
 		
 	}
 

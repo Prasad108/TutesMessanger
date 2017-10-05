@@ -41,11 +41,11 @@
             <p class="login-img"><i class="icon_lock_alt"></i></p>
             <div class="input-group">
               <span class="input-group-addon"><i class="icon_profile"></i></span>
-              <form:input type="text" path="username" class="form-control" placeholder="Username" required="required" />
+              <form:input type="text" path="username" name="username" class="form-control" placeholder="Username" required="required" />
             </div>
             <div class="input-group">
                 <span class="input-group-addon"><i class="icon_key_alt"></i></span>
-                <form:input type="password" path="password" class="form-control" placeholder="Password" required="required" />
+                <form:input type="password" path="password" name="password" class="form-control" placeholder="Password" required="required" />
             </div>
             
            <c:if test="${!empty ErrorMessage}">

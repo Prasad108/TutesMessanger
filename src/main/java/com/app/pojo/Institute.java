@@ -31,9 +31,9 @@ public class Institute implements java.io.Serializable {
 	private Date subscriptionTill;
 	private Boolean subscritionEnable;
 	private Boolean enable;
-	private Set<Branch> branches = new HashSet<Branch>(0);
-	private Set<Teacher> teachers = new HashSet<Teacher>(0);
-	private Set<Student> students = new HashSet<Student>(0);
+	private transient Set<Branch> branches = new HashSet<Branch>(0);
+	private transient Set<Teacher> teachers = new HashSet<Teacher>(0);
+	private transient Set<Student> students = new HashSet<Student>(0);
 
 	public Institute() {
 	}

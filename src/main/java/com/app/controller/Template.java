@@ -1,14 +1,32 @@
 package com.app.controller;
 
+
+import java.lang.reflect.Modifier;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.app.pojo.Login;
+
+import com.app.pojo.Role;
+import com.app.service.RoleService;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+
 
 @Controller
 public class Template {
+	
+	
+	@Autowired
+	RoleService roleService;
 	
 	@RequestMapping(value="/index",method = RequestMethod.GET)  
 	 public String templateIndex(){
@@ -88,6 +106,17 @@ public class Template {
 	    return "template/widgets";  	
 	    }
 	
-	
+	}
 
-}
+
+
+
+
+
+
+
+
+
+
+
+

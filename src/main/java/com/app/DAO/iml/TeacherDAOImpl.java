@@ -48,8 +48,8 @@ public class TeacherDAOImpl implements TeacherDAO {
 
 	@Override
 	 @Transactional
-	public void delet(int id) {
-		currentSession().delete(id);
+	public void delet(Teacher teacher) {
+		currentSession().delete(teacher);
 
 	}
 

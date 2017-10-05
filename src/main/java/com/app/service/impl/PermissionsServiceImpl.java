@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.app.DAO.PermissionsDAO;
 import com.app.pojo.Permissions;
+import com.app.pojo.Teacher;
 import com.app.service.PermissionsService;
 
 @Service("PermissionsService")
@@ -49,6 +50,12 @@ public class PermissionsServiceImpl implements PermissionsService {
 	public List<Permissions> getall() {
 		
 		return permissionsDAO.getall();
+	}
+
+	@Override
+	public Permissions GetPermissionOfTeacher(Teacher t) {
+		
+		return permissionsDAO.GetPermissionOfTeacher(t);
 	}
 
 }

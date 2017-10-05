@@ -19,9 +19,9 @@ import javax.persistence.Table;
 public class Teacher implements java.io.Serializable {
 
 	private Integer id;
-	private Institute institute;
-	private Login login;
-	private Permissions permissions;
+	private transient Institute institute;
+	private transient Login login;
+	private transient Permissions permissions;
 	private String fname;
 	private String lname;
 	private String email;

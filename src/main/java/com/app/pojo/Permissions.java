@@ -33,7 +33,7 @@ public class Permissions implements java.io.Serializable {
 	private boolean setExam;
 	private boolean updateResults;
 	private boolean alterInstituteStructure;
-	private Set<Teacher> teachers = new HashSet<Teacher>(0);
+	private transient Set<Teacher> teachers = new HashSet<Teacher>(0);
 
 	public Permissions() {
 	}
@@ -214,4 +214,46 @@ public class Permissions implements java.io.Serializable {
 		this.teachers = teachers;
 	}
 
+	@Override
+	public String toString() {
+		return "Permissions [id=" + id + ", authoriseStudent=" + authoriseStudent + ", authoriseTeacher="
+				+ authoriseTeacher + ", fillAttendance=" + fillAttendance + ", fillSchedule=" + fillSchedule
+				+ ", mailParent=" + mailParent + ", mailStudent=" + mailStudent + ", mailTeacher=" + mailTeacher
+				+ ", msgParent=" + msgParent + ", msgStudent=" + msgStudent + ", msgTeacher=" + msgTeacher
+				+ ", setExam=" + setExam + ", updateResults=" + updateResults + ", alterInstituteStructure="
+				+ alterInstituteStructure + "]";
+	}
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

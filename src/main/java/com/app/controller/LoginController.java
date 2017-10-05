@@ -9,14 +9,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.app.pojo.Login;
+import com.app.pojo.Permissions;
 import com.app.pojo.Role;
 import com.app.pojo.Teacher;
 import com.app.service.InstituteService;
 import com.app.service.LoginService;
+import com.app.service.PermissionsService;
 import com.app.service.TeacherService;
+import com.google.gson.Gson;
 
 @Controller
-@SessionAttributes({ "teacher", "appAdmin", "student","institute" })
+@SessionAttributes({ "teacher", "appAdmin", "student","institute","login","permissions","teacherJSON" })
 public class LoginController {
 
 	@Autowired
@@ -27,6 +30,12 @@ public class LoginController {
 
 	@Autowired
 	InstituteService instituteService;
+	
+
+	@Autowired
+	PermissionsService permissionsService;
+	
+	 Gson gson = new Gson();
 
 	@RequestMapping(value = "/gologin", method = RequestMethod.GET)
 	public String goToLogin(Model mod, Login l) {
@@ -45,10 +54,7 @@ public class LoginController {
 		String output = "";
 		if (loginService.exist(login)) {
 			System.out.println("**********such a user exists ");
-			
-		
-			
-			
+						
 			Login userLogin = loginService.find_By_Uname_pwd(login);
 
 			if(loginService.Isenabled(userLogin)) {
@@ -61,18 +67,50 @@ public class LoginController {
 					break;
 
 				case 2:
-					output = "Teacher/home";// teacher
-					model.addAttribute("teacher", teacherService.findByLoginId(userLogin.getId()));
+					// ** Teacher 
+					output = "Teacher/home"; 		
+					Teacher t=teacherService.findByLoginId(userLogin.getId());	
+					//t1.setLogin(userLogin);				
+					Permissions p1=permissionsService.find(t.getPermissions().getId());
+					t.setPermissions(p1);
+					t.setInstitute(teacherService.GetInstitute(t.getId()));
+					t.setLogin(userLogin);
+					model.addAttribute("teacher",t);
+					model.addAttribute("teacherJSON",gson.toJson(t));
+					model.addAttribute("institute",gson.toJson(t) );
+					//model.addAttribute("login",gson.toJson(userLogin) );
+					model.addAttribute("permissions",gson.toJson(p1) );
 					System.out.println("teacher logged in");
 					break;
-
+					
 				case 3:
-					output = "Teacher/home";// ** institute admin
-					Teacher t=teacherService.findByLoginId(userLogin.getId());
-					System.out.println(t);
-					model.addAttribute("teacher",t );
-					model.addAttribute("institute",teacherService.GetInstitute(t.getId()) );
-					model.addAttribute("appAdmin", teacherService.findByLoginId(userLogin.getId()));
+					System.out.println("inside case 3--------------------------------------");
+					output = "Teacher/home"; // ** institute admin					
+					Teacher t1=teacherService.findByLoginId(userLogin.getId());																					
+					Permissions p=permissionsService.find(t1.getPermissions().getId());					
+									
+					
+					//t1.setLogin(userLogin);			
+					//t1.setPermissions(p);
+					//t1.setInstitute(teacherService.GetInstitute(t1.getId()));
+					//t1.setLogin(userLogin);
+					
+					
+				
+					System.out.println(gson.toJson(teacherService.GetInstitute(t1.getId())));
+					System.out.println(gson.toJson(userLogin));
+					System.out.println(gson.toJson(p));
+					t1.setPermissions(p);
+					t1.setInstitute(teacherService.GetInstitute(t1.getId()));
+					t1.setLogin(userLogin);
+					
+					System.out.println("teacher is __________--------"+gson.toJson(t1));
+					
+					model.addAttribute("teacher",t1 );					
+					model.addAttribute("teacherJSON",gson.toJson(t1));
+					model.addAttribute("institute",gson.toJson(teacherService.GetInstitute(t1.getId())) );
+					//model.addAttribute("login",gson.toJson(userLogin) );
+					model.addAttribute("permissions",gson.toJson(p) );
 					System.out.println("institute admin logged in");
 					break;
 

@@ -21,17 +21,22 @@ import com.app.pojo.Classes;
 import com.app.pojo.Division;
 import com.app.pojo.Institute;
 import com.app.pojo.Login;
+import com.app.pojo.Permissions;
+import com.app.pojo.Role;
 import com.app.pojo.Schedule;
 import com.app.pojo.Teacher;
 import com.app.service.BranchService;
 import com.app.service.ClassesService;
 import com.app.service.DivisionService;
 import com.app.service.InstituteService;
+import com.app.service.LoginService;
+import com.app.service.PermissionsService;
 import com.app.service.ScheduleService;
 import com.app.service.TeacherService;
+import com.google.gson.Gson;
 
 @Controller
-@SessionAttributes({ "teacher", "appAdmin", "student" })
+@SessionAttributes({ "teacher", "appAdmin","institute","login","permissions","teacherJSON"  })
 public class TeacherController {
 	
 	@Autowired
@@ -42,7 +47,7 @@ public class TeacherController {
 	
 	@Autowired
 	ClassesService classesService;
-	
+	 
 	@Autowired
 	DivisionService divisionService;
 	
@@ -51,6 +56,14 @@ public class TeacherController {
 	
 	@Autowired
 	ScheduleService scheduleService;
+	
+	@Autowired
+	LoginService loginService;
+	
+	@Autowired
+	PermissionsService permissionsService;
+	
+	Gson gson = new Gson();
 	
 	 @RequestMapping(value="/ModifyInstitueStructure",method = RequestMethod.GET)  
 	    public String  ModifyInstitueStructure(Model model,@ModelAttribute("teacher") Teacher teacher) {  
@@ -67,13 +80,11 @@ public class TeacherController {
 			System.out.println("institute is :"+inst);
 			
 			 List <Branch> branchlist=branchService.getallOfParticularInstitute(inst);
-			 System.out.println("we are going to print the branches of current isntitute :");
+			 System.out.println("we are going to print the branches of current institute :");
 			 for (Branch b : branchlist) {
 				    System.out.println(b);
 				}
-				
-		
-				
+								
 			model.addAttribute("BranchesOfInst",branchlist );
 			
 	        return "Teacher/ModifyInstitueStructure";
@@ -277,8 +288,7 @@ public class TeacherController {
 		 return "Teacher/changePassword";
 	 }
 
-	 
-	 
+	 	 
 	 @RequestMapping(value="/scheduletree",method = RequestMethod.GET)  
 	    public String  scheduletree(Model model,@ModelAttribute("teacher") Teacher teacher,@ModelAttribute("institute") Institute institute) {  
 	    	
@@ -294,10 +304,9 @@ public class TeacherController {
 	    }
 
 	 
-	 
 	 @RequestMapping(value = "/GetCalender/{id}", method = RequestMethod.GET)
 	 @ResponseBody
-	  public String GetCalender( @PathVariable("id") int id ){
+	   public String GetCalender( @PathVariable("id") int id ){
 		 
 		 
 			System.out.println("from GetCalender controller and division id is :"+id );		
@@ -326,8 +335,8 @@ public class TeacherController {
 			
 		return result;
 	 }
+
 	 
-	 	 	 
 	 @RequestMapping(value="/updateDivisionSchedule",method = RequestMethod.POST)  
 	    public  String  updateDivisionSchedule(Model model,@ModelAttribute("Schedule") Schedule schedule,@ModelAttribute("teacher") Teacher teacher) {  
 	    	
@@ -384,7 +393,7 @@ public class TeacherController {
 			
 	        return "Teacher/InstStructForSchedule";
 	    }
-	 
+
 	 
 	 @RequestMapping(value="/updateDivisionScheduleService",method = RequestMethod.POST)  
 	    public    String  updateDivisionScheduleService(@RequestBody Schedule schedule, HttpServletRequest request,@ModelAttribute("teacher") Teacher teacher) {  
@@ -404,12 +413,91 @@ public class TeacherController {
 	    	{
 	    		System.out.println("error in chedule update");
 	    		result="error in updating shcedule";
-	    		
-	    		
+	    		  		
 	    	}
-	    	
-			    
-			
+	    				
 	        return result;
 	    }
+
+	 
+	 @RequestMapping(value = "/TeacherHome", method = RequestMethod.GET)
+		public String TeacherHome(@ModelAttribute("teacher") Teacher teacher) {		
+			System.out.println("inside Teacher Home Page controller");
+			
+			return "Teacher/home";
+
+		}
+	 
+	 @RequestMapping(value = "/TeacherRequestForApproval", method = RequestMethod.GET)
+		public String TeacherRequestForApproval(Model model,@ModelAttribute("teacher") Teacher teacher) {		
+			System.out.println("inside TeacherRequestForApproval controller");
+			System.out.println("teachers insitute id is :"+teacher.getInstitute().getId());
+			List<Teacher> teacherList=instituteService.getallPendingTeacherForApproval(instituteService.find(teacher.getInstitute().getId()));
+			String teacherListJSON=gson.toJson(teacherList);
+			model.addAttribute("TeacherListJSON", teacherListJSON);
+			return "Teacher/TeacherRequestForApproval";
+
+		}
+	 
+	 
+	 
+	 @RequestMapping(value = "/deleteTeacherApprovalRequest/{id}", method = RequestMethod.POST)
+	 @ResponseBody
+	  public String deleteTeacherApprovalRequest( @PathVariable("id") int id ){
+		 
+			System.out.println("from /deleteTeacherApprovalRequest/{id} controller");
+			
+			String result="";									
+			System.out.println("teacher to be deleted is with id"+id);		
+				try{Teacher t=teacherService.find(id);
+				loginService.delet(loginService.find(t.getLogin().getId()));
+				System.out.println("Teacher is deleted with the id "+id);
+				result="{\"message\":\"Teacher with id "+id+" is deleted \",\"status\":\"success\"}";
+				}
+				catch(Exception e)
+				{
+					System.out.println(e.getMessage());
+					System.out.println(e);
+					System.out.println("error in deletion with teacher id : "+id);
+					result="{\"message\":\"ERROR...!! Teacher with id "+id+" not deleted\",\"status\":\"fail\"}";
+				}
+			System.out.println(result);
+		return result;
+	 }
+	 
+	 
+	 
+	 
+	 @RequestMapping(value = "/approveTeacherApprovalRequest/{id}", method = RequestMethod.POST)
+	 @ResponseBody
+	  public String approveTeacherApprovalRequest( @PathVariable("id") int id ,@RequestBody Permissions p, @ModelAttribute("teacher") Teacher teacher){
+		 
+			System.out.println("from /approveTeacherApprovalRequest/{id} controller");
+			
+			String result="";
+			System.out.println("permssions are :"+p);
+			System.out.println("teacher to be updated is with id"+id);		
+				try
+				{
+					Teacher t=teacherService.find(id);		//find teacher								
+					permissionsService.create(p);			// create permissions	
+					t.setPermissions(p);					//attach permissions to teacher
+					teacherService.update(t);               //update teacher
+					Login l=loginService.find(t.getLogin().getId()); // get login of teacher
+					l.setEnableInstitute(true);				 // enable the institute flag 
+					loginService.update(l);				     //update login
+					System.out.println("Teacher is updated with the id "+id);
+					result="{\"message\":\"Teacher with id "+id+" is updated \",\"status\":\"success\"}";
+				}
+				catch(Exception e)
+				{
+					System.out.println(e.getMessage());
+					System.out.println(e);
+					System.out.println("error in updation with teacher id : "+id);
+					result="{\"message\":\"ERROR...!! Teacher with id "+id+" not updated\",\"c\":\"fail\"}";
+				}
+			System.out.println(result);
+		return result;
+	 }
+
 }

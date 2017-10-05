@@ -100,6 +100,21 @@ $(document).ready(function(){
 	
 	 });	
 
+	 
+
+	 $("#myModal2").clickOutsideThisElement(function() {
+		 $('.modal').modal('hide');
+		 $('#myModal2').modal('hide');
+		});
+
+	 $("#divString").focusout(function () {
+
+		var str = $(this).val();
+		var res = str.replace('"', "'");
+	    $(this).val(res);
+
+	});
+
 });
 
 </script>

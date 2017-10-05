@@ -34,8 +34,8 @@ public class LoginServiceImpl implements LoginService {
 	}
 
 	@Override
-	public void delet(int id) {
-		loginDAO.delet(id);
+	public void delet(Login login) {
+		loginDAO.delet(login);
 
 	}
 

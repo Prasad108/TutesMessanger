@@ -45,7 +45,9 @@ public class RoleDAOImpl implements RoleDAO{
 	@Override
 	@Transactional
 	public void delet(int id) {
-		currentSession().delete(id);
+		Integer i=id;Role r= new Role();
+		r.setId(id);
+		currentSession().delete(r);
 		
 	}
 
