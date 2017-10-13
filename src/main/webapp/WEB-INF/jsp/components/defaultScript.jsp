@@ -13,7 +13,7 @@
     <script src="/TutesMessanger/assets/jquery-easy-pie-chart/jquery.easy-pie-chart.js"></script>
     <script src="/TutesMessanger/js/owl.carousel.js" ></script>
     <!-- jQuery full calendar -->
-    <script src="/TutesMessanger/js/fullcalendar.min.js"></script> Full Google Calendar - Calendar
+    <script src="/TutesMessanger/js/fullcalendar.min.js"></script> 
 	<script src="/TutesMessanger/assets/fullcalendar/fullcalendar/fullcalendar.js"></script>
     <!--script for this page only-->
     <script src="/TutesMessanger/js/calendar-custom.js"></script>
@@ -40,7 +40,7 @@
 	<script src="/TutesMessanger/js/charts.js"></script>
 	<script src="/TutesMessanger/js/jquery.slimscroll.min.js"></script>
 
-	<script src="/TutesMessanger/assets/angular.min.js"></script>
+<!-- 	<script src="/TutesMessanger/assets/angular.min.js"></script> -->
 	
 	
 	

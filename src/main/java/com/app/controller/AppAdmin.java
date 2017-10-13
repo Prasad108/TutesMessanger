@@ -58,7 +58,7 @@ public class AppAdmin {
 	    @RequestMapping(value="/AddNewInstitute",method = RequestMethod.GET)  
 	    public String  AddNewInstitute(Model model) {  
 	    	
-	    	System.out.println("this is AddNewInstitute controller");
+	    	System.out.println("**********this is AddNewInstitute controller**********");
 	    	Institute inst= new Institute();
 	    	model.addAttribute("Institute", inst);
 			String output="appAdmin/AddNewInstitute";
@@ -70,7 +70,7 @@ public class AppAdmin {
 	    @RequestMapping(value="/RegisterInstitute",method = RequestMethod.POST)  
 	    public String  RegisterInstitute(Model model,@ModelAttribute("Institute") Institute inst ) {  
 	    	
-	    	System.out.println("this is RegisterInstitute controller");
+	    	System.out.println("**********this is RegisterInstitute controller**********");
 	    	String output="appAdmin/CreateInstituteAdmin";
 	    	System.out.println(inst);
 	    	model.addAttribute("addInstitute", inst);
@@ -86,7 +86,7 @@ public class AppAdmin {
 	    @RequestMapping(value="/SaveInstituteAdmin",method = RequestMethod.POST)  
 	    public String  SaveInstituteAdmin(Model model,@ModelAttribute("addInstitute") Institute inst ,@ModelAttribute("Teacher") Teacher teacher ) {  
 	    	 
-	    	System.out.println("this is SaveInstituteAdmin controller");
+	    	System.out.println("**********this is SaveInstituteAdmin controller**********");
 	    	String output="appAdmin/";   	 
 			try{	
 				
@@ -120,7 +120,7 @@ public class AppAdmin {
 	
 	    @RequestMapping(value="/ExistingInstitutes",method = RequestMethod.GET)  
 	    public String  ExistingInstitutes(Model model) {  			
-				System.out.println("this is from AppAdmin/GoToAddInstitute controller");		
+				System.out.println("**********this is from AppAdmin/GoToAddInstitute controller**********");		
 				ArrayList<Institute> Institutelist= new ArrayList<Institute>();
 				Institutelist.addAll(instituteService.getall());
 				model.addAttribute("listOfInstitute", Institutelist);
@@ -133,7 +133,7 @@ public class AppAdmin {
 	    public String  updateInstitute(Model model,@ModelAttribute("Institute") Institute inst) {  			
 	    	
 	    	System.out.println(inst);
-				System.out.println("this is from updateInstitute controller");	
+				System.out.println("**********this is from updateInstitute controller**********");	
 				Institute inst1=instituteService.find(inst.getId());
 				inst.setEnable(inst1.getEnable());
 				inst.setSubscritionEnable(inst1.getSubscritionEnable());

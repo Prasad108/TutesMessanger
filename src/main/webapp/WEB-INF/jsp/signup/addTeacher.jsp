@@ -113,7 +113,7 @@
                                             <label for="contact" class="control-label col-lg-2">Institute <span class="required">*</span></label>
                                           
 												<div class="col-lg-10">
-													<form:select name="BusinessDistrictId" path="institute.id" id="institutelist" class="form-control" onchange="" form="SelectInstitute" required="required">
+													<form:select name="BusinessDistrictId" path="institute.id" id="institutelist" class="form-control" onchange="" form="myform" required="required">
 														<option value="">None</option>
 														<c:forEach items="${teacherlist}" var="institute">
 															<option value="${institute.id}">${institute.name}</option>

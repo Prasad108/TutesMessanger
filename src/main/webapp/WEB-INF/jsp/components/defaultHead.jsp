@@ -63,3 +63,5 @@
     <link href="/TutesMessanger/css/style-responsive.css" rel="stylesheet" />
 	<link href="/TutesMessanger/css/xcharts.min.css" rel=" stylesheet">	
 	<link href="/TutesMessanger/css/jquery-ui-1.10.4.min.css" rel="stylesheet">
+	
+	 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.js"></script> 

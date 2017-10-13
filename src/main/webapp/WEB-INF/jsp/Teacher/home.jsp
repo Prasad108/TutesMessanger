@@ -8,10 +8,11 @@
  		<title>Teacher </title>
    		<jsp:include page="/WEB-INF/jsp/components/defaultHead.jsp" /> 
    		
-   		 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.js"></script> 
-   		<script>
+   		<%-- <jsp:include page="/WEB-INF/jsp/Teacher/components/angular.jsp" />  --%>
+   		
+   		<!-- <script>
 
-  		var app = angular.module('myApp', []);
+  		/*  var app = angular.module('myApp', []);
    		app.controller('teacherCtrl', function($scope, $http) {
 
    		
@@ -19,11 +20,13 @@
    			$scope.permissions=JSON.parse('${permissions}');  				
    			console.log("teacher is "+$scope.teacher);
    			console.log("teacher id is "+$scope.teacher["id"]);  			   		  			 			  			
-   		});   		      
-   		</script>
+   		});   	     */  
+		
+   		</script> -->
    		
-		<!-- <script src="/js/angular/Teacher/TeacherHome.js" type="text/javascript"> -->
-		</script>
+		
+		 <script src="${pageContext.request.contextPath}/js/angular/TeacherHome.js"></script>
+		<%-- <script src="${pageContext.request.contextPath}/js/TeacherHome.js" type="text/javascript"> --%>	
    	</head>
 <body >
 

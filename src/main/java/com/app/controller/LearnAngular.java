@@ -27,19 +27,19 @@ public class LearnAngular {
 
 	@RequestMapping(value="/angular",method = RequestMethod.GET)  
 	 public String angular(){
-		 System.out.println("inside angular controller");
+		 System.out.println("**********inside angular controller**********");
 	    return "template/angular";  	
 	    }
 	
 	@RequestMapping(value="/angular/hhtp1",method = RequestMethod.GET)  
 	 public String angularhhtp1(){
-		 System.out.println("inside angularhhtp1 controller");
+		 System.out.println("**********inside angularhhtp1 controller**********");
 	    return "template/angular/hhtp1";  	
 	    }
 		
 	@RequestMapping(value="/angular/getContry",method = RequestMethod.GET)  
 	 @ResponseBody public String angularhhtp1getContry(){
-		 System.out.println("inside angularhhtp1getContry controller");
+		 System.out.println("**********inside angularhhtp1getContry controller**********");
 		 String result="{\r\n" + 
 		 		"  \"records\": [\r\n" + 
 		 		"    {\r\n" + 
@@ -125,7 +125,7 @@ public class LearnAngular {
 	
 	@RequestMapping(value="/angular/role",method = RequestMethod.GET)  
 	 public String angularrole(Model model){
-		 System.out.println("inside angularrole controller");
+		 System.out.println("**********inside angularrole controller**********");
 		 			 
 		 List<Role> roleList=roleService.getall();		
 		 Gson gson = new Gson();				
@@ -138,7 +138,7 @@ public class LearnAngular {
 
 	@RequestMapping(value="/angular/getRoles",method = RequestMethod.GET)  
 	 @ResponseBody public String angularGetRoles(){
-		 System.out.println("inside angular/role/GetRoles controller");
+		 System.out.println("**********inside angular/role/GetRoles controller**********");
 		 List<Role> roleList=roleService.getall();			
 		 Gson gson = new Gson();				
 		 String JSON_RolesList= gson.toJson(roleList);	
@@ -148,7 +148,7 @@ public class LearnAngular {
 		
 	@RequestMapping(value="/angular/saveRole",method = RequestMethod.POST)  
 	 @ResponseBody public String saveRole(@RequestBody Role role){
-		 System.out.println("inside angular/role/saveRole controller");
+		 System.out.println("**********inside angular/role/saveRole controller**********");
 		 System.out.println(role);
 		 String result="";
 		 try {
@@ -173,7 +173,7 @@ public class LearnAngular {
 	 @ResponseBody
 	  public String deleteRole( @PathVariable("id") int id ){
 		 
-			System.out.println("from /angular/deleteRole/{id} controller");
+			System.out.println("**********from /angular/deleteRole/{id} controller**********");
 			
 			String result="";
 			
@@ -196,7 +196,7 @@ public class LearnAngular {
 	 
 	 @RequestMapping(value="/angular/UpdateRole",method = RequestMethod.POST)  
 	 @ResponseBody public String updatRole(@RequestBody Role role){
-		 System.out.println("inside angular/role/updatRole controller");
+		 System.out.println("**********inside angular/role/updatRole controller**********");
 		 System.out.println(role);
 		 String result="";
 		 try {

@@ -70,7 +70,7 @@ public class TeacherController {
 	 @RequestMapping(value="/ModifyInstitueStructure",method = RequestMethod.GET)  
 	    public String  ModifyInstitueStructure(Model model,@ModelAttribute("teacher") Teacher teacher) {  
 	    	
-	    	System.out.println("this is ModifyInstitueStructure controller");
+	    	System.out.println("**********this is ModifyInstitueStructure controller**********");
 	    			
 			Branch branch= new Branch();
 			Classes clsess=new Classes();
@@ -96,7 +96,7 @@ public class TeacherController {
 	 @RequestMapping(value="/AddNewBranch",method = RequestMethod.POST)  
 	    public String  AddNewBranch(Model model,@ModelAttribute("Branch") Branch branch1,@ModelAttribute("teacher") Teacher teacher) {  
 	    	
-	    	System.out.println("this is AddNewBranch controller");
+	    	System.out.println("**********this is AddNewBranch controller**********");
 	    	branch1.setInstitute(teacher.getInstitute());
 	    	
 	    	branchService.create(branch1);
@@ -132,7 +132,7 @@ public class TeacherController {
 	    public String  AddNewClass(Model model,@ModelAttribute("Classes") Classes clas,@ModelAttribute("teacher") Teacher teacher) {  
 	    	
 		 
-	    	System.out.println("this is AddNewClass controller");
+	    	System.out.println("**********this is AddNewClass controller**********");
 	    	
 	    	
 	    	Branch branch= branchService.find(clas.getBranch().getId()) ;
@@ -181,7 +181,7 @@ public class TeacherController {
 	 @ResponseBody
 	  public String GetClassesList( @PathVariable("id") int id ){
 		 
-			System.out.println("from GetClassesList controller");
+			System.out.println("**********from GetClassesList controller**********");
 			
 			List<Classes> classList=classesService.getallOfParticularBranch(branchService.find(id));
 			String JSON="[{\"value\":0,\"name\":\"--- Select Class---\"},";
@@ -205,7 +205,7 @@ public class TeacherController {
 	   public String  AddNewDivision(Model model,@ModelAttribute("Division") Division div,@ModelAttribute("teacher") Teacher teacher) {  
 	    	
 		 
-	    	System.out.println("this is AddNewDivision controller");	    	
+	    	System.out.println("**********this is AddNewDivision controller**********");	    	
 	    	Classes clas2=classesService.find(div.getClasses().getId());	    	
 	    	Division newDiv=new Division(clas2, div.getName());
 	    		    	
@@ -250,7 +250,7 @@ public class TeacherController {
 	 @RequestMapping(value="/ViewInstitueStructure",method = RequestMethod.GET)  
 	    public String  ViewInstitueStructure(Model model,@ModelAttribute("teacher") Teacher teacher,@ModelAttribute("institute") Institute institute) {  
 	    	
-		 
+		 System.out.println("**********this is AddNewDivision controller**********");	    	
 		 String str=teacherService.InstituteStucture(teacher);
 				
 		 System.out.println(str);
@@ -263,6 +263,8 @@ public class TeacherController {
 	 @RequestMapping("/teacherChangePassword")
 	 public String changePasswordShow(Model map) 
 	 {
+		 System.out.println("**********this is teacherChangePassword controller**********");	    	
+		 
 		 String oldPassword = "a", newPassword = "a";
 		 map.addAttribute("oldPassword",oldPassword);
 		 map.addAttribute("newPassword", newPassword);
@@ -273,7 +275,7 @@ public class TeacherController {
 	 @RequestMapping(value="/teacherChangePassword" , method=RequestMethod.POST)
 	 public String changePassword(Model map ,@RequestParam("oldPassword") String oldPassword ,@RequestParam("newPassword") String newPassword,@ModelAttribute("teacher") Teacher teacher ) 
 	 {
-		
+		 System.out.println("**********this is teacherChangePassword controller**********");	    	
 		System.out.println(teacher.toString());
 		Login login =  teacherService.getLoginIdByEmail(teacher.getEmail());
 		System.out.println(login.getId());
@@ -294,7 +296,7 @@ public class TeacherController {
 	 @RequestMapping(value="/scheduletree",method = RequestMethod.GET)  
 	    public String  scheduletree(Model model,@ModelAttribute("teacher") Teacher teacher,@ModelAttribute("institute") Institute institute) {  
 	    	
-	    	System.out.println("this is scheduletree controller");
+	    	System.out.println("**********this is scheduletree controller**********");
 	    	String str=teacherService.InstituteStuctureForSchedule(teacher);
 			Schedule schedule= new Schedule();
 					
@@ -311,7 +313,7 @@ public class TeacherController {
 	   public String GetCalender( @PathVariable("id") int id ){
 		 
 		 
-			System.out.println("from GetCalender controller and division id is :"+id );		
+			System.out.println("**********from GetCalender controller and division id is :"+id +"**********");		
 			Division d=divisionService.find(id);
 			System.out.println("division is "+d);
 			Schedule schedule= scheduleService.fordivision(id);
@@ -342,7 +344,7 @@ public class TeacherController {
 	 @RequestMapping(value="/updateDivisionSchedule",method = RequestMethod.POST)  
 	    public  String  updateDivisionSchedule(Model model,@ModelAttribute("Schedule") Schedule schedule,@ModelAttribute("teacher") Teacher teacher) {  
 	    	
-	    	System.out.println("this is updateDivisionSchedule controller");
+	    	System.out.println("**********this is updateDivisionSchedule controller**********");
 	    	
 	    	System.out.println(schedule);
 	    	// if the schedule already exist update it 
@@ -400,7 +402,7 @@ public class TeacherController {
 	 @RequestMapping(value="/updateDivisionScheduleService",method = RequestMethod.POST)  
 	    public    String  updateDivisionScheduleService(@RequestBody Schedule schedule, HttpServletRequest request,@ModelAttribute("teacher") Teacher teacher) {  
 	    	
-	    	System.out.println("this is updateDivisionScheduleService controller");
+	    	System.out.println("**********this is updateDivisionScheduleService controller**********");
 	    	
 	    	String result="";
 	    	
@@ -424,7 +426,7 @@ public class TeacherController {
 	 
 	 @RequestMapping(value = "/TeacherHome", method = RequestMethod.GET)
 		public String TeacherHome(@ModelAttribute("teacher") Teacher teacher) {		
-			System.out.println("inside Teacher Home Page controller");
+			System.out.println("**********inside Teacher Home Page controller**********");
 			
 			return "Teacher/home";
 
@@ -432,7 +434,7 @@ public class TeacherController {
 	 
 	 @RequestMapping(value = "/TeacherRequestForApproval", method = RequestMethod.GET)
 		public String TeacherRequestForApproval(Model model,@ModelAttribute("teacher") Teacher teacher) {		
-			System.out.println("inside TeacherRequestForApproval controller");
+			System.out.println("**********inside TeacherRequestForApproval controller**********");
 			System.out.println("teachers insitute id is :"+teacher.getInstitute().getId());
 			List<Teacher> teacherList=instituteService.getallPendingTeacherForApproval(instituteService.find(teacher.getInstitute().getId()));
 			String teacherListJSON=gson.toJson(teacherList);
@@ -447,7 +449,7 @@ public class TeacherController {
 	 @ResponseBody
 	  public String deleteTeacherApprovalRequest( @PathVariable("id") int id ){
 		 
-			System.out.println("from /deleteTeacherApprovalRequest/{id} controller");
+			System.out.println("**********from /deleteTeacherApprovalRequest/{id} controller**********");
 			
 			String result="";									
 			System.out.println("teacher to be deleted is with id"+id);		
@@ -474,7 +476,7 @@ public class TeacherController {
 	 @ResponseBody
 	  public String approveTeacherApprovalRequest( @PathVariable("id") int id ,@RequestBody Permissions p, @ModelAttribute("teacher") Teacher teacher){
 		 
-			System.out.println("from /approveTeacherApprovalRequest/{id} controller");
+			System.out.println("**********from /approveTeacherApprovalRequest/{id} controller**********");
 			
 			String result="";
 			System.out.println("permssions are :"+p);

@@ -46,9 +46,8 @@ public class AppAdminServiceImpl implements AppAdminService {
 		// save institute 
 		instituteService.create(inst);			
     	System.out.println("institue saved");
-    	
-    	
-    	Role r= RoleService.findByName("institute admin"); // got the role of institute admin 		   
+    	   	
+    	Role r= RoleService.findByName("ROLE_INSTITUTE_ADMIN"); // got the role of institute admin 		   
     	
     	// created the object of login with username as email-id and pwd as contact no
     	Login login= new Login(r,teacher.getEmail(), teacher.getContactno()); 

@@ -55,7 +55,7 @@ public class LoginController {
 	@RequestMapping(value = "/gologin", method = RequestMethod.GET)
 	public String goToLogin(Model mod, Login l) {
 		mod.addAttribute("Login", l);
-		System.out.println("inside gologin controller");
+		System.out.println("**********inside gologin controller**********");
 
 		return "login";
 
@@ -64,7 +64,7 @@ public class LoginController {
 	@RequestMapping(value = "/Checklogin", method = RequestMethod.POST)
 	public String login(Model model, @ModelAttribute("login") Login login, Login l) {
 
-		System.out.println("this is from Checklogin controller");
+		System.out.println("**********this is from Checklogin controller**********");
 		//System.out.println("login credentials are " + login.toString());
 		String output = "";
 		if (loginService.exist(login)) {
