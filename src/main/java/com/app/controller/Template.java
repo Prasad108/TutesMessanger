@@ -4,6 +4,8 @@ package com.app.controller;
 import java.lang.reflect.Modifier;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Controller;
@@ -11,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 
@@ -82,11 +85,11 @@ public class Template {
 	    return "template/grids";  	
 	    }
 	
-	@RequestMapping(value="/login",method = RequestMethod.GET)  
+	/*@RequestMapping(value="/login",method = RequestMethod.GET)  
 	 public String login(){
 		 System.out.println("inside login controller");
 	    return "template/login";  	
-	    }
+	    }*/
 	
 	@RequestMapping(value="/profile",method = RequestMethod.GET)  
 	 public String profile(){
@@ -105,6 +108,50 @@ public class Template {
 		 System.out.println("inside widgets controller");
 	    return "template/widgets";  	
 	    }
+	
+	
+	@RequestMapping(value = "/login", method = { RequestMethod.GET, RequestMethod.POST })
+	public String login(@RequestParam(value = "error", required = false) String error,
+			@RequestParam(value = "logout", required = false) String logout,HttpSession session,Model model) {
+		System.out.println("*************** This is login controller **********************");
+
+			
+		if (error != null) {
+			System.out.println("Invalid username and password!");
+			model.addAttribute("error", "Invalid username and password!");
+		}
+
+		 if (logout != null) {
+			System.out.println("You've been logged out successfully.");
+			model.addAttribute("msg", "You've been logged out successfully.");
+			model.asMap().clear();
+			    session.invalidate();
+			    model.asMap().clear();
+		}		
+		 
+		/*model.setViewName("login");*/
+
+		return "login";
+
+	}
+	
+	
+	@RequestMapping(value = "/logout", method = { RequestMethod.GET, RequestMethod.POST })
+	public String logout(@RequestParam(value = "error", required = false) String error,
+			@RequestParam(value = "logout", required = false) String logout,HttpSession session,Model model) {
+		System.out.println("*************** This is logout controller **********************");
+
+		
+			System.out.println("You've been logged out successfully.!!!");
+			model.addAttribute("msg", "You've been logged out successfully.");
+			model.asMap().clear();
+			    session.invalidate();
+			    model.asMap().clear();
+				
+		return "login";
+
+	}
+	
 	
 	}
 

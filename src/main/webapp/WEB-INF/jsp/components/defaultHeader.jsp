@@ -1,4 +1,5 @@
-  
+  <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+       <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>  
       <header class="header dark-bg">
             <div class="toggle-nav">
                 <div class="icon-reorder tooltips" data-original-title="Toggle Navigation" data-placement="bottom"><i class="icon_menu"></i></div>
@@ -122,7 +123,7 @@
                             </li>
                             <li>
                                 <a href="#">
-                                    <span class="photo"><img alt="avatar" src="./img/avatar-mini.jpg"></span>
+                                    <span class="photo"><img alt="avatar" src="/TutesMessanger/img/avatar-mini.jpg"></span>
                                     <span class="subject">
                                     <span class="from">Greg  Martin</span>
                                     <span class="time">1 min</span>
@@ -134,7 +135,7 @@
                             </li>
                             <li>
                                 <a href="#">
-                                    <span class="photo"><img alt="avatar" src="./img/avatar-mini2.jpg"></span>
+                                    <span class="photo"><img alt="avatar" src="/TutesMessanger/img/avatar-mini2.jpg"></span>
                                     <span class="subject">
                                     <span class="from">Bob   Mckenzie</span>
                                     <span class="time">5 mins</span>
@@ -146,7 +147,7 @@
                             </li>
                             <li>
                                 <a href="#">
-                                    <span class="photo"><img alt="avatar" src="./img/avatar-mini3.jpg"></span>
+                                    <span class="photo"><img alt="avatar" src="/TutesMessanger/img/avatar-mini3.jpg"></span>
                                     <span class="subject">
                                     <span class="from">Phillip   Park</span>
                                     <span class="time">2 hrs</span>
@@ -158,7 +159,7 @@
                             </li>
                             <li>
                                 <a href="#">
-                                    <span class="photo"><img alt="avatar" src="./img/avatar-mini4.jpg"></span>
+                                    <span class="photo"><img alt="avatar" src="/TutesMessanger/img/avatar-mini4.jpg"></span>
                                     <span class="subject">
                                     <span class="from">Ray   Munoz</span>
                                     <span class="time">1 day</span>
@@ -224,7 +225,7 @@
                     <li class="dropdown">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                             <span class="profile-ava">
-                                <img alt="" src="img/avatar1_small.jpg">
+                                <img alt="" src="/TutesMessanger/img/avatar1_small.jpg">
                             </span>
                             <span class="username">Jenifer Smith</span>
                             <b class="caret"></b>
@@ -244,7 +245,27 @@
                                 <a href="#"><i class="icon_chat_alt"></i> Chats</a>
                             </li>
                             <li>
-                                <a href="login.html"><i class="icon_key_alt"></i> Log Out</a>
+                           <%--  <form:form name="logoutForm"  action="/login?logout" method="post">
+						    <input type="submit"
+						               value="Log out" />
+						    <input type="hidden"
+						                name="${_csrf.parameterName}"
+						                value="${_csrf.token}"/>
+						    </form:form>
+						    onClick="document.forms['search-form'].submit();"  --%>
+						    
+						   <c:url var="logoutUrl" value="/logout"/>
+							    <form:form  id="logoutForm" action="${logoutUrl}"
+							            method="post">
+							   <!--  <input type="submit"
+							               value="Log out" /> -->
+							    <input type="hidden"
+							                name="${_csrf.parameterName}"
+							                value="${_csrf.token}"/>
+							    </form:form>
+							    
+							    <%-- ${pageContext.request.contextPath}/login?logout --%>
+                             <a href="#" onclick="document.getElementById('logoutForm').submit();" ><i class="icon_key_alt"></i> Log Out</a>
                             </li>
                             <li>
                                 <a href="documentation.html"><i class="icon_key_alt"></i> Documentation</a>

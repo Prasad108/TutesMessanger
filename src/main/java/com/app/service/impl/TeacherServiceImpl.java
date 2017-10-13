@@ -108,6 +108,7 @@ public class TeacherServiceImpl implements TeacherService {
 	public String InstituteStucture(Teacher teacher)
 	{
 		
+		
 		Institute inst=instituteService.find(teacher.getInstitute().getId());
 		
 		 String str="<ul><li><a href=\"#\">"+inst.getName()+"</a><ul>";
@@ -129,7 +130,42 @@ public class TeacherServiceImpl implements TeacherService {
 					 List<Division>divList=divisionService.getallOfParticularClass(c);
 					 for(Division d :divList)
 					 {
-						 /*str+="<li><a class='divisionSchedule' id='"+d.getId()+"' data-toggle='modal'  href='#myModal'>"+d.getName()+"</a></li>";*/
+						 str+="<li><a class='divisionSchedule' id='"+d.getId()+"'   href='#'>"+d.getName()+"</a></li>";						 
+					 }
+				}catch(Exception e)
+				{
+					System.out.println("no further Division in the class");
+				}			 				 
+				 str+="</ul></li>";				 
+			 }
+			 str+="</ul></li>";			 
+		 }
+		 str+="</ul></li></ul>";
+			
+		return str;
+		/*
+		Institute inst=instituteService.find(teacher.getInstitute().getId());
+		
+		 String str="<ul><li><a href=\"#\">"+inst.getName()+"</a><ul>";
+
+		// branches of institute
+		 List <Branch> branchlist=branchService.getallOfParticularInstitute(inst);
+		 for(Branch b : branchlist)
+		 {
+			 str+="<li><a href=\"#\">"+b.getName()+"</a><ul>";
+		 
+			//classes of branch
+			 List<Classes> classList=classesService.getallOfParticularBranch(b);
+			 for(Classes c : classList)
+			 {
+				 str+="<li><a href=\"#\">"+c.getName()+"</a><ul>";
+				try
+				{
+					 // division of Classes
+					 List<Division>divList=divisionService.getallOfParticularClass(c);
+					 for(Division d :divList)
+					 {
+						 str+="<li><a class='divisionSchedule' id='"+d.getId()+"' data-toggle='modal'  href='#myModal'>"+d.getName()+"</a></li>";
 						 str+="<li><a href=\"#\">"+d.getName()+"</a></li>";
 						 System.out.println("division  is: "+d);
 					 }
@@ -144,45 +180,8 @@ public class TeacherServiceImpl implements TeacherService {
 		 str+="</ul></li></ul>";
 			
 		return str;
+		*/
 		
-		/*Institute inst=GetInstitute(teacher.getId());
-		
-		 String str="<ul><li><a href=\"#\">"+inst.getName()+"</a><ul>";
-		 System.out.println("isntituet is: "+inst);
-		 		 
-		// branches of institute
-		 List <Branch> branchlist=branchService.getallOfParticularInstitute(inst);
-		 for(Branch b : branchlist)
-		 {
-			 str+="<li><a href=\"#\">"+b.getName()+"</a><ul>";
-			 System.out.println("Branch is: "+b);
-			 
-			//classes of branch
-			 List<Classes> classList=classesService.getallOfParticularBranch(b);
-			 for(Classes c : classList)
-			 {
-				 str+="<li><a href=\"#\">"+c.getName()+"</a><ul>";
-				 System.out.println("Class is: "+c);				 
-				try
-				{
-					 // division of Classes
-					 List<Division>divList=divisionService.getallOfParticularClass(c);
-					 for(Division d :divList)
-					 {
-						 str+="<li><a href=\"#\">"+d.getName()+"</a></li>";
-						 System.out.println("division  is: "+d);
-					 }
-				}catch(Exception e)
-				{
-					System.out.println("no further Division in the class");
-				}			 
-				 str+="</ul></li>";			 
-			 }
-			 str+="</ul></li>";			 
-		 }
-		 str+="</ul></li></ul>";		
-		
-		return str;*/
 	}
 
 	@Override

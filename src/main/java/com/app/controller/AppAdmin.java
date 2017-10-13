@@ -24,6 +24,7 @@ import com.app.service.RoleService;
 
 @Controller
 @SessionAttributes({"addInstitute"})
+@RequestMapping("/AppAdmin")
 public class AppAdmin {
 		
 	@Autowired
@@ -43,6 +44,16 @@ public class AppAdmin {
 
 	@Autowired
 	AppAdminService appAdminService; 
+	
+	
+	
+	
+	 @RequestMapping(value="/dashboard",method = RequestMethod.GET)  
+	    public    String  appAdminDashboard() {  
+	    	
+	    	System.out.println("*************this is /appAdmin/dashboard controller*********************");	    		    				
+	        return "appAdmin/dashboard";
+	    }
 	
 	    @RequestMapping(value="/AddNewInstitute",method = RequestMethod.GET)  
 	    public String  AddNewInstitute(Model model) {  

@@ -68,4 +68,10 @@ public class LoginServiceImpl implements LoginService {
 		return loginDAO.Isenabled(login);
 	}
 
+	@Override
+	public Login findByUsername(String username) {
+		
+		return loginDAO.findByUsername(username);
+	}
+
 }

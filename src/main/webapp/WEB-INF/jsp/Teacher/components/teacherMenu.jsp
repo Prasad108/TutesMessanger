@@ -5,7 +5,7 @@
               <!-- sidebar menu start-->
               <ul class="sidebar-menu">                
                   <li class="active">
-                      <a class="" href="TeacherHome">
+                      <a class="" href="home">
                           <i class="icon_house_alt"></i>
                           <span>Home{{4+4}}</span>
                       </a>

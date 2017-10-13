@@ -106,6 +106,15 @@ public class LoginDAOimpl implements LoginDAO {
 	}
 
 
+	@Override
+	@Transactional
+	public Login findByUsername(String username) {
+		Query query=currentSession().createQuery("from Login l where l.username = :username");
+		query.setParameter("username",username);				
+		return (Login) query.uniqueResult();
+	}
+
+
 
 
 	

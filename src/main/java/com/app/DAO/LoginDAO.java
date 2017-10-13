@@ -18,6 +18,7 @@ public interface LoginDAO {
 	public boolean exist(Login login);
 	public boolean Isenabled(Login login);
 	public Login find_By_Uname_pwd(Login l);
+	public Login findByUsername(String username);
 	
 	
 	

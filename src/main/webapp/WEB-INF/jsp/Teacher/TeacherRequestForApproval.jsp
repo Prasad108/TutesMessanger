@@ -4,27 +4,8 @@
 <html ng-app="myApp" ng-controller="myCtrl">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-
- <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Creative - Bootstrap 3 Responsive Admin Template">
-    <meta name="author" content="GeeksLabs">
-    <meta name="keyword" content="Creative, Dashboard, Admin, Template, Theme, Bootstrap, Responsive, Retina, Minimal">
-    <link rel="shortcut icon" href="img/favicon.png">
-
-   
-
-    <!-- Bootstrap CSS -->    
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <!-- bootstrap theme -->
-    <link href="css/bootstrap-theme.css" rel="stylesheet">
-    <!--external css-->
-    <!-- font icon -->
-    <link href="css/elegant-icons-style.css" rel="stylesheet" />
-    <link href="css/font-awesome.min.css" rel="stylesheet" />
-    <!-- Custom styles -->
-    <link href="css/style.css" rel="stylesheet">
-    <link href="css/style-responsive.css" rel="stylesheet" />
+	<jsp:include page="/WEB-INF/jsp/components/defaultHead.jsp" /> 
+ 
 <title>TeacherApprover</title>
  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.js"></script> 
  <script>
@@ -331,19 +312,14 @@
                             
           
 <table>
-<div>
-  
+<div>    
+    
 </table>
 </div>
    </section>
- </section>   
-     <!-- container section start --> 	
-
-<script src="js/jquery.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <!-- nice scroll -->
-    <script src="js/jquery.scrollTo.min.js"></script>
-    <script src="js/jquery.nicescroll.js" type="text/javascript"></script><!--custome script for all page-->
-    <script src="js/scripts.js"></script>
+    <!-- container section start -->
+<jsp:include page="/WEB-INF/jsp/components/defaultScript.jsp" />
+   </section>
+ <!-- container section start -->
 </body>
 </html>

@@ -26,13 +26,14 @@ CREATE TABLE `branch` (
   `instituteid` int(11) DEFAULT NULL,
   `Name` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `instituteid` (`instituteid`),
-  CONSTRAINT `branch_ibfk_1` FOREIGN KEY (`instituteid`) REFERENCES `institute` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+  KEY `FKnxfgigw3bfa77sdopkoiybuy6` (`instituteid`),
+  CONSTRAINT `FKnxfgigw3bfa77sdopkoiybuy6` FOREIGN KEY (`instituteid`) REFERENCES `institute` (`id`),
+  CONSTRAINT `branch_ibfk_1` FOREIGN KEY (`instituteid`) REFERENCES `institute` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 /*Data for the table `branch` */
 
-insert  into `branch`(`id`,`instituteid`,`Name`) values (1,1,'newBranch'),(2,1,'newBranch2'),(3,1,'newBranch3'),(4,1,'newBranch4'),(5,43,'newBranch'),(6,43,'newBranch2'),(7,43,'newBranch3'),(8,43,'b4'),(9,44,'pune'),(10,44,'Nashik'),(11,44,'Banglur'),(12,44,'Kolhapur'),(13,44,'Mumbai'),(14,50,'Pune');
+insert  into `branch`(`id`,`instituteid`,`Name`) values (15,50,'Pune');
 
 /*Table structure for table `classes` */
 
@@ -43,13 +44,14 @@ CREATE TABLE `classes` (
   `branchid` int(11) DEFAULT NULL,
   `name` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `branch constraint` (`branchid`),
-  CONSTRAINT `branch constraint` FOREIGN KEY (`branchid`) REFERENCES `branch` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+  KEY `FK8txt3facl8ithk4d24werxdj0` (`branchid`),
+  CONSTRAINT `FK8txt3facl8ithk4d24werxdj0` FOREIGN KEY (`branchid`) REFERENCES `branch` (`id`),
+  CONSTRAINT `branch constraint` FOREIGN KEY (`branchid`) REFERENCES `branch` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 
 /*Data for the table `classes` */
 
-insert  into `classes`(`id`,`branchid`,`name`) values (1,9,'class1'),(2,9,'class2'),(3,10,'10th class'),(4,10,'10th class'),(5,10,'10th class'),(6,10,'12th class'),(7,10,'11th class'),(9,9,'1st std'),(10,9,' 2nd standard'),(11,9,'3rd standard'),(12,11,'new Banglur class'),(13,13,'11th class'),(14,14,'11th class'),(15,14,'12th class'),(16,14,'10th class'),(17,14,'9 th Class');
+insert  into `classes`(`id`,`branchid`,`name`) values (18,15,'10th '),(19,15,'11th');
 
 /*Table structure for table `division` */
 
@@ -60,13 +62,14 @@ CREATE TABLE `division` (
   `classid` int(11) DEFAULT NULL,
   `name` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `class constraint` (`classid`),
-  CONSTRAINT `class constraint` FOREIGN KEY (`classid`) REFERENCES `classes` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+  KEY `FK25iyw80l6c7ieoxnxa0c07f4g` (`classid`),
+  CONSTRAINT `FK25iyw80l6c7ieoxnxa0c07f4g` FOREIGN KEY (`classid`) REFERENCES `classes` (`id`),
+  CONSTRAINT `class constraint` FOREIGN KEY (`classid`) REFERENCES `classes` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
 
 /*Data for the table `division` */
 
-insert  into `division`(`id`,`classid`,`name`) values (1,1,'div 123'),(2,11,'abcd'),(3,12,'new banglur class div'),(4,13,'Div A'),(5,12,'New Banglur division'),(6,14,'Division A'),(7,14,'Division B'),(8,15,'Division A (biology)'),(9,15,'Division B(Maths +Marathi + giography)'),(10,15,'Division C (Electronics )'),(11,14,'Division C'),(12,14,'Division D'),(13,14,'Division D'),(14,16,'Division B'),(15,16,'Division D'),(16,16,'Division A'),(17,16,'Division C'),(18,17,'Division A');
+insert  into `division`(`id`,`classid`,`name`) values (19,18,'A'),(20,18,'B'),(21,18,'C'),(22,19,'PCM'),(23,19,'PCB');
 
 /*Table structure for table `institute` */
 
@@ -82,12 +85,13 @@ CREATE TABLE `institute` (
   `Subscrition_enable` tinyint(1) DEFAULT '0',
   `enable` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8;
+  UNIQUE KEY `name` (`name`),
+  UNIQUE KEY `UKpjpnqsflkw13n8c1rldhqtqeo` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8;
 
 /*Data for the table `institute` */
 
-insert  into `institute`(`id`,`name`,`Address`,`contactno`,`email`,`Subscription_till`,`Subscrition_enable`,`enable`) values (1,'Sinhgad',NULL,NULL,NULL,NULL,1,NULL),(26,'sdf','gasd','gf','f@d',NULL,NULL,NULL),(43,'a','a','7777777777','a@a.aa',NULL,1,NULL),(44,'b','b','8888888888','b@b.bb',NULL,1,NULL),(47,'v','v','9874561230','dasd@sdfas.in',NULL,1,NULL),(48,'abcd','ifg','8974563210','sdfas@sdaf.com',NULL,1,NULL),(49,'IAM','pune','8605617199','nilnik@gmail.com',NULL,1,NULL),(50,'Vidya','Pune','7894561230','vidya@vidya.com','2017-08-01',1,NULL),(56,'ddadfas','pune','sdfasd','asdfasdf','2017-08-26',1,NULL),(57,'fsdg','gdfgdfsg','dfgdfsg','dfgdfsg','2017-08-01',0,NULL),(58,'dsf','dfg','sd','dfg','2017-08-30',1,NULL),(59,'cvbh','gfh','fgh','sdf','2017-08-08',0,NULL),(60,'Time','abcd','8547961230','asdf@df.co','2017-08-31',1,NULL);
+insert  into `institute`(`id`,`name`,`Address`,`contactno`,`email`,`Subscription_till`,`Subscrition_enable`,`enable`) values (50,'Vidya','Pune','7894561230','vidya@vidya.com','2017-08-01',1,NULL),(61,'Chaitanhya Acedami','pune','7385620399','ratan@gmail.com','2018-01-01',1,NULL);
 
 /*Table structure for table `login` */
 
@@ -102,13 +106,15 @@ CREATE TABLE `login` (
   `enable_Institute` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`),
-  KEY `login_ibfk_1` (`role`),
-  CONSTRAINT `login_ibfk_1` FOREIGN KEY (`role`) REFERENCES `role` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
+  UNIQUE KEY `UK3svxcq6q51yfdg253l6x3dget` (`username`),
+  KEY `FKrn8y9fe820jtkri7daw25wa5e` (`role`),
+  CONSTRAINT `FKrn8y9fe820jtkri7daw25wa5e` FOREIGN KEY (`role`) REFERENCES `role` (`id`),
+  CONSTRAINT `login_ibfk_1` FOREIGN KEY (`role`) REFERENCES `role` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8;
 
 /*Data for the table `login` */
 
-insert  into `login`(`id`,`username`,`password`,`role`,`enable_Master`,`enable_Institute`) values (15,'Prasad','Dukale',2,0,0),(16,'Admin','Admin',4,1,1),(25,'a@a.aa','7777777777',3,0,0),(26,'b@b.bb','8888888888',3,0,0),(27,'dasd@sdfas.in','9874561230',3,0,0),(28,'sdfas@sdaf.com','8974563210',3,0,0),(29,'nilnik@gmail.com','8605617199',3,0,0),(30,'vidya@vidya.com','7894561230',3,1,1),(31,'jkbhjk','jlhl',3,0,0),(32,'abcd','efg',3,1,0),(33,'asdf@df.co','8547961230',3,1,0);
+insert  into `login`(`id`,`username`,`password`,`role`,`enable_Master`,`enable_Institute`) values (16,'Admin','Admin',4,1,1),(30,'vidya@vidya.com','7894561230',3,1,1),(34,'ratan@gmail.com','7385620399',3,1,1),(38,'teacher','teacher',2,1,1),(39,'user','user',58,1,1);
 
 /*Table structure for table `parent` */
 
@@ -146,11 +152,11 @@ CREATE TABLE `permissions` (
   `alter_institute_structure` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 /*Data for the table `permissions` */
 
-insert  into `permissions`(`id`,`authorise_student`,`authorise_teacher`,`fill_attendance`,`fill_schedule`,`mail_parent`,`mail_student`,`mail_teacher`,`msg_parent`,`msg_student`,`msg_teacher`,`set_exam`,`update_results`,`alter_institute_structure`) values (1,1,1,1,1,1,1,1,1,1,1,1,1,0),(8,1,1,1,1,1,1,1,1,1,1,1,1,0),(9,1,1,1,1,1,1,1,1,1,1,1,1,0),(10,1,1,1,1,1,1,1,1,1,1,1,1,0),(11,1,1,1,1,1,1,1,1,1,1,1,1,1),(12,1,1,1,1,1,1,1,1,1,1,1,1,1),(13,1,1,1,1,1,1,1,1,1,1,1,1,1),(14,1,1,1,1,1,1,1,1,1,1,1,1,1);
+insert  into `permissions`(`id`,`authorise_student`,`authorise_teacher`,`fill_attendance`,`fill_schedule`,`mail_parent`,`mail_student`,`mail_teacher`,`msg_parent`,`msg_student`,`msg_teacher`,`set_exam`,`update_results`,`alter_institute_structure`) values (13,0,1,1,1,1,1,1,1,1,1,1,1,1),(15,1,1,1,1,1,1,1,1,1,1,1,1,1);
 
 /*Table structure for table `role` */
 
@@ -160,11 +166,11 @@ CREATE TABLE `role` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(20) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=utf8;
 
 /*Data for the table `role` */
 
-insert  into `role`(`id`,`name`) values (1,'student'),(2,'teacher'),(3,'institute admin'),(4,'app master');
+insert  into `role`(`id`,`name`) values (1,'ROLE_STUDENT'),(2,'ROLE_TEACHER'),(3,'ROLE_INSTITUTE_ADMIN'),(4,'ROLE_APP_ADMIN'),(52,'cleaner'),(54,'Security'),(55,'Manager'),(57,'tester'),(58,'ROLE_ADMIN');
 
 /*Table structure for table `schedule` */
 
@@ -176,12 +182,14 @@ CREATE TABLE `schedule` (
   `string` varchar(1000) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `division` (`division`),
-  CONSTRAINT `division foreign kry` FOREIGN KEY (`division`) REFERENCES `division` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+  UNIQUE KEY `UKdwsnwm45935druiyn7l2rb9qx` (`division`),
+  CONSTRAINT `FKsn3hd79992f4c761tx84ms4v7` FOREIGN KEY (`division`) REFERENCES `division` (`id`),
+  CONSTRAINT `division foreign kry` FOREIGN KEY (`division`) REFERENCES `division` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `schedule` */
 
-insert  into `schedule`(`id`,`division`,`string`) values (1,8,'<iframe src=\'https://calendar.google.com/calendar/embed?mode=WEEK&amp;height=600&amp;wkst=2&amp;bgcolor=%23FFFFFF&amp;src=ci5fi0t0u5i8927il2ula0kbgs%40group.calendar.google.com&amp;color=%2329527A&amp;ctz=Asia%2FCalcutta\' style=\'border-width:0\' width=\'800\' height=\'600\' frameborder=\'0\' scrolling=\'no\'></iframe>'),(6,9,'<iframe src=\'https://calendar.google.com/calendar/embed?mode=WEEK&amp;height=600&amp;wkst=2&amp;bgcolor=%23FFFFFF&amp;src=ci5fi0t0u5i8927il2ula0kbgs%40group.calendar.google.com&amp;color=%2329527A&amp;ctz=Asia%2FCalcutta\' style=\'border-width:0\' width=\'800\' height=\'600\' frameborder=\'0\' scrolling=\'no\'></iframe>'),(9,11,'<iframe src=\'https://calendar.google.com/calendar/embed?mode=WEEK&amp;height=600&amp;wkst=2&amp;bgcolor=%23FFFFFF&amp;src=ci5fi0t0u5i8927il2ula0kbgs%40group.calendar.google.com&amp;color=%2329527A&amp;ctz=Asia%2FCalcutta\' style=\'border-width:0\' width=\'800\' height=\'600\' frameborder=\'0\' scrolling=\'no\'></iframe>'),(10,18,'<iframe src=\'https://calendar.google.com/calendar/embed?height=600&amp;wkst=1&amp;bgcolor=%2366ff99&amp;src=ci5fi0t0u5i8927il2ula0kbgs%40group.calendar.google.com&amp;color=%2329527A&amp;ctz=Asia%2FCalcutta\' style=\"border:solid 1px #777\" width=\"800\" height=\"600\" frameborder=\"0\" scrolling=\"no\"></iframe>');
+insert  into `schedule`(`id`,`division`,`string`) values (1,22,'<iframe src=\'https://calendar.google.com/calendar/embed?mode=WEEK&amp;height=600&amp;wkst=1&amp;bgcolor=%23FFFFFF&amp;src=ci5fi0t0u5i8927il2ula0kbgs%40group.calendar.google.com&amp;color=%2329527A&amp;ctz=Asia%2FCalcutta\' style=\"border:solid 1px #777\" width=\"800\" height=\"600\" frameborder=\"0\" scrolling=\"no\"></iframe>');
 
 /*Table structure for table `student` */
 
@@ -198,9 +206,12 @@ CREATE TABLE `student` (
   `father` varchar(50) NOT NULL,
   `instid` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `parent` (`parentid`),
-  KEY `loginid` (`loginid`),
-  KEY `instid` (`instid`),
+  KEY `FKddkv9iq8sx7tndj2dnn9k88ux` (`instid`),
+  KEY `FKkst5i99hukf1o65ca5tyf8jcl` (`loginid`),
+  KEY `FKiuk6flu7v3kxbkl6mx1x741fb` (`parentid`),
+  CONSTRAINT `FKddkv9iq8sx7tndj2dnn9k88ux` FOREIGN KEY (`instid`) REFERENCES `institute` (`id`),
+  CONSTRAINT `FKiuk6flu7v3kxbkl6mx1x741fb` FOREIGN KEY (`parentid`) REFERENCES `parent` (`id`),
+  CONSTRAINT `FKkst5i99hukf1o65ca5tyf8jcl` FOREIGN KEY (`loginid`) REFERENCES `login` (`id`),
   CONSTRAINT `parent` FOREIGN KEY (`parentid`) REFERENCES `parent` (`id`),
   CONSTRAINT `student_ibfk_1` FOREIGN KEY (`loginid`) REFERENCES `login` (`id`),
   CONSTRAINT `student_ibfk_2` FOREIGN KEY (`instid`) REFERENCES `institute` (`id`)
@@ -225,16 +236,19 @@ CREATE TABLE `teacher` (
   `permissions` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FKAA31CBE24AD2CFF8` (`permissions`),
-  KEY `instid` (`instid`),
-  KEY `loginid` (`loginid`),
-  CONSTRAINT `FKAA31CBE24AD2CFF8` FOREIGN KEY (`permissions`) REFERENCES `permissions` (`id`) ON UPDATE CASCADE,
-  CONSTRAINT `instid` FOREIGN KEY (`instid`) REFERENCES `institute` (`id`) ON UPDATE CASCADE,
-  CONSTRAINT `loginid` FOREIGN KEY (`loginid`) REFERENCES `login` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
+  KEY `FK5oud04u4jqqk94fw43yq24aia` (`instid`),
+  KEY `FK5nx0877rbto8ekmbaqej7c1e6` (`loginid`),
+  CONSTRAINT `FK5nx0877rbto8ekmbaqej7c1e6` FOREIGN KEY (`loginid`) REFERENCES `login` (`id`),
+  CONSTRAINT `FK5oud04u4jqqk94fw43yq24aia` FOREIGN KEY (`instid`) REFERENCES `institute` (`id`),
+  CONSTRAINT `FKAA31CBE24AD2CFF8` FOREIGN KEY (`permissions`) REFERENCES `permissions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FKpfiaka1s2wcphdf19527xcrjx` FOREIGN KEY (`permissions`) REFERENCES `permissions` (`id`),
+  CONSTRAINT `instid` FOREIGN KEY (`instid`) REFERENCES `institute` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `loginid` FOREIGN KEY (`loginid`) REFERENCES `login` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
 
 /*Data for the table `teacher` */
 
-insert  into `teacher`(`id`,`fname`,`lname`,`instid`,`email`,`contactno`,`loginid`,`permissions`) values (5,'Prasad','Dukale',1,'pdukale9@gmail.com','9657939975',15,NULL),(20,'a','a',43,'a@a.aa','7777777777',25,8),(21,'b','b',44,'b@b.bb','8888888888',26,9),(22,'dfg','sdgfsd',47,'dasd@sdfas.in','9874561230',27,10),(23,'fasf','asdfasdf',48,'sdfas@sdaf.com','8974563210',28,11),(24,'Anil','Nalawade',49,'nilnik@gmail.com','8605617199',29,12),(25,'Arpit','Sharma',50,'vidya@vidya.com','7894561230',30,13),(27,'demo','adfa',50,'sdfas','sdfasd',32,13),(28,'sdafsd','sdfasdf',60,'asdf@df.co','8547961230',33,14);
+insert  into `teacher`(`id`,`fname`,`lname`,`instid`,`email`,`contactno`,`loginid`,`permissions`) values (25,'Arpit','Sharma',50,'vidya@vidya.com','7894561230',30,13),(29,'Ratan ','Jadhav',61,'ratan@gmail.com','7385620399',34,15);
 
 /* Trigger structure for table `institute` */
 

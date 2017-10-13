@@ -15,5 +15,6 @@ public interface LoginService {
 	public boolean exist(Login login);
 	public Login find_By_Uname_pwd(Login l);
 	public boolean Isenabled(Login login);
+	public Login findByUsername(String username);
 
 }

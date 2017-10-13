@@ -19,5 +19,6 @@ public interface TeacherDAO {
 	public void changePassword(String newPassword  , Login login);
 	public Boolean checkPassword(String oldPassword, Integer id);
 	
+	
 
 }

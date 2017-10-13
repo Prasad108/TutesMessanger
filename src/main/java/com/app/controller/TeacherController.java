@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -37,6 +38,7 @@ import com.google.gson.Gson;
 
 @Controller
 @SessionAttributes({ "teacher", "appAdmin","institute","login","permissions","teacherJSON"  })
+@RequestMapping("/Teacher")
 public class TeacherController {
 	
 	@Autowired
@@ -499,5 +501,18 @@ public class TeacherController {
 			System.out.println(result);
 		return result;
 	 }
+	 
+	 
+	 
+	 
+	 @RequestMapping(value="/home",method = RequestMethod.GET)  
+	    public    String  taecherhome() {  
+	    	
+	    	System.out.println("*************this is /Teacher/home controller*********************");
+	    	
+	    	
+	    				
+	        return "Teacher/home";
+	    }
 
 }
