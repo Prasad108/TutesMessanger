@@ -6,7 +6,7 @@
 <!DOCTYPE html >
 <html>
 	<head>
- 	<title>App Admin</title>
+ 	<title>Teacher SignUp</title>
  
    <jsp:include page="/WEB-INF/jsp/components/defaultHead.jsp" /> 
    

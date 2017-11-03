@@ -26,8 +26,7 @@ CREATE TABLE `branch` (
   `instituteid` int(11) DEFAULT NULL,
   `Name` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `FKnxfgigw3bfa77sdopkoiybuy6` (`instituteid`),
-  CONSTRAINT `FKnxfgigw3bfa77sdopkoiybuy6` FOREIGN KEY (`instituteid`) REFERENCES `institute` (`id`),
+  KEY `branch_ibfk_1` (`instituteid`),
   CONSTRAINT `branch_ibfk_1` FOREIGN KEY (`instituteid`) REFERENCES `institute` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
@@ -44,8 +43,7 @@ CREATE TABLE `classes` (
   `branchid` int(11) DEFAULT NULL,
   `name` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `FK8txt3facl8ithk4d24werxdj0` (`branchid`),
-  CONSTRAINT `FK8txt3facl8ithk4d24werxdj0` FOREIGN KEY (`branchid`) REFERENCES `branch` (`id`),
+  KEY `branch constraint` (`branchid`),
   CONSTRAINT `branch constraint` FOREIGN KEY (`branchid`) REFERENCES `branch` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 
@@ -62,8 +60,7 @@ CREATE TABLE `division` (
   `classid` int(11) DEFAULT NULL,
   `name` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `FK25iyw80l6c7ieoxnxa0c07f4g` (`classid`),
-  CONSTRAINT `FK25iyw80l6c7ieoxnxa0c07f4g` FOREIGN KEY (`classid`) REFERENCES `classes` (`id`),
+  KEY `class constraint` (`classid`),
   CONSTRAINT `class constraint` FOREIGN KEY (`classid`) REFERENCES `classes` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
 
@@ -85,8 +82,7 @@ CREATE TABLE `institute` (
   `Subscrition_enable` tinyint(1) DEFAULT '0',
   `enable` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `name` (`name`),
-  UNIQUE KEY `UKpjpnqsflkw13n8c1rldhqtqeo` (`name`)
+  UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8;
 
 /*Data for the table `institute` */
@@ -106,9 +102,7 @@ CREATE TABLE `login` (
   `enable_Institute` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`),
-  UNIQUE KEY `UK3svxcq6q51yfdg253l6x3dget` (`username`),
-  KEY `FKrn8y9fe820jtkri7daw25wa5e` (`role`),
-  CONSTRAINT `FKrn8y9fe820jtkri7daw25wa5e` FOREIGN KEY (`role`) REFERENCES `role` (`id`),
+  KEY `login_ibfk_1` (`role`),
   CONSTRAINT `login_ibfk_1` FOREIGN KEY (`role`) REFERENCES `role` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8;
 
@@ -170,7 +164,7 @@ CREATE TABLE `role` (
 
 /*Data for the table `role` */
 
-insert  into `role`(`id`,`name`) values (1,'ROLE_STUDENT'),(2,'ROLE_TEACHER'),(3,'ROLE_INSTITUTE_ADMIN'),(4,'ROLE_APP_ADMIN'),(52,'cleaner'),(54,'Security'),(55,'Manager'),(57,'tester'),(58,'ROLE_ADMIN');
+insert  into `role`(`id`,`name`) values (1,'student'),(2,'teacher'),(3,'institute admin'),(4,'app master'),(52,'cleaner'),(54,'Security'),(55,'Manager'),(57,'tester'),(58,'ROLE_ADMIN');
 
 /*Table structure for table `schedule` */
 
@@ -182,8 +176,6 @@ CREATE TABLE `schedule` (
   `string` varchar(1000) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `division` (`division`),
-  UNIQUE KEY `UKdwsnwm45935druiyn7l2rb9qx` (`division`),
-  CONSTRAINT `FKsn3hd79992f4c761tx84ms4v7` FOREIGN KEY (`division`) REFERENCES `division` (`id`),
   CONSTRAINT `division foreign kry` FOREIGN KEY (`division`) REFERENCES `division` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
@@ -206,12 +198,9 @@ CREATE TABLE `student` (
   `father` varchar(50) NOT NULL,
   `instid` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `FKddkv9iq8sx7tndj2dnn9k88ux` (`instid`),
-  KEY `FKkst5i99hukf1o65ca5tyf8jcl` (`loginid`),
-  KEY `FKiuk6flu7v3kxbkl6mx1x741fb` (`parentid`),
-  CONSTRAINT `FKddkv9iq8sx7tndj2dnn9k88ux` FOREIGN KEY (`instid`) REFERENCES `institute` (`id`),
-  CONSTRAINT `FKiuk6flu7v3kxbkl6mx1x741fb` FOREIGN KEY (`parentid`) REFERENCES `parent` (`id`),
-  CONSTRAINT `FKkst5i99hukf1o65ca5tyf8jcl` FOREIGN KEY (`loginid`) REFERENCES `login` (`id`),
+  KEY `parent` (`parentid`),
+  KEY `loginid` (`loginid`),
+  KEY `instid` (`instid`),
   CONSTRAINT `parent` FOREIGN KEY (`parentid`) REFERENCES `parent` (`id`),
   CONSTRAINT `student_ibfk_1` FOREIGN KEY (`loginid`) REFERENCES `login` (`id`),
   CONSTRAINT `student_ibfk_2` FOREIGN KEY (`instid`) REFERENCES `institute` (`id`)
@@ -236,12 +225,9 @@ CREATE TABLE `teacher` (
   `permissions` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FKAA31CBE24AD2CFF8` (`permissions`),
-  KEY `FK5oud04u4jqqk94fw43yq24aia` (`instid`),
-  KEY `FK5nx0877rbto8ekmbaqej7c1e6` (`loginid`),
-  CONSTRAINT `FK5nx0877rbto8ekmbaqej7c1e6` FOREIGN KEY (`loginid`) REFERENCES `login` (`id`),
-  CONSTRAINT `FK5oud04u4jqqk94fw43yq24aia` FOREIGN KEY (`instid`) REFERENCES `institute` (`id`),
+  KEY `instid` (`instid`),
+  KEY `loginid` (`loginid`),
   CONSTRAINT `FKAA31CBE24AD2CFF8` FOREIGN KEY (`permissions`) REFERENCES `permissions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FKpfiaka1s2wcphdf19527xcrjx` FOREIGN KEY (`permissions`) REFERENCES `permissions` (`id`),
   CONSTRAINT `instid` FOREIGN KEY (`instid`) REFERENCES `institute` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `loginid` FOREIGN KEY (`loginid`) REFERENCES `login` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;

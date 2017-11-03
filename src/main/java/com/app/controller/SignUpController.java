@@ -17,15 +17,18 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.app.pojo.Institute;
 import com.app.pojo.Login;
+import com.app.pojo.Parent;
 import com.app.pojo.Permissions;
 import com.app.pojo.Role;
 import com.app.pojo.Teacher;
 import com.app.pojo.Student;
 import com.app.service.InstituteService;
 import com.app.service.LoginService;
+import com.app.service.ParentService;
 import com.app.service.PermissionsService;
 import com.app.service.RoleService;
 import com.app.service.TeacherService;
+import com.app.service.StudentService;
 
 @Controller
 @SessionAttributes({ "teacher", "institute" })
@@ -45,6 +48,12 @@ public class SignUpController {
 	
 	@Autowired
 	PermissionsService permissionsService;
+	
+	@Autowired
+	StudentService StudentService;
+	
+	@Autowired
+	ParentService parentService;
 	
 	@RequestMapping(value="/SignUp",method = RequestMethod.GET)  
     public String  SignUp(Model model ) {  
@@ -105,10 +114,44 @@ public class SignUpController {
     	
     	System.out.println("**********this is RegisterStudent controller**********");  
     	Student s= new Student();
-    	model.addAttribute("Student", s);    	
+    	model.addAttribute("Student", s); 
+    	List<Institute> institutelist =	instituteService.getall();
+    	model.addAttribute("institutelist",institutelist);
 		
         return "signup/StudentSignUpForm";  
     }
 
+    @Transactional
+    @RequestMapping(value="/SaveStudent",method = RequestMethod.POST)  
+    public String  SaveStudent(Model model,@ModelAttribute("Student") Student student) {  
+    	
+    	System.out.println("**********this is SaveStudent controller**********");  
+    	System.out.println("student is "+student);
+    	
+    	Role r= RoleService.findByName("ROLE_STUDENT"); // got the role of institute admin 	
+    	
+    	// created the object of login with username as email-id and pwd as contact no
+    	Login login= new Login(r,student.getEmail(),student.getContactno());
+    	// save login credentials    
+    	loginService.create(login);    
+    	
+    	Institute i= instituteService.find(student.getInstitute().getId());
+    	
+    	student.getParent().setFname(student.getFather());
+    	student.getParent().setLname(student.getLname());
+    	
+    	student.setLogin(login);
+    	student.setInstitute(i);
+    	
+    	Parent p=student.getParent();
+    	
+    	parentService.create(p);
+    			student.setParent(p);  	
+    	StudentService.create(student);
+    	
+    	System.out.println("student created");
+    		
+        return "signup/StudentSignUpForm";  
+    }
 
 }

@@ -8,6 +8,7 @@
  
 <title>TeacherApprover</title>
  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.js"></script> 
+ <jsp:include page="/WEB-INF/jsp/Teacher/components/angular.jsp" />
  <script>
 
   		var app = angular.module('myApp', []);

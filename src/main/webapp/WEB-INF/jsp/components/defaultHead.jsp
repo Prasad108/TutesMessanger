@@ -49,19 +49,19 @@
     <link href="/TutesMessanger/css/elegant-icons-style.css" rel="stylesheet" />
     <link href="/TutesMessanger/css/font-awesome.min.css" rel="stylesheet" />    
     <!-- full calendar css-->
-    <link href="/TutesMessanger/assets/fullcalendar/fullcalendar/bootstrap-fullcalendar.css" rel="stylesheet" />
-	<link href="/TutesMessanger/assets/fullcalendar/fullcalendar/fullcalendar.css" rel="stylesheet" />
+  <!--   <link href="/TutesMessanger/assets/fullcalendar/fullcalendar/bootstrap-fullcalendar.css" rel="stylesheet" />
+	<link href="/TutesMessanger/assets/fullcalendar/fullcalendar/fullcalendar.css" rel="stylesheet" /> -->
     <!-- easy pie chart-->
-    <link href="/TutesMessanger/assets/jquery-easy-pie-chart/jquery.easy-pie-chart.css" rel="stylesheet" type="text/css" media="screen"/>
+ <!--    <link href="/TutesMessanger/assets/jquery-easy-pie-chart/jquery.easy-pie-chart.css" rel="stylesheet" type="text/css" media="screen"/> -->
     <!-- owl carousel -->
-    <link rel="stylesheet" href="/TutesMessanger/css/owl.carousel.css" type="text/css">
-	<link href="/TutesMessanger/css/jquery-jvectormap-1.2.2.css" rel="stylesheet">
+    <!-- <link rel="stylesheet" href="/TutesMessanger/css/owl.carousel.css" type="text/css">
+	<link href="/TutesMessanger/css/jquery-jvectormap-1.2.2.css" rel="stylesheet"> -->
     <!-- Custom styles -->
 	<link rel="stylesheet" href="/TutesMessanger/css/fullcalendar.css">
 	<link href="/TutesMessanger/css/widgets.css" rel="stylesheet">
     <link href="/TutesMessanger/css/style.css" rel="stylesheet">
     <link href="/TutesMessanger/css/style-responsive.css" rel="stylesheet" />
-	<link href="/TutesMessanger/css/xcharts.min.css" rel=" stylesheet">	
-	<link href="/TutesMessanger/css/jquery-ui-1.10.4.min.css" rel="stylesheet">
+	<!-- <link href="/TutesMessanger/css/xcharts.min.css" rel=" stylesheet">	
+	<link href="/TutesMessanger/css/jquery-ui-1.10.4.min.css" rel="stylesheet"> -->
 	
 	 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.js"></script> 

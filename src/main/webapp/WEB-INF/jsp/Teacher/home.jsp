@@ -7,7 +7,7 @@
 	<head>
  		<title>Teacher </title>
    		<jsp:include page="/WEB-INF/jsp/components/defaultHead.jsp" /> 
-   		
+   		<jsp:include page="/WEB-INF/jsp/Teacher/components/angular.jsp" />
    		<%-- <jsp:include page="/WEB-INF/jsp/Teacher/components/angular.jsp" />  --%>
    		
    		<!-- <script>
@@ -25,8 +25,7 @@
    		</script> -->
    		
 		
-		 <script src="${pageContext.request.contextPath}/js/angular/TeacherHome.js"></script>
-		<%-- <script src="${pageContext.request.contextPath}/js/TeacherHome.js" type="text/javascript"> --%>	
+		
    	</head>
 <body >
 

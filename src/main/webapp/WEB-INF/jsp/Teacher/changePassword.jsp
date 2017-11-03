@@ -3,10 +3,11 @@
      <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>    
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<html ng-app="myApp" ng-controller="teacherCtrl">
 	<head>
  		<title>Teacher </title>
    		<jsp:include page="/WEB-INF/jsp/components/defaultHead.jsp" /> 
+   		<jsp:include page="/WEB-INF/jsp/Teacher/components/angular.jsp" />
    	</head>
 <body>
 <section id="container" class="">
@@ -52,8 +53,24 @@
           </div>
           </section>
  </section>   
-     <!-- container section start -->
-<jsp:include page="/WEB-INF/jsp/components/defaultScript.jsp" />
+    
+   	<script src="/TutesMessanger/js/jquery.js"></script>
+	<!-- bootstrap -->
+    <script src="/TutesMessanger/js/bootstrap.min.js"></script>
+     <!-- nice scroll -->
+    <script src="/TutesMessanger/js/jquery.scrollTo.min.js"></script>
+    <script src="/TutesMessanger/js/jquery.nicescroll.js" type="text/javascript"></script>
+   
+   
+  <!--   <!-- custom select -->
+    <script src="/TutesMessanger/js/jquery.customSelect.min.js" ></script>
+	<script src="/TutesMessanger/assets/chart-master/Chart.js"></script> -->
+   
+    <!--custome script for all page-->
+    <script src="/TutesMessanger/js/scripts.js"></script>
+   
+   
+
    </section>
  <!-- container section start -->
   </body>

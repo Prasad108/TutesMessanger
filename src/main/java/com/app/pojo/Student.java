@@ -23,7 +23,7 @@ public class Student implements java.io.Serializable {
 	private String fname;
 	private String lname;
 	private String contactno;
-	private byte[] email;
+	private String email;
 	private String father;
 
 	public Student() {
@@ -35,7 +35,7 @@ public class Student implements java.io.Serializable {
 	}
 
 	public Student(int id, Institute institute, Login login, Parent parent, String fname, String lname,
-			String contactno, byte[] email, String father) {
+			String contactno, String email, String father) {
 		this.id = id;
 		this.institute = institute;
 		this.login = login;
@@ -116,11 +116,11 @@ public class Student implements java.io.Serializable {
 	}
 
 	@Column(name = "email")
-	public byte[] getEmail() {
+	public String getEmail() {
 		return this.email;
 	}
 
-	public void setEmail(byte[] email) {
+	public void setEmail(String email) {
 		this.email = email;
 	}
 
