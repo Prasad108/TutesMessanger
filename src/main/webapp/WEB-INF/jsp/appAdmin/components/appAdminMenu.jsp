@@ -12,8 +12,8 @@
                           <span class="menu-arrow arrow_carrot-right"></span>
                       </a>
                       <ul class="sub">
-                          <li><a class="" href="/TutesMessanger/AppAdmin/ExistingInstitutes">Existing Institutes</a></li>
-                          <li><a class="" href="/TutesMessanger/AppAdmin/AddNewInstitute">ADD Institute</a></li>
+                          <li><a class="" href="${pageContext.request.contextPath}/AppAdmin/ExistingInstitutes">Existing Institutes</a></li>
+                          <li><a class="" href="${pageContext.request.contextPath}/AppAdmin/AddNewInstitute">ADD Institute</a></li>
                           
                       </ul>
                   </li>

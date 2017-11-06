@@ -187,7 +187,7 @@
 
     </script>
     
-     <script>
+   
 
   	<script src="${pageContext.request.contextPath}/js/jquery.js"></script>
 	<script src="${pageContext.request.contextPath}/js/jquery-ui-1.10.4.min.js"></script>
@@ -204,6 +204,6 @@
     <script src="${pageContext.request.contextPath}/js/scripts.js"></script>
    
 	
-    </script>	
+    	
   </body>
 </html>

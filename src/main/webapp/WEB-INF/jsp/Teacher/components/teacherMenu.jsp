@@ -11,13 +11,13 @@
                       </a>
                   </li>
                    <li>
-                      <a class="" href="widgets.html">
+                      <a class="" href="#">
                           <i class="icon_genius"></i>
                           <span>Messages</span>
                       </a>
                   </li>
                   <li>
-                      <a class="" href="widgets.html">
+                      <a class="" href="#">
                           <i class="icon_genius"></i>
                           <span>Emails</span>
                       </a>
@@ -29,7 +29,7 @@
                       </a>
                   </li>
                    <li>
-                      <a class="" href="widgets.html">
+                      <a class="" href="#">
                           <i class="icon_genius"></i>
                           <span>Attendance</span>
                       </a>
@@ -60,7 +60,7 @@
                       </ul>
                   </li>
                   <li>
-                      <a class="" href="widgets.html">
+                      <a class="" href="#">
                           <i class="icon_genius"></i>
                           <span>Request Approver</span>
                       </a>
@@ -73,8 +73,8 @@
                           <span class="menu-arrow arrow_carrot-right"></span>
                       </a>
                       <ul class="sub">
-                          <li><a class="" href="form_component.html">View Profile</a></li>                          
-                          <li><a class="" href="form_validation.html">Edit Profile</a></li>
+                          <li><a class="" href="#">View Profile</a></li>                          
+                          <li><a class="" href="#">Edit Profile</a></li>
                           <li><a class="" href="teacherChangePassword">Change Password</a></li>
                       </ul>
                   </li>                                                        				                    
