@@ -7,7 +7,7 @@ http://tutem-tutesmessanger.7e14.starter-us-west-2.openshiftapps.com/gologin
 
 for Master App Admin module     username- Admin
                                 password- Admin
-           teacher module       username- Prasad
-                                password- Dukale
+           teacher module       username- vidya@vidya.com
+                                password- 7894561230
            To see Template      username- Template
                                 password- Template
