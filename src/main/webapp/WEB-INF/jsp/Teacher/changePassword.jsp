@@ -54,20 +54,20 @@
           </section>
  </section>   
     
-   	<script src="/TutesMessanger/js/jquery.js"></script>
+   	<script src="${pageContext.request.contextPath}/js/jquery.js"></script>
 	<!-- bootstrap -->
-    <script src="/TutesMessanger/js/bootstrap.min.js"></script>
+    <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
      <!-- nice scroll -->
-    <script src="/TutesMessanger/js/jquery.scrollTo.min.js"></script>
-    <script src="/TutesMessanger/js/jquery.nicescroll.js" type="text/javascript"></script>
+    <script src="${pageContext.request.contextPath}/js/jquery.scrollTo.min.js"></script>
+    <script src="${pageContext.request.contextPath}/js/jquery.nicescroll.js" type="text/javascript"></script>
    
    
   <!--   <!-- custom select -->
-    <script src="/TutesMessanger/js/jquery.customSelect.min.js" ></script>
-	<script src="/TutesMessanger/assets/chart-master/Chart.js"></script> -->
+    <script src="${pageContext.request.contextPath}/js/jquery.customSelect.min.js" ></script>
+	<script src="${pageContext.request.contextPath}/assets/chart-master/Chart.js"></script> -->
    
     <!--custome script for all page-->
-    <script src="/TutesMessanger/js/scripts.js"></script>
+    <script src="${pageContext.request.contextPath}/js/scripts.js"></script>
    
    
 

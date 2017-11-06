@@ -1,46 +1,46 @@
-	<script src="/TutesMessanger/js/jquery.js"></script>
-	<script src="/TutesMessanger/js/jquery-ui-1.10.4.min.js"></script>
-    <script src="/TutesMessanger/js/jquery-1.8.3.min.js"></script>
-    <script type="text/javascript" src="/TutesMessanger/js/jquery-ui-1.9.2.custom.min.js"></script>
+	<script src="${pageContext.request.contextPath}/js/jquery.js"></script>
+	<script src="${pageContext.request.contextPath}/js/jquery-ui-1.10.4.min.js"></script>
+    <script src="${pageContext.request.contextPath}/js/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-ui-1.9.2.custom.min.js"></script>
     <!-- bootstrap -->
-    <script src="/TutesMessanger/js/bootstrap.min.js"></script>
+    <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
     <!-- nice scroll -->
-    <script src="/TutesMessanger/js/jquery.scrollTo.min.js"></script>
-    <script src="/TutesMessanger/js/jquery.nicescroll.js" type="text/javascript"></script>
+    <script src="${pageContext.request.contextPath}/js/jquery.scrollTo.min.js"></script>
+    <script src="${pageContext.request.contextPath}/js/jquery.nicescroll.js" type="text/javascript"></script>
     <!-- charts scripts -->
-    <script src="/TutesMessanger/assets/jquery-knob/js/jquery.knob.js"></script>
-    <script src="/TutesMessanger/js/jquery.sparkline.js" type="text/javascript"></script>
-    <script src="/TutesMessanger/assets/jquery-easy-pie-chart/jquery.easy-pie-chart.js"></script>
-    <script src="/TutesMessanger/js/owl.carousel.js" ></script>
+    <script src="${pageContext.request.contextPath}/assets/jquery-knob/js/jquery.knob.js"></script>
+    <script src="${pageContext.request.contextPath}/js/jquery.sparkline.js" type="text/javascript"></script>
+    <script src="${pageContext.request.contextPath}/assets/jquery-easy-pie-chart/jquery.easy-pie-chart.js"></script>
+    <script src="${pageContext.request.contextPath}/js/owl.carousel.js" ></script>
     <!-- jQuery full calendar -->
-    <script src="/TutesMessanger/js/fullcalendar.min.js"></script> 
-	<script src="/TutesMessanger/assets/fullcalendar/fullcalendar/fullcalendar.js"></script>
+    <script src="${pageContext.request.contextPath}/js/fullcalendar.min.js"></script> 
+	<script src="${pageContext.request.contextPath}/assets/fullcalendar/fullcalendar/fullcalendar.js"></script>
     <!--script for this page only-->
-    <script src="/TutesMessanger/js/calendar-custom.js"></script>
-	<script src="/TutesMessanger/js/jquery.rateit.min.js"></script>
+    <script src="${pageContext.request.contextPath}/js/calendar-custom.js"></script>
+	<script src="${pageContext.request.contextPath}/js/jquery.rateit.min.js"></script>
     <!-- custom select -->
-    <script src="/TutesMessanger/js/jquery.customSelect.min.js" ></script>
-	<script src="/TutesMessanger/assets/chart-master/Chart.js"></script>
+    <script src="${pageContext.request.contextPath}/js/jquery.customSelect.min.js" ></script>
+	<script src="${pageContext.request.contextPath}/assets/chart-master/Chart.js"></script>
    
     <!--custome script for all page-->
-    <script src="/TutesMessanger/js/scripts.js"></script>
+    <script src="${pageContext.request.contextPath}/js/scripts.js"></script>
    
    
     <!-- custom script for this page-->
-    <script src="/TutesMessanger/js/sparkline-chart.js"></script>
-    <script src="/TutesMessanger/js/easy-pie-chart.js"></script>
-	<script src="/TutesMessanger/js/jquery-jvectormap-1.2.2.min.js"></script>
-	<script src="/TutesMessanger/js/jquery-jvectormap-world-mill-en.js"></script>
-	<script src="/TutesMessanger/js/xcharts.min.js"></script>
-	<script src="/TutesMessanger/js/jquery.autosize.min.js"></script>
-	<script src="/TutesMessanger/js/jquery.placeholder.min.js"></script>
-	<script src="/TutesMessanger/js/gdp-data.js"></script>	
-	<script src="/TutesMessanger/js/morris.min.js"></script>
-	<script src="/TutesMessanger/js/sparklines.js"></script>	
-	<script src="/TutesMessanger/js/charts.js"></script>
-	<script src="/TutesMessanger/js/jquery.slimscroll.min.js"></script>
+    <script src="${pageContext.request.contextPath}/js/sparkline-chart.js"></script>
+    <script src="${pageContext.request.contextPath}/js/easy-pie-chart.js"></script>
+	<script src="${pageContext.request.contextPath}/js/jquery-jvectormap-1.2.2.min.js"></script>
+	<script src="${pageContext.request.contextPath}/js/jquery-jvectormap-world-mill-en.js"></script>
+	<script src="${pageContext.request.contextPath}/js/xcharts.min.js"></script>
+	<script src="${pageContext.request.contextPath}/js/jquery.autosize.min.js"></script>
+	<script src="${pageContext.request.contextPath}/js/jquery.placeholder.min.js"></script>
+	<script src="${pageContext.request.contextPath}/js/gdp-data.js"></script>	
+	<script src="${pageContext.request.contextPath}/js/morris.min.js"></script>
+	<script src="${pageContext.request.contextPath}/js/sparklines.js"></script>	
+	<script src="${pageContext.request.contextPath}/js/charts.js"></script>
+	<script src="${pageContext.request.contextPath}/js/jquery.slimscroll.min.js"></script>
 
-<!-- 	<script src="/TutesMessanger/assets/angular.min.js"></script> -->
+<!-- 	<script src="${pageContext.request.contextPath}/assets/angular.min.js"></script> -->
 	
 	
 	

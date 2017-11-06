@@ -8,6 +8,7 @@
 					<ol class="breadcrumb">
 						<li><i class="fa fa-home"></i><a href="index.html">Home</a></li>
 						<li><i class="fa fa-laptop"></i>Dashboard</li>						  	
+						
 					</ol>
 				</div>
 			</div>
@@ -128,7 +129,7 @@
 								</thead>   
 								<tbody>
 									<tr>
-										<td><img src="img/Germany.png" style="height:18px; margin-top:-2px;"></td>
+										<td><img src="${pageContext.request.contextPath}/img/Germany.png" style="height:18px; margin-top:-2px;"></td>
 										<td>Germany</td>
 										<td>2563</td>
 										<td>1025</td>
@@ -143,7 +144,7 @@
 										</td>
 									</tr>
 									<tr>
-										<td><img src="img/India.png" style="height:18px; margin-top:-2px;"></td>
+										<td><img src="${pageContext.request.contextPath}/img/India.png" style="height:18px; margin-top:-2px;"></td>
 										<td>India</td>
 										<td>3652</td>
 										<td>2563</td>
@@ -158,7 +159,7 @@
 										</td>
 									</tr>
 									<tr>
-										<td><img src="img/Spain.png" style="height:18px; margin-top:-2px;"></td>
+										<td><img src="${pageContext.request.contextPath}/img/Spain.png" style="height:18px; margin-top:-2px;"></td>
 										<td>Spain</td>
 										<td>562</td>
 										<td>452</td>
@@ -173,7 +174,7 @@
 										</td>
 									</tr>
 									<tr>
-										<td><img src="img/India.png" style="height:18px; margin-top:-2px;"></td>
+										<td><img src="${pageContext.request.contextPath}/img/India.png" style="height:18px; margin-top:-2px;"></td>
 										<td>Russia</td>
 										<td>1258</td>
 										<td>958</td>
@@ -188,7 +189,7 @@
 										</td>
 									</tr>
 									<tr>
-										<td><img src="img/Spain.png" style="height:18px; margin-top:-2px;"></td>
+										<td><img src="${pageContext.request.contextPath}/img/Spain.png" style="height:18px; margin-top:-2px;"></td>
 										<td>USA</td>
 										<td>4856</td>
 										<td>3621</td>
@@ -203,7 +204,7 @@
 										</td>
 									</tr>
 									<tr>
-										<td><img src="img/Germany.png" style="height:18px; margin-top:-2px;"></td>
+										<td><img src="${pageContext.request.contextPath}/img/Germany.png" style="height:18px; margin-top:-2px;"></td>
 										<td>Brazil</td>
 										<td>265</td>
 										<td>102</td>
@@ -218,7 +219,7 @@
 										</td>
 									</tr>
 									<tr>
-										<td><img src="img/Germany.png" style="height:18px; margin-top:-2px;"></td>
+										<td><img src="${pageContext.request.contextPath}/img/Germany.png" style="height:18px; margin-top:-2px;"></td>
 										<td>Coloumbia</td>
 										<td>265</td>
 										<td>102</td>
@@ -233,7 +234,7 @@
 										</td>
 									</tr>
 									<tr>
-										<td><img src="img/Germany.png" style="height:18px; margin-top:-2px;"></td>
+										<td><img src="${pageContext.request.contextPath}/img/Germany.png" style="height:18px; margin-top:-2px;"></td>
 										<td>France</td>
 										<td>265</td>
 										<td>102</td>
@@ -338,7 +339,7 @@
                       <li class="by-me">
                         <!-- Use the class "pull-left" in avatar -->
                         <div class="avatar pull-left">
-                          <img src="img/user.jpg" alt=""/>
+                          <img src="${pageContext.request.contextPath}/img/user.jpg" alt=""/>
                         </div>
 
                         <div class="chat-content">
@@ -353,7 +354,7 @@
                       <li class="by-other">
                         <!-- Use the class "pull-right" in avatar -->
                         <div class="avatar pull-right">
-                          <img src="img/user22.png" alt=""/>
+                          <img src="${pageContext.request.contextPath}/img/user22.png" alt=""/>
                         </div>
 
                         <div class="chat-content">
@@ -366,7 +367,7 @@
 
                       <li class="by-me">
                         <div class="avatar pull-left">
-                          <img src="img/user.jpg" alt=""/>
+                          <img src="${pageContext.request.contextPath}/img/user.jpg" alt=""/>
                         </div>
 
                         <div class="chat-content">
@@ -379,7 +380,7 @@
                       <li class="by-other">
                         <!-- Use the class "pull-right" in avatar -->
                         <div class="avatar pull-right">
-                          <img src="img/user22.png" alt=""/>
+                          <img src="${pageContext.request.contextPath}/img/user22.png" alt=""/>
                         </div>
 
                         <div class="chat-content">
@@ -421,7 +422,7 @@
                               </div>
                               <div class="col-lg-4">
                                 <span class="profile-ava pull-right">
-                                        <img alt="" class="simple" src="img/avatar1_small.jpg">
+                                        <img alt="" class="simple" src="${pageContext.request.contextPath}/img/avatar1_small.jpg">
                                         Jenifer smith
                                 </span>                                
                               </div>
@@ -439,7 +440,7 @@
                                   </td>
                                   <td>
                                     <span class="profile-ava">
-                                        <img alt="" class="simple" src="img/avatar1_small.jpg">
+                                        <img alt="" class="simple" src="${pageContext.request.contextPath}/img/avatar1_small.jpg">
                                     </span>
                                   </td>
                               </tr>
@@ -477,7 +478,7 @@
                                   </td>
                                   <td>
                                       <span class="profile-ava">
-                                        <img alt="" class="simple" src="img/avatar1_small.jpg">
+                                        <img alt="" class="simple" src="${pageContext.request.contextPath}/img/avatar1_small.jpg">
                                       </span>
                                   </td>
                               </tr>
@@ -527,7 +528,7 @@
                                   </td>
                                   <td>
                                       <span class="profile-ava">
-                                        <img alt="" class="simple" src="img/avatar1_small.jpg">
+                                        <img alt="" class="simple" src="${pageContext.request.contextPath}/img/avatar1_small.jpg">
                                       </span>
                                   </td>
                               </tr>

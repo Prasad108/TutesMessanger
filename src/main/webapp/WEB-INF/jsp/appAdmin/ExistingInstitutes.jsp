@@ -15,19 +15,19 @@
     <meta name="description" content="Creative - Bootstrap 3 Responsive Admin Template">
     <meta name="author" content="GeeksLabs">
     <meta name="keyword" content="Creative, Dashboard, Admin, Template, Theme, Bootstrap, Responsive, Retina, Minimal">
-    <link rel="shortcut icon" href="/TutesMessanger/img/favicon.png">
+    <link rel="shortcut icon" href="${pageContext.request.contextPath}/img/favicon.png">
     
 <!-- Bootstrap CSS -->    
-    <link href="/TutesMessanger/css/bootstrap.min.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
     <!-- bootstrap theme -->
-    <link href="/TutesMessanger/css/bootstrap-theme.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/css/bootstrap-theme.css" rel="stylesheet">
     <!--external css-->
     <!-- font icon -->
-    <link href="/TutesMessanger/css/elegant-icons-style.css" rel="stylesheet" />
-    <link href="/TutesMessanger/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="${pageContext.request.contextPath}/css/elegant-icons-style.css" rel="stylesheet" />
+    <link href="${pageContext.request.contextPath}/css/font-awesome.min.css" rel="stylesheet" />
     <!-- Custom styles -->
-    <link href="/TutesMessanger/css/style.css" rel="stylesheet">
-    <link href="/TutesMessanger/css/style-responsive.css" rel="stylesheet" />
+    <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/css/style-responsive.css" rel="stylesheet" />
    
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 -->
@@ -40,8 +40,8 @@
 	
 	
     
-	<script type="text/javascript" src="/TutesMessanger/js/pikaday.js"></script>
-  <link rel="stylesheet" href="/TutesMessanger/css/pikaday.css">   
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/pikaday.js"></script>
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/pikaday.css">   
   
   
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
@@ -309,19 +309,19 @@ $(document).ready(function(){
     
     <script>
 
-  	<script src="/TutesMessanger/js/jquery.js"></script>
-	<script src="/TutesMessanger/js/jquery-ui-1.10.4.min.js"></script>
-    <script src="/TutesMessanger/js/jquery-1.8.3.min.js"></script>
-    <script type="text/javascript" src="/TutesMessanger/js/jquery-ui-1.9.2.custom.min.js"></script>
+  	<script src="${pageContext.request.contextPath}/js/jquery.js"></script>
+	<script src="${pageContext.request.contextPath}/js/jquery-ui-1.10.4.min.js"></script>
+    <script src="${pageContext.request.contextPath}/js/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-ui-1.9.2.custom.min.js"></script>
     <!-- bootstrap -->
-    <script src="/TutesMessanger/js/bootstrap.min.js"></script>
+    <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
     <!-- nice scroll -->
-    <script src="/TutesMessanger/js/jquery.scrollTo.min.js"></script>
-    <script src="/TutesMessanger/js/jquery.nicescroll.js" type="text/javascript"></script>
+    <script src="${pageContext.request.contextPath}/js/jquery.scrollTo.min.js"></script>
+    <script src="${pageContext.request.contextPath}/js/jquery.nicescroll.js" type="text/javascript"></script>
    
    
     <!--custome script for all page-->
-    <script src="/TutesMessanger/js/scripts.js"></script>
+    <script src="${pageContext.request.contextPath}/js/scripts.js"></script>
    
 	
     </script>	
