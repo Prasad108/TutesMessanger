@@ -77,7 +77,13 @@
                           <li><a class="" href="#">Edit Profile</a></li>
                           <li><a class="" href="teacherChangePassword">Change Password</a></li>
                       </ul>
-                  </li>                                                        				                    
+                  </li>  
+                   <li>
+                      <a class="" href="#" onclick="document.getElementById('logoutForm').submit();" >
+                          <i class="icon_key_alt"></i>
+                          <span>Log Out</span>
+                      </a>
+                  </li>                                                      				                    
               </ul>
               <!-- sidebar menu end-->
           </div>
