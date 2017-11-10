@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.app.DAO.InstituteDAO;
 import com.app.pojo.Institute;
+import com.app.pojo.Student;
 import com.app.pojo.Teacher;
 import com.app.service.InstituteService;
 
@@ -63,6 +64,12 @@ public class InstituteServiceImpl implements InstituteService {
 	public List<Teacher> getallPendingTeacherForApproval(Institute institute) {
 		// TODO Auto-generated method stub
 		return InstituteDAO.getallPendingTeacherForApproval(institute);
+	}
+
+	@Override
+	public List<Student> getallPendingStudentForApproval(Institute institute) {
+		// TODO Auto-generated method stub
+		return InstituteDAO.getallPendingStudentForApproval(institute);
 	}
 
 }

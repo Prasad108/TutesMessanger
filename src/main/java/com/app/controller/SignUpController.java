@@ -126,6 +126,11 @@ public class SignUpController {
     public String  SaveStudent(Model model,@ModelAttribute("Student") Student student) {  
     	
     	System.out.println("**********this is SaveStudent controller**********");  
+    	
+    	String result="";
+    	try
+		{
+    	
     	System.out.println("student is "+student);
     	
     	Role r= RoleService.findByName("ROLE_STUDENT"); // got the role of institute admin 	
@@ -150,8 +155,23 @@ public class SignUpController {
     	StudentService.create(student);
     	
     	System.out.println("student created");
+    	
+    	model.addAttribute("SuccessMessage","Student Saved succesffully. Please wait till Institute sanctions your account");
+    	
+    	result="signup/SaveStudentResult";
+    	
+			
+		}
+		catch(Exception e)
+		{
+			System.out.println(e.getMessage());
+			System.out.println(e);
+			System.out.println("error in saving student ");
+			model.addAttribute("ErrorMessage","Error in Saaving Student...!!!");
+			result="signup/SaveStudentResult";
+		}
     		
-        return "signup/StudentSignUpForm";  
+        return result;  
     }
 
 }

@@ -1,23 +1,49 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html ng-app="myApp" ng-controller="myCtrl">
+<html ng-app="myApp" ng-controller="myCtrl" >
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<jsp:include page="/WEB-INF/jsp/components/defaultHead.jsp" /> 
  
 <title>TeacherApprover</title>
- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.js"></script> 
- <jsp:include page="/WEB-INF/jsp/Teacher/components/angular.jsp" />
+
  <script>
 
-  		var app = angular.module('myApp', []);
+ var app = angular.module('myApp',[]);
+
+ app.config(function($httpProvider) {
+	 $httpProvider.defaults.headers.post['My-Header']='value' 
+	}); 
+ 
+  		
+  		/* app.config(function($httpProvider) {
+  		  $httpProvider.defaults.xsrfCookieName = 'XSRF-TOKEN';
+  		  $httpProvider.defaults.xsrfHeaderName = 'X-XSRF-TOKEN';
+  		}); */
+  		/* /* app.config([
+  		  "$httpProvider", function($httpProvider) {
+  		    $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content');
+  		  }
+  		]);  */ 
+  		
+  		/*  app.config(['$httpProvider', function($httpProvider) {
+  	  		 
+  	  csrfToken = 
+  	  $httpProvider.defaults.headers.post['X-CSRF-Token'] = csrfToken
+  	  $httpProvider.defaults.headers.put['X-CSRF-Token'] = csrfToken
+  	  $httpProvider.defaults.headers.patch['X-CSRF-Token'] = csrfToken
+  	  $httpProvider.defaults.headers.delete['X-CSRF-Token'] = csrfToken
+  		}]);  
+ */
+  		
    		app.controller('myCtrl', function($scope, $http) {
 
    		
    			$scope.teacherList=JSON.parse('${TeacherListJSON}');
    			$scope.teacher=JSON.parse('${teacherJSON}');
    			$scope.permissions=JSON.parse('${permissions}'); 
+   		 console.log("hello console");
    		 $scope.checkbox = {
    				authorise_student : false,
    				authorise_teacher :false,
@@ -57,24 +83,39 @@
    		    };
    		
 
+   		
 
-
-   		//-------------Approve fucntion-------------------
+   		/* //-------------Approve fucntion-------------------
    		    $scope.approve=function(teacher)
    		    { 
 
+   		    	
+
+   		    console.log("inside teacher approval request")
+
    		    	var data = JSON.stringify({authoriseStudent:$scope.checkbox.authorise_student,authoriseTeacher:$scope.checkbox.authorise_teacher,fillAttendance:$scope.checkbox.fill_attendance,fillSchedule:$scope.checkbox.fill_schedule,mailParent:$scope.checkbox.mail_parent,mailStudent:$scope.checkbox.mail_student,mailTeacher:$scope.checkbox.mail_teacher,msgParent:$scope.checkbox.msg_parent,msgStudent:$scope.checkbox.msg_student,msgTeacher:$scope.checkbox.msg_teacher,setExam:$scope.checkbox.set_exam,updateResults:$scope.checkbox.update_results,alterInstituteStructure:$scope.checkbox.alter_institute_structure});
-   	   		    
+   		 var csrf = $scope.csrf_token;
+ 	    console.log("csrf token is"+scrf)
+   		 
+   		  console.log("inside teacher approval request datat is :"+data);
+
+   		
    		        $http({
-   		            url: "approveTeacherApprovalRequest/"+teacher.id,
+   		            url: "TeacherRequestApprover/"+teacher.id,
+   		         contentType : 'application/json; charset=utf-8',
+   		      dataType : 'json',
    		            method: "POST",  
-   		         data: data        
+   		         data  :data  ,
+   		      headers: {'X-CSRFToken' : csrf }
+   		     
    		        })
-   		        .then(function(response) {
-   		                // if success       	
+   		        .then(function successCallback(response) {
+   		                // if success   
+   		                
+   		                console.log("response came");    	
    		        	
 				var status=response.data.status;
-				if(status=="success"){
+				if(response.data.status=="success"){
 
 					 console.log(" teacher is approved : "+teacher.id);
    		        	 console.log("teacher is deleted and response recieved is :"+response.data.message);
@@ -87,30 +128,105 @@
 
 				}          
    		        }, 
-   		        function(data) { // optional
+   		     function errorCallback(response) {
    		                // failed
-   		                 $scope.deletemessage=data.message;
+   		                
+   		                 console.log("error response came");    	
+   		                 $scope.deletemessage=response.data.message;
    		        	 console.log(" teacher is deletion failed and response is "+data.message);      
    		        });
 
    		    };
+ */
+
+
+//-------------Approve fucntion-------------------
+    $scope.approve=function(teacher)
+    { 
+
+	 var parameters = {};
+
+	
+	 
+	 parameters.authoriseStudent=$scope.checkbox.authorise_student;
+	 parameters.authoriseTeacher=$scope.checkbox.authorise_teacher;
+	 parameters.fillAttendance=$scope.checkbox.fill_attendance;
+	 parameters.fillSchedule=$scope.checkbox.fill_schedule;
+	 parameters.mailParent=$scope.checkbox.mail_parent;
+	 parameters.mailStudent=$scope.checkbox.mail_student;
+	 parameters.mailTeacher=$scope.checkbox.mail_teacher;
+	 parameters.msgParent=$scope.checkbox.msg_parent;
+	 parameters.msgStudent=$scope.checkbox.msg_student;
+	 parameters.msgTeacher=$scope.checkbox.msg_teacher;
+	 parameters.setExam=$scope.checkbox.set_exam;
+	 parameters.updateResults=$scope.checkbox.update_results;
+	 parameters.alterInstituteStructure=$scope.checkbox.alter_institute_structure
+	 
+
+    console.log("inside teacher approval request")
+
+    	var data = JSON.stringify({});
+
+  console.log("inside teacher approval request datat is :"+data);
+
+
+        $http({
+            url: "TeacherRequestApprover/"+teacher.id,
+         contentType : 'application/json; charset=utf-8',
+      dataType : 'json',
+            method: "GET",  
+            params :parameters      
+        })
+        .then(function successCallback(response) {
+                // if success   
+                
+                console.log("response came");    	
+        	
+		var status=response.data.status;
+		if(response.data.status=="success"){
+
+			 console.log(" teacher is approved : "+teacher.id);
+        	 console.log("teacher is deleted and response recieved is :"+response.data.message);
+ 			
+        	 $scope.deletemessage=response.data.message;
+        	//delete the role from array
+        	 for( i=$scope.teacherList.length-1; i>=0; i--) {
+        		    if( $scope.teacherList[i].id == teacher.id) $scope.teacherList.splice(i,1);
+        		}    
+
+		}          
+        }, 
+     function errorCallback(response) {
+                // failed
+                
+                 console.log("error response came");    	
+                 $scope.deletemessage=response.data.message;
+        	 console.log(" teacher is deletion failed and response is "+data.message);      
+        });
+
+    };
 
 
 
 
       		 //-------------delete fucntion-------------------
-      		    $scope.delete=function(teacher)
+      		    $scope.deleteTeacher=function(teacher)
       		    { 
+
+      		      console.log("hello from delete function console");
       		        $http({
       		            url: "deleteTeacherApprovalRequest/"+teacher.id,
-      		            method: "POST",          
+      		            method: "GET",          
       		        })
-      		        .then(function(response) {
+      		        .then(function successCallback(response) {
 
-      		        	if(status=="success"){
-      		                // if success       	
+      		        
       		        	 console.log(" teacher is deleted : "+teacher.id);
       		        	 console.log("teacher is deleted and response recieved is :"+response.data.message);
+
+      		        	if(response.data.status=="success"){
+      		                // if success       	
+      		        	
 
       		 			
       		        	 $scope.deletemessage=response.data.message;
@@ -120,7 +236,7 @@
       		        		}  
       		        	}            
       		        }, 
-      		        function(data) { // optional
+      		      function errorCallback(response) {
       		                // failed
       		                 $scope.message=data.message;
       		        	 console.log(" teacher deletion failed and response is "+data.message);      
@@ -130,10 +246,11 @@
 
       		    
    			  			   			  			 			  			
-   		});   		
+   		}); 
+   		  		
    		</script>
 </head>
-<body>
+<body >
   <!-- Default header -->
 <jsp:include page="/WEB-INF/jsp/components/defaultHeader.jsp" /> 
 
@@ -175,7 +292,7 @@
                                   <div class="btn-group">
                                     
                                       <a class="btn btn-success"  data-toggle="modal" ng-click="resetPermissions()" href="#myModal"><i class="icon_check_alt2"></i></a>
-                                      <a class="btn btn-danger" ng-click="delete(teacher)"><i class="icon_close_alt2"></i></a>
+                                      <a class="btn btn-danger" ng-click="deleteTeacher(teacher)"><i class="icon_close_alt2"></i></a>
                                       
                                       
                                        <!-- Modal -->
@@ -311,12 +428,8 @@
                   </div>
               </div>
                             
-          
-<table>
-<div>    
-    
-</table>
-</div>
+ 
+
    </section>
     <!-- container section start -->
 <jsp:include page="/WEB-INF/jsp/components/defaultScript.jsp" />

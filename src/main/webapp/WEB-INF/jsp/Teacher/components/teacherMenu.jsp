@@ -53,7 +53,7 @@
                           <span class="menu-arrow arrow_carrot-right"></span>
                       </a>
                       <ul class="sub" >
-                          <li ng-show="permissions.authoriseStudent"><a class="" href="#">Student Requests</a></li>
+                          <li ng-show="permissions.authoriseStudent"><a class="" href="StudentRequestManager">Student Requests</a></li>
                            <li ng-show="permissions.authoriseTeacher"><a class="" href="TeacherRequestForApproval">Teacher Request </a></li>    
                           <li ng-show="permissions.authoriseStudent"><a class="" href="#">Edit/Delete Student</a></li>
                           <li ng-show="permissions.authoriseTeacher"><a class="" href="#">Edit/Delete Teacher</a></li>                       

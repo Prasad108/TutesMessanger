@@ -13,6 +13,7 @@ import com.app.DAO.InstituteDAO;
 import com.app.pojo.Institute;
 import com.app.pojo.Login;
 import com.app.pojo.Role;
+import com.app.pojo.Student;
 import com.app.pojo.Teacher;
 
 
@@ -83,6 +84,15 @@ public class instituteDAOImpl implements InstituteDAO {
 		query.setParameter("institute",institute);
 		return query.list();
 		
+	}
+
+
+	@Override
+	@Transactional
+	public List<Student> getallPendingStudentForApproval(Institute institute) {
+		Query query=currentSession().createQuery("SELECT s FROM Login l, Student s WHERE l.enableInstitute=FALSE AND l.id=s.login AND s.institute= :institute");
+		query.setParameter("institute",institute);
+		return query.list();
 	}
 
 }

@@ -25,14 +25,17 @@ import com.app.pojo.Login;
 import com.app.pojo.Permissions;
 import com.app.pojo.Role;
 import com.app.pojo.Schedule;
+import com.app.pojo.Student;
 import com.app.pojo.Teacher;
 import com.app.service.BranchService;
 import com.app.service.ClassesService;
 import com.app.service.DivisionService;
 import com.app.service.InstituteService;
 import com.app.service.LoginService;
+import com.app.service.ParentService;
 import com.app.service.PermissionsService;
 import com.app.service.ScheduleService;
+import com.app.service.StudentService;
 import com.app.service.TeacherService;
 import com.google.gson.Gson;
 
@@ -64,6 +67,12 @@ public class TeacherController {
 	
 	@Autowired
 	PermissionsService permissionsService;
+
+	@Autowired
+	StudentService StudentService;
+	
+	@Autowired
+	ParentService parentService;
 	
 	Gson gson = new Gson();
 	
@@ -445,7 +454,7 @@ public class TeacherController {
 	 
 	 
 	 
-	 @RequestMapping(value = "/deleteTeacherApprovalRequest/{id}", method = RequestMethod.POST)
+	 @RequestMapping(value = "/deleteTeacherApprovalRequest/{id}", method = RequestMethod.GET)
 	 @ResponseBody
 	  public String deleteTeacherApprovalRequest( @PathVariable("id") int id ){
 		 
@@ -472,14 +481,65 @@ public class TeacherController {
 	 
 	 
 	 
-	 @RequestMapping(value = "/approveTeacherApprovalRequest/{id}", method = RequestMethod.POST)
+	 /*@RequestMapping(value = "/TeacherRequestApprover/{id}", method = RequestMethod.GET)
 	 @ResponseBody
-	  public String approveTeacherApprovalRequest( @PathVariable("id") int id ,@RequestBody Permissions p, @ModelAttribute("teacher") Teacher teacher){
+	  public String approveTeacherApprovalRequest( @PathVariable("id") int id,@RequestBody Permissions p){
 		 
 			System.out.println("**********from /approveTeacherApprovalRequest/{id} controller**********");
 			
 			String result="";
-			System.out.println("permssions are :"+p);
+			,@RequestBody Permissions p, @ModelAttribute("teacher") Teacher teacher
+			System.out.println("permssions are :"+p);  
+			System.out.println("teacher to be updated is with id"+id);		
+				try
+				{
+					Teacher t=teacherService.find(id);		//find teacher								
+					permissionsService.create(p);			// create permissions	
+					t.setPermissions(p);					//attach permissions to teacher
+					teacherService.update(t);               //update teacher
+					Login l=loginService.find(t.getLogin().getId()); // get login of teacher
+					l.setEnableInstitute(true);				 // enable the institute flag 
+					loginService.update(l);				     //update login
+					System.out.println("Teacher is updated with the id "+id);
+					result="{\"message\":\"Teacher with id "+id+" is updated \",\"status\":\"success\"}";
+				}
+				catch(Exception e)
+				{
+					System.out.println(e.getMessage());
+					System.out.println(e);
+					System.out.println("error in updation with teacher id : "+id);
+					result="{\"message\":\"ERROR...!! Teacher with id "+id+" not updated\",\"c\":\"fail\"}";
+				}
+			System.out.println(result);
+		return result;
+	 }*/
+	 
+	 @RequestMapping(value = "/TeacherRequestApprover/{id}", method = RequestMethod.GET)
+	 @ResponseBody
+	  public String approveTeacherApprovalRequest( @PathVariable("id") int id,@RequestParam("authoriseStudent") boolean authoriseStudent,
+			  @RequestParam("authoriseTeacher") boolean authoriseTeacher,
+			  @RequestParam("fillAttendance") boolean fillAttendance,
+			  @RequestParam("fillSchedule") boolean fillSchedule,
+			  @RequestParam("mailParent") boolean mailParent,
+			  @RequestParam("mailStudent") boolean mailStudent,
+			  @RequestParam("mailTeacher") boolean mailTeacher,
+			  @RequestParam("msgParent") boolean msgParent,
+			  @RequestParam("msgStudent") boolean msgStudent,
+			  @RequestParam("msgTeacher") boolean msgTeacher,
+			  @RequestParam("setExam") boolean setExam,
+			  @RequestParam("updateResults") boolean updateResults,
+			  @RequestParam("alterInstituteStructure") boolean alterInstituteStructure
+			  ){
+		 
+			System.out.println("**********from /approveTeacherApprovalRequest/{id} controller**********");
+			
+			String result="";
+			System.out.println("authoriseTeacher"+authoriseTeacher+"fillAttendance:"+fillAttendance);
+			Permissions p=new Permissions( authoriseStudent,  authoriseTeacher,  fillAttendance,  fillSchedule,
+					 mailParent,  mailStudent,  mailTeacher,  msgParent,  msgStudent,
+					 msgTeacher,  setExam,  updateResults,  alterInstituteStructure);
+			
+			System.out.println("permssions are :"+p);  
 			System.out.println("teacher to be updated is with id"+id);		
 				try
 				{
@@ -517,4 +577,84 @@ public class TeacherController {
 	        return "Teacher/home";
 	    }
 
+	 
+	 @RequestMapping(value = "/StudentRequestManager", method = RequestMethod.GET)
+		public String StudentRequestManager(Model model,@ModelAttribute("teacher") Teacher teacher) {		
+			System.out.println("**********inside StudentRequestManager controller**********");
+			System.out.println("teachers insitute id is :"+teacher.getInstitute().getId());
+			List<Student> studnetList=instituteService.getallPendingStudentForApproval(instituteService.find(teacher.getInstitute().getId()));
+			for(Student s :studnetList)
+			{
+				System.out.println(s.getFname());
+			}
+			
+			String studentListJSON=gson.toJson(studnetList);
+			model.addAttribute("StudentListJSON", studentListJSON);
+			return "Teacher/StudentRequestManager";
+
+		}
+	 
+	 
+	 @RequestMapping(value = "/deleteStudentApprovalRequest/{id}", method = RequestMethod.GET)
+	 @ResponseBody
+	  public String deleteStudentApprovalRequest( @PathVariable("id") int id ){
+		 
+			System.out.println("**********from /deleteStudentApprovalRequest/{id} controller**********");
+			
+			String result="";									
+			System.out.println("student to be deleted is with id"+id);		
+				try{
+					Student s=StudentService.find(id);
+					System.out.println("first name of the student is "+s.getFname());
+					Login login= loginService.find(s.getLogin().getId());
+					System.out.println("login id is "+login.getId());
+				loginService.delet(login);
+				System.out.println("Student is deleted with the id "+id);
+				result="{\"message\":\"Student with id "+id+" is deleted \",\"status\":\"success\"}";
+				}
+				catch(Exception e)
+				{
+					System.out.println(e.getMessage());
+					e.printStackTrace();
+					System.out.println();
+					System.out.println("error in deletion with Student id : "+id);
+					result="{\"message\":\"ERROR...!! student with id "+id+" not deleted\",\"status\":\"fail\"}";
+				}
+			System.out.println(result);
+		return result;
+	 }
+	 
+	
+	 @RequestMapping(value = "/StudentRequestApprover/{id}", method = RequestMethod.GET)
+	 @ResponseBody
+	  public String StudentRequestApprover( @PathVariable("id") int id){
+		 
+			System.out.println("**********from /StudentRequestApprover/{id} controller**********");
+			
+			String result="";
+			
+			
+			System.out.println("studnet to be updated is with id"+id);		
+				try
+				{
+					Student s=StudentService.find(id);		//find teacher								
+					
+					Login l=loginService.find(s.getLogin().getId()); // get login of teacher
+					l.setEnableInstitute(true);				 // enable the institute flag 
+					loginService.update(l);				     //update login
+					System.out.println("Student is updated with the id "+id);
+					result="{\"message\":\"Studen with id "+id+" is updated \",\"status\":\"success\"}";
+				}
+				catch(Exception e)
+				{
+					System.out.println(e.getMessage());
+					System.out.println(e);
+					System.out.println("error in updation with Student id : "+id);
+					result="{\"message\":\"ERROR...!! Student with id "+id+" not updated\",\"c\":\"fail\"}";
+				}
+			System.out.println(result);
+		return result;
+	 }
+	 
+	 
 }

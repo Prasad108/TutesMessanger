@@ -1,9 +1,12 @@
 package com.app.pojo;
 // Generated 18 Sep, 2017 4:17:49 PM by Hibernate Tools 5.2.3.Final
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -17,9 +20,9 @@ import javax.persistence.Table;
 public class Student implements java.io.Serializable {
 
 	private int id;
-	private Institute institute;
-	private Login login;
-	private Parent parent;
+	private transient Institute institute;
+	private transient Login login;
+	private transient Parent parent;
 	private String fname;
 	private String lname;
 	private String contactno;
@@ -48,6 +51,7 @@ public class Student implements java.io.Serializable {
 	}
 
 	@Id
+	@GeneratedValue(strategy = IDENTITY)
 
 	@Column(name = "id", unique = true, nullable = false)
 	public int getId() {

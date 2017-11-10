@@ -8,11 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.app.pojo.Branch;
+
 import com.app.pojo.Student;
 
 @Repository("StudentDAO")
-public class StudentDAO implements com.app.DAO.StudentDAO {
+public class StudentDAOImpl implements com.app.DAO.StudentDAO {
 	
 
 	 @Autowired
@@ -52,7 +52,7 @@ public class StudentDAO implements com.app.DAO.StudentDAO {
 	@Override
 	@Transactional
 	public Student find(int id) {
-		return (Student)currentSession().get(Branch.class,id);
+		return (Student)currentSession().get(Student.class,id);
 	}
 
 	@Override

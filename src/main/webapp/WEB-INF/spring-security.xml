@@ -53,5 +53,7 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
 				authorities-by-username-query="SELECT username, r.name FROM role r, login l WHERE l.username=? AND l.role=r.id" />
 		</authentication-provider>
 	</authentication-manager>
+	
+	
 
 </beans:beans>

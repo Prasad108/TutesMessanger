@@ -217,7 +217,9 @@ public class LoginController {
 					break;
 
 				case 2:
-					// ** Teacher 
+					System.out.println("inside case 2--------------------------------------");
+					System.out.println("Teacher logged in");
+					/*// ** Teacher 
 					output = "Teacher/home"; 		
 					Teacher t=teacherService.findByLoginId(userLogin.getId());	
 					//t1.setLogin(userLogin);				
@@ -231,21 +233,14 @@ public class LoginController {
 					//model.addAttribute("login",gson.toJson(userLogin) );
 					model.addAttribute("permissions",gson.toJson(p1) );
 					System.out.println("teacher logged in");
-					break;
+					break;*/
 					
 				case 3://institute admin
 					System.out.println("inside case 3--------------------------------------");
 					output = "Teacher/home"; // ** institute admin					
 					Teacher t1=teacherService.findByLoginId(userLogin.getId());																					
 					Permissions p=permissionsService.find(t1.getPermissions().getId());					
-									
-					
-					//t1.setLogin(userLogin);			
-					//t1.setPermissions(p);
-					//t1.setInstitute(teacherService.GetInstitute(t1.getId()));
-					//t1.setLogin(userLogin);
-					
-					
+																	
 				
 					System.out.println(gson.toJson(teacherService.GetInstitute(t1.getId())));
 					System.out.println(gson.toJson(userLogin));
@@ -254,19 +249,12 @@ public class LoginController {
 					t1.setInstitute(teacherService.GetInstitute(t1.getId()));
 					t1.setLogin(userLogin);
 					
-					System.out.println("teacher is __________--------"+gson.toJson(t1));
-					
+					System.out.println("teacher is __________--------"+gson.toJson(t1));					
 					
 					redirectAttributes.addFlashAttribute("teacher",t1 );					
 					redirectAttributes.addFlashAttribute("teacherJSON",gson.toJson(t1));
-					redirectAttributes.addFlashAttribute("institute",gson.toJson(teacherService.GetInstitute(t1.getId())) );
-					//model.addAttribute("login",gson.toJson(userLogin) );
-					redirectAttributes.addFlashAttribute("permissions",gson.toJson(p) );
-					/*model.addAttribute("teacher",t1 );					
-					model.addAttribute("teacherJSON",gson.toJson(t1));
-					model.addAttribute("institute",gson.toJson(teacherService.GetInstitute(t1.getId())) );
-					//model.addAttribute("login",gson.toJson(userLogin) );
-					model.addAttribute("permissions",gson.toJson(p) );*/
+					redirectAttributes.addFlashAttribute("institute",gson.toJson(teacherService.GetInstitute(t1.getId())) );				
+					redirectAttributes.addFlashAttribute("permissions",gson.toJson(p) );				
 					System.out.println("institute admin logged in");
 					break;
 

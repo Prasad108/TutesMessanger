@@ -3,6 +3,7 @@ package com.app.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -146,6 +147,7 @@ public class LearnAngular {
 	    return JSON_RolesList;  	
 	    }
 		
+	@Secured("permitAll")
 	@RequestMapping(value="/angular/saveRole",method = RequestMethod.POST)  
 	 @ResponseBody public String saveRole(@RequestBody Role role){
 		 System.out.println("**********inside angular/role/saveRole controller**********");
@@ -169,6 +171,7 @@ public class LearnAngular {
 	    return result;  	
 	    }
 	
+	@Secured("permitAll")
 	 @RequestMapping(value = "/angular/deleteRole/{id}", method = RequestMethod.POST)
 	 @ResponseBody
 	  public String deleteRole( @PathVariable("id") int id ){
@@ -194,6 +197,7 @@ public class LearnAngular {
 		return result;
 }
 	 
+	@Secured("permitAll")
 	 @RequestMapping(value="/angular/UpdateRole",method = RequestMethod.POST)  
 	 @ResponseBody public String updatRole(@RequestBody Role role){
 		 System.out.println("**********inside angular/role/updatRole controller**********");

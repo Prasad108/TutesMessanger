@@ -3,6 +3,7 @@ package com.app.service;
 import java.util.List;
 
 import com.app.pojo.Institute;
+import com.app.pojo.Student;
 import com.app.pojo.Teacher;
 
 public interface InstituteService {
@@ -15,6 +16,7 @@ public interface InstituteService {
 	public Institute find(String name);
 	public List<Institute> getall();
 	public List<Teacher> getallPendingTeacherForApproval(Institute institute);
+	public List<Student> getallPendingStudentForApproval(Institute institute);
 
 
 }
