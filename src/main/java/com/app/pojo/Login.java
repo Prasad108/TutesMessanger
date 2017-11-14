@@ -1,5 +1,5 @@
 package com.app.pojo;
-// Generated 18 Sep, 2017 4:17:49 PM by Hibernate Tools 5.2.3.Final
+// Generated 14 Nov, 2017 11:41:36 AM by Hibernate Tools 5.2.3.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -30,16 +30,13 @@ public class Login implements java.io.Serializable {
 	private boolean enableInstitute;
 	private transient Set<Teacher> teachers = new HashSet<Teacher>(0);
 	private transient Set<Student> students = new HashSet<Student>(0);
-
-	
-	@Override
-	public String toString() {
-		return "Login [id=" + id + ", username=" + username + ", password=" + password + ", enableMaster="
-				+ enableMaster + ", enableInstitute=" + enableInstitute + "]";
-	}
+	private transient Set<Student> students_1 = new HashSet<Student>(0);
+	private transient Set<Teacher> teachers_1 = new HashSet<Teacher>(0);
 
 	public Login() {
 	}
+	
+
 
 	public Login(String username, String password, boolean enableMaster, boolean enableInstitute) {
 		this.username = username;
@@ -48,8 +45,17 @@ public class Login implements java.io.Serializable {
 		this.enableInstitute = enableInstitute;
 	}
 
+	public Login(Role role, String username, String password) {
+		super();
+		this.role = role;
+		this.username = username;
+		this.password = password;
+	}
+
+
+
 	public Login(Role role, String username, String password, boolean enableMaster, boolean enableInstitute,
-			Set<Teacher> teachers, Set<Student> students) {
+			Set<Teacher> teachers, Set<Student> students, Set<Student> students_1, Set<Teacher> teachers_1) {
 		this.role = role;
 		this.username = username;
 		this.password = password;
@@ -57,15 +63,8 @@ public class Login implements java.io.Serializable {
 		this.enableInstitute = enableInstitute;
 		this.teachers = teachers;
 		this.students = students;
-	}
-	
-	
-
-	public Login(Role role, String username, String password) {
-		super();
-		this.role = role;
-		this.username = username;
-		this.password = password;
+		this.students_1 = students_1;
+		this.teachers_1 = teachers_1;
 	}
 
 	@Id
@@ -142,6 +141,24 @@ public class Login implements java.io.Serializable {
 
 	public void setStudents(Set<Student> students) {
 		this.students = students;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "login")
+	public Set<Student> getStudents_1() {
+		return this.students_1;
+	}
+
+	public void setStudents_1(Set<Student> students_1) {
+		this.students_1 = students_1;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "login")
+	public Set<Teacher> getTeachers_1() {
+		return this.teachers_1;
+	}
+
+	public void setTeachers_1(Set<Teacher> teachers_1) {
+		this.teachers_1 = teachers_1;
 	}
 
 }

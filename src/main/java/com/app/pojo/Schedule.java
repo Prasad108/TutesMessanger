@@ -1,5 +1,5 @@
 package com.app.pojo;
-// Generated 18 Sep, 2017 4:17:49 PM by Hibernate Tools 5.2.3.Final
+// Generated 14 Nov, 2017 11:41:36 AM by Hibernate Tools 5.2.3.Final
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,20 +20,13 @@ import javax.persistence.UniqueConstraint;
 public class Schedule implements java.io.Serializable {
 
 	private Integer id;
-	private Division division;
+	private transient Division division;
 	private String string;
 
 	public Schedule() {
 	}
 
 	public Schedule(Division division, String string) {
-		this.division = division;
-		this.string = string;
-	}
-
-	public Schedule(Integer id, Division division, String string) {
-		super();
-		this.id = id;
 		this.division = division;
 		this.string = string;
 	}
@@ -67,11 +60,6 @@ public class Schedule implements java.io.Serializable {
 
 	public void setString(String string) {
 		this.string = string;
-	}
-
-	@Override
-	public String toString() {
-		return "Schedule [id=" + id + ", division=" + division + ", string=" + string + "]";
 	}
 
 }

@@ -1,12 +1,11 @@
 package com.app.pojo;
-// Generated 18 Sep, 2017 4:17:49 PM by Hibernate Tools 5.2.3.Final
-
-import static javax.persistence.GenerationType.IDENTITY;
+// Generated 14 Nov, 2017 11:41:36 AM by Hibernate Tools 5.2.3.Final
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -19,19 +18,18 @@ import javax.persistence.Table;
 @Table(name = "student", catalog = "tutesmessanger")
 public class Student implements java.io.Serializable {
 
-	private int id;
+	private Integer id;
+	private transient Division division;
 	private transient Institute institute;
 	private transient Login login;
 	private transient Parent parent;
 	private String fname;
+	private String father;
 	private String lname;
 	private String contactno;
 	private String email;
-	private String father;
 
-	public Student() {
-	}
-
+	
 	public Student(int id, String father) {
 		this.id = id;
 		this.father = father;
@@ -49,17 +47,49 @@ public class Student implements java.io.Serializable {
 		this.email = email;
 		this.father = father;
 	}
+	
+	public Student() {
+	}
+	
+	
+
+	public Student(String father) {
+		this.father = father;
+	}
+
+	public Student(Division division, Institute institute, Login login, Parent parent, String fname, String father,
+			String lname, String contactno, String email) {
+		this.division = division;
+		this.institute = institute;
+		this.login = login;
+		this.parent = parent;
+		this.fname = fname;
+		this.father = father;
+		this.lname = lname;
+		this.contactno = contactno;
+		this.email = email;
+	}
 
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 
 	@Column(name = "id", unique = true, nullable = false)
-	public int getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "divid")
+	public Division getDivision() {
+		return this.division;
+	}
+
+	public void setDivision(Division division) {
+		this.division = division;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -101,6 +131,15 @@ public class Student implements java.io.Serializable {
 		this.fname = fname;
 	}
 
+	@Column(name = "father", nullable = false, length = 50)
+	public String getFather() {
+		return this.father;
+	}
+
+	public void setFather(String father) {
+		this.father = father;
+	}
+
 	@Column(name = "lName")
 	public String getLname() {
 		return this.lname;
@@ -119,22 +158,13 @@ public class Student implements java.io.Serializable {
 		this.contactno = contactno;
 	}
 
-	@Column(name = "email")
+	@Column(name = "email", length = 20)
 	public String getEmail() {
 		return this.email;
 	}
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	@Column(name = "father", nullable = false, length = 50)
-	public String getFather() {
-		return this.father;
-	}
-
-	public void setFather(String father) {
-		this.father = father;
 	}
 
 }

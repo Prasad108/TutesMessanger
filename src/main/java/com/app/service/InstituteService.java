@@ -17,6 +17,7 @@ public interface InstituteService {
 	public List<Institute> getall();
 	public List<Teacher> getallPendingTeacherForApproval(Institute institute);
 	public List<Student> getallPendingStudentForApproval(Institute institute);
+	public List<Student> getallStudentWhoAreNotInAnyDivision(Institute institute);
 
 
 }

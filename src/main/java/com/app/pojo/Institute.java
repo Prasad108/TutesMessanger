@@ -1,5 +1,5 @@
 package com.app.pojo;
-// Generated 18 Sep, 2017 4:17:49 PM by Hibernate Tools 5.2.3.Final
+// Generated 14 Nov, 2017 11:41:36 AM by Hibernate Tools 5.2.3.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -34,6 +34,9 @@ public class Institute implements java.io.Serializable {
 	private transient Set<Branch> branches = new HashSet<Branch>(0);
 	private transient Set<Teacher> teachers = new HashSet<Teacher>(0);
 	private transient Set<Student> students = new HashSet<Student>(0);
+	private transient Set<Student> students_1 = new HashSet<Student>(0);
+	private transient Set<Teacher> teachers_1 = new HashSet<Teacher>(0);
+	private transient Set<Branch> branches_1 = new HashSet<Branch>(0);
 
 	public Institute() {
 	}
@@ -42,16 +45,9 @@ public class Institute implements java.io.Serializable {
 		this.name = name;
 	}
 
-	@Override
-	public String toString() {
-		return "Institute [id=" + id + ", name=" + name + ", address=" + address + ", contactno=" + contactno
-				+ ", email=" + email + ", subscriptionTill=" + subscriptionTill + ", subscritionEnable="
-				+ subscritionEnable + ", enable=" + enable + "]";
-	}
-
 	public Institute(String name, String address, String contactno, String email, Date subscriptionTill,
 			Boolean subscritionEnable, Boolean enable, Set<Branch> branches, Set<Teacher> teachers,
-			Set<Student> students) {
+			Set<Student> students, Set<Student> students_1, Set<Teacher> teachers_1, Set<Branch> branches_1) {
 		this.name = name;
 		this.address = address;
 		this.contactno = contactno;
@@ -62,6 +58,9 @@ public class Institute implements java.io.Serializable {
 		this.branches = branches;
 		this.teachers = teachers;
 		this.students = students;
+		this.students_1 = students_1;
+		this.teachers_1 = teachers_1;
+		this.branches_1 = branches_1;
 	}
 
 	@Id
@@ -165,6 +164,33 @@ public class Institute implements java.io.Serializable {
 
 	public void setStudents(Set<Student> students) {
 		this.students = students;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "institute")
+	public Set<Student> getStudents_1() {
+		return this.students_1;
+	}
+
+	public void setStudents_1(Set<Student> students_1) {
+		this.students_1 = students_1;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "institute")
+	public Set<Teacher> getTeachers_1() {
+		return this.teachers_1;
+	}
+
+	public void setTeachers_1(Set<Teacher> teachers_1) {
+		this.teachers_1 = teachers_1;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "institute")
+	public Set<Branch> getBranches_1() {
+		return this.branches_1;
+	}
+
+	public void setBranches_1(Set<Branch> branches_1) {
+		this.branches_1 = branches_1;
 	}
 
 }

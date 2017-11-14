@@ -1,5 +1,5 @@
 package com.app.pojo;
-// Generated 18 Sep, 2017 4:17:49 PM by Hibernate Tools 5.2.3.Final
+// Generated 14 Nov, 2017 11:41:36 AM by Hibernate Tools 5.2.3.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -22,31 +22,31 @@ import javax.persistence.Table;
 public class Division implements java.io.Serializable {
 
 	private Integer id;
-	private Classes classes;
+	private transient Classes classes;
 	private String name;
-	private Set<Schedule> schedules = new HashSet<Schedule>(0);
+	private transient Set<Schedule> schedules = new HashSet<Schedule>(0);
+	private transient Set<Student> students = new HashSet<Student>(0);
+	private transient Set<Schedule> schedules_1 = new HashSet<Schedule>(0);
 
 	public Division() {
 	}
+	
 
 
-	public Division(Classes classes, String name, Set<Schedule> schedules) {
+
+public Division(Classes classes, String name) {
+		super();
+		this.classes = classes;
+		this.name = name;
+	}
+
+	public Division(Classes classes, String name, Set<Schedule> schedules, Set<Student> students,
+			Set<Schedule> schedules_1) {
 		this.classes = classes;
 		this.name = name;
 		this.schedules = schedules;
-	}
-
-	public Division(Integer id, Classes classes, String name) {
-		super();
-		this.id = id;
-		this.classes = classes;
-		this.name = name;
-	}
-
-	public Division(Classes classes, String name) {
-		super();
-		this.classes = classes;
-		this.name = name;
+		this.students = students;
+		this.schedules_1 = schedules_1;
 	}
 
 	@Id
@@ -66,12 +66,6 @@ public class Division implements java.io.Serializable {
 	public Classes getClasses() {
 		return this.classes;
 	}
-
-	@Override
-	public String toString() {
-		return "Division [id=" + id + ", classes=" + classes + ", name=" + name + "]";
-	}
-
 
 	public void setClasses(Classes classes) {
 		this.classes = classes;
@@ -94,6 +88,23 @@ public class Division implements java.io.Serializable {
 	public void setSchedules(Set<Schedule> schedules) {
 		this.schedules = schedules;
 	}
-	
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "division")
+	public Set<Student> getStudents() {
+		return this.students;
+	}
+
+	public void setStudents(Set<Student> students) {
+		this.students = students;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "division")
+	public Set<Schedule> getSchedules_1() {
+		return this.schedules_1;
+	}
+
+	public void setSchedules_1(Set<Schedule> schedules_1) {
+		this.schedules_1 = schedules_1;
+	}
 
 }

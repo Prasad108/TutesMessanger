@@ -95,4 +95,13 @@ public class instituteDAOImpl implements InstituteDAO {
 		return query.list();
 	}
 
+
+	@Override
+	@Transactional
+	public List<Student> getallStudentWhoAreNotInAnyDivision(Institute institute) {
+		Query query=currentSession().createQuery("SELECT s FROM Student s WHERE s.division IS NULL AND s.institute= :institute");
+		query.setParameter("institute",institute);
+		return query.list();
+	}
+
 }

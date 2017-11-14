@@ -212,7 +212,7 @@ public class LoginController {
 				int roleId = userRole.getId();
 				switch (roleId) {
 				case 1:
-					output = "hello";// student
+					output = "Student/Home";// student
 					System.out.println("student logged in");
 					break;
 

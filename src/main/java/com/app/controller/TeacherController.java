@@ -656,5 +656,21 @@ public class TeacherController {
 		return result;
 	 }
 	 
+	 @RequestMapping(value = "/AddStudentToDivision", method = RequestMethod.GET)
+		public String AddStudentToDivision(Model model,@ModelAttribute("teacher") Teacher teacher) {		
+			System.out.println("**********inside AddStudentToDivision controller**********");
+			System.out.println("teachers insitute id is :"+teacher.getInstitute().getId());
+			List<Student> studnetList=instituteService.getallStudentWhoAreNotInAnyDivision(instituteService.find(teacher.getInstitute().getId()));
+			for(Student s :studnetList)
+			{
+				System.out.println(s.getFname());
+			}
+			
+			String studentListJSON=gson.toJson(studnetList);
+			model.addAttribute("StudentListJSON", studentListJSON);
+			return "Teacher/AddStudentToDivision";
+
+		}
+	 
 	 
 }

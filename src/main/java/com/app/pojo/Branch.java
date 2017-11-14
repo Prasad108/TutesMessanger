@@ -1,5 +1,5 @@
 package com.app.pojo;
-// Generated 18 Sep, 2017 4:17:49 PM by Hibernate Tools 5.2.3.Final
+// Generated 14 Nov, 2017 11:41:36 AM by Hibernate Tools 5.2.3.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -22,17 +22,25 @@ import javax.persistence.Table;
 public class Branch implements java.io.Serializable {
 
 	private Integer id;
-	private Institute institute;
+	private transient Institute institute;
 	private String name;
-	private Set<Classes> classeses = new HashSet<Classes>(0);
+	private transient Set<Classes> classeses = new HashSet<Classes>(0);
+	private transient Set<Classes> classeses_1 = new HashSet<Classes>(0);
 
 	public Branch() {
 	}
 
-	public Branch(Institute institute, String name, Set<Classes> classeses) {
+
+
+
+
+
+
+	public Branch(Institute institute, String name, Set<Classes> classeses, Set<Classes> classeses_1) {
 		this.institute = institute;
 		this.name = name;
 		this.classeses = classeses;
+		this.classeses_1 = classeses_1;
 	}
 
 	@Id
@@ -73,6 +81,15 @@ public class Branch implements java.io.Serializable {
 
 	public void setClasseses(Set<Classes> classeses) {
 		this.classeses = classeses;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "branch")
+	public Set<Classes> getClasseses_1() {
+		return this.classeses_1;
+	}
+
+	public void setClasseses_1(Set<Classes> classeses_1) {
+		this.classeses_1 = classeses_1;
 	}
 
 }

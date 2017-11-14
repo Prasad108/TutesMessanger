@@ -1,5 +1,5 @@
 package com.app.pojo;
-// Generated 18 Sep, 2017 4:17:49 PM by Hibernate Tools 5.2.3.Final
+// Generated 14 Nov, 2017 11:41:36 AM by Hibernate Tools 5.2.3.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -22,24 +22,27 @@ import javax.persistence.Table;
 public class Classes implements java.io.Serializable {
 
 	private Integer id;
-	private Branch branch;
+	private transient  Branch branch;
 	private String name;
-	private Set<Division> divisions = new HashSet<Division>(0);
+	private transient  Set<Division> divisions = new HashSet<Division>(0);
+	private transient Set<Division> divisions_1 = new HashSet<Division>(0);
 
 	public Classes() {
 	}
-
-	public Classes(Branch branch, String name, Set<Division> divisions) {
-		this.branch = branch;
-		this.name = name;
-		this.divisions = divisions;
-	}
-
+	
 	
 	public Classes(Branch branch, String name) {
 		super();
 		this.branch = branch;
 		this.name = name;
+	}
+
+
+	public Classes(Branch branch, String name, Set<Division> divisions, Set<Division> divisions_1) {
+		this.branch = branch;
+		this.name = name;
+		this.divisions = divisions;
+		this.divisions_1 = divisions_1;
 	}
 
 	@Id
@@ -80,6 +83,15 @@ public class Classes implements java.io.Serializable {
 
 	public void setDivisions(Set<Division> divisions) {
 		this.divisions = divisions;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "classes")
+	public Set<Division> getDivisions_1() {
+		return this.divisions_1;
+	}
+
+	public void setDivisions_1(Set<Division> divisions_1) {
+		this.divisions_1 = divisions_1;
 	}
 
 }

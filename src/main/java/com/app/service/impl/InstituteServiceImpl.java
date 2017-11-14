@@ -72,4 +72,10 @@ public class InstituteServiceImpl implements InstituteService {
 		return InstituteDAO.getallPendingStudentForApproval(institute);
 	}
 
+	@Override
+	public List<Student> getallStudentWhoAreNotInAnyDivision(Institute institute) {
+		// TODO Auto-generated method stub
+		return InstituteDAO.getallStudentWhoAreNotInAnyDivision(institute);
+	}
+
 }

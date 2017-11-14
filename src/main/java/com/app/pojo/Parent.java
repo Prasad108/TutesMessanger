@@ -1,5 +1,5 @@
 package com.app.pojo;
-// Generated 18 Sep, 2017 4:17:49 PM by Hibernate Tools 5.2.3.Final
+// Generated 14 Nov, 2017 11:41:36 AM by Hibernate Tools 5.2.3.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -24,10 +24,12 @@ public class Parent implements java.io.Serializable {
 	private String lname;
 	private String contactno;
 	private String email;
-	private Set<Student> students = new HashSet<Student>(0);
+	private transient Set<Student> students = new HashSet<Student>(0);
+	private transient Set<Student> students_1 = new HashSet<Student>(0);
 
 	public Parent() {
 	}
+
 
 	public Parent(String fname, String lname, String contactno) {
 		this.fname = fname;
@@ -35,12 +37,14 @@ public class Parent implements java.io.Serializable {
 		this.contactno = contactno;
 	}
 
-	public Parent(String fname, String lname, String contactno, String email, Set<Student> students) {
+	public Parent(String fname, String lname, String contactno, String email, Set<Student> students,
+			Set<Student> students_1) {
 		this.fname = fname;
 		this.lname = lname;
 		this.contactno = contactno;
 		this.email = email;
 		this.students = students;
+		this.students_1 = students_1;
 	}
 
 	@Id
@@ -98,6 +102,15 @@ public class Parent implements java.io.Serializable {
 
 	public void setStudents(Set<Student> students) {
 		this.students = students;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "parent")
+	public Set<Student> getStudents_1() {
+		return this.students_1;
+	}
+
+	public void setStudents_1(Set<Student> students_1) {
+		this.students_1 = students_1;
 	}
 
 }

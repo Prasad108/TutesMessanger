@@ -1,5 +1,5 @@
 package com.app.pojo;
-// Generated 18 Sep, 2017 4:17:49 PM by Hibernate Tools 5.2.3.Final
+// Generated 14 Nov, 2017 11:41:36 AM by Hibernate Tools 5.2.3.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -34,6 +34,7 @@ public class Permissions implements java.io.Serializable {
 	private boolean updateResults;
 	private boolean alterInstituteStructure;
 	private transient Set<Teacher> teachers = new HashSet<Teacher>(0);
+	private transient Set<Teacher> teachers_1 = new HashSet<Teacher>(0);
 
 	public Permissions() {
 	}
@@ -59,7 +60,7 @@ public class Permissions implements java.io.Serializable {
 	public Permissions(boolean authoriseStudent, boolean authoriseTeacher, boolean fillAttendance, boolean fillSchedule,
 			boolean mailParent, boolean mailStudent, boolean mailTeacher, boolean msgParent, boolean msgStudent,
 			boolean msgTeacher, boolean setExam, boolean updateResults, boolean alterInstituteStructure,
-			Set<Teacher> teachers) {
+			Set<Teacher> teachers, Set<Teacher> teachers_1) {
 		this.authoriseStudent = authoriseStudent;
 		this.authoriseTeacher = authoriseTeacher;
 		this.fillAttendance = fillAttendance;
@@ -74,6 +75,7 @@ public class Permissions implements java.io.Serializable {
 		this.updateResults = updateResults;
 		this.alterInstituteStructure = alterInstituteStructure;
 		this.teachers = teachers;
+		this.teachers_1 = teachers_1;
 	}
 
 	@Id
@@ -214,46 +216,13 @@ public class Permissions implements java.io.Serializable {
 		this.teachers = teachers;
 	}
 
-	@Override
-	public String toString() {
-		return "Permissions [id=" + id + ", authoriseStudent=" + authoriseStudent + ", authoriseTeacher="
-				+ authoriseTeacher + ", fillAttendance=" + fillAttendance + ", fillSchedule=" + fillSchedule
-				+ ", mailParent=" + mailParent + ", mailStudent=" + mailStudent + ", mailTeacher=" + mailTeacher
-				+ ", msgParent=" + msgParent + ", msgStudent=" + msgStudent + ", msgTeacher=" + msgTeacher
-				+ ", setExam=" + setExam + ", updateResults=" + updateResults + ", alterInstituteStructure="
-				+ alterInstituteStructure + "]";
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "permissions")
+	public Set<Teacher> getTeachers_1() {
+		return this.teachers_1;
+	}
+
+	public void setTeachers_1(Set<Teacher> teachers_1) {
+		this.teachers_1 = teachers_1;
 	}
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
