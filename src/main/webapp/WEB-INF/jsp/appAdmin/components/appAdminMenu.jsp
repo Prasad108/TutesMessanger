@@ -17,12 +17,12 @@
                           
                       </ul>
                   </li>
-                   <li>
-                      <a class="" href="#" onclick="document.getElementById('logoutForm').submit();" >
+                    <li>
+                      <a class="" href="${pageContext.request.contextPath}/login?logout" >
                           <i class="icon_key_alt"></i>
                           <span>Log Out</span>
                       </a>
-                  </li>
+                  </li> 
 				 
                   
               </ul>

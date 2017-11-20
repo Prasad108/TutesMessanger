@@ -42,8 +42,7 @@
           <section class="wrapper">
           <div class="row">
 	          	<h1> Teacher Home page</h1>                  	
-	          	<h4>{{teacher}}</h4>
-	          	<h4>{{permissions}}</h4>                   
+	          	            
           </div>
           </section>
  </section>   

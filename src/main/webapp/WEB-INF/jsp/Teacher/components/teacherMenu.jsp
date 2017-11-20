@@ -10,7 +10,7 @@
                           <span>Home{{4+4}}</span>
                       </a>
                   </li>
-                   <li>
+                 <!--   <li>
                       <a class="" href="#">
                           <i class="icon_genius"></i>
                           <span>Messages</span>
@@ -21,19 +21,19 @@
                           <i class="icon_genius"></i>
                           <span>Emails</span>
                       </a>
-                  </li>
+                  </li> -->
                   <li>
                       <a class="" href="scheduletree">
                           <i class="icon_genius"></i>
                           <span>Schedule</span>
                       </a>
                   </li>
-                   <li>
+                   <!-- <li>
                       <a class="" href="#">
                           <i class="icon_genius"></i>
                           <span>Attendance</span>
                       </a>
-                  </li>
+                  </li> -->
                    <li class="sub-menu">
                       <a href="javascript:;" class="">
                           <i class="icon_desktop"></i>
@@ -55,18 +55,13 @@
                       <ul class="sub" >
                           <li ng-show="permissions.authoriseStudent"><a class="" href="StudentRequestManager">Student Requests</a></li>
                            <li ng-show="permissions.authoriseTeacher"><a class="" href="TeacherRequestForApproval">Teacher Request </a></li>    
-                          <li ng-show="permissions.authoriseStudent"><a class="" href="#">Edit/Delete Student</a></li>
+                       <!--    <li ng-show="permissions.authoriseStudent"><a class="" href="#">Edit/Delete Student</a></li> -->
                            <li ng-show="permissions.authoriseStudent"><a class="" href="AddStudentToDivision">Add Student To division</a></li>
-                           <li ng-show="permissions.authoriseStudent"><a class="" href="StudentInDivision">See Student in divisions</a></li>
-                          <li ng-show="permissions.authoriseTeacher"><a class="" href="#">Edit/Delete Teacher</a></li>                       
+                          <!--  <li ng-show="permissions.authoriseStudent"><a class="" href="StudentInDivision">See Student in divisions</a></li>
+                          <li ng-show="permissions.authoriseTeacher"><a class="" href="#">Edit/Delete Teacher</a></li>       -->                 
                       </ul>
                   </li>
-                  <li>
-                      <a class="" href="#">
-                          <i class="icon_genius"></i>
-                          <span>Request Approver</span>
-                      </a>
-                  </li>
+                 
                   
                   <li class="sub-menu">
                       <a href="javascript:;" class="">
@@ -80,8 +75,10 @@
                           <li><a class="" href="teacherChangePassword">Change Password</a></li>
                       </ul>
                   </li>  
+                  
+                    
                    <li>
-                      <a class="" href="#" onclick="document.getElementById('logoutForm').submit();" >
+                      <a class="" href="${pageContext.request.contextPath}/login?logout" >
                           <i class="icon_key_alt"></i>
                           <span>Log Out</span>
                       </a>

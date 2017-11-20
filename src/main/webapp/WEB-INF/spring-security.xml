@@ -32,7 +32,7 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
 		<logout  invalidate-session="true"
 			delete-cookies="JSESSIONID" />
 		<!-- enable csrf protection -->
-		<csrf />
+		<!-- <csrf /> -->
 		<!-- <remember-me token-validity-seconds="1209600" remember-me-parameter="remember-me" 
 			data-source-ref="dataSource" /> -->
 

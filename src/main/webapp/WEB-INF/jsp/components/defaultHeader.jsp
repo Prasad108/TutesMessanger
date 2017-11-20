@@ -6,10 +6,10 @@
             </div>
 
             <!--logo start-->
-            <a href="#" class="logo">Nice <span class="lite">Admin</span></a>
+            <a href="#" class="logo">Tutes <span class="lite">Messanger</span></a>
             <!--logo end-->
 
-            <div class="nav search-row" id="top_menu">
+           <%--  <div class="nav search-row" id="top_menu">
                 <!--  search form start -->
                 <ul class="nav top-menu">                    
                     <li>
@@ -19,10 +19,10 @@
                     </li>                    
                 </ul>
                 <!--  search form end -->                
-            </div>
+            </div> --%>
 
             <div class="top-nav notification-row">                
-                <!-- notificatoin dropdown start-->
+          <%--       <!-- notificatoin dropdown start-->
                 <ul class="nav pull-right top-menu">
                     	
                     <!-- task notificatoin start -->
@@ -220,19 +220,19 @@
                             </li>
                         </ul>
                     </li>
-                    <!-- alert notification end-->
+                    <!-- alert notification end--> --%>
                     <!-- user login dropdown start-->
-                    <li class="dropdown">
+                    <%-- <li class="dropdown">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                             <span class="profile-ava">
-                                <img alt="" src="${pageContext.request.contextPath}/img/avatar1_small.jpg">
+                                <img alt="" fa fa-user-md src="${pageContext.request.contextPath}/img/avatar-mini4.jpg.jpg">
                             </span>
-                            <span class="username">Jenifer Smith</span>
+                            <span class="username ">USER</span>
                             <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu extended logout">
                             <div class="log-arrow-up"></div>
-                            <li class="eborder-top">
+                           <!--  <li class="eborder-top">
                                 <a href="#"><i class="icon_profile"></i> My Profile</a>
                             </li>
                             <li>
@@ -243,38 +243,28 @@
                             </li>
                             <li>
                                 <a href="#"><i class="icon_chat_alt"></i> Chats</a>
-                            </li>
+                            </li> -->
                             <li>
-                           <%--  <form:form name="logoutForm"  action="/login?logout" method="post">
+                            <form:form name="logoutForm"  action="/login?logout" method="post">
 						    <input type="submit"
 						               value="Log out" />
 						    <input type="hidden"
 						                name="${_csrf.parameterName}"
 						                value="${_csrf.token}"/>
-						    </form:form>
-						    onClick="document.forms['search-form'].submit();"  --%>
+						    </form:form>	
+						    onClick="document.forms['search-form'].submit();" 
 						    
-						   <c:url var="logoutUrl" value="/logout"/>
-							    <form:form  id="logoutForm" action="${logoutUrl}"
-							            method="post">
-							   <!--  <input type="submit"
-							               value="Log out" /> -->
-							    <input type="hidden"
-							                name="${_csrf.parameterName}"
-							                value="${_csrf.token}"/>
-							    </form:form>
+						  
 							    
-							    <%-- ${pageContext.request.contextPath}/login?logout --%>
+							    ${pageContext.request.contextPath}/login?logout
                              <a href="#" onclick="document.getElementById('logoutForm').submit();" ><i class="icon_key_alt"></i> Log Out</a>
                             </li>
-                            <li>
+                           <!--  <li>
                                 <a href="documentation.html"><i class="icon_key_alt"></i> Documentation</a>
-                            </li>
-                            <li>
-                                <a href="documentation.html"><i class="icon_key_alt"></i> Documentation</a>
-                            </li>
+                            </li> -->
+                            
                         </ul>
-                    </li>
+                    </li> --%>
                     <!-- user login dropdown end -->
                 </ul>
                 <!-- notificatoin dropdown end-->

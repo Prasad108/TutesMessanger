@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+     <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+       <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>  
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -54,7 +56,7 @@
 
    		 $scope.filteredTodos = []
    	  ,$scope.currentPage = 1
-   	  ,$scope.numPerPage = 11
+   	  ,$scope.numPerPage = 5
    	  ,$scope.maxSize = 6,
    	  
    	$scope.totallenght=$scope.studentList.length/$scope.numPerPage*10;
@@ -202,6 +204,11 @@
                           <header class="panel-heading">
                              Student who are not in any Division are {{studentList.length}}
                           </header>
+                           <div class="row">
+                <div class="col-lg-3">
+                   <input type="text" class="form-control"  ng-model="test">
+                </div>
+               </div>
                           
                           <table id="example" class="table  ">
                            <tbody>
@@ -211,7 +218,7 @@
                                  <th><i class="icon_mobile"></i> Mobile</th>
                                
                               </tr>
-                              <tr ng-repeat="student in filteredTodos "  ng-class="{selectedrow:IsContains(student)}" ng-click="Selecte(student)">
+                              <tr ng-repeat="student in filteredTodos | filter : test | orderBy:'fname' "  ng-class="{selectedrow:IsContains(student)}" ng-click="Selecte(student)">
     								<td>{{ student.fname }}  {{ student.lname }}</td>
    							 		<td>{{ student.email }}</td>
    							 		<td>{{ student.contactno }}</td>
