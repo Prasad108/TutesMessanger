@@ -22,5 +22,7 @@ public interface TeacherService {
 	
 	public String InstituteStucture(Teacher teacher);
 	public String InstituteStuctureForSchedule(Teacher teacher);
+	public void changeUserName(String newUserName, Login login);
+	
 
 }

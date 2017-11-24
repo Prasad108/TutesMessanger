@@ -123,7 +123,6 @@ public class Template {
 
 		 if (logout != null) {
 			System.out.println("You've been logged out successfully.!!");
-			model.addAttribute("msg", "You've been logged out successfully.");
 			model.asMap().clear();
 			    session.invalidate();
 			    model.asMap().clear();

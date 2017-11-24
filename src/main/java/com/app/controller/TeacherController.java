@@ -1,5 +1,6 @@
 package com.app.controller;
 
+import java.awt.geom.CubicCurve2D;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -671,6 +672,60 @@ public class TeacherController {
 			return "Teacher/AddStudentToDivision";
 
 		}
+	 
+	 
+	 @RequestMapping(value = "/changeTUsername", method = RequestMethod.POST)
+		public String changeTUsername(@ModelAttribute("teacher") Teacher teacher,HttpServletRequest request,Model model) {		
+			System.out.println("**********inside changeTUsername controller**********");
+			String currentUserName=request.getParameter("currentUsername");
+			String newUserName=request.getParameter("newUsername");
+			String existName=teacher.getLogin().getUsername();
+			
+			System.out.println("from form "+currentUserName +" from teacherobject"+existName);
+			System.out.println("new username "+newUserName);
+			if(existName.equals(currentUserName) )
+			{
+				teacherService.changeUserName(newUserName,teacher.getLogin());	
+				model.addAttribute("userNameChangeSuccess","username successfully updated");
+				teacher.getLogin().setUsername(newUserName);
+				model.addAttribute("teacher",teacher);
+			}
+			else
+			{
+				model.addAttribute("wrongCurrentUserName","You have entered wrong current Username");
+			}
+			
+			return "Teacher/changePassword";
+
+		}
+	 
+	 
+	 @RequestMapping(value = "/changeTPassword", method = RequestMethod.POST)
+		public String changeTPassword(@ModelAttribute("teacher") Teacher teacher,HttpServletRequest request,Model model) {		
+			System.out.println("**********inside changeTPassword controller**********");
+			String currentPassword=request.getParameter("currentPassword");
+			String newPassword=request.getParameter("newPassword");
+			
+			String existPassword=teacher.getLogin().getPassword();
+			
+			System.out.println("from form "+currentPassword +" from teacherobject"+existPassword);
+			System.out.println("new username "+newPassword);
+			if(existPassword.equals(currentPassword) )
+			{
+				teacherService.changePassword(newPassword,teacher.getLogin());	
+				model.addAttribute("passwordChangeSuccess","password successfully updated");
+				teacher.getLogin().setPassword(newPassword);
+				model.addAttribute("teacher", teacher);
+			}
+			else
+			{
+				model.addAttribute("wrongPassword","You have entered wrong current Password");
+			}
+			
+			return "Teacher/changePassword";
+
+		}
+	 
 	 
 	 
 }

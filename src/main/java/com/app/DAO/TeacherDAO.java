@@ -18,6 +18,8 @@ public interface TeacherDAO {
 	public Login getLoginIdByEmail(String email);
 	public void changePassword(String newPassword  , Login login);
 	public Boolean checkPassword(String oldPassword, Integer id);
+	public void changeUserName(String newUserName, Login login);
+	
 	
 	
 

@@ -223,4 +223,9 @@ public class TeacherServiceImpl implements TeacherService {
 		return str;
 	}
 
+	@Override
+	public void changeUserName(String newUserName, Login login) {
+   TeacherDAO.changeUserName(newUserName, login);
+	}
+
 }

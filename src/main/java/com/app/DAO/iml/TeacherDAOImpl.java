@@ -90,6 +90,7 @@ public class TeacherDAOImpl implements TeacherDAO {
 	}
 
 	@Override
+	@Transactional
 	public Login getLoginIdByEmail(String email) {
 		Query query = currentSession().createQuery("select l from Login l where l.username= :email");
 		query.setParameter("email",email);
@@ -99,6 +100,7 @@ public class TeacherDAOImpl implements TeacherDAO {
 	}
 
 	@Override
+	@Transactional
 	public void changePassword(String newPassword , Login login) {
 		
 		
@@ -111,12 +113,23 @@ public class TeacherDAOImpl implements TeacherDAO {
 	}
 
 	@Override
+	@Transactional
 	public Boolean checkPassword(String oldPassword, Integer id) {
 		Login  login = (Login) currentSession().createQuery("select l from Login l where l.id= :id and l.password= :oldPassword").setParameter("id", id).setParameter("oldPassword", oldPassword).uniqueResult();
 		
 		 if(login != null)
 			 return true;
 		 return false;
+	}
+
+	@Override
+	@Transactional
+	public void changeUserName(String newUserName, Login login) {
+		String query= "UPDATE login SET username ='"+newUserName+"'WHERE id='"+login.getId()+"'";
+		
+		currentSession().createSQLQuery(query);
+		 SQLQuery sqlQuery = currentSession().createSQLQuery(query);
+		 sqlQuery.executeUpdate();
 	}
 
 }
