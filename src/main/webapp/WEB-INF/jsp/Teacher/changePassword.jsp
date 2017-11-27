@@ -5,10 +5,57 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html ng-app="myApp" ng-controller="teacherCtrl">
 	<head>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
  		<title>Teacher </title>
    		<jsp:include page="/WEB-INF/jsp/components/defaultHead.jsp" /> 
    		<jsp:include page="/WEB-INF/jsp/Teacher/components/angular.jsp" />
+   		
+   	   <script type="text/javascript">
+   	   
+   	   
+   	 $(document).ready(function(){
+   		 
+   		$('#submitChangePassword').attr('disabled','disabled'); 
+   		
+   		$('#confirmPassword').keyup(function(){
+   			var password=$("#newPassword").val();
+   			var confirm_password=$("#confirmPassword").val();
+   			
+   			if(confirm_password == password)
+   			{
+   				$("#message").text("Both Password are matching");
+   				$('#submitChangePassword').removeAttr('disabled');
+   				$('#message').css('color', 'green');
+   			}
+   			else
+   			{
+   				$("#message").text("Both Password are not matching");	
+   				$('#submitChangePassword').attr('disabled','disabled');
+   				$('#message').css('color', 'red');
+   			}
+   			
+   		});
+   		 
+     	/* var check = function() {
+   	    if (document.getElementById('newPassword').value ==
+   	    document.getElementById('confirmPassword').value) {
+   	    document.getElementById('message').style.color = 'green';
+   	    document.getElementById('message').innerHTML = 'matching with your new password';
+   	  $('#submitChangePassword').removeAttr('disabled'); 
+   	  } else {
+   	    document.getElementById('message').style.color = 'red';
+   	    document.getElementById('message').innerHTML = 'not matching with your new password';
+   	    $('#submitChangePassword').attr('disabled','disabled'); 
+   	    
+   	  }
+   	} */
+     });
+   	   </script> 
+     
    	</head>
+   
+   	
 <body>
 <section id="container" class="">
    <!-- Default header -->
@@ -80,7 +127,7 @@
 								<span class="input-group-addon"><i class="icon_profile"></i></span>
 								<input type="text" class="form-control" id="currentUsername"
 									name="currentUsername" placeholder="Current Username"
-									required="required" />
+									required="required" maxlength="30" />
 							</div>
 							<br>
 							<div class="input-group">
@@ -124,34 +171,35 @@
 							<span class="input-group-addon"><i class="icon_profile"></i></span>
 							<input type="text" class="form-control" id="currentPassword"
 								name="currentPassword" placeholder="Current Password"
-								required="required" />
+								required="required" maxlength="30"/>
 						</div>
 						<br>
 						<div class="input-group">
 							<span class="input-group-addon"><i class="icon_key_alt"></i></span>
-							<input type="text" class="form-control" id="newPassword"
+							<input type="password" class="form-control" id="newPassword"
 								name="newPassword" placeholder="New Password"
 								required="required"
 								pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,}"
 								title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
-								maxlength="30" />
+								maxlength="30" onkeyup='check();'/>
 						</div>
                          
                          <br>
 						<div class="input-group">
 							<span class="input-group-addon"><i class="icon_key_alt"></i></span>
-							<input type="text" class="form-control" id="confirmPassword"
+							<input type="password" class="form-control" id="confirmPassword"
 								name="confirmPassword" placeholder="Confirm Password"
 								required="required"
 								pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,}"
 								title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
-								maxlength="30" />
+								maxlength="30" onkeyup='check();'/>
 						</div>
+						<span id='message' style="margin-left: 40px"></span>
 						<br>
 
 
 
-						<button class="btn btn-info btn-lg btn-block" type="submit">Change
+						<button class="btn btn-info btn-lg btn-block" id="submitChangePassword" type="submit">Change
 							Password</button>
 
 

@@ -726,6 +726,14 @@ public class TeacherController {
 
 		}
 	 
+	 @RequestMapping("/teacherShowProfile")
+	 public String teacherShowProfile(Model map) 
+	 {
+		 System.out.println("**********this is teacherShowProfile controller**********");	    	
+		 return "Teacher/showProfile";
+
+	}
+	 
 	 
 	 
 }

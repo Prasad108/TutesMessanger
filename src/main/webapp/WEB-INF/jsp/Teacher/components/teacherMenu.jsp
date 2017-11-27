@@ -70,7 +70,7 @@
                           <span class="menu-arrow arrow_carrot-right"></span>
                       </a>
                       <ul class="sub">
-                          <li><a class="" href="#">View Profile</a></li>                          
+                          <li><a class="" href="teacherShowProfile">View Profile</a></li>                          
                           <li><a class="" href="#">Edit Profile</a></li>
                           <li><a class="" href="teacherChangePassword">Change Password</a></li>
                       </ul>
