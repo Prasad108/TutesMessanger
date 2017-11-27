@@ -727,13 +727,36 @@ public class TeacherController {
 		}
 	 
 	 @RequestMapping("/teacherShowProfile")
-	 public String teacherShowProfile(Model map) 
+	 public String teacherShowProfile(Model model) 
 	 {
 		 System.out.println("**********this is teacherShowProfile controller**********");	    	
 		 return "Teacher/showProfile";
-
-	}
+   	 }
 	 
+	 @RequestMapping(value="/teacherEditProfile")
+	 public String teacherEditProfile(Model model) 
+	 {
+		 System.out.println("**********this is teacherEditProfile controller**********");	 
+		 model.addAttribute("EditTeacher", new Teacher());
+		 return "Teacher/editProfile";
+     }
 	 
+	 @RequestMapping(value="/editTeacher",method = RequestMethod.POST)
+	 public String editTeacher(Model model,@ModelAttribute("teacher") Teacher teacher1,@ModelAttribute("EditTeacher") Teacher teacher2) 
+	 {
+		 System.out.println("**********this is editTeacher controller**********");
+		 teacher1.setFname(teacher2.getFname());
+		 teacher1.setLname(teacher2.getLname());
+		 teacher1.setEmail(teacher2.getEmail());
+		 teacher1.setContactno(teacher2.getContactno());
+		 
+		 teacherService.update(teacher1);
+		 model.addAttribute("teacher",teacher1);
+		 model.addAttribute("teacherJSON",gson.toJson(teacher1));
+		 
+		 model.addAttribute("profileEditSuccess","Your profile updated successfully");
+		
+		 return "Teacher/showProfile";
+     }
 	 
 }

@@ -71,7 +71,7 @@
                       </a>
                       <ul class="sub">
                           <li><a class="" href="teacherShowProfile">View Profile</a></li>                          
-                          <li><a class="" href="#">Edit Profile</a></li>
+                          <li><a class="" href="teacherEditProfile">Edit Profile</a></li>
                           <li><a class="" href="teacherChangePassword">Change Password</a></li>
                       </ul>
                   </li>  

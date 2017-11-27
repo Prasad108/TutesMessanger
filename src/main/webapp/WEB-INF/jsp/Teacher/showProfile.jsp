@@ -5,7 +5,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html ng-app="myApp" ng-controller="teacherCtrl">
 <head>
-<title>Teacher</title>
+<title>Teacher Profile</title>
 <jsp:include page="/WEB-INF/jsp/components/defaultHead.jsp" />
 <jsp:include page="/WEB-INF/jsp/Teacher/components/angular.jsp" />
 <%-- <jsp:include page="/WEB-INF/jsp/Teacher/components/angular.jsp" />  --%>
@@ -40,6 +40,16 @@
 	<section id="main-content">
 	 <section class="wrapper">
 	<div class="row">
+	
+	  <c:if test="${!empty profileEditSuccess}">
+  					  <div class="alert alert-success fade in">
+                                  <button data-dismiss="alert" class="close close-sm" type="button">
+                                      <i class="icon-remove"></i>
+                                  </button>
+                                  ${profileEditSuccess}
+                              </div>
+		     </c:if>
+		     
 		<div id="profile" class="tab-pane">
 			<section class="panel">
 			<div class="panel-body bio-graph-info">
