@@ -41,10 +41,15 @@
  <section id="main-content">
           <section class="wrapper">
           <div class="row">
+<<<<<<< Upstream, based on branch 'master' of https://github.com/Prasad108/TutesMessanger.git
 	          	<h1> Teacher Home page</h1>     {{teacher.fname}} 
 	          	{{teacher.lname}}  
 	          	{{teacher.email}}  
 	          	{{teacher.contactno}}              	
+=======
+	          	<h1> Teacher Home page</h1>  
+	          	<h2>${driver}</h2>             	
+>>>>>>> 6e879ec Student Home and view Schedule
 	          	            
 	          	            <h2>this is by anather method  ${teacher.fname} </h2>
           </div>

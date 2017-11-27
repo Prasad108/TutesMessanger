@@ -63,7 +63,7 @@
                   </li>
                  
                   
-                  <li class="sub-menu">
+                 <!--  <li class="sub-menu">
                       <a href="javascript:;" class="">
                           <i class="icon_document_alt"></i>
                           <span>Profile</span>
@@ -74,7 +74,7 @@
                           <li><a class="" href="#">Edit Profile</a></li>
                           <li><a class="" href="teacherChangePassword">Change Password</a></li>
                       </ul>
-                  </li>  
+                  </li>   -->
                   
                     
                    <li>
