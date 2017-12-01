@@ -46,7 +46,7 @@ public class ClassesDAOimpl implements ClassesDAO {
 	@Override
 	 @Transactional
 	public void delet(int id) {
-		currentSession().delete(id);
+		currentSession().delete(find(id));
 
 	}
 

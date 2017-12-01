@@ -48,7 +48,8 @@ public class BranchDAOImpl implements BranchDAO {
 	@Override
 	 @Transactional
 	public void delet(int id) {
-		currentSession().delete(id);
+		
+		currentSession().delete(find(id));
 		
 	}
 

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.app.DAO.BranchDAO;
 import com.app.DAO.StudentDAO;
+import com.app.pojo.Institute;
 import com.app.pojo.Student;
 import com.app.service.StudentService;
 
@@ -47,6 +48,18 @@ public class StudnetServiceImpl implements StudentService{
 	@Override
 	public List<Student> getall() {
 		return StudetentDAO.getall();
+	}
+
+	@Override
+	public Student findByLoginId(int id) {
+		
+		return StudetentDAO.findByLoginId(id);
+	}
+
+	@Override
+	public Institute GetInstitute(int id) {
+		// TODO Auto-generated method stub
+		return StudetentDAO.GetInstitute(id);
 	}
 
 }

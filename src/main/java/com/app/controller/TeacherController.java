@@ -59,7 +59,7 @@ public class TeacherController {
 	
 	@Autowired
 	InstituteService instituteService;
-	
+
 	@Autowired
 	ScheduleService scheduleService;
 	
@@ -111,7 +111,7 @@ public class TeacherController {
 	    	
 	    	branchService.create(branch1);
 	    	System.out.println("new Branch is saved ");
-	    	model.addAttribute("SaveSuccessMessage", "New branch is Saved with the name "+branch1.getName());
+	    	model.addAttribute("SuccessMessage", "New branch is Saved with the name "+branch1.getName());
 	    	
 	    	Branch branch= new Branch();
 			Classes clsess=new Classes();
@@ -137,7 +137,100 @@ public class TeacherController {
 	        return "Teacher/ModifyInstitueStructure";
 	    }
 	 	 
-
+	 
+	 @RequestMapping(value="/DeleteBranch",method = RequestMethod.POST)  
+	    public String  DeleteBranch(Model model,@ModelAttribute("teacher") Teacher teacher,@ModelAttribute("Classes") Classes clas) {  
+	    	
+	    	System.out.println("**********this is Delete Branch controller**********");
+	   Branch branch1=clas.getBranch();
+	    	System.out.println("teacher id is "+teacher);
+	    	System.out.println("branch name is "+branch1.getName()+" and its id is "+branch1.getId());
+	   
+	    	try{
+	    		branchService.delet(branch1.getId());
+		    	System.out.println("Branch is deleted ");
+		    	model.addAttribute("SuccessMessage", "Branch is deleted successfully");
+	    	}
+	    	catch(Exception e)
+	    	{
+	    		e.printStackTrace();
+	    		model.addAttribute("ErrorMessage", "This branch can not be deleted as it contains classes, first delete classes");
+	    	}
+	    	
+	    	
+	    	
+	    	Branch branch= new Branch();
+			Classes clsess=new Classes();
+			Division division =new Division();
+			model.addAttribute("Branch", branch);
+			model.addAttribute("Classes", clsess);
+			model.addAttribute("Division", division);
+	    	System.out.println(teacher.getId());
+	    	
+	    	Institute inst=teacherService.GetInstitute(teacher.getId());
+			System.out.println("institute is :"+inst);
+	    	
+	    	 List <Branch> branchlist=branchService.getallOfParticularInstitute(inst);
+			 System.out.println("we are going to print the branches of current isntitute :");
+			 for (Branch b : branchlist) {
+				    System.out.println(b);
+				}
+				
+		
+				
+			model.addAttribute("BranchesOfInst",branchlist );
+	    			
+	        return "Teacher/ModifyInstitueStructure";
+	    }
+	 
+	 
+	 @RequestMapping(value="/modalRenameBranch",method = RequestMethod.POST)  
+	    public String  modalRenameBranch(Model model,@ModelAttribute("teacher") Teacher teacher,@ModelAttribute("Classes") Classes clas) {  
+	    	
+	    	System.out.println("**********this is Rename Branch controller**********");
+	        Branch branch1=clas.getBranch();
+	    	System.out.println("teacher id is "+teacher);
+	    	System.out.println("branch name is "+branch1.getName()+" and its id is "+branch1.getId());
+	    	branch1.setInstitute(teacher.getInstitute());
+	   
+	    	try{
+	    		branchService.update(branch1);
+		    	System.out.println("Branch is renamed");
+		    	model.addAttribute("SuccessMessage", "Branch is renamed successfully");
+	    	}
+	    	catch(Exception e)
+	    	{
+	    		e.printStackTrace();
+	    		model.addAttribute("ErrorMessage", "This branch can not be renamed");
+	    	}
+	    	
+	    	
+	    	
+	    	Branch branch= new Branch();
+			Classes clsess=new Classes();
+			Division division =new Division();
+			model.addAttribute("Branch", branch);
+			model.addAttribute("Classes", clsess);
+			model.addAttribute("Division", division);
+	    	System.out.println(teacher.getId());
+	    	
+	    	Institute inst=teacherService.GetInstitute(teacher.getId());
+			System.out.println("institute is :"+inst);
+	    	
+	    	 List <Branch> branchlist=branchService.getallOfParticularInstitute(inst);
+			 System.out.println("we are going to print the branches of current isntitute :");
+			 for (Branch b : branchlist) {
+				    System.out.println(b);
+				}
+				
+		
+				
+			model.addAttribute("BranchesOfInst",branchlist );
+	    			
+	        return "Teacher/ModifyInstitueStructure";
+	    }
+	 
+	 
 	 @RequestMapping(value="/AddNewClass",method = RequestMethod.POST)  
 	    public String  AddNewClass(Model model,@ModelAttribute("Classes") Classes clas,@ModelAttribute("teacher") Teacher teacher) {  
 	    	
@@ -150,7 +243,7 @@ public class TeacherController {
 	    	try{	
 			    	classesService.create(c);	    		
 			    	System.out.println("new Classes is saved ");
-			    	model.addAttribute("SaveSuccessMessage", "New Class is Saved with the name "+clas.getName());
+			    	model.addAttribute("SuccessMessage", "New Class is Saved with the name "+clas.getName());
 			    	
 	    	}
 			catch(Exception e)
@@ -187,6 +280,96 @@ public class TeacherController {
 	    }
 	 
 	 
+	 @RequestMapping(value="/DeleteClassFromBranch",method = RequestMethod.POST)  
+	    public String  DeleteClassFromBranch(Model model,@ModelAttribute("teacher") Teacher teacher,@ModelAttribute("Division") Division div) {  
+	    	
+	    	System.out.println("**********this is Delete Class controller**********");
+	        Branch branch1=div.getClasses().getBranch();
+	        Classes classes=div.getClasses();
+	    	System.out.println("teacher id is "+teacher);
+	    	System.out.println("class name is "+classes.getName()+" and its id is "+classes.getId());
+	   
+	    	try{
+	    		classesService.delet(classes.getId());
+		    	System.out.println("Class is deleted ");
+		    	model.addAttribute("SuccessMessage", "Class is deleted successfully");
+	    	}
+	    	catch(Exception e)
+	    	{
+	    		e.printStackTrace();
+	    		model.addAttribute("ErrorMessage", "This class can not be deleted as it contains division, first delete divisions");
+	    	}
+	    	
+	    	Branch branch= new Branch();
+			Classes clsess=new Classes();
+			Division division =new Division();
+			model.addAttribute("Branch", branch);
+			model.addAttribute("Classes", clsess);
+			model.addAttribute("Division", division);
+	    	System.out.println(teacher.getId());
+	    	
+	    	Institute inst=teacherService.GetInstitute(teacher.getId());
+			System.out.println("institute is :"+inst);
+	    	
+	    	 List <Branch> branchlist=branchService.getallOfParticularInstitute(inst);
+			 System.out.println("we are going to print the branches of current isntitute :");
+			 for (Branch b : branchlist) {
+				    System.out.println(b);
+				}
+				
+		
+				
+			model.addAttribute("BranchesOfInst",branchlist );
+	    			
+	        return "Teacher/ModifyInstitueStructure";
+	    }
+	 
+	 
+	 @RequestMapping(value="/modalRenameClass",method = RequestMethod.POST)  
+	    public String  modalRenameClass(Model model,@ModelAttribute("teacher") Teacher teacher,@ModelAttribute("Division") Division div) {  
+	    	
+	    	System.out.println("**********this is Rename Branch controller**********");
+	        Branch branch1=div.getClasses().getBranch();
+	        Classes classes=div.getClasses();
+	    	System.out.println("teacher id is "+teacher);
+	    	System.out.println("class name is "+classes.getName()+" and its id is "+classes.getId());
+	     	branch1.setInstitute(teacher.getInstitute());
+	        classes.setBranch(branch1);
+	    	try{
+	    		classesService.update(classes);
+		    	System.out.println("Class is renamed");
+		    	model.addAttribute("SuccessMessage", "Class is renamed successfully");
+	    	}
+	    	catch(Exception e)
+	    	{
+	    		e.printStackTrace();
+	    		model.addAttribute("ErrorMessage", "This class can not be renamed");
+	    	}
+	    	
+	    	Branch branch= new Branch();
+			Classes clsess=new Classes();
+			Division division =new Division();
+			model.addAttribute("Branch", branch);
+			model.addAttribute("Classes", clsess);
+			model.addAttribute("Division", division);
+	    	System.out.println(teacher.getId());
+	    	
+	    	Institute inst=teacherService.GetInstitute(teacher.getId());
+			System.out.println("institute is :"+inst);
+	    	
+	    	 List <Branch> branchlist=branchService.getallOfParticularInstitute(inst);
+			 System.out.println("we are going to print the branches of current isntitute :");
+			 for (Branch b : branchlist) {
+				    System.out.println(b);
+				}
+				
+			model.addAttribute("BranchesOfInst",branchlist );
+	    			
+	        return "Teacher/ModifyInstitueStructure";
+	    }
+	 
+	  
+	 
 	 @RequestMapping(value = "/GetClassesList/{id}", method = RequestMethod.GET)
 	 @ResponseBody
 	  public String GetClassesList( @PathVariable("id") int id ){
@@ -215,14 +398,15 @@ public class TeacherController {
 	   public String  AddNewDivision(Model model,@ModelAttribute("Division") Division div,@ModelAttribute("teacher") Teacher teacher) {  
 	    	
 		 
-	    	System.out.println("**********this is AddNewDivision controller**********");	    	
+	    	System.out.println("**********this is AddNewDivision controller**********");	 
+	    	
 	    	Classes clas2=classesService.find(div.getClasses().getId());	    	
 	    	Division newDiv=new Division(clas2, div.getName());
 	    		    	
 	    	try{	
 	    		divisionService.create(newDiv);	    		
 			    	System.out.println("new Division is saved ");
-			    	model.addAttribute("SaveSuccessMessage", "New Division is Saved with the name "+newDiv.getName());
+			    	model.addAttribute("SuccessMessage", "New Division is Saved with the name "+newDiv.getName());
 			    	
 	    	}
 			catch(Exception e)
@@ -260,7 +444,8 @@ public class TeacherController {
 	 @RequestMapping(value="/ViewInstitueStructure",method = RequestMethod.GET)  
 	    public String  ViewInstitueStructure(Model model,@ModelAttribute("teacher") Teacher teacher,@ModelAttribute("institute") Institute institute) {  
 	    	
-		 System.out.println("**********this is AddNewDivision controller**********");	    	
+		 System.out.println("**********this is ViewInstitueStructure controller**********");	    
+		 System.out.println(teacher);
 		 String str=teacherService.InstituteStucture(teacher);
 				
 		 System.out.println(str);
@@ -369,7 +554,7 @@ public class TeacherController {
 	    		// update the variable for the calender string 
 	    		scheduleService.update(s1);
 	    		System.out.println("------------------------schedule is updated------------------------- ");
-	    		model.addAttribute("SaveSuccessMessage", "Schedule Updated for the division");
+	    		model.addAttribute("SuccessMessage", "Schedule Updated for the division");
 	    	
 	    	}catch(Exception e)
 	    	{
@@ -388,7 +573,7 @@ public class TeacherController {
 	    			scheduleService.create(schedule);
 	    			
 	    			System.out.println("------------------------schedule is saved------------------------- ");
-	    			 model.addAttribute("SaveSuccessMessage", "Schedule created for the  division");
+	    			 model.addAttribute("SuccessMessage", "Schedule created for the  division");
 	    			
 	    		}catch(Exception e1)
 	    		{

@@ -41,7 +41,10 @@
  <section id="main-content">
           <section class="wrapper">
           <div class="row">
-	          	
+   
+	          	<h1> Teacher Home page</h1>  
+
+
           </div>
           </section>
  </section>   

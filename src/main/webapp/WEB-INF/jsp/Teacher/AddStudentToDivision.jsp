@@ -25,11 +25,12 @@
 
 <style> 
   .selectedrow {	  
+  
     background-color:red;   
-	}
+	}    
 	
 	tr:hover {
-  background-color: pink;
+  background-color: none;
 	}
 	
 	tr:hover td {
@@ -170,11 +171,28 @@
    		    console.log("begin is "+begin+" end is "+end)
    		    $scope.filteredTodos = $scope.studentList.slice(begin, end);
    		  });
+
+
+   	 $scope.filter = function(){
+   	    var results = $scope.filteredRT;
+   	    results.length = 0;
+   	    var searchText = $scope.searchText;
+   	    var reminderTypes = $scope.reminderTypes;
+
+   	    for(var i = 0; i < reminderTypes.length; ++i){
+   	      if(searchText.length > 0){
+   	        if(reminderTypes[i].Name.toLowerCase().includes(searchText.toLowerCase())){
+   	          results.push(reminderTypes[i]);
+   	        }
+   	      } else {
+   	        results.push(reminderTypes[i]);
+   	      }
+   	    }
      		  			  			   			  			 			  			
    		}); 
    		
    		  		
-   		</script>
+   		</script>   
 
    		
    		
@@ -206,7 +224,7 @@
                           </header>
                            <div class="row">
                 <div class="col-lg-3">
-                   <input type="text" class="form-control"  ng-model="test">
+                   <input type="text" class="form-control"  ng-model="searchText" ng-change="filter()" >
                 </div>
                </div>
                           

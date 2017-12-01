@@ -18,6 +18,12 @@ import javax.persistence.Table;
 @Table(name = "teacher", catalog = "tutesmessanger")
 public class Teacher implements java.io.Serializable {
 
+	@Override
+	public String toString() {
+		return "Teacher [id=" + id + ", fname=" + fname + ", lname=" + lname + ", email=" + email + ", contactno="
+				+ contactno + "]";
+	}
+
 	private Integer id;
 	private transient Institute institute;
 	private transient Login login;

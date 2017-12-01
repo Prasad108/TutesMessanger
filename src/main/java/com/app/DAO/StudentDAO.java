@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import com.app.pojo.Institute;
 import com.app.pojo.Student;
+import com.app.pojo.Teacher;
 
 
 public interface StudentDAO {
@@ -15,5 +17,7 @@ public interface StudentDAO {
 	public void delet(int id );
 	public Student find(int id);
 	public List<Student> getall();
+	public Student findByLoginId(int id);
+	public Institute GetInstitute(int id);
 
 }
