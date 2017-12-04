@@ -48,7 +48,7 @@ public class DivisionDAOImpl implements DivisionDAO {
 	@Override
 	 @Transactional
 	public void delet(int id) {
-		currentSession().delete(id);
+		currentSession().delete(find(id));
 
 	}
 

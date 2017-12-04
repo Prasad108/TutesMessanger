@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -102,7 +103,6 @@ public class TeacherController {
 	        return "Teacher/ModifyInstitueStructure";
 	    }
 	       	 
-	 
 	 @RequestMapping(value="/AddNewBranch",method = RequestMethod.POST)  
 	    public String  AddNewBranch(Model model,@ModelAttribute("Branch") Branch branch1,@ModelAttribute("teacher") Teacher teacher) {  
 	    	
@@ -129,15 +129,12 @@ public class TeacherController {
 			 for (Branch b : branchlist) {
 				    System.out.println(b);
 				}
-				
-		
-				
+			
 			model.addAttribute("BranchesOfInst",branchlist );
 	    				
 	        return "Teacher/ModifyInstitueStructure";
 	    }
 	 	 
-	 
 	 @RequestMapping(value="/DeleteBranch",method = RequestMethod.POST)  
 	    public String  DeleteBranch(Model model,@ModelAttribute("teacher") Teacher teacher,@ModelAttribute("Classes") Classes clas) {  
 	    	
@@ -182,7 +179,6 @@ public class TeacherController {
 	    			
 	        return "Teacher/ModifyInstitueStructure";
 	    }
-	 
 	 
 	 @RequestMapping(value="/modalRenameBranch",method = RequestMethod.POST)  
 	    public String  modalRenameBranch(Model model,@ModelAttribute("teacher") Teacher teacher,@ModelAttribute("Classes") Classes clas) {  
@@ -229,7 +225,6 @@ public class TeacherController {
 	    			
 	        return "Teacher/ModifyInstitueStructure";
 	    }
-	 
 	 
 	 @RequestMapping(value="/AddNewClass",method = RequestMethod.POST)  
 	    public String  AddNewClass(Model model,@ModelAttribute("Classes") Classes clas,@ModelAttribute("teacher") Teacher teacher) {  
@@ -279,7 +274,6 @@ public class TeacherController {
 	        return "Teacher/ModifyInstitueStructure";
 	    }
 	 
-	 
 	 @RequestMapping(value="/DeleteClassFromBranch",method = RequestMethod.POST)  
 	    public String  DeleteClassFromBranch(Model model,@ModelAttribute("teacher") Teacher teacher,@ModelAttribute("Division") Division div) {  
 	    	
@@ -317,18 +311,15 @@ public class TeacherController {
 				    System.out.println(b);
 				}
 				
-		
-				
 			model.addAttribute("BranchesOfInst",branchlist );
 	    			
 	        return "Teacher/ModifyInstitueStructure";
 	    }
 	 
-	 
 	 @RequestMapping(value="/modalRenameClass",method = RequestMethod.POST)  
 	    public String  modalRenameClass(Model model,@ModelAttribute("teacher") Teacher teacher,@ModelAttribute("Division") Division div) {  
 	    	
-	    	System.out.println("**********this is Rename Branch controller**********");
+	    	System.out.println("**********this is Rename Class controller**********");
 	        Branch branch1=div.getClasses().getBranch();
 	        Classes classes=div.getClasses();
 	    	System.out.println("teacher id is "+teacher);
@@ -368,11 +359,9 @@ public class TeacherController {
 	        return "Teacher/ModifyInstitueStructure";
 	    }
 	 
-	  
-	 
 	 @RequestMapping(value = "/GetClassesList/{id}", method = RequestMethod.GET)
 	 @ResponseBody
-	  public String GetClassesList( @PathVariable("id") int id ){
+	    public String GetClassesList( @PathVariable("id") int id ){
 		 
 			System.out.println("**********from GetClassesList controller**********");
 			
@@ -389,13 +378,34 @@ public class TeacherController {
 			JSON+="]";
 			System.out.println(JSON);
 			
+			return JSON;
+}
+	 
+	 @RequestMapping(value = "/GetDivisionList/{id}", method = RequestMethod.GET)
+	 @ResponseBody
+	    public String GetDivisionList( @PathVariable("id") int id ){
+		 
+			System.out.println("**********from GetDivisionList controller**********");
+			List<Division> divisionList=divisionService.getallOfParticularClass(classesService.find(id));
+			//List<Classes> classList=classesService.getallOfParticularBranch(branchService.find(id));
+			String JSON="[{\"value\":0,\"name\":\"--- Select Division---\"},";
+			for (Division div : divisionList) {
+				JSON+="{";
+				JSON+="\"value\":"+div.getId()+",";
+				JSON+="\"name\":\""+div.getName()+"\"";
+				JSON+="},";
+			    System.out.println(div);
+			}
+			JSON=JSON.substring(0, JSON.length() - 1);
+			JSON+="]";
+			System.out.println(JSON);
+			
 			
 		return JSON;
 }
-	 
-	 
+	
 	 @RequestMapping(value="/AddNewDivision",method = RequestMethod.POST)  
-	   public String  AddNewDivision(Model model,@ModelAttribute("Division") Division div,@ModelAttribute("teacher") Teacher teacher) {  
+	   	public String  AddNewDivision(Model model,@ModelAttribute("Division") Division div,@ModelAttribute("teacher") Teacher teacher) {  
 	    	
 		 
 	    	System.out.println("**********this is AddNewDivision controller**********");	 
@@ -432,14 +442,124 @@ public class TeacherController {
 				 for (Branch b : branchlist) {
 					    System.out.println(b);
 					}
-					
-			
-					
 				model.addAttribute("BranchesOfInst",branchlist );
 	    	}
 	    	 return "Teacher/ModifyInstitueStructure";
 	    }
-
+	 
+	 @RequestMapping(value="/DeleteDivisionFromClass",method = RequestMethod.POST)  
+	    public String  DeleteDivisionFromClass(Model model,@ModelAttribute("teacher") Teacher teacher,HttpServletRequest req) {  
+	    	
+	    	System.out.println("**********this is Delete Division controller**********");
+	    	String divID=req.getParameter("disabledSelectForDivisionForDelete");
+	        int id=Integer.valueOf(divID);
+	    	String classID=req.getParameter("disabledSelectForClassesForDeleteDivision");
+	    	System.out.println("div id is "+id);
+	    	System.out.println("class id is "+classID);
+	 
+	    	System.out.println("teacher id is "+teacher);
+	    
+	    	try{
+	    		divisionService.delet(id);
+		    	System.out.println("Division is deleted ");
+		    	model.addAttribute("SuccessMessage", "Division is deleted successfully");
+	    	}
+	    	catch(Exception e)
+	    	{
+	    		e.printStackTrace();
+	    		model.addAttribute("ErrorMessage", "This Division can not be deleted");
+	    	}
+	    	
+	        Branch branch= new Branch();
+			Classes clsess=new Classes();
+			Division division =new Division();
+			model.addAttribute("Branch", branch);
+			model.addAttribute("Classes", clsess);
+			model.addAttribute("Division", division);
+	    	System.out.println(teacher.getId());
+	    	
+	    	Institute inst=teacherService.GetInstitute(teacher.getId());
+			System.out.println("institute is :"+inst);
+	    	
+	    	 List <Branch> branchlist=branchService.getallOfParticularInstitute(inst);
+			 System.out.println("we are going to print the branches of current isntitute :");
+			 for (Branch b : branchlist) {
+				    System.out.println(b);
+				}
+			model.addAttribute("BranchesOfInst",branchlist );
+	    	 return "Teacher/ModifyInstitueStructure";
+	    }
+	 
+	 @RequestMapping(value="/modalRenameDivision",method = RequestMethod.POST)  
+	    public String  modalRenameDivision(Model model,@ModelAttribute("teacher") Teacher teacher,HttpServletRequest req) {  
+	    	
+	    	System.out.println("**********this is Rename Division controller**********");
+	    	String id=req.getParameter("selectedDivisionIdToRename");
+	    	
+	    	Integer intObject = new Integer(id);
+	    	int DivId = intObject.intValue();
+	     	String DivName=req.getParameter("selectedDivisionForRename");
+	    	System.out.println("Div is "+DivName+" and its id is "+DivId);
+	    	
+	  
+	    	String id1=req.getParameter("selectedClassIdToRenameDivision");
+	    	Integer intObject1 = new Integer(id1);
+	    	int ClassId = intObject1.intValue();
+	    	String ClassName=req.getParameter("selectedClassForRenameDivision");
+	    	
+	    	
+	    	String id2=req.getParameter("selectedBranchIdrenameDivision");
+	    	Integer intObject2 = new Integer(id2);
+	    	int BranchId=intObject2.intValue();
+	    	String BranchName=req.getParameter("selectedBranchForRenameDivision");
+	    	
+	    	Branch branch=new Branch();
+	    	Classes classes=new Classes();
+	        Division div=new Division();
+	        
+	        branch.setId(BranchId);
+	        branch.setName(BranchName);
+	        
+	        classes.setBranch(branch);
+	        classes.setId(ClassId);
+	        classes.setName(ClassName);
+	        
+	    	div.setClasses(classes);
+	    	div.setId(DivId);
+	    	div.setName(DivName);
+	        
+	    	try{
+	    		divisionService.update(div);
+		    	System.out.println("Division is renamed");
+		    	model.addAttribute("SuccessMessage", "Division is renamed successfully");
+	    	}
+	    	catch(Exception e)
+	    	{
+	    		e.printStackTrace();
+	    		model.addAttribute("ErrorMessage", "This Division can not be renamed");
+	    	}
+	    
+	    	Branch branch1= new Branch();
+			Classes clsess=new Classes();
+			Division division =new Division();
+			model.addAttribute("Branch", branch1);
+			model.addAttribute("Classes", clsess);
+			model.addAttribute("Division", division);
+	    	System.out.println(teacher.getId());
+	    	
+	    	Institute inst=teacherService.GetInstitute(teacher.getId());
+			System.out.println("institute is :"+inst);
+	    	
+	    	 List <Branch> branchlist=branchService.getallOfParticularInstitute(inst);
+			 System.out.println("we are going to print the branches of current isntitute :");
+			 for (Branch b : branchlist) {
+				    System.out.println(b);
+				}
+				
+			model.addAttribute("BranchesOfInst",branchlist );
+	    			
+	        return "Teacher/ModifyInstitueStructure";
+	    }
 	 
 	 @RequestMapping(value="/ViewInstitueStructure",method = RequestMethod.GET)  
 	    public String  ViewInstitueStructure(Model model,@ModelAttribute("teacher") Teacher teacher,@ModelAttribute("institute") Institute institute) {  
@@ -453,10 +573,9 @@ public class TeacherController {
 		 		 
 	        return "Teacher/ExistingInstituteStructure";
 	    }
-
 	 
 	 @RequestMapping("/teacherChangePassword")
-	 public String changePasswordShow(Model map) 
+	 	public String changePasswordShow(Model map) 
 	 {
 		 System.out.println("**********this is teacherChangePassword controller**********");	    	
 		 
@@ -466,9 +585,8 @@ public class TeacherController {
 		 return "Teacher/changePassword";
 	 }
 
-	 
 	 @RequestMapping(value="/teacherChangePassword" , method=RequestMethod.POST)
-	 public String changePassword(Model map ,@RequestParam("oldPassword") String oldPassword ,@RequestParam("newPassword") String newPassword,@ModelAttribute("teacher") Teacher teacher ) 
+	 	public String changePassword(Model map ,@RequestParam("oldPassword") String oldPassword ,@RequestParam("newPassword") String newPassword,@ModelAttribute("teacher") Teacher teacher ) 
 	 {
 		 System.out.println("**********this is teacherChangePassword controller**********");	    	
 		System.out.println(teacher.toString());
@@ -486,8 +604,7 @@ public class TeacherController {
 		
 		 return "Teacher/changePassword";
 	 }
-
-	 	 
+ 
 	 @RequestMapping(value="/scheduletree",method = RequestMethod.GET)  
 	    public String  scheduletree(Model model,@ModelAttribute("teacher") Teacher teacher,@ModelAttribute("institute") Institute institute) {  
 	    	
@@ -502,10 +619,9 @@ public class TeacherController {
 	        return "Teacher/InstStructForSchedule";
 	    }
 
-	 
 	 @RequestMapping(value = "/GetCalender/{id}", method = RequestMethod.GET)
 	 @ResponseBody
-	   public String GetCalender( @PathVariable("id") int id ){
+	   	public String GetCalender( @PathVariable("id") int id ){
 		 
 		 
 			System.out.println("**********from GetCalender controller and division id is :"+id +"**********");		
@@ -535,7 +651,6 @@ public class TeacherController {
 		return result;
 	 }
 
-	 
 	 @RequestMapping(value="/updateDivisionSchedule",method = RequestMethod.POST)  
 	    public  String  updateDivisionSchedule(Model model,@ModelAttribute("Schedule") Schedule schedule,@ModelAttribute("teacher") Teacher teacher) {  
 	    	
@@ -593,7 +708,6 @@ public class TeacherController {
 	        return "Teacher/InstStructForSchedule";
 	    }
 
-	 
 	 @RequestMapping(value="/updateDivisionScheduleService",method = RequestMethod.POST)  
 	    public    String  updateDivisionScheduleService(@RequestBody Schedule schedule, HttpServletRequest request,@ModelAttribute("teacher") Teacher teacher) {  
 	    	
@@ -618,7 +732,6 @@ public class TeacherController {
 	        return result;
 	    }
 
-	 
 	 @RequestMapping(value = "/TeacherHome", method = RequestMethod.GET)
 		public String TeacherHome(@ModelAttribute("teacher") Teacher teacher) {		
 			System.out.println("**********inside Teacher Home Page controller**********");
@@ -638,11 +751,9 @@ public class TeacherController {
 
 		}
 	 
-	 
-	 
 	 @RequestMapping(value = "/deleteTeacherApprovalRequest/{id}", method = RequestMethod.GET)
 	 @ResponseBody
-	  public String deleteTeacherApprovalRequest( @PathVariable("id") int id ){
+	 	public String deleteTeacherApprovalRequest( @PathVariable("id") int id ){
 		 
 			System.out.println("**********from /deleteTeacherApprovalRequest/{id} controller**********");
 			
@@ -664,45 +775,9 @@ public class TeacherController {
 		return result;
 	 }
 	 
-	 
-	 
-	 
-	 /*@RequestMapping(value = "/TeacherRequestApprover/{id}", method = RequestMethod.GET)
-	 @ResponseBody
-	  public String approveTeacherApprovalRequest( @PathVariable("id") int id,@RequestBody Permissions p){
-		 
-			System.out.println("**********from /approveTeacherApprovalRequest/{id} controller**********");
-			
-			String result="";
-			,@RequestBody Permissions p, @ModelAttribute("teacher") Teacher teacher
-			System.out.println("permssions are :"+p);  
-			System.out.println("teacher to be updated is with id"+id);		
-				try
-				{
-					Teacher t=teacherService.find(id);		//find teacher								
-					permissionsService.create(p);			// create permissions	
-					t.setPermissions(p);					//attach permissions to teacher
-					teacherService.update(t);               //update teacher
-					Login l=loginService.find(t.getLogin().getId()); // get login of teacher
-					l.setEnableInstitute(true);				 // enable the institute flag 
-					loginService.update(l);				     //update login
-					System.out.println("Teacher is updated with the id "+id);
-					result="{\"message\":\"Teacher with id "+id+" is updated \",\"status\":\"success\"}";
-				}
-				catch(Exception e)
-				{
-					System.out.println(e.getMessage());
-					System.out.println(e);
-					System.out.println("error in updation with teacher id : "+id);
-					result="{\"message\":\"ERROR...!! Teacher with id "+id+" not updated\",\"c\":\"fail\"}";
-				}
-			System.out.println(result);
-		return result;
-	 }*/
-	 
 	 @RequestMapping(value = "/TeacherRequestApprover/{id}", method = RequestMethod.GET)
 	 @ResponseBody
-	  public String approveTeacherApprovalRequest( @PathVariable("id") int id,@RequestParam("authoriseStudent") boolean authoriseStudent,
+	 	public String approveTeacherApprovalRequest( @PathVariable("id") int id,@RequestParam("authoriseStudent") boolean authoriseStudent,
 			  @RequestParam("authoriseTeacher") boolean authoriseTeacher,
 			  @RequestParam("fillAttendance") boolean fillAttendance,
 			  @RequestParam("fillSchedule") boolean fillSchedule,
@@ -750,9 +825,6 @@ public class TeacherController {
 		return result;
 	 }
 	 
-	 
-	 
-	 
 	 @RequestMapping(value="/home",method = RequestMethod.GET)  
 	    public    String  taecherhome() {  
 	    	
@@ -763,7 +835,6 @@ public class TeacherController {
 	        return "Teacher/home";
 	    }
 
-	 
 	 @RequestMapping(value = "/StudentRequestManager", method = RequestMethod.GET)
 		public String StudentRequestManager(Model model,@ModelAttribute("teacher") Teacher teacher) {		
 			System.out.println("**********inside StudentRequestManager controller**********");
@@ -780,10 +851,9 @@ public class TeacherController {
 
 		}
 	 
-	 
 	 @RequestMapping(value = "/deleteStudentApprovalRequest/{id}", method = RequestMethod.GET)
 	 @ResponseBody
-	  public String deleteStudentApprovalRequest( @PathVariable("id") int id ){
+	 	public String deleteStudentApprovalRequest( @PathVariable("id") int id ){
 		 
 			System.out.println("**********from /deleteStudentApprovalRequest/{id} controller**********");
 			
@@ -810,10 +880,9 @@ public class TeacherController {
 		return result;
 	 }
 	 
-	
 	 @RequestMapping(value = "/StudentRequestApprover/{id}", method = RequestMethod.GET)
 	 @ResponseBody
-	  public String StudentRequestApprover( @PathVariable("id") int id){
+	 	public String StudentRequestApprover( @PathVariable("id") int id){
 		 
 			System.out.println("**********from /StudentRequestApprover/{id} controller**********");
 			
@@ -858,7 +927,6 @@ public class TeacherController {
 
 		}
 	 
-	 
 	 @RequestMapping(value = "/changeTUsername", method = RequestMethod.POST)
 		public String changeTUsername(@ModelAttribute("teacher") Teacher teacher,HttpServletRequest request,Model model) {		
 			System.out.println("**********inside changeTUsername controller**********");
@@ -883,7 +951,6 @@ public class TeacherController {
 			return "Teacher/changePassword";
 
 		}
-	 
 	 
 	 @RequestMapping(value = "/changeTPassword", method = RequestMethod.POST)
 		public String changeTPassword(@ModelAttribute("teacher") Teacher teacher,HttpServletRequest request,Model model) {		
@@ -912,14 +979,14 @@ public class TeacherController {
 		}
 	 
 	 @RequestMapping("/teacherShowProfile")
-	 public String teacherShowProfile(Model model) 
+	 	public String teacherShowProfile(Model model) 
 	 {
 		 System.out.println("**********this is teacherShowProfile controller**********");	    	
 		 return "Teacher/showProfile";
    	 }
 	 
 	 @RequestMapping(value="/teacherEditProfile")
-	 public String teacherEditProfile(Model model) 
+	 	public String teacherEditProfile(Model model) 
 	 {
 		 System.out.println("**********this is teacherEditProfile controller**********");	 
 		 model.addAttribute("EditTeacher", new Teacher());
@@ -927,7 +994,7 @@ public class TeacherController {
      }
 	 
 	 @RequestMapping(value="/editTeacher",method = RequestMethod.POST)
-	 public String editTeacher(Model model,@ModelAttribute("teacher") Teacher teacher1,@ModelAttribute("EditTeacher") Teacher teacher2) 
+	 	public String editTeacher(Model model,@ModelAttribute("teacher") Teacher teacher1,@ModelAttribute("EditTeacher") Teacher teacher2) 
 	 {
 		 System.out.println("**********this is editTeacher controller**********");
 		 teacher1.setFname(teacher2.getFname());
@@ -943,5 +1010,4 @@ public class TeacherController {
 		
 		 return "Teacher/showProfile";
      }
-	 
 }

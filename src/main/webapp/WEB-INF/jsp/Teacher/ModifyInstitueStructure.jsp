@@ -42,10 +42,12 @@
 	        	     });
 	        	     $("#disabledSelectForClassesInAddDividion").html(cb);
 	        	});	
-		        		            
+		         
+	        	 $('#saveDivisionSubmitBTN').attr('disabled','disabled');
 	   		     $('#disabledSelectForClassesInAddDividion').removeAttr('disabled'); 
 	   		     	                      
 	         }else{
+	         $('#disabledSelectForClassesInAddDividion').html('<option value="0">--- Select class ---</option>');
 	         $('#disabledSelectForClassesInAddDividion').attr('disabled','disabled'); 
 	         $('#disabledInputForDivisionName').attr('disabled','disabled'); 
 	         $('#saveDivisionSubmitBTN').attr('disabled','disabled'); 
@@ -86,10 +88,12 @@
 
 	   	if(others != 0){           
    	        $('#saveDivisionSubmitBTN').removeAttr('disabled'); 
+   	   
    	     $('#disabledInputForDivisionName').removeAttr('disabled');   
    	               
    	         }else{
    	         $('#saveDivisionSubmitBTN').attr('disabled','disabled'); 
+   	   
    	      $('#disabledInputForDivisionName').attr('disabled','disabled'); 
    	        }  
 	   	 
@@ -182,6 +186,7 @@
     	        }  
            });
  	  
+    	 //-----------------rename class button click and selected value automatically shown in specific tag------------------
     	  $('#submitBTNrenameClass').on('click',function(){
     		var selectedBranch = $("#SelectBranchForDeleteClass option:selected" ).text();
     		var selectedClass= $("#disabledSelectForClassesForDelete option:selected").text();
@@ -192,21 +197,119 @@
     	     $("#renameClassId").val(selectedClassId); 
     	    $("#selectedBranchIdrenameClass").val(selectedBranchId);
     		 
-    	  /*  $("#renameBranchName").on('change',function(){
-    	     var renameBranchNameModal=$("#renameBranchName").text();
-    	    	if(renameBranchNameModal == null)
-    	    		{
-    	    		 $('#submitBTNrenameBranchModal').attr('disabled','disabled');
-    	    		}
-    	    	  else
-    	    	   {
-    	    	    $('#submitBTNrenameBranchModal').removeAttr('disabled');
-    	    	   }
-    	    	
-    	    }); */
-  
     	     }); 
-    });
+    	  
+    	  
+    	//-----------------select division to delete-------------------
+    	
+    	
+    	$('#disabledSelectForClassesForDeleteDivision').attr('disabled','disabled');
+    	$('#disabledSelectForDivisionForDelete').attr('disabled','disabled');
+    	$('#submitBTNrenameDivision').attr('disabled','disabled');
+    	$('#deleteDivisionSubmitBTN').attr('disabled','disabled');
+    	
+    	//-------------------------------select Branch to delete division--------------------------
+    	$('#SelectBranchForDeleteDivision').change(function() {
+    		   	 var  others = $(this).find(":selected").val();
+    		        if(others != 0)
+    		        {   
+    		         $("#disabledSelectForDivisionForDelete").html('<option value="0">--- Select Division ---</option>');
+    	    		 $('#disabledSelectForDivisionForDelete').attr('disabled','disabled'); 
+    	    		 $('#deleteDivisionSubmitBTN').attr('disabled','disabled'); 
+    	    		 $('#submitBTNrenameDivision').attr('disabled','disabled');
+    	    		 
+    		         $.getJSON("GetClassesList/"+$(this).find(":selected").val(), function(jsonData)
+    		          {
+    		            cb = '';
+    		            $.each(jsonData, function(i,data){
+    		        	cb+='<option value="'+data.value+'">'+data.name+'</option>';
+    		        	});
+    		        	  $("#disabledSelectForClassesForDeleteDivision").html(cb);
+    		        	});	
+    			        		            
+    		   		    $('#disabledSelectForClassesForDeleteDivision').removeAttr('disabled'); 
+    		   		   //  $('#deleteDivisionSubmitBTN').removeAttr('disabled');
+    		   		   	                      
+    		         }
+    		         else
+    		         {
+    		          $('#disabledSelectForClassesForDeleteDivision').html('<option value="0">--- Select Class ---</option>');
+    		          $('#disabledSelectForClassesForDeleteDivision').attr('disabled','disabled'); 
+    		          $("#disabledSelectForDivisionForDelete").html('<option value="0">--- Select Division ---</option>');
+    		     	  $('#disabledSelectForDivisionForDelete').attr('disabled','disabled'); 
+    		          $('#deleteDivisionSubmitBTN').attr('disabled','disabled');
+    		          $('#submitBTNrenameDivision').attr('disabled','disabled');
+    		          //$('#saveDivisionSubmitBTN').attr('disabled','disabled'); 
+    		         }  
+    	    }); 
+    		        
+    	//-------------------------------select class to delete division-----------------------------
+    		        $("#disabledSelectForClassesForDeleteDivision").change(function(){
+                        var selectedClass=$("#disabledSelectForClassesForDeleteDivision option:selected").val();
+    		   		    var selectedbranch=$("#SelectBranchForDeleteDivision option:selected").val();
+    		   		     if(selectedClass != 0 ){
+    		   		    	 if(selectedbranch != 0){
+    		   		    	 $.getJSON("GetDivisionList/"+$("#disabledSelectForClassesForDeleteDivision option:selected").val(), function(jsonData){
+        		        	     cb = '';
+        		        	     $.each(jsonData, function(i,data){
+        		        	         cb+='<option value="'+data.value+'">'+data.name+'</option>';
+        		        	     });
+        		        	     $("#disabledSelectForDivisionForDelete").html(cb);
+        		        	});
+    		   		    	 
+    		   		    	$('#disabledSelectForDivisionForDelete').removeAttr('disabled');
+    		   		    	 }
+    		   		    } 
+    		   		     else{
+    		   		    	$("#disabledSelectForDivisionForDelete").html('<option value="0">--- Select Division ---</option>');
+    		   		    	$('#disabledSelectForDivisionForDelete').attr('disabled','disabled'); 
+    		   		        $('#deleteDivisionSubmitBTN').attr('disabled','disabled');
+    		   		        $('#submitBTNrenameDivision').attr('disabled','disabled');
+    		   		     }
+    		   });
+    	
+    	//-----------------------------select division to delete------------------------
+    	       $("#disabledSelectForDivisionForDelete").change(function(){
+   		    	var selectedDivision=$("#disabledSelectForDivisionForDelete option:selected").val();
+   		    	var selectedClass=$("#disabledSelectForClassesForDeleteDivision option:selected").val();
+   		    	var others=$("#SelectBranchForDeleteDivision").val();
+   		    	if(selectedDivision != 0 )
+   		    		{
+   		    		 if(selectedClass != 0 )
+   		    		 {
+   		    			 if(others != 0)
+   		    			 {
+   		    		      $('#deleteDivisionSubmitBTN').removeAttr('disabled');
+   		    		      $('#submitBTNrenameDivision').removeAttr('disabled');
+   		    		     }
+   		    		 }
+   		    		}
+   		    	    else
+   		    	    {
+   		    	     $('#deleteDivisionSubmitBTN').attr('disabled','disabled'); 
+   		    	     $('#submitBTNrenameDivision').attr('disabled','disabled');
+   		    	    }
+   		    	});
+    	
+    	       //-----------------rename division button click and selected value automatically shown in specific tag------------------
+    	    	  $('#submitBTNrenameDivision').on('click',function(){
+    	    		var selectedBranch = $("#SelectBranchForDeleteDivision option:selected" ).text();
+    	    		var selectedClass= $("#disabledSelectForClassesForDeleteDivision option:selected").text();
+    	    	    var selectedDivision = $("#disabledSelectForDivisionForDelete option:selected").text();
+    	    	    var selectedBranchId= $("#SelectBranchForDeleteDivision option:selected").val();
+    	    	    var selectedClassId= $("#disabledSelectForClassesForDeleteDivision option:selected").val();
+    	    	    var selectedDivisionId= $("#disabledSelectForDivisionForDelete option:selected").val();
+    	    	    
+    	    	    $("#selectedBranchIdrenameDivision").val(selectedBranchId);
+    	    	    $("#selectedClassIdToRenameDivision").val(selectedClassId);
+    	    	    $("#selectedDivisionIdToRename").val(selectedDivisionId);
+    	    	    
+    	    	    $("#selectedBranchForRenameDivision").val(selectedBranch);
+    	    	    $("#selectedClassForRenameDivision").val(selectedClass);
+    	    	    $("#selectedDivisionForRename").val(selectedDivision);
+    	    	 
+    	    		 }); 
+    	   });
 
    </script>	
 
@@ -366,29 +469,29 @@
 													
 													 <label for="fullname" class="control-label col-lg-2">Add new Division <span class="required">*</span></label>
 													<div class="col-lg-10">
-														<form:input path="name" class="form-control" id="disabledInputForDivisionName" type="text" placeholder="Add new class" required="required" />
+														<form:input path="name" class="form-control" id="disabledInputForDivisionName" type="text" placeholder="Add new division" required="required" />
 													</div>
 																			
 											</div>
 											<div class="form-group">
 			                                          <div class="col-lg-offset-2 col-lg-10">
-			                                              <button class="btn btn-primary" id="saveDivisionSubmitBTN" type="submit">Add Class</button>
+			                                              <button class="btn btn-primary" id="saveDivisionSubmitBTN" type="submit">Add Division</button>
 			                     					 </div>
 			                                </div>
 										</form:form>
                                   </div>
                               </div>
                           </div>
-                      </div>
+                     
                       
           <!-- -----------------------------   Delete Branch from Institute  ---------------------------------->  
-                      <div><h2>Delete</h2></div>
-                      <div class="panel-group m-bot20" id="accordion">
+                      <div><h2>Delete/Rename</h2></div>
+                     
                           <div class="panel panel-primary">
                               <div class="panel-heading">
                                   <h4 class="panel-title">
                                       <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
-                                          Delete Branch from Institute 
+                                          Delete/Rename Branch from Institute 
                                       </a>
                                   </h4>
                               </div>
@@ -476,13 +579,13 @@
 										                             </div>
 										                     </div>
 					                                 </div>
-			                                 </div>                   
- <!-- -----------------------------------------------   Delete Class from Branch ---------------------------------->                          
+			                                                   
+ <!-- -----------------------------------------------   Delete/Rename Class from Branch ---------------------------------->                          
                        <div class="panel panel-success">
                               <div class="panel-heading">
                                   <h4 class="panel-title">
                                       <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseFive">
-                                        Delete Class from Branch
+                                        Delete/Rename Class from Branch
                                       </a>
                                   </h4>
                               </div>
@@ -515,7 +618,7 @@
 											<div class="form-group">
 			                                          <div class="col-lg-offset-2 col-lg-10">
 			                                              <a class="btn btn-primary" data-toggle="modal" id="submitBTNrenameClass" href="#renameClassModal">Rename</a>
-			                                              <button class="btn btn-primary" id="DeleteClassSubmitBTN"type="submit">Delete Class</button>
+			                                              <button class="btn btn-danger" id="DeleteClassSubmitBTN"type="submit">Delete Class</button>
 			                     					 </div>
 			                                </div>
 										</form:form>
@@ -584,61 +687,135 @@
                                                     </div>
                        
                           
- <!-- -----------------------------   Add Division into Class ---------------------------------->
- <%-- 
+ <!-- -----------------------------   Delete/Rename Division from Class ---------------------------------->
+ 
                           <div class="panel panel-warning">
                               <div class="panel-heading">
                                   <h4 class="panel-title">
                                       <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseSix">
-                                           Add Division into Class
+                                          Delete/Rename Division from Class
                                       </a>
                                   </h4>
                               </div>
+                              
                               <div id="collapseSix" class="panel-collapse collapse">
                                   <div class="panel-body">
                                      
-										<form:form modelAttribute="Division" class="form-validate form-horizontal " id="AddNewDivision" action="AddNewDivision" method="POST">
+										<form class="form-validate form-horizontal " id="DeleteDivision" action="DeleteDivisionFromClass" method="POST">
 											<div class="form-group ">
 											
 												<label for="fullname" class="control-label col-lg-2">Select The Branch 
 												 <span class="required">*</span>
 												</label>
 												<div class="col-lg-10">
-													<form:select path="classes.branch.id" class="form-control input-lg m-bot15 "  form="AddNewDivision" id="SelectBranch2">
+													<select class="form-control input-lg m-bot15 "  form="DeleteDivision" id="SelectBranchForDeleteDivision">
 														<option value="0">--- Select Branch---</option>
 														<c:forEach items="${BranchesOfInst}" var="branch">
 															<option value="${branch.id}">${branch.name}</option>
 														</c:forEach>
-													</form:select>
+													</select>
 												</div>
 												
-													 <label for="fullname" class="control-label col-lg-2">Select the Class <span class="required">*</span></label>
+													 <label for="fullname" class="control-label col-lg-2">Select Class <span class="required">*</span></label>
 													<div class="col-lg-10">
-														<form:select path="classes.id" class="form-control m-bot15" id="disabledSelectForClassesInAddDividion" type="text" placeholder="Add new class" required="required" >
+														<select class="form-control m-bot15" id="disabledSelectForClassesForDeleteDivision" name="disabledSelectForClassesForDeleteDivision" type="text" placeholder="Select Class" required="required" >
 															<option value="0">--- Select Class---</option>
-														</form:select>
+														</select>
 													</div>		
 													
-													 <label for="fullname" class="control-label col-lg-2">Add new Division <span class="required">*</span></label>
+													 <label for="fullname" class="control-label col-lg-2">Select Division <span class="required">*</span></label>
 													<div class="col-lg-10">
-														<form:input path="name" class="form-control" id="disabledInputForDivisionName" type="text" placeholder="Add new class" required="required" />
-													</div>
+														<select class="form-control m-bot15" id="disabledSelectForDivisionForDelete" name="disabledSelectForDivisionForDelete" type="text" placeholder="Select Division" required="required" >
+															<option value="0">--- Select Division---</option>
+														</select>
+													</div>	
+													<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 																			
 											</div>
 											<div class="form-group">
 			                                          <div class="col-lg-offset-2 col-lg-10">
-			                                              <button class="btn btn-primary" id="saveDivisionSubmitBTN" type="submit">Add Class</button>
+			                                          <a class="btn btn-primary" data-toggle="modal" id="submitBTNrenameDivision" href="#renameDivisionModal">Rename</a>
+			                                              <button class="btn btn-danger" id="deleteDivisionSubmitBTN" type="submit">Delete</button>
 			                     					 </div>
 			                                </div>
-										</form:form>
+										</form>
                                   </div>
                               </div>
-                          </div>
-                      </div> --%>
+                              
+                               <div class="modal fade" id="renameDivisionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+										                              <div class="modal-dialog">
+										                                  <div class="modal-content">
+										                                        <div class="modal-header">
+										                                           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+										                                           <h4 class="modal-title">Rename Division Name</h4>
+										                                        </div>
+										                                        
+										                                  <div class="modal-body">
+										                                         <div class="row">
+																                    <div class="col-lg-12">
+																                      <section class="panel">
+																                          <header class="panel-heading">
+																                          Make Changes To Institute
+																                          </header>
+																                          
+																							 <div class="panel-body">
+																								  <div class="form">
+																									     <form class="form-validate form-horizontal " id="modal_rename_divisionform" method="post" action="modalRenameDivision">
+																									              <div class="form-group ">
+																									              <div class="col-lg-10" style="display:none">
+																			                                              <input class=" form-control" id="selectedBranchIdrenameDivision" name="selectedBranchIdrenameDivision" type="text" autocomplete="off" required="required" maxlength="50" readonly="true"  />
+																			                                      </div>
+																			                                       <div class="col-lg-10" style="display:none">
+																			                                              <input class=" form-control" id="selectedClassIdToRenameDivision" name="selectedClassIdToRenameDivision" type="text" autocomplete="off" required="required" maxlength="50" readonly="true"  />
+																			                                          </div>
+																			                                          
+																			                                          <div class="col-lg-10" style="display:none">
+																			                                              <input class=" form-control" id="selectedDivisionIdToRename" name="selectedDivisionIdToRename" type="text" autocomplete="off" required="required" maxlength="50" readonly="true"  />
+																			                                          </div>
+																			                         
+																			                                          <label for="fullname" class="control-label col-lg-2">Branch Name<span class="required">*</span></label>
+																			                                           <br>
+																			                                           <div class="col-lg-10">
+																			                                              <input class=" form-control" id="selectedBranchForRenameDivision" name="selectedBranchForRenameDivision" type="text" autocomplete="off" required="required" maxlength="50" readonly="true"/>
+																			                                          </div>
+																			                                          <br></br>
+																			                                          <label for="fullname" class="control-label col-lg-2">Class Name<span class="required">*</span></label>
+																			                                           <br>
+																			                                           <div class="col-lg-10">
+																			                                              <input class=" form-control" id="selectedClassForRenameDivision" name="selectedClassForRenameDivision" type="text" autocomplete="off" required="required" maxlength="50" readonly="true"/>
+																			                                          </div>
+																			                                           <br></br>
+																			                                          <label for="fullname" class="control-label col-lg-2">Division Name<span class="required">*</span></label>
+																			                                           <br>
+																			                                           <div class="col-lg-10">
+																			                                              <input class=" form-control" id="selectedDivisionForRename" name="selectedDivisionForRename" type="text" autocomplete="off" required="required" maxlength="50"/>
+																			                                          </div>
+																			                                          
+																			                                          <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+																			                                      </div>
+																			                                    
+																			                                      <div class="form-group">
+																			                                       <div class="col-lg-offset-2 col-lg-10">
+																									                       <button class="btn btn-primary" type="submit" id="submitBTNrenameDivisionModal">Rename</button>
+																									               </div>
+																									              </div>
+																									     </form>
+																							       </div>
+																				            </div>
+																                      </section>
+																                  </div>
+										                                       </div>
+																			 </div>
+										                                     <div class="modal-footer">
+										                                         <button data-dismiss="modal" class="btn btn-default" type="button">Close</button>
+										                                    </div>
+										                               </div>
+										                          </div>
+										                   </div>
+                                    </div>
+                      </div>
                       <!--collapse end-->
-                      
-                      
-                      
+               
        </section>   
    </section> 
     </aside>  

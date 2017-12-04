@@ -3,7 +3,7 @@
      <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
        <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>  
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<html ng-app="myApp" ng-controller="myCtrl">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
@@ -14,8 +14,8 @@
 <%-- <jsp:include page="/WEB-INF/jsp/Teacher/components/angular.jsp" /> --%>
 
 
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-rc.0/angular.js"></script>
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" />
+<!-- 	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-rc.0/angular.js"></script>
+ --><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" />
 
 
 
@@ -41,8 +41,6 @@
 
   <script>
 
-
-  
 
   		var app = angular.module('myApp', ['ui.bootstrap']);
   		
@@ -72,7 +70,7 @@
 
    		$scope.setSelected = function (idSelectedVote) {
    		   $scope.idSelectedVote = idSelectedVote;
-   		}
+   		};
    		
    		$scope.Selecte = function (student) {
    	   		console.log("inside the function");
@@ -107,7 +105,7 @@
 
    	   	console.log("after function executed"+$scope.selected);
     		  
-    		}
+    		};
 
 
 
@@ -127,7 +125,7 @@
 		   	  }
 		   	 }
 		   	 return hasMatch;
-   		}
+   		};
 
    		$scope.add=function () {
    	   		console.log("inside the add function")
@@ -161,7 +159,7 @@
  		     $scope.selected.splice(i,1);
  		}   
 		
-   		}
+   		};
 
 
 
@@ -189,6 +187,8 @@
    	      }
    	    }
      		  			  			   			  			 			  			
+   		};
+   		
    		}); 
    		
    		  		
@@ -198,7 +198,7 @@
    		
 
 </head>
-<body ng-app="myApp" ng-controller="myCtrl" >
+<body  >
 
 <section id="container" class="">
    <!-- Default header -->
