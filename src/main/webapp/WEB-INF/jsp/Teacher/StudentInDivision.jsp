@@ -13,11 +13,22 @@
  <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
  
- 	<style>
- 	.selected {
-    background-color:aqua;
-        }
- 	</style>
+ 
+<style> 
+		  .selectedrow {	  
+		  
+		    background-color:aqua;   
+			}    
+			
+			tr:hover {
+		  background-color: none;
+			}
+			
+			tr:hover td {
+			  color: blue;
+					}
+					
+</style>
  
  <script>
   /*  $(document).ready(function()
@@ -156,6 +167,9 @@
    			$scope.divisionList=[];
    			
    			$scope.NoStudentInDivision=false;
+   			$scope.ShowStudentTable=false;
+   			
+   		
    			
    			console.log($scope.branchList);
    		
@@ -164,6 +178,7 @@
    			$scope.selectedBranch=function(){ //on change of branch
    				
    				$scope.NoStudentInDivision=false; //to remove error message	
+   				$scope.ShowStudentTable=false;    //do not show student table
    				
    			 for( i=$scope.divisionList.length-1; i>=0; i--) {   //to clean the division list
    				$scope.divisionList.splice(i,1);
@@ -201,6 +216,7 @@
 			$scope.selectedClass=function(){
 	
 				$scope.NoStudentInDivision=false; //to remove error message	
+				$scope.ShowStudentTable=false;    //do not show student table
    				
 		   		console.log($scope.selectedClass.name);
 		   		
@@ -229,14 +245,15 @@
 		   	                 console.log("error response came");    	
 		   	                    
 		   	        });
-   			} ;
+   			};
    			
    			
    			
 //--------------------------------------------- To get Student list on click button ----------------------------   			
    			$scope.getStudent=function(){
 
-   				$scope.NoStudentInDivision=false; //to remove error message		
+   				$scope.NoStudentInDivision=false; //to remove error message	
+   				$scope.ShowStudentTable=false;    //do not show student table
    				
 	   			if (!($scope.selectDivision === undefined || $scope.selectDivision === null))	
 	   			{
@@ -259,10 +276,21 @@
 					   	         		{
 					   	         		console.log("there is error or no student in division");
 					   	         			$scope.NoStudentInDivision=true;      //to add error message	
+					   	         		$scope.ShowStudentTable=false;    //do not show student table
 					   	         		}
 					   	         	else{
 					   	         	console.log("succesess students are there");
-					   	        	 $scope.studentList=response.data;	   
+
+					   	             $scope.ShowStudentTable=true;    //show student table
+					   	        	 $scope.studentList=response.data;	
+					   	        	 
+
+					   	   			for (var i = 0; i < $scope.studentList.length; i++) {
+					   	   				$scope.studentList[i].Selected=false;
+					   	            };
+					   	            
+					   	            $scope.CheckUncheckHeader();
+
 					   	        	 for( i=$scope.studentList.length-1; i>=0; i--) {
 							   	          console.log($scope.studentList[i].fname);    	
 							        		} 
@@ -283,6 +311,42 @@
 	   				}
 	   				
    			};
+   			
+   		    
+
+  //------------------------------- to hide student table on change division------------------------------------------  
+   			$scope.selectedDivision=function()
+   			{
+   				$scope.ShowStudentTable=false;    //do not show student table
+   			};
+   			
+	 			  			  			
+   			$scope.CheckUncheckHeader = function () {
+                $scope.IsAllChecked = true;
+                for (var i = 0; i < $scope.studentList.length; i++) {
+                    if (!$scope.studentList[i].Selected) {
+                        $scope.IsAllChecked = false;
+                        break;
+                    }
+                };
+            };
+            $scope.CheckUncheckHeader();
+ 
+            $scope.CheckUncheckAll = function () {
+            	
+            	console.log("CheckUncheckAll :"+$scope.IsAllChecked)
+            	
+                for (var i = 0; i < $scope.studentList.length; i++) {
+                	
+                    $scope.studentList[i].Selected = $scope.IsAllChecked;
+                }
+                for (var i = 0; i < $scope.studentList.length; i++) {
+                	console.log($scope.studentList[i].Selected)
+                   
+                }
+            };
+            
+            
    			
    }); 
    		
@@ -573,7 +637,7 @@
 											</label>
 												
 												<div class="col-lg-10">
-												  <select class="form-control input-lg m-bot15 " ng-model="selectDivision" ng-options="division.name for (x,division) in divisionList" required="required"></select>
+												  <select class="form-control input-lg m-bot15 " ng-model="selectDivision" ng-options="division.name for (x,division) in divisionList" ng-change="selectedDivision()" required="required" ></select>
 												</div>
 									</div>
 											
@@ -596,12 +660,48 @@
                               </div>
                              </div>
                              
+                             
+                             
+                             
+                             
                              <div ng-if="NoStudentInDivision" class="alert alert-block alert-danger fade in">
                                   <button data-dismiss="alert" class="close close-sm" type="button">
                                       <i class="icon-remove"></i>
                                   </button>
                                   <strong>Selected division does not contain any student</strong> 
                               </div>
+                              
+                              <table id="example" class="table  " ng-show="ShowStudentTable">
+                            <tbody>
+                              <tr>
+								<th align="left"><label>
+                       <input type="checkbox" ng-model="IsAllChecked" ng-change="CheckUncheckAll()" /> Select All</label></th>
+								
+								<th><i class="icon_profile"></i> Full Name</th>                               
+                            <th><i class="icon_mail_alt"></i> Email</th>                            
+                                 <th><i class="icon_mobile"></i> Mobile</th>
+                               
+                              </tr>
+                              <tr ng-repeat="m in studentList" ng-class="{selectedrow:m.Selected}"  >
+								
+								 
+									<td> <label>
+                            <label for="chkCustomer_{{m.CustomerId}}">
+                            <input id="chkCustomer_{{m.CustomerId}}" type="checkbox" ng-model="m.Selected" ng-change="CheckUncheckHeader()" />
+                            {{m.CustomerId}}
+                        </label></td>
+									<td>{{ m.fname }}  {{ m.lname }}</td>
+   							 		<td>{{ m.email }}</td>
+   							 		<td>{{ m.contactno }}</td>
+   							 		
+                                
+  							</tr>
+                             
+                                                    
+                           </tbody>
+</table>
+                              
+                              
                        
  
 			</section>
