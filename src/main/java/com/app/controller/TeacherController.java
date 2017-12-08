@@ -1,6 +1,7 @@
 package com.app.controller;
 
 import java.awt.geom.CubicCurve2D;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -652,7 +653,7 @@ public class TeacherController {
 	 }
 
 	 @RequestMapping(value="/updateDivisionSchedule",method = RequestMethod.POST)  
-	    public  String  updateDivisionSchedule(Model model,@ModelAttribute("Schedule") Schedule schedule,@ModelAttribute("teacher") Teacher teacher) {  
+	    public String  updateDivisionSchedule(Model model,@ModelAttribute("Schedule") Schedule schedule,@ModelAttribute("teacher") Teacher teacher) {  
 	    	
 	    	System.out.println("**********this is updateDivisionSchedule controller**********");
 	    	
@@ -709,7 +710,7 @@ public class TeacherController {
 	    }
 
 	 @RequestMapping(value="/updateDivisionScheduleService",method = RequestMethod.POST)  
-	    public    String  updateDivisionScheduleService(@RequestBody Schedule schedule, HttpServletRequest request,@ModelAttribute("teacher") Teacher teacher) {  
+	    public String  updateDivisionScheduleService(@RequestBody Schedule schedule, HttpServletRequest request,@ModelAttribute("teacher") Teacher teacher) {  
 	    	
 	    	System.out.println("**********this is updateDivisionScheduleService controller**********");
 	    	
@@ -826,7 +827,7 @@ public class TeacherController {
 	 }
 	 
 	 @RequestMapping(value="/home",method = RequestMethod.GET)  
-	    public    String  taecherhome() {  
+	    public String  taecherhome() {  
 	    	
 	    	System.out.println("*************this is /Teacher/home controller*********************");
 	    	
@@ -1010,4 +1011,220 @@ public class TeacherController {
 		
 		 return "Teacher/showProfile";
      }
+	 
+	 @RequestMapping(value = "/StudentInDivision", method = RequestMethod.GET)
+		public String ShowStudentInDivision(Model model,@ModelAttribute("teacher") Teacher teacher) {		
+			System.out.println("**********inside Show student of particular division controller**********");
+			
+			    Branch branch= new Branch();
+				Classes clsess=new Classes();
+				Division division =new Division();
+				model.addAttribute("Branch", branch);
+				model.addAttribute("Classes", clsess);
+				model.addAttribute("Division", division);
+		    	System.out.println(teacher.getId());
+		    	
+		    	Institute inst=teacherService.GetInstitute(teacher.getId());
+				System.out.println("institute is :"+inst);
+		    	
+		    	 List <Branch> branchlist=branchService.getallOfParticularInstitute(inst);
+				 System.out.println("we are going to print the branches of current isntitute :");
+				 for (Branch b : branchlist) {
+					    System.out.println(b);
+					}
+				
+				
+			 String	branchListJSON=gson.toJson(branchlist);
+			System.out.println(branchListJSON);
+			model.addAttribute("branchListJSON",branchListJSON );
+			return "Teacher/StudentInDivision";
+		}
+	 
+	 @RequestMapping(value="/showStudentOfDivision",method=RequestMethod.POST)
+	 public String displayStudentOfDivision(Model model,@ModelAttribute("teacher") Teacher teacher,HttpServletRequest req)
+	 {
+		 System.out.println("**********inside displayStudentOfDivision controller**********");
+		 String id=req.getParameter("disabledSelectForDivisionForShowStudent");
+		 String DivName=req.getParameter("");
+		 int DivID=Integer.parseInt(id);
+		 System.out.println(DivID);
+		 
+		try
+		{
+			System.out.println("in try");
+		List<Student> studentList= StudentService.findByDivId(DivID);
+		for (Student s : studentList) {
+			    System.out.println(s.getFname()+" "+s.getLname());
+			}
+		
+		String studentListJSON=gson.toJson(studentList);
+		model.addAttribute("StudentListJSON", studentListJSON);
+		if(studentList.isEmpty())
+		{
+			model.addAttribute("ErrorMessage","Selected division does not contain any student");
+		}
+		else
+		{
+			model.addAttribute("SuccessMessage","Selected division have following students");	
+		}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+		    Branch branch= new Branch();
+			Classes clsess=new Classes();
+			Division division =new Division();
+			model.addAttribute("Branch", branch);
+			model.addAttribute("Classes", clsess);
+			model.addAttribute("Division", division);
+	    	System.out.println(teacher.getId());
+	    	
+	    	Institute inst=teacherService.GetInstitute(teacher.getId());
+			System.out.println("institute is :"+inst);
+	    	
+	    	 List <Branch> branchlist=branchService.getallOfParticularInstitute(inst);
+			 System.out.println("we are going to print the branches of current isntitute :");
+			 for (Branch b : branchlist) {
+				    System.out.println(b);
+				}
+			model.addAttribute("BranchesOfInst",branchlist );
+		
+		 return "Teacher/StudentInDivision";
+	 }
+	 
+	 
+	 @RequestMapping(value="/GetStudentOfDivision/{id}", method=RequestMethod.GET)
+	 @ResponseBody
+	 public String GetStudentOfDivision(  @PathVariable("id") int DivID)
+	 {
+		 System.out.println("**********inside GetStudentOfDivision controller**********");
+		
+		 System.out.println(DivID);
+		 String studentListJSON="";
+		 
+		try
+		{
+			System.out.println("in try");
+		List<Student> studentList= StudentService.findByDivId(DivID);
+		for (Student s : studentList) {
+			    System.out.println(s.getFname()+" "+s.getLname());
+			}
+		
+		studentListJSON=gson.toJson(studentList);
+		
+		if(studentList.isEmpty())
+		{
+			studentListJSON="{\"ErrorMessage\":\"Selected division does not contain any student\"}";		
+		}
+		else
+		{
+			studentListJSON=gson.toJson(studentList);
+		}
+		}
+		catch(Exception e)
+		{
+			studentListJSON="{\"ErrorMessage\":\"Selected division does not contain any student\"}";
+			
+			e.printStackTrace();
+		}
+		
+		System.out.println(studentListJSON);
+		
+		 return studentListJSON;
+	 }
+	 
+	 
+	 
+	/* @RequestMapping(value="/deleteStudentFromDivision", method=RequestMethod.GET)
+	
+	 public String deleteStudentFromDivision(Model model,@ModelAttribute("teacher") Teacher teacher,HttpServletRequest req)
+	 {
+		 System.out.println("**********inside deleteStudentFromDivision controller**********");
+		 String [] name=req.getParameterValues("selectedstudent");
+		 for(int i=0;i<name.length;i++){
+	       System.out.println("selected student "+name);
+		 }
+		
+		
+	  return "Teacher/StudentInDivision";
+	 }
+	 */
+	 
+	 @RequestMapping(value = "/GetClassesListInJSON/{id}", method = RequestMethod.GET)
+	 @ResponseBody
+	    public String GetClassesListINJSON( @PathVariable("id") int id ){
+		 
+			System.out.println("**********from GetClassesListINJSON controller**********");
+			
+			List<Classes> classList=classesService.getallOfParticularBranch(branchService.find(id));
+			
+         		String classesListJSON=gson.toJson(classList);
+			
+			System.out.println(classesListJSON);
+			
+			return classesListJSON;
+}
+	 
+	 @RequestMapping(value = "/GetDivisionListInJSON/{id}", method = RequestMethod.GET)
+	 @ResponseBody
+	    public String GetDivisionListInJSON( @PathVariable("id") int id ){
+		 
+			System.out.println("**********from GetDivisionListInJSON controller**********");
+			System.out.println(id);
+			List<Division> divisionList=divisionService.getallOfParticularClass(classesService.find(id));
+			
+         		String divisionListJSON=gson.toJson(divisionList);
+			
+			System.out.println(divisionListJSON);
+			
+			return divisionListJSON;
+}
+	 
+	 
+	 
+	 
+	 
+	 @RequestMapping(value="/GetStudentOfDivisionInJSON", method=RequestMethod.POST)
+	 @ResponseBody
+	 public String GetStudentOfDivisionInJSON(@RequestBody Division division)
+	 {
+		 System.out.println("**********inside GetStudentOfDivisionInJSON controller**********");
+		
+		 System.out.println(division);
+		 String studentListJSON="";
+		 
+		try
+		{
+			System.out.println("in try");
+		List<Student> studentList= StudentService.findByDivId(division.getId());
+		for (Student s : studentList) {
+			    System.out.println(s.getFname()+" "+s.getLname());
+			}
+		
+		studentListJSON=gson.toJson(studentList);
+		
+		if(studentList.isEmpty())
+		{
+			studentListJSON="{\"ErrorMessage\":\"Selected division does not contain any student\"}";		
+		}
+		else
+		{
+			studentListJSON=gson.toJson(studentList);
+		}
+		}
+		catch(Exception e)
+		{
+			studentListJSON="{\"ErrorMessage\":\"Selected division does not contain any student\"}";
+			
+			e.printStackTrace();
+		}
+		
+		System.out.println(studentListJSON);
+		
+		 return studentListJSON;
+	 }
+	 
+	 
 }

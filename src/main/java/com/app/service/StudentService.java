@@ -13,6 +13,7 @@ public interface StudentService {
 	public Student find(int id);
 	public List<Student> getall();
 	public Student findByLoginId(int id);
+	public List<Student> findByDivId(int id);
 	public Institute GetInstitute(int id);
 
 }

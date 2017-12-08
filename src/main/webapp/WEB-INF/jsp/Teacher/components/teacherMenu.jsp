@@ -57,8 +57,8 @@
                            <li ng-show="permissions.authoriseTeacher"><a class="" href="TeacherRequestForApproval">Teacher Request </a></li>    
                        <!--    <li ng-show="permissions.authoriseStudent"><a class="" href="#">Edit/Delete Student</a></li> -->
                            <li ng-show="permissions.authoriseStudent"><a class="" href="AddStudentToDivision">Add Student To division</a></li>
-                          <!--  <li ng-show="permissions.authoriseStudent"><a class="" href="StudentInDivision">See Student in divisions</a></li>
-                          <li ng-show="permissions.authoriseTeacher"><a class="" href="#">Edit/Delete Teacher</a></li>       -->                 
+                           <li ng-show="permissions.authoriseStudent"><a class="" href="StudentInDivision">Division's student</a></li>
+                         <!--  <li ng-show="permissions.authoriseTeacher"><a class="" href="#">Edit/Delete Teacher</a></li>       -->                 
                       </ul>
                   </li>
                  

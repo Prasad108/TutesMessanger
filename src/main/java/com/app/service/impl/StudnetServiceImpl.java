@@ -55,6 +55,12 @@ public class StudnetServiceImpl implements StudentService{
 		
 		return StudetentDAO.findByLoginId(id);
 	}
+	
+	@Override
+	public List<Student> findByDivId(int id) {
+		
+		return StudetentDAO.findByDivId(id);
+	}
 
 	@Override
 	public Institute GetInstitute(int id) {

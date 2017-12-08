@@ -71,6 +71,14 @@ public class StudentDAOImpl implements com.app.DAO.StudentDAO {
 		
 		return (Student) query.uniqueResult();
 	}
+	
+	@Override
+	@Transactional
+	public List<Student> findByDivId(int id) {
+		Query query=currentSession().createQuery("from Student  where divid = :id");
+		query.setParameter("id",id);
+		return query.list();
+	}
 
 	@Override
 	@Transactional

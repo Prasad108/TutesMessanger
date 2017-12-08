@@ -34,6 +34,14 @@ public class Division implements java.io.Serializable {
 
 
 
+@Override
+	public String toString() {
+		return "Division [id=" + id + ", name=" + name + "]";
+	}
+
+
+
+
 public Division(Classes classes, String name) {
 		super();
 		this.classes = classes;

@@ -67,9 +67,7 @@ $(document).ready(function(){
 			 $("#instContactno").val($(this).closest('tr').children()[4].textContent);
 			 $("#instEmail").val($(this).closest('tr').children()[3].textContent);
 			 $(".instdate").val(date);
-			
-		
-		
+
 		   
 		});
 
