@@ -9,10 +9,18 @@
 <jsp:include page="/WEB-INF/jsp/components/defaultHead.jsp" />
 <%-- <jsp:include page="/WEB-INF/jsp/Teacher/components/angular.jsp" /> --%>
 
+
  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
  <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
- 
+
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" />
+
+
+
+<link data-require="bootstrap-css@*" data-semver="3.3.1" rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" />
+
+    <script data-require="ui-bootstrap@*" data-semver="0.12.1" src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.12.1.min.js"></script>
  
 <style> 
 		  .selectedrow {	  
@@ -149,11 +157,11 @@
   </script>
   
   <script>
-  		var app = angular.module('myApp', []);
+  		var app = angular.module('myApp',  ['ui.bootstrap']);
   		
   		
   		
-   		app.controller('studentCtrl', function($scope, $http) {
+   		app.controller('studentCtrl', function($scope, $http, $filter) {
    			
    			
    			$scope.branchList=JSON.parse('${branchListJSON}');
@@ -168,6 +176,13 @@
    			
    			$scope.NoStudentInDivision=false;
    			$scope.ShowStudentTable=false;
+   			
+   		 $scope.filteredTodos = []
+      	  ,$scope.currentPage = 1
+      	  ,$scope.numPerPage = 10
+      	  ,$scope.maxSize = 3,
+      	  
+      	$scope.totallenght=$scope.studentList.length/$scope.numPerPage*10;
    			
    		
    			
@@ -289,11 +304,21 @@
 					   	   				$scope.studentList[i].Selected=false;
 					   	            };
 					   	            
+					   	     	$scope.totallenght=$scope.studentList.length/$scope.numPerPage*10;
+					   	    
+					   	 
+					   	            
 					   	            $scope.CheckUncheckHeader();
 
 					   	        	 for( i=$scope.studentList.length-1; i>=0; i--) {
 							   	          console.log($scope.studentList[i].fname);    	
 							        		} 
+					   	        	 
+					   	        	 var begin = (($scope.currentPage - 1) * $scope.numPerPage)
+					        		    , end = begin + $scope.numPerPage;
+					        		    console.log("begin is "+begin+" end is "+end)
+					        		    $scope.filteredTodos = $scope.studentList.slice(begin, end);
+					   	        	 
 					   	         	}
 				    
 				   	        }, 
@@ -345,6 +370,18 @@
                    
                 }
             };
+            
+        	$scope.$watch('currentPage + numPerPage', function() {
+       		    var begin = (($scope.currentPage - 1) * $scope.numPerPage)
+       		    , end = begin + $scope.numPerPage;
+       		    console.log("begin is "+begin+" end is "+end)
+       		    $scope.filteredTodos = $scope.studentList.slice(begin, end);
+       		  });
+        	
+
+          	
+          	
+          		
             
             
    			
@@ -600,6 +637,8 @@
 
 	<section id="main-content">
 	 <section class="wrapper">
+	    <div class="row">
+                  <div class="col-lg-12">
 	
 	 <div class="panel-group m-bot20" id="accordion">
 	                 <div class="panel panel-warning">
@@ -671,10 +710,33 @@
                                   <strong>Selected division does not contain any student</strong> 
                               </div>
                               
+                                  
+                                 <section class="panel">
+                          <div class="panel-body" ng-show="ShowStudentTable">
+                              <form class="form-horizontal " method="get"  > 
+                                     <div class="form-group" >
+                                      <label class="control-label col-lg-2" for="inputSuccess">Search Student</label>
+                                      <div class="col-lg-10">
+                                          <div class="row">
+                                          <div class="col-lg-3">
+                                                  <input type="text" class="form-control" placeholder="search"  ng-model="student_filter">
+                                              </div>
+                                          </div>
+
+                                      </div>
+                                  </div>
+
+                              </form>
+                                 </div>
+                                
+                              <br>
+                             
+                               <div class="panel-body" ng-show="ShowStudentTable">
                               <table id="example" class="table  " ng-show="ShowStudentTable">
                             <tbody>
+                          
                               <tr>
-								<th align="left"><label>
+								<th ><label>
                        <input type="checkbox" ng-model="IsAllChecked" ng-change="CheckUncheckAll()" /> Select All</label></th>
 								
 								<th><i class="icon_profile"></i> Full Name</th>                               
@@ -682,25 +744,27 @@
                                  <th><i class="icon_mobile"></i> Mobile</th>
                                
                               </tr>
-                              <tr ng-repeat="m in studentList" ng-class="{selectedrow:m.Selected}"  >
+                              <tr ng-repeat="m in filteredTodos | filter : student_filter" ng-class="{selectedrow:m.Selected}"  >
 								
 								 
-									<td> <label>
-                            <label for="chkCustomer_{{m.CustomerId}}">
-                            <input id="chkCustomer_{{m.CustomerId}}" type="checkbox" ng-model="m.Selected" ng-change="CheckUncheckHeader()" />
-                            {{m.CustomerId}}
-                        </label></td>
+									<td><input id="" type="checkbox" ng-model="m.Selected" ng-change="CheckUncheckHeader()" /></td>
 									<td>{{ m.fname }}  {{ m.lname }}</td>
    							 		<td>{{ m.email }}</td>
    							 		<td>{{ m.contactno }}</td>
-   							 		
-                                
+   						   
   							</tr>
                              
                                                     
                            </tbody>
 </table>
-                              
+              <pagination  ng-show="ShowStudentTable"
+      ng-model="currentPage"
+      total-items="totallenght"
+      max-size="maxSize"  
+      boundary-links="true">
+    </pagination> 
+    </div>    
+     </section>             
                               
                        
  
