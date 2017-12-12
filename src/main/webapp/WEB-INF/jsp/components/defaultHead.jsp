@@ -65,13 +65,6 @@
 	<link href="${pageContext.request.contextPath}/css/jquery-ui-1.10.4.min.css" rel="stylesheet"> -->
 	
 	
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" />
 
-
-
-<link data-require="bootstrap-css@*" data-semver="3.3.1" rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" />
-
-    <script data-require="ui-bootstrap@*" data-semver="0.12.1" src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.12.1.min.js"></script>
- 
 	
 	 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.js"></script> 

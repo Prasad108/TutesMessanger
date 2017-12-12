@@ -40,34 +40,39 @@
                                           <div class="col-lg-10">
                                               <form:input path="fname" class=" form-control" id="firstname" name="firstname" type="text" autocomplete="off" required="required" maxlength="50"/>
                                           </div>
+                                          <br><br/>
                                           <label for="lastname" class="control-label col-lg-2">Middle(Father's) Name <span class="required">*</span></label>
                                           <div class="col-lg-10">
                                               <form:input path="father" class=" form-control" id="lastname" name="lastname" type="text" autocomplete="off" required="required" maxlength="50"/>
                                           </div>
+                                           <br><br/>
                                            <label for="lastname" class="control-label col-lg-2">Last Name <span class="required">*</span></label>
                                           <div class="col-lg-10">
                                               <form:input path="lname" class=" form-control" id="lastname" name="lastname" type="text" autocomplete="off" required="required" maxlength="50"/>
                                           </div>
+                                           <br><br/>
                                            <label for="email" class="control-label col-lg-2">Student Email Id <span class="required">*</span></label>
                                           <div class="col-lg-10">
                                               <form:input path="email" class=" form-control" id="email" name="email" type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" autocomplete="off" required="required" maxlength="50"/>
                                           </div>
-                                           <label for="contact" class="control-label col-lg-2">Student Contact Number <span class="required">*</span></label>
+                                           <br><br/>
+                                           <label for="contact" class="control-label col-lg-2">Student Contact No.<span class="required">*</span></label>
                                           <div class="col-lg-10">
                                               <form:input path="contactno" class=" form-control" id="contactno" name="contactno" type="text" pattern="[789][0-9]{9}" title="Please enter Valid contact number" autocomplete="off" required="required" maxlength="12"/>
                                           </div>
                                           
-                                          
+                                           <br><br/>
                                            <label for="email" class="control-label col-lg-2">Parents Email Id <span class="required">*</span></label>
                                           <div class="col-lg-10">
                                               <form:input path="parent.email" class=" form-control" id="email" name="email" type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" autocomplete="off" required="required" maxlength="50"/>
                                           </div>
-                                           <label for="contact" class="control-label col-lg-2">Parents Contact Number <span class="required">*</span></label>
+                                           <br><br/>
+                                           <label for="contact" class="control-label col-lg-2">Parents Contact No.<span class="required">*</span></label>
                                           <div class="col-lg-10">
                                               <form:input path="parent.contactno" class=" form-control" id="contactno" name="contactno" type="text" pattern="[789][0-9]{9}" title="Please enter Valid contact number" autocomplete="off" required="required" maxlength="12"/>
                                           </div>
                                           
-                                          
+                                           <br><br/>
                                             <label for="contact" class="control-label col-lg-2">Institute <span class="required">*</span></label>
                                           
 												<div class="col-lg-10">

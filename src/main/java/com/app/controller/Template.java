@@ -15,8 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-
+import com.app.pojo.Login;
 import com.app.pojo.Role;
 import com.app.service.RoleService;
 import com.google.gson.Gson;
@@ -112,21 +113,17 @@ public class Template {
 	
 	@RequestMapping(value = "/login", method = { RequestMethod.GET, RequestMethod.POST })
 	public String login(@RequestParam(value = "error", required = false) String error,
-			@RequestParam(value = "logout", required = false) String logout,HttpSession session,Model model) {
+			@RequestParam(value = "logout", required = false) String logout,Login l,HttpSession session,Model model,RedirectAttributes redirectAttributes) {
 		System.out.println("*************** This is login controller **********************");
 
-			
+		model.addAttribute("Login", l);
 		if (error != null) {
 			System.out.println("Invalid username and password!");
 			model.addAttribute("error", "Invalid username and password!");
 		}
-
 		 if (logout != null) {
-			System.out.println("You've been logged out successfully.!!");
-			model.asMap().clear();
-			    session.invalidate();
-			    model.asMap().clear();
-			    model.addAttribute("msg", "You've been logged out successfully.");
+			System.out.println("You've been logged out successfully.!!");			
+			    model.addAttribute("msg", "You've been logged out successfully.");		  
 		}		
 		 
 		/*model.setViewName("login");*/

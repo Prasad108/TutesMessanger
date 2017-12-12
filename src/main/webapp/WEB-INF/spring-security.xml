@@ -19,9 +19,10 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
 
 		<intercept-url pattern="/admin**" access="hasRole('ROLE_ADMIN')" />
 		
-		<!-- <intercept-url pattern="/Teacher**" access="hasRole('ROLE_INSTITUTE_ADMIN')"  /> -->
+		<intercept-url pattern="/Teacher**" access="hasAnyRole('ROLE_INSTITUTE_ADMIN','ROLE_TEACHER')"   />
 			<intercept-url pattern="/Teacher/**" access="hasAnyRole('ROLE_INSTITUTE_ADMIN','ROLE_TEACHER')" />
 			<intercept-url pattern="/AppAdmin/**" access="hasRole('ROLE_APP_ADMIN')" />
+			<intercept-url pattern="/Student/**" access="hasRole('ROLE_STUDENT')" />
 		
 
 		<!-- access denied page -->
@@ -30,11 +31,12 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
 			authentication-failure-url="/login?error" username-parameter="username"
 			password-parameter="password" />
 		<logout  invalidate-session="true"
-			delete-cookies="JSESSIONID" />
-		<!-- enable csrf protection -->
-		<csrf disabled="true" />
-		<!-- <remember-me token-validity-seconds="1209600" remember-me-parameter="remember-me" 
-			data-source-ref="dataSource" /> -->
+			delete-cookies="JSESSIONID"  logout-success-url="/login?logout" logout-url="/logout" />
+			
+		<!-- enable csrf protection  disabled="true" -->
+		<csrf  disabled="true"/>
+		<remember-me token-validity-seconds="1209600" remember-me-parameter="remember-me" 
+			data-source-ref="dataSource" /> 
 
 		<session-management>
 			<concurrency-control max-sessions="1" />

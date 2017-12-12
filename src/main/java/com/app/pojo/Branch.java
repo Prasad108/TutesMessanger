@@ -30,12 +30,6 @@ public class Branch implements java.io.Serializable {
 	public Branch() {
 	}
 
-
-
-
-
-
-
 	public Branch(Institute institute, String name, Set<Classes> classeses, Set<Classes> classeses_1) {
 		this.institute = institute;
 		this.name = name;

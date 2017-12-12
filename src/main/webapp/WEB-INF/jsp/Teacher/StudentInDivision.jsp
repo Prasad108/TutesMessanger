@@ -161,7 +161,7 @@
   		
   		
   		
-   		app.controller('studentCtrl', function($scope, $http, $filter) {
+   		app.controller('studentCtrl', ['$scope', '$http', '$filter', function($scope,$http,$filter) {
    			
    			
    			$scope.branchList=JSON.parse('${branchListJSON}');
@@ -176,6 +176,7 @@
    			
    			$scope.NoStudentInDivision=false;
    			$scope.ShowStudentTable=false;
+   			$scope.ShowSelectAll=true;
    			
    		 $scope.filteredTodos = []
       	  ,$scope.currentPage = 1
@@ -379,13 +380,75 @@
        		  });
         	
 
-          	
+        	$scope.filterStudent=function()
+        	{
+        		if(($scope.student_filter.length) > 0 )
+        			{
+        			 $scope.ShowSelectAll=false;
+        			console.log(angular.isArray($scope.studentList));
+        			var searchFilter=$scope.student_filter;
+        			 console.log(searchFilter);
+        			 
+        			 $scope.filteredTodos= $filter('filter')($scope.studentList,searchFilter);
+        			 
+        			 console.log($scope.filteredTodos.length);
+        			 
+        			 	$scope.totallenght=$scope.filteredTodos.length/$scope.numPerPage*10;
+        			 	
+        				$scope.filteredCheckUncheckHeader();
+        			 
+
+
+        			 
+        			 
+        			}
+        		else
+        			{
+        		 	$scope.totallenght=$scope.studentList.length/$scope.numPerPage*10;
+        			
+        			 $scope.ShowSelectAll=true;
+        			 
+        			 var begin = (($scope.currentPage - 1) * $scope.numPerPage)
+	        		    , end = begin + $scope.numPerPage;
+	        		    console.log("begin is "+begin+" end is "+end)
+	        		    $scope.filteredTodos = $scope.studentList.slice(begin, end);
+        			 
+        			}
+        	};
+        	
+        	$scope.filterCheckUncheckAll=function()
+        	{
+        		 for (var i = 0; i < $scope.filteredTodos.length; i++) {
+                     			 
+        			 $scope.filteredTodos[i].Selected = $scope.IsFilteredAllChecked;
+        			 
+        			 for(var j=0;j< $scope.studentList.length; j++)
+        				 {
+        				 if( $scope.filteredTodos[i].id == $scope.studentList[j].id )
+        					 {
+        					 $scope.studentList[i].Selected = $scope.IsFilteredAllChecked;
+        					 break;
+        					 }
+        				  
+        				 }
+                 }
+        	};
+        	
+        	$scope.filteredCheckUncheckHeader = function () {
+                $scope.IsFilteredAllChecked = true;
+                for (var i = 0; i < $scope.filteredTodos.length; i++) {
+                    if (!$scope.filteredTodos[i].Selected) {
+                        $scope.IsFilteredAllChecked = false;
+                        break;
+                    }
+                };
+            };
           	
           		
             
             
    			
-   }); 
+   }]); 
    		
    	 </script>
    	  <script>
@@ -719,7 +782,7 @@
                                       <div class="col-lg-10">
                                           <div class="row">
                                           <div class="col-lg-3">
-                                                  <input type="text" class="form-control" placeholder="search"  ng-model="student_filter">
+                                                  <input type="text" class="form-control" placeholder="search"  ng-model="student_filter" ng-change="filterStudent()">
                                               </div>
                                           </div>
 
@@ -736,21 +799,24 @@
                             <tbody>
                           
                               <tr>
-								<th ><label>
-                       <input type="checkbox" ng-model="IsAllChecked" ng-change="CheckUncheckAll()" /> Select All</label></th>
+								<th ><label ng-show="ShowSelectAll">
+                       <input type="checkbox" ng-model="IsAllChecked" ng-change="CheckUncheckAll()" /> Select All</label>
+                       <label ng-show="!ShowSelectAll">
+                       <input type="checkbox" ng-model="IsFilteredAllChecked" ng-change="filterCheckUncheckAll()" /> Select Filtered All</label>
+                       </th>
 								
 								<th><i class="icon_profile"></i> Full Name</th>                               
                             <th><i class="icon_mail_alt"></i> Email</th>                            
                                  <th><i class="icon_mobile"></i> Mobile</th>
                                
                               </tr>
-                              <tr ng-repeat="m in filteredTodos | filter : student_filter" ng-class="{selectedrow:m.Selected}"  >
+                              <tr ng-repeat="student in filteredTodos | filter : student_filter" ng-class="{selectedrow:student.Selected}"  >
 								
 								 
-									<td><input id="" type="checkbox" ng-model="m.Selected" ng-change="CheckUncheckHeader()" /></td>
-									<td>{{ m.fname }}  {{ m.lname }}</td>
-   							 		<td>{{ m.email }}</td>
-   							 		<td>{{ m.contactno }}</td>
+									<td><input  type="checkbox" ng-model="student.Selected" ng-change="CheckUncheckHeader();filteredCheckUncheckHeader()" /></td>
+									<td>{{ student.fname }} {{ student.father }} {{ student.lname }}</td>
+   							 		<td>{{ student.email }}</td>
+   							 		<td>{{ student.contactno }}</td>
    						   
   							</tr>
                              

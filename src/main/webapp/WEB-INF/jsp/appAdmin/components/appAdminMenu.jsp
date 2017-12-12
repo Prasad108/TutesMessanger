@@ -18,7 +18,7 @@
                       </ul>
                   </li>
                     <li>
-                      <a class="" href="${pageContext.request.contextPath}/login?logout" >
+                      <a class="" href="${pageContext.request.contextPath}/logout" >
                           <i class="icon_key_alt"></i>
                           <span>Log Out</span>
                       </a>
