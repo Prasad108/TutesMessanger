@@ -174,6 +174,8 @@
    			
    			$scope.divisionList=[];
    			
+   			$scope.selectedstudentList=[];
+   			
    			$scope.NoStudentInDivision=false;
    			$scope.ShowStudentTable=false;
    			$scope.ShowSelectAll=true;
@@ -300,6 +302,7 @@
 					   	             $scope.ShowStudentTable=true;    //show student table
 					   	        	 $scope.studentList=response.data;	
 					   	        	 
+					   	             console.log($scope.studentList);
 
 					   	   			for (var i = 0; i < $scope.studentList.length; i++) {
 					   	   				$scope.studentList[i].Selected=false;
@@ -398,8 +401,6 @@
         				$scope.filteredCheckUncheckHeader();
         			 
 
-
-        			 
         			 
         			}
         		else
@@ -424,9 +425,9 @@
         			 
         			 for(var j=0;j< $scope.studentList.length; j++)
         				 {
-        				 if( $scope.filteredTodos[i].id == $scope.studentList[j].id )
-        					 {
-        					 $scope.studentList[i].Selected = $scope.IsFilteredAllChecked;
+        				 if( $scope.filteredTodos[i] == $scope.studentList[j] )
+        					 {  
+        					 $scope.studentList[j].Selected = $scope.IsFilteredAllChecked;
         					 break;
         					 }
         				  
@@ -444,7 +445,58 @@
                 };
             };
           	
-          		
+            
+            $scope.deleteStudentFromDivision = function () {
+            	
+            	 for (var i = 0; i < $scope.studentList.length; i++) {
+                     if ($scope.studentList[i].Selected) {
+                         console.log($scope.studentList[i].fname);
+                         $scope.selectedstudentList.push($scope.studentList[i]);
+                     }
+                 }
+            	 
+            	 if($scope.selectedstudentList.length != 0)
+            		 {
+            		  console.log("selectedstudentList is not empty");
+  		
+            		 /*  var data=[];
+            		  data.push(JSON.stringify($scope.selectedstudentList));
+            		  data.push(JSON.stringify($scope.selectDivision));
+            		  console.log(data);
+            		  
+            		  var data2=JSON.stringify(data);
+            		  console.log(data2); */
+            		  
+            		   $http({
+			   	            url: "DeleteSelectedStudentFromDivision",
+			   	         	contentType : 'application/json; charset=utf-8',
+			   	    	 	dataType : 'json',
+			   	            method: "POST" ,        
+			   	            data: [JSON.stringify($scope.selectedstudentList),JSON.stringify($scope.selectDivision)]
+			   	               
+			   	        })
+			   	        .then(function successCallback(response) {
+			   	                // if success   then generate student table
+				   	                
+				   	            
+				   	        	 
+				   	         	
+			    
+			   	        }, 
+			   	    		 function errorCallback(response) {
+			   	                // failed
+			   	                
+			   	                 console.log("error response came");    	
+			   	                    
+			   	        });
+            		  
+            		  
+            		 }
+            	 else
+            		 {
+            		 console.log("selectedstudentList is empty");
+            		 }
+            };	 	
             
             
    			
@@ -782,11 +834,17 @@
                                       <div class="col-lg-10">
                                           <div class="row">
                                           <div class="col-lg-3">
-                                                  <input type="text" class="form-control" placeholder="search"  ng-model="student_filter" ng-change="filterStudent()">
-                                              </div>
+                                              <input type="text" class="form-control" placeholder="search"  ng-model="student_filter" ng-change="filterStudent()">
                                           </div>
-
-                                      </div>
+                                          <div class="col-lg-2">
+                                               <button class="btn btn-danger" ng-click="deleteStudentFromDivision()" id="deleteStudentSubmitBTN" type="submit">Delete Students</button>
+                                          </div>
+                                          <div class="col-lg-2">
+                                               <button class="btn btn-primary"  id="shiftStudentSubmitBTN" type="submit">Shift Students</button>
+                                          </div>
+                                          </div>
+                                      </div> 
+                                        
                                   </div>
 
                               </form>

@@ -1,11 +1,14 @@
 package com.app.controller;
 
 import java.awt.geom.CubicCurve2D;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.codehaus.jackson.map.ObjectMapper;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -40,6 +43,8 @@ import com.app.service.PermissionsService;
 import com.app.service.ScheduleService;
 import com.app.service.StudentService;
 import com.app.service.TeacherService;
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.google.gson.Gson;
 
 @Controller
@@ -1227,4 +1232,23 @@ public class TeacherController {
 	 }
 	 
 	 
+	 
+	 @RequestMapping(value="/DeleteSelectedStudentFromDivision", method=RequestMethod.POST)
+	 @ResponseBody
+	 public String DeleteSelectedStudentFromDivision(@RequestBody ArrayList<Student> studentList,@RequestBody Division division)
+	 {
+		 System.out.println("**********inside DeleteSelectedStudentFromDivision controller**********");
+		 
+		 for(Student s:studentList)
+		 {
+			 System.out.println(s.getFname());
+		 }
+		 System.out.println(division.getName());
+		/* System.out.println();
+		 ObjectMapper mapper = new ObjectMapper();
+		 JSONObject jsonObj = new JSONObject(json);*/
+		
+		
+		 return "";
+	 }
 }
