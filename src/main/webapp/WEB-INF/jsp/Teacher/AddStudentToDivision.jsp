@@ -11,9 +11,10 @@
 <title>StudentManager</title>
  <jsp:include page="/WEB-INF/jsp/components/defaultHead.jsp" /> 
 
-<%-- <jsp:include page="/WEB-INF/jsp/Teacher/components/angular.jsp" /> --%>
+ <jsp:include page="/WEB-INF/jsp/Teacher/components/AngularAddStudentToDivision.jsp" /> 
 
 
+<<<<<<< Upstream, based on branch 'master' of https://github.com/Prasad108/TutesMessanger.git
 <!-- 	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-rc.0/angular.js"></script>
  --><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" />
 
@@ -23,6 +24,9 @@
 
     <script data-require="ui-bootstrap@*" data-semver="0.12.1" src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.12.1.min.js"></script>
 
+=======
+	
+>>>>>>> 1b4a74a want to rebase
 <style> 
   .selectedrow {	  
   
@@ -39,6 +43,7 @@
 	
 	</style>
 
+<<<<<<< Upstream, based on branch 'master' of https://github.com/Prasad108/TutesMessanger.git
   <script>
 
 
@@ -47,7 +52,12 @@
    		app.controller('myCtrl', function($scope, $http, $filter) {
 
 
+=======
+ 
+		
+>>>>>>> 1b4a74a want to rebase
    		
+<<<<<<< Upstream, based on branch 'master' of https://github.com/Prasad108/TutesMessanger.git
    			$scope.studentList=JSON.parse('${StudentListJSON}');
    			$scope.teacher=JSON.parse('${teacherJSON}');
    			$scope.permissions=JSON.parse('${permissions}'); 
@@ -106,20 +116,16 @@
    	   	console.log("after function executed"+$scope.selected);
     		  
     		};
+=======
+<!--    		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-rc.0/angular.js"></script> -->
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" />
+>>>>>>> 1b4a74a want to rebase
 
 
 
-   		$scope.IsContains=function (student) {
-   	   		console.log("inside the Iscontains function")
-   			var hasMatch =false;
-   			
-		   	 for (var index = 0; index < $scope.selected.length; ++index) {
-		
-		   	  var stud = $scope.selected[index];
-		
-		   	  if(stud.id == student.id){
-		   	    hasMatch = true;
+<link data-require="bootstrap-css@*" data-semver="3.3.1" rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" />
 
+<<<<<<< Upstream, based on branch 'master' of https://github.com/Prasad108/TutesMessanger.git
 		   	    console.log("match found");
 		   	    break;
 		   	  }
@@ -194,11 +200,18 @@
    		  		
    		</script>   
 
+=======
+    <script data-require="ui-bootstrap@*" data-semver="0.12.1" src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.12.1.min.js"></script>
+>>>>>>> 1b4a74a want to rebase
    		
    		
 
 </head>
+<<<<<<< Upstream, based on branch 'master' of https://github.com/Prasad108/TutesMessanger.git
 <body  >
+=======
+<body  ng-app="myApp" ng-controller="myCtrl" >
+>>>>>>> 1b4a74a want to rebase
 
 <section id="container" class="">
    <!-- Default header -->
@@ -230,13 +243,15 @@
                           
                           <table id="example" class="table  ">
                            <tbody>
-                              <tr>
+                              <tr><th><input type="checkbox" ng-click="selectALL()" >Select ALL</th>
                                  <th><i class="icon_profile"></i> Full Name</th>                               
                                  <th><i class="icon_mail_alt"></i> Email</th>                            
                                  <th><i class="icon_mobile"></i> Mobile</th>
                                
                               </tr>
                               <tr ng-repeat="student in filteredTodos | filter : test | orderBy:'fname' "  ng-class="{selectedrow:IsContains(student)}" ng-click="Selecte(student)">
+    								<td> <input type="checkbox"
+											ng-model="selected[student]" ng-false-value="undefined" ></td>
     								<td>{{ student.fname }}  {{ student.lname }}</td>
    							 		<td>{{ student.email }}</td>
    							 		<td>{{ student.contactno }}</td>
@@ -260,6 +275,25 @@
                                   </button>
                                   <strong>No pending request for approval</strong>
                               </div>
+                              
+                              
+                              
+                              <!-- <div>
+			
+									<button ng-click="selectAll()">select all</button>
+									<table>
+									
+									<tr ng-repeat="item in items">
+									<td>
+										<label> {{item.n}}: <input type="checkbox"
+											ng-model="selected[item.id]" ng-false-value="undefined" ng-class="{selectedrow:IsContains(student)}">
+										</label>
+										</td>
+									</tr>
+									</table>
+									<pre>selected: {{selected | json}}</pre>
+
+						</div> -->
                       </section>
                   </div>
               </div>
