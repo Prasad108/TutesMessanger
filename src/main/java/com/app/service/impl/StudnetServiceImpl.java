@@ -64,8 +64,14 @@ public class StudnetServiceImpl implements StudentService{
 
 	@Override
 	public Institute GetInstitute(int id) {
-		// TODO Auto-generated method stub
+		
 		return StudetentDAO.GetInstitute(id);
 	}
+
+	@Override
+	public void deleteSelectedFromDiv(int id) {
+	  
+		StudetentDAO.deleteSelectedFromDiv(id);
+		}
 
 }

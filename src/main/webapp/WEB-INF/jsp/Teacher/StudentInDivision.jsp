@@ -159,26 +159,26 @@
   <script>
   		var app = angular.module('myApp',  ['ui.bootstrap']);
   		
-  		
-  		
    		app.controller('studentCtrl', ['$scope', '$http', '$filter', function($scope,$http,$filter) {
    			
-   			
    			$scope.branchList=JSON.parse('${branchListJSON}');
-   			
    			$scope.teacher=JSON.parse('${teacherJSON}');
-   			$scope.permissions=JSON.parse('${permissions}');  				
+   			$scope.permissions=JSON.parse('${permissions}');
+   			
    			console.log("teacher is "+$scope.teacher);
-   			console.log("teacher id is "+$scope.teacher["id"]); 
+   			console.log("teacher id is "+$scope.teacher["id"]);
+   			
+   		//--------initialise arrayt for different list-----	
    			$scope.studentList=[];
-   			
    			$scope.divisionList=[];
-   			
    			$scope.selectedstudentList=[];
    			
+   	//--------initialise variable to show/hide some division-----
    			$scope.NoStudentInDivision=false;
    			$scope.ShowStudentTable=false;
    			$scope.ShowSelectAll=true;
+   			$scope.selectStudentFirstMessage=false;
+   			$scope.deleteSucessStudent=false;
    			
    		 $scope.filteredTodos = []
       	  ,$scope.currentPage = 1
@@ -186,8 +186,6 @@
       	  ,$scope.maxSize = 3,
       	  
       	$scope.totallenght=$scope.studentList.length/$scope.numPerPage*10;
-   			
-   		
    			
    			console.log($scope.branchList);
    		
@@ -198,8 +196,10 @@
    				$scope.NoStudentInDivision=false; //to remove error message	
    				$scope.ShowStudentTable=false;    //do not show student table
    				
-   			 for( i=$scope.divisionList.length-1; i>=0; i--) {   //to clean the division list
-   				$scope.divisionList.splice(i,1);
+   			 for( i=$scope.divisionList.length-1; i>=0; i--)
+   			        { 
+   				     //to clean the division list
+   				     $scope.divisionList.splice(i,1);
 	        		} 
    				
 		   		console.log($scope.selectBranch.name); 
@@ -209,24 +209,21 @@
 		   	            url: "GetClassesListInJSON/"+$scope.selectBranch.id,
 		   	         	contentType : 'application/json; charset=utf-8',
 		   	    	 	 dataType : 'json',
-		   	            method: "GET" 
-		   	               
+		   	            method: "GET"       
 		   	        })
 		   	        .then(function successCallback(response) {
 		   	                // if success   then generate classlist dropdown
 		   	                
-		   	                console.log("response came"); 
+		   	            console.log("response came"); 
 		   	            $scope.classList=response.data;
 		   	            
-		   	         for( i=$scope.classList.length-1; i>=0; i--) {
-		   	          console.log($scope.classList[i].name);    	
+		   	         	for( i=$scope.classList.length-1; i>=0; i--) {
+		   	          		console.log($scope.classList[i].name);    	
 		        		}       
 		   	        }, 
 		   	    		 function errorCallback(response) {
 		   	                // failed
-		   	                
-		   	                 console.log("error response came");    	
-		   	                    
+		   	                console.log("error response came");    	             
 		   	        });
    			} ;
    			
@@ -259,14 +256,10 @@
 		   	        }, 
 		   	    		 function errorCallback(response) {
 		   	                // failed
-		   	                
 		   	                 console.log("error response came");    	
-		   	                    
 		   	        });
    			};
-   			
-   			
-   			
+   		
 //--------------------------------------------- To get Student list on click button ----------------------------   			
    			$scope.getStudent=function(){
 
@@ -310,8 +303,6 @@
 					   	            
 					   	     	$scope.totallenght=$scope.studentList.length/$scope.numPerPage*10;
 					   	    
-					   	 
-					   	            
 					   	            $scope.CheckUncheckHeader();
 
 					   	        	 for( i=$scope.studentList.length-1; i>=0; i--) {
@@ -324,25 +315,19 @@
 					        		    $scope.filteredTodos = $scope.studentList.slice(begin, end);
 					   	        	 
 					   	         	}
-				    
 				   	        }, 
 				   	    		 function errorCallback(response) {
 				   	                // failed
-				   	                
-				   	                 console.log("error response came");    	
-				   	                    
+				   	                console.log("error response came");    	          
 				   	        });
 	   				
 	   				}
 	   			else
 	   				{
 	   						console.log("division not selected");
-	   				}
-	   				
+	   				}	
    			};
    			
-   		    
-
   //------------------------------- to hide student table on change division------------------------------------------  
    			$scope.selectedDivision=function()
    			{
@@ -351,7 +336,10 @@
    			
 	 			  			  			
    			$scope.CheckUncheckHeader = function () {
+   				$scope.selectStudentFirstMessage=false;
+   				$scope.deleteSucessStudent=false;
                 $scope.IsAllChecked = true;
+                
                 for (var i = 0; i < $scope.studentList.length; i++) {
                     if (!$scope.studentList[i].Selected) {
                         $scope.IsAllChecked = false;
@@ -362,6 +350,8 @@
             $scope.CheckUncheckHeader();
  
             $scope.CheckUncheckAll = function () {
+            	$scope.selectStudentFirstMessage=false;
+            	$scope.deleteSucessStudent=false;
             	
             	console.log("CheckUncheckAll :"+$scope.IsAllChecked)
             	
@@ -399,9 +389,6 @@
         			 	$scope.totallenght=$scope.filteredTodos.length/$scope.numPerPage*10;
         			 	
         				$scope.filteredCheckUncheckHeader();
-        			 
-
-        			 
         			}
         		else
         			{
@@ -413,12 +400,14 @@
 	        		    , end = begin + $scope.numPerPage;
 	        		    console.log("begin is "+begin+" end is "+end)
 	        		    $scope.filteredTodos = $scope.studentList.slice(begin, end);
-        			 
         			}
         	};
         	
         	$scope.filterCheckUncheckAll=function()
         	{
+        		$scope.selectStudentFirstMessage=false;
+        		$scope.deleteSucessStudent=false;
+        		
         		 for (var i = 0; i < $scope.filteredTodos.length; i++) {
                      			 
         			 $scope.filteredTodos[i].Selected = $scope.IsFilteredAllChecked;
@@ -430,13 +419,15 @@
         					 $scope.studentList[j].Selected = $scope.IsFilteredAllChecked;
         					 break;
         					 }
-        				  
         				 }
                  }
         	};
         	
         	$scope.filteredCheckUncheckHeader = function () {
                 $scope.IsFilteredAllChecked = true;
+                $scope.selectStudentFirstMessage=false;
+                $scope.deleteSucessStudent=false;
+                
                 for (var i = 0; i < $scope.filteredTodos.length; i++) {
                     if (!$scope.filteredTodos[i].Selected) {
                         $scope.IsFilteredAllChecked = false;
@@ -445,61 +436,70 @@
                 };
             };
           	
-            
+      //------------------------- delete student from division -----------------------------------      
             $scope.deleteStudentFromDivision = function () {
-            	
+            	 var index =[];
+            	 $scope.deleteSucessStudent=false;      //------to show student delete success message                
             	 for (var i = 0; i < $scope.studentList.length; i++) {
                      if ($scope.studentList[i].Selected) {
                          console.log($scope.studentList[i].fname);
-                         $scope.selectedstudentList.push($scope.studentList[i]);
+                         index.push(i);
+                         $scope.selectedstudentList.push($scope.studentList[i]);  //--------push selected student in selectedStudentList array
                      }
                  }
-            	 
-            	 if($scope.selectedstudentList.length != 0)
+            	
+            	 for (var i = 0; i < $scope.studentList.length; i++){
+            		 for (var j = 0; j < $scope.selectedstudentList.length; j++){
+            			 if( $scope.studentList[i] == $scope.selectedstudentList[j])
+            				 {
+            				 $scope.studentList.splice(i,1);              //remove selected student from studentList
+            				 }
+            		 }
+            	 }
+       
+            	 console.log($scope.studentList);
+            		 
+            		 $scope.totallenght=$scope.studentList.length/$scope.numPerPage*10;
+            		 
+            		 var begin = (($scope.currentPage - 1) * $scope.numPerPage), end = begin + $scope.numPerPage;
+	        		    console.log("begin is "+begin+" end is "+end)
+	        		    $scope.filteredTodos = $scope.studentList.slice(begin, end);
+            
+            	 if($scope.selectedstudentList.length != 0)           //----check selectedStudentList is empty or not
             		 {
+            		 $scope.deleteSucessStudent=false; 
+            		 $scope.selectStudentFirstMessage=false;
             		  console.log("selectedstudentList is not empty");
-  		
-            		 /*  var data=[];
-            		  data.push(JSON.stringify($scope.selectedstudentList));
-            		  data.push(JSON.stringify($scope.selectDivision));
-            		  console.log(data);
             		  
-            		  var data2=JSON.stringify(data);
-            		  console.log(data2); */
-            		  
-            		   $http({
+              //------- http post request to delete selected student-------
+
+                    $http({
 			   	            url: "DeleteSelectedStudentFromDivision",
 			   	         	contentType : 'application/json; charset=utf-8',
 			   	    	 	dataType : 'json',
 			   	            method: "POST" ,        
-			   	            data: [JSON.stringify($scope.selectedstudentList),JSON.stringify($scope.selectDivision)]
+			   	            data: JSON.stringify($scope.selectedstudentList)
 			   	               
 			   	        })
 			   	        .then(function successCallback(response) {
-			   	                // if success   then generate student table
-				   	                
-				   	            
-				   	        	 
-				   	         	
-			    
+			   	                // if success   
+			   	        	$scope.deleteSucessStudent=true; 
 			   	        }, 
 			   	    		 function errorCallback(response) {
 			   	                // failed
-			   	                
-			   	                 console.log("error response came");    	
-			   	                    
-			   	        });
-            		  
-            		  
-            		 }
+			   	                $scope.deleteSucessStudent=false;
+			   	                 console.log("error response came");    	           
+			   	        });  
+            	 }
             	 else
-            		 {
-            		 console.log("selectedstudentList is empty");
-            		 }
+                 {
+            	  console.log("selectedstudentList is empty");
+            	  $scope.selectStudentFirstMessage=true;
+            	 }
+            	 
+            	 $scope.selectedstudentList.splice(0, $scope.selectedstudentList.length); //-----empty selectedStudentList array
             };	 	
-            
-            
-   			
+     	
    }]); 
    		
    	 </script>
@@ -815,9 +815,6 @@
                              </div>
                              
                              
-                             
-                             
-                             
                              <div ng-if="NoStudentInDivision" class="alert alert-block alert-danger fade in">
                                   <button data-dismiss="alert" class="close close-sm" type="button">
                                       <i class="icon-remove"></i>
@@ -843,6 +840,15 @@
                                                <button class="btn btn-primary"  id="shiftStudentSubmitBTN" type="submit">Shift Students</button>
                                           </div>
                                           </div>
+                                          <br>
+                                          <div ng-show="selectStudentFirstMessage"  style="width: 55%;height: 10%;background-color: red;border-radius: 5%" >
+														<strong style="margin-left: 4%">Select student first</strong>
+									      </div>
+									      
+									       <div ng-show="deleteSucessStudent"  style="width: 55%;height: 10%;background-color:aqua;border-radius: 5%" >
+														<strong style="margin-left: 4%">Students deleted successfully</strong>
+									      </div>
+                                          
                                       </div> 
                                         
                                   </div>
@@ -889,10 +895,7 @@
     </pagination> 
     </div>    
      </section>             
-                              
-                       
- 
-			</section>
+ 	</section>
 	
 	</section> <!-- container section start --> <jsp:include
 		page="/WEB-INF/jsp/components/defaultScript.jsp" /> </section>

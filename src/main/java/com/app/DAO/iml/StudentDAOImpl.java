@@ -89,4 +89,16 @@ public class StudentDAOImpl implements com.app.DAO.StudentDAO {
 		return (Institute) query.uniqueResult();
 	}
 
+	@Override
+	@Transactional
+	public void deleteSelectedFromDiv(int id) {
+	
+		Query query=currentSession().createQuery("UPDATE Student s SET s.division.id=NULL WHERE s.id =:id");
+		query.setParameter("id", id);
+		query.executeUpdate();
+		//query.setParameter("status", null);
+		System.out.println("success query");
+		
+	}
+
 }
