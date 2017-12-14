@@ -848,57 +848,44 @@
 									       <div ng-show="deleteSucessStudent"  style="width: 55%;height: 10%;background-color:aqua;border-radius: 5%" >
 														<strong style="margin-left: 4%">Students deleted successfully</strong>
 									      </div>
-                                          
                                       </div> 
-                                        
-                                  </div>
-
+                                    </div>
                               </form>
-                                 </div>
+                          </div>
                                 
-                              <br>
+              <br>
                              
-                               <div class="panel-body" ng-show="ShowStudentTable">
-                              <table id="example" class="table  " ng-show="ShowStudentTable">
-                            <tbody>
-                          
-                              <tr>
+      <div class="panel-body" ng-show="ShowStudentTable">
+            <table id="example" class="table  " ng-show="ShowStudentTable">
+                  <tbody>
+                            <tr>
 								<th ><label ng-show="ShowSelectAll">
-                       <input type="checkbox" ng-model="IsAllChecked" ng-change="CheckUncheckAll()" /> Select All</label>
-                       <label ng-show="!ShowSelectAll">
-                       <input type="checkbox" ng-model="IsFilteredAllChecked" ng-change="filterCheckUncheckAll()" /> Select Filtered All</label>
-                       </th>
+                                   <input type="checkbox" ng-model="IsAllChecked" ng-change="CheckUncheckAll()" /> Select All</label>
+                                   <label ng-show="!ShowSelectAll">
+                                   <input type="checkbox" ng-model="IsFilteredAllChecked" ng-change="filterCheckUncheckAll()" /> Select Filtered All</label>
+                                </th>
 								
 								<th><i class="icon_profile"></i> Full Name</th>                               
-                            <th><i class="icon_mail_alt"></i> Email</th>                            
-                                 <th><i class="icon_mobile"></i> Mobile</th>
-                               
-                              </tr>
-                              <tr ng-repeat="student in filteredTodos | filter : student_filter" ng-class="{selectedrow:student.Selected}"  >
+                                <th><i class="icon_mail_alt"></i> Email</th>                            
+                                <th><i class="icon_mobile"></i> Mobile</th>
+                           </tr>
+                           <tr ng-repeat="student in filteredTodos | filter : student_filter" ng-class="{selectedrow:student.Selected}">
 								
-								 
-									<td><input  type="checkbox" ng-model="student.Selected" ng-change="CheckUncheckHeader();filteredCheckUncheckHeader()" /></td>
-									<td>{{ student.fname }} {{ student.father }} {{ student.lname }}</td>
-   							 		<td>{{ student.email }}</td>
-   							 		<td>{{ student.contactno }}</td>
-   						   
-  							</tr>
-                             
-                                                    
-                           </tbody>
-</table>
-              <pagination  ng-show="ShowStudentTable"
-      ng-model="currentPage"
-      total-items="totallenght"
-      max-size="maxSize"  
-      boundary-links="true">
-    </pagination> 
-    </div>    
+							     <td><input  type="checkbox" ng-model="student.Selected" ng-change="CheckUncheckHeader();filteredCheckUncheckHeader()" /></td>
+								 <td>{{ student.fname }} {{ student.father }} {{ student.lname }}</td>
+   							 	 <td>{{ student.email }}</td>
+   							 	 <td>{{ student.contactno }}</td>
+   						  </tr>
+                 </tbody>
+           </table>
+              <pagination  ng-show="ShowStudentTable" ng-model="currentPage" total-items="totallenght" max-size="maxSize" boundary-links="true">
+              </pagination> 
+     </div>    
      </section>             
  	</section>
 	
-	</section> <!-- container section start --> <jsp:include
-		page="/WEB-INF/jsp/components/defaultScript.jsp" /> </section>
+	</section> <!-- container section start --> 
+	<jsp:include page="/WEB-INF/jsp/components/defaultScript.jsp" /> </section>
 	<!-- container section start -->
 </body>
 </html>
