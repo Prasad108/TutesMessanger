@@ -41,22 +41,14 @@
  <section id="main-content">
           <section class="wrapper">
           <div class="row">
-<<<<<<< Upstream, based on branch 'master' of https://github.com/Prasad108/TutesMessanger.git
-   
-	          	<h1> Teacher Home page</h1>  
 
-
-=======
 
 	          	<h1> Teacher Home page</h1>     {{teacher.fname}} 
 	          	{{teacher.lname}}  
 	          	{{teacher.email}}  
 	          	{{teacher.contactno}}              	
 
-	     
-	          	            
-	          	            <h2>this is by anather method  ${teacher.fname} </h2>
->>>>>>> 1b4a74a want to rebase
+
           </div>
           </section>
  </section>   

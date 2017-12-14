@@ -1,17 +1,14 @@
 package com.app.controller;
 
-import java.awt.geom.CubicCurve2D;
-import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.codehaus.jackson.map.ObjectMapper;
-import org.json.JSONObject;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
-import org.springframework.security.access.prepost.PreAuthorize;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -929,6 +926,20 @@ public class TeacherController {
 			
 			String studentListJSON=gson.toJson(studnetList);
 			model.addAttribute("StudentListJSON", studentListJSON);
+			
+		 	Institute inst=teacherService.GetInstitute(teacher.getId());
+			System.out.println("institute is :"+inst);
+	    	
+	    	 List <Branch> branchlist=branchService.getallOfParticularInstitute(inst);
+			 System.out.println("we are going to print the branches of current isntitute :");
+			 for (Branch b : branchlist) {
+				    System.out.println(b);
+				}
+			
+			
+		 String	branchListJSON=gson.toJson(branchlist);
+		System.out.println(branchListJSON);
+		model.addAttribute("branchListJSON",branchListJSON );
 			return "Teacher/AddStudentToDivision";
 
 		}
@@ -1250,5 +1261,23 @@ public class TeacherController {
 		
 		
 		 return "";
+	 }
+	 
+	 @RequestMapping(value="/AddSelectedStudentToDivision/{id}", method=RequestMethod.POST)
+	 @ResponseBody
+	 public String AddSelectedStudentToDivision(@PathVariable("id") int id,@RequestBody ArrayList<Student> studentList)
+	 {
+		 System.out.println("**********inside AddSelectedStudentToDivision controller**********");
+		 
+		 Division division=divisionService.find(id);
+		 System.out.println("division name is "+division.getName());
+		 
+		 for(Student s:studentList)
+		 {
+			 System.out.println(s.getFname());
+			 StudentService.SetDivisionId(s.getId(), id);
+		 }
+		 System.out.println(division.getName());		
+		 return gson.toJson(division);
 	 }
 }

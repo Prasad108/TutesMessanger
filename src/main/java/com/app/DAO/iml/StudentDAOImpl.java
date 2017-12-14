@@ -89,4 +89,15 @@ public class StudentDAOImpl implements com.app.DAO.StudentDAO {
 		return (Institute) query.uniqueResult();
 	}
 
+	@Override
+	@Transactional
+	public void SetDivisionId(int StudentId,int DiviID) {
+		Query query = currentSession().createQuery("UPDATE Student s SET s.division.id=:DiviID  where s.id= :StudentId");
+		query.setParameter("DiviID",DiviID);
+		query.setParameter("StudentId",StudentId);
+		int result=query.executeUpdate();
+		System.out.println(result+" This is query result");
+		
+	}
+
 }

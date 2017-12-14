@@ -61,11 +61,7 @@
                          <!--  <li ng-show="permissions.authoriseTeacher"><a class="" href="#">Edit/Delete Teacher</a></li>       -->                 
                       </ul>
                   </li>
-                 
-<<<<<<< Upstream, based on branch 'master' of https://github.com/Prasad108/TutesMessanger.git
-                  
-=======
->>>>>>> 1b4a74a want to rebase
+
                   <li class="sub-menu">
                       <a href="javascript:;" class="">
                           <i class="icon_document_alt"></i>
