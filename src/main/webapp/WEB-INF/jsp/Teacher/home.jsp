@@ -41,8 +41,12 @@
  <section id="main-content">
           <section class="wrapper">
           <div class="row">
-   
-	          	<h1> Teacher Home page</h1>  
+
+
+	          	<h1> Teacher Home page</h1>     {{teacher.fname}} 
+	          	{{teacher.lname}}  
+	          	{{teacher.email}}  
+	          	{{teacher.contactno}}              	
 
 
           </div>

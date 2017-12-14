@@ -74,4 +74,10 @@ public class StudnetServiceImpl implements StudentService{
 		StudetentDAO.deleteSelectedFromDiv(id);
 		}
 
+	@Override
+	public void SetDivisionId(int StudentId, int DiviID) {
+		StudetentDAO.SetDivisionId(StudentId, DiviID);
+		
+	}
+
 }

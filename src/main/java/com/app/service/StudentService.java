@@ -16,5 +16,6 @@ public interface StudentService {
 	public Student findByLoginId(int id);
 	public List<Student> findByDivId(int id);
 	public Institute GetInstitute(int id);
+	public void SetDivisionId(int StudentId,int DiviID);
 
 }

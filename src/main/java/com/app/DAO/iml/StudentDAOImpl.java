@@ -91,6 +91,18 @@ public class StudentDAOImpl implements com.app.DAO.StudentDAO {
 
 	@Override
 	@Transactional
+	public void SetDivisionId(int StudentId,int DiviID) {
+		Query query = currentSession().createQuery("UPDATE Student s SET s.division.id=:DiviID  where s.id= :StudentId");
+		query.setParameter("DiviID",DiviID);
+		query.setParameter("StudentId",StudentId);
+		int result=query.executeUpdate();
+		System.out.println(result+" This is query result");
+		
+	}
+
+
+@Override
+	@Transactional
 	public void deleteSelectedFromDiv(int id) {
 	
 		Query query=currentSession().createQuery("UPDATE Student s SET s.division.id=NULL WHERE s.id =:id");
@@ -100,5 +112,6 @@ public class StudentDAOImpl implements com.app.DAO.StudentDAO {
 		System.out.println("success query");
 		
 	}
+
 
 }

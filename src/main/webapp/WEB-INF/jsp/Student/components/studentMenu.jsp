@@ -5,7 +5,7 @@
               <!-- sidebar menu start-->
               <ul class="sidebar-menu">                
                   <li class="active">
-                      <a class="" href="home">
+                      <a class="" href="Home">
                           <i class="icon_house_alt"></i>
                           <span>Home</span>
                       </a>

@@ -39,6 +39,7 @@
     <link rel="shortcut icon" href="${pageContext.request.contextPath}/img/favicon.png">
 
    
+	 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.js"></script> 
 
     <!-- Bootstrap CSS -->    
     <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
@@ -67,4 +68,3 @@
 	
 
 	
-	 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.js"></script> 
