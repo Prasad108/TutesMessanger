@@ -1246,15 +1246,17 @@ public class TeacherController {
 	 
 	 @RequestMapping(value="/DeleteSelectedStudentFromDivision", method=RequestMethod.POST)
 	 @ResponseBody
-	 public String DeleteSelectedStudentFromDivision(@RequestBody ArrayList<Student> studentList,@RequestBody Division division)
+	 public String DeleteSelectedStudentFromDivision(@RequestBody ArrayList<Student> studentList)
 	 {
 		 System.out.println("**********inside DeleteSelectedStudentFromDivision controller**********");
-		 
+		 System.out.println(studentList);
 		 for(Student s:studentList)
 		 {
-			 System.out.println(s.getFname());
+			 System.out.println(s.getFname()+" "+s.getId());
+			 
+			StudentService.deleteSelectedFromDiv(s.getId());
 		 }
-		 System.out.println(division.getName());
+		
 		/* System.out.println();
 		 ObjectMapper mapper = new ObjectMapper();
 		 JSONObject jsonObj = new JSONObject(json);*/

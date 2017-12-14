@@ -827,70 +827,82 @@
                               </div>
                               
                                   
-                              <section class="panel">
-		                          <div class="panel-body" ng-show="ShowStudentTable">
-		                              <form class="form-horizontal " method="get"  > 
-		                                     <div class="form-group" >
-		                                      <label class="control-label col-lg-2" for="inputSuccess">Search Student</label>
-		                                      <div class="col-lg-10">
-		                                          <div class="row">
-		                                          <div class="col-lg-3">
-		                                              <input type="text" class="form-control" placeholder="search"  ng-model="student_filter" ng-change="filterStudent()">
-		                                          </div>
-		                                          <div class="col-lg-2">
-		                                               <button class="btn btn-danger" ng-click="deleteStudentFromDivision()" id="deleteStudentSubmitBTN" type="submit">Delete Students</button>
-		                                          </div>
-		                                          <div class="col-lg-2">
-		                                               <button class="btn btn-primary"  id="shiftStudentSubmitBTN" type="submit">Shift Students</button>
-		                                          </div>
-		                                          </div>
-		                                      </div> 
-		                                        
-		                                  </div>
-		
-		                              </form>
-		                                 </div>
+                             
+                                 
+                                 <section class="panel">
+                          <div class="panel-body" ng-show="ShowStudentTable">
+                              <form class="form-horizontal " method="get"  > 
+                                     <div class="form-group" >
+                                      <label class="control-label col-lg-2" for="inputSuccess">Search Student</label>
+                                      <div class="col-lg-10">
+                                          <div class="row">
+                                          <div class="col-lg-3">
+                                              <input type="text" class="form-control" placeholder="search"  ng-model="student_filter" ng-change="filterStudent()">
+                                          </div>
+                                          <div class="col-lg-2">
+                                               <button class="btn btn-danger" ng-click="deleteStudentFromDivision()" id="deleteStudentSubmitBTN" type="submit">Delete Students</button>
+                                          </div>
+                                          <div class="col-lg-2">
+                                               <button class="btn btn-primary"  id="shiftStudentSubmitBTN" type="submit">Shift Students</button>
+                                          </div>
+                                          </div>
+                                          <br>
+                                          <div ng-show="selectStudentFirstMessage"  style="width: 55%;height: 10%;background-color: red;border-radius: 5%" >
+														<strong style="margin-left: 4%">Select student first</strong>
+									      </div>
+									      
+									       <div ng-show="deleteSucessStudent"  style="width: 55%;height: 10%;background-color:aqua;border-radius: 5%" >
+														<strong style="margin-left: 4%">Students deleted successfully</strong>
+									      </div>
+                                          
+                                      </div> 
+                                        
+                                  </div>
+
+                              </form>
+                                 </div>
                                 
                               <br>
                              
                                <div class="panel-body" ng-show="ShowStudentTable">
-				                      <table id="example" class="table  " ng-show="ShowStudentTable">
-				                       <tbody>
-				                          
-				                              <tr>
-												<th ><label ng-show="ShowSelectAll">
-							                       <input type="checkbox" ng-model="IsAllChecked" ng-change="CheckUncheckAll()" /> Select All</label>
-							                       <label ng-show="!ShowSelectAll">
-							                       <input type="checkbox" ng-model="IsFilteredAllChecked" ng-change="filterCheckUncheckAll()" /> Select Filtered All</label>
-							                    </th>
-												
-												<th><i class="icon_profile"></i> Full Name</th>                               
-				                            	<th><i class="icon_mail_alt"></i> Email</th>                            
-				                                <th><i class="icon_mobile"></i> Mobile</th>
-				                               
-				                              </tr>
-				                              <tr ng-repeat="student in filteredTodos | filter : student_filter" ng-class="{selectedrow:student.Selected}"  >
-												
-												 
-													<td><input  type="checkbox" ng-model="student.Selected" ng-change="CheckUncheckHeader();filteredCheckUncheckHeader()" /></td>
-													<td>{{ student.fname }} {{ student.father }} {{ student.lname }}</td>
-				   							 		<td>{{ student.email }}</td>
-				   							 		<td>{{ student.contactno }}</td>		   						   
-				  							</tr>			                                                    
-				                           </tbody>
-										</table>
-										      <pagination  ng-show="ShowStudentTable"
-											      ng-model="currentPage"
-											      total-items="totallenght"
-											      max-size="maxSize"  
-											      boundary-links="true">
-										    </pagination> 
-							    </div>    
-							     </section>             
-							                              
-							                       
-							 
-										</section>
+				                    
+                              <table id="example" class="table  " ng-show="ShowStudentTable">
+                            <tbody>
+                          
+                              <tr>
+								<th ><label ng-show="ShowSelectAll">
+                       <input type="checkbox" ng-model="IsAllChecked" ng-change="CheckUncheckAll()" /> Select All</label>
+                       <label ng-show="!ShowSelectAll">
+                       <input type="checkbox" ng-model="IsFilteredAllChecked" ng-change="filterCheckUncheckAll()" /> Select Filtered All</label>
+                       </th>
+								
+								<th><i class="icon_profile"></i> Full Name</th>                               
+                            <th><i class="icon_mail_alt"></i> Email</th>                            
+                                 <th><i class="icon_mobile"></i> Mobile</th>
+                               
+                              </tr>
+                              <tr ng-repeat="student in filteredTodos | filter : student_filter" ng-class="{selectedrow:student.Selected}"  >
+								
+								 
+									<td><input  type="checkbox" ng-model="student.Selected" ng-change="CheckUncheckHeader();filteredCheckUncheckHeader()" /></td>
+									<td>{{ student.fname }} {{ student.father }} {{ student.lname }}</td>
+   							 		<td>{{ student.email }}</td>
+   							 		<td>{{ student.contactno }}</td>
+   						   
+  							</tr>
+                             
+                                                    
+                           </tbody>
+</table>
+              <pagination  ng-show="ShowStudentTable"
+      ng-model="currentPage"
+      total-items="totallenght"
+      max-size="maxSize"  
+      boundary-links="true">
+    </pagination> 
+    </div>    
+     </section>             
+ 	</section>
 	
 	</section> <!-- container section start --> <jsp:include
 		page="/WEB-INF/jsp/components/defaultScript.jsp" /> </section>
