@@ -375,7 +375,7 @@
 
 </head>
 
-<body  ng-app="myApp" ng-controller="studentCtrl" >
+<body  ng-app="myApp" ng-controller="studentCtrl" ng-cloak class="ng-cloak">
 
 <section id="container" class="">
    <!-- Default header -->
@@ -532,7 +532,7 @@
 				  							</tr>			                                                    
 				                           </tbody>
 										</table>
-										      <pagination  ng-show="ShowStudentTable"
+										      <pagination  
 											      ng-model="currentPage"
 											      total-items="totallenght"
 											      max-size="maxSize"  

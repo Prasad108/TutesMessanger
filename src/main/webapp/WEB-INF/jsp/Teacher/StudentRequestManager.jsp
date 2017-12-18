@@ -127,7 +127,7 @@
    		
 
 </head>
-<body ng-app="myApp" ng-controller="myCtrl">
+<body ng-app="myApp" ng-controller="myCtrl" ng-cloak class="ng-cloak">
 
 <section id="container" class="">
    <!-- Default header -->

@@ -252,7 +252,7 @@
    		  		
    		</script>
 </head>
-<body >
+<body  ng-cloak class="ng-cloak">
   <!-- Default header -->
 <jsp:include page="/WEB-INF/jsp/components/defaultHeader.jsp" /> 
 

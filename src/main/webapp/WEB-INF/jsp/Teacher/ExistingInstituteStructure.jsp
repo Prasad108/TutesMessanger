@@ -120,7 +120,7 @@
  
    		
    	</head>
-<body>
+<body ng-cloak class="ng-cloak">
 <section id="container" class="">
    <!-- Default header -->
 <jsp:include page="/WEB-INF/jsp/components/defaultHeader.jsp" /> 

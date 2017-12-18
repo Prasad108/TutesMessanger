@@ -5,7 +5,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html ng-app="myApp" ng-controller="studentCtrl">
 <head>
-<title>Teacher Profile</title>
+<title>Student In Division</title>
 <jsp:include page="/WEB-INF/jsp/components/defaultHead.jsp" />
 <%-- <jsp:include page="/WEB-INF/jsp/Teacher/components/angular.jsp" /> --%>
 
@@ -915,7 +915,7 @@
    </script>
 </head>
 
-<body>
+<body ng-cloak class="ng-cloak">
 
 	<section id="container" class="">
 	       <!-- Default header --> 
