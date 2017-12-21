@@ -1,6 +1,7 @@
 package com.app.pojo;
-// Generated 21 Dec, 2017 11:23:34 AM by Hibernate Tools 5.2.3.Final
+// Generated 21 Dec, 2017 5:29:32 PM by Hibernate Tools 5.2.3.Final
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
@@ -13,6 +14,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 
 /**
@@ -27,15 +30,20 @@ public class ExamSubjectStudentCompositTable implements java.io.Serializable {
 	private transient Exam exam;
 	private transient Student student;
 	private transient Subject subject;
+	private Date dateTime;
+	private Integer durationInMinutes;
 	private transient Set<Result> results = new HashSet<Result>(0);
 
 	public ExamSubjectStudentCompositTable() {
 	}
 
-	public ExamSubjectStudentCompositTable(Exam exam, Student student, Subject subject, Set<Result> results) {
+	public ExamSubjectStudentCompositTable(Exam exam, Student student, Subject subject, Date dateTime,
+			Integer durationInMinutes, Set<Result> results) {
 		this.exam = exam;
 		this.student = student;
 		this.subject = subject;
+		this.dateTime = dateTime;
+		this.durationInMinutes = durationInMinutes;
 		this.results = results;
 	}
 
@@ -79,6 +87,25 @@ public class ExamSubjectStudentCompositTable implements java.io.Serializable {
 
 	public void setSubject(Subject subject) {
 		this.subject = subject;
+	}
+
+	@Temporal(TemporalType.DATE)
+	@Column(name = "date-time", length = 10)
+	public Date getDateTime() {
+		return this.dateTime;
+	}
+
+	public void setDateTime(Date dateTime) {
+		this.dateTime = dateTime;
+	}
+
+	@Column(name = "duration_in_minutes")
+	public Integer getDurationInMinutes() {
+		return this.durationInMinutes;
+	}
+
+	public void setDurationInMinutes(Integer durationInMinutes) {
+		this.durationInMinutes = durationInMinutes;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "examSubjectStudentCompositTable")

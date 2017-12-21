@@ -71,6 +71,81 @@ CREATE TABLE `division` (
 
 insert  into `division`(`id`,`classid`,`name`) values (19,18,'A'),(20,18,'B'),(21,18,'C'),(22,19,'PCM'),(23,19,'PCB');
 
+/*Table structure for table `exam` */
+
+DROP TABLE IF EXISTS `exam`;
+
+CREATE TABLE `exam` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `discription` varchar(500) DEFAULT NULL,
+  `out_of` int(11) DEFAULT NULL,
+  `passing_marks` int(11) DEFAULT NULL,
+  `regular` tinyint(4) DEFAULT NULL,
+  `exam_type_id` int(11) DEFAULT NULL,
+  `exam_mode_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `exam_mode foreign key` (`exam_mode_id`),
+  KEY `exam_type foreign key` (`exam_type_id`),
+  CONSTRAINT `exam_mode foreign key` FOREIGN KEY (`exam_mode_id`) REFERENCES `exam_mode` (`id`),
+  CONSTRAINT `exam_type foreign key` FOREIGN KEY (`exam_type_id`) REFERENCES `exam_type` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+/*Data for the table `exam` */
+
+insert  into `exam`(`id`,`discription`,`out_of`,`passing_marks`,`regular`,`exam_type_id`,`exam_mode_id`) values (1,NULL,80,27,1,2,2);
+
+/*Table structure for table `exam_mode` */
+
+DROP TABLE IF EXISTS `exam_mode`;
+
+CREATE TABLE `exam_mode` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `Mode_name` varchar(300) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+/*Data for the table `exam_mode` */
+
+insert  into `exam_mode`(`id`,`Mode_name`) values (1,'MCQ'),(2,'Theory'),(3,'Practical'),(4,'Oral');
+
+/*Table structure for table `exam_subject_student_composit_table` */
+
+DROP TABLE IF EXISTS `exam_subject_student_composit_table`;
+
+CREATE TABLE `exam_subject_student_composit_table` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `student_id` int(11) DEFAULT NULL,
+  `subject_id` int(11) DEFAULT NULL,
+  `exam_id` int(11) DEFAULT NULL,
+  `date-time` date DEFAULT NULL,
+  `duration_in_minutes` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `composite_unique_key` (`student_id`,`subject_id`,`exam_id`),
+  KEY `subject foreign key exam_subject_student_composit_table` (`subject_id`),
+  KEY `exam foreign key exam_subject_student_composit_table` (`exam_id`),
+  CONSTRAINT `exam foreign key exam_subject_student_composit_table` FOREIGN KEY (`exam_id`) REFERENCES `exam` (`id`),
+  CONSTRAINT `student foreign key exam_subject_student_composit_table` FOREIGN KEY (`student_id`) REFERENCES `student` (`id`),
+  CONSTRAINT `subject foreign key exam_subject_student_composit_table` FOREIGN KEY (`subject_id`) REFERENCES `subject` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+/*Data for the table `exam_subject_student_composit_table` */
+
+insert  into `exam_subject_student_composit_table`(`id`,`student_id`,`subject_id`,`exam_id`,`date-time`,`duration_in_minutes`) values (1,NULL,2,1,'2017-12-21',1),(2,26,2,1,NULL,1);
+
+/*Table structure for table `exam_type` */
+
+DROP TABLE IF EXISTS `exam_type`;
+
+CREATE TABLE `exam_type` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `Type_name` varchar(300) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+/*Data for the table `exam_type` */
+
+insert  into `exam_type`(`id`,`Type_name`) values (1,'Unit Test'),(2,'semister end'),(3,'Annual');
+
 /*Table structure for table `institute` */
 
 DROP TABLE IF EXISTS `institute`;
@@ -110,11 +185,28 @@ CREATE TABLE `login` (
   KEY `FKrn8y9fe820jtkri7daw25wa5e` (`role`),
   CONSTRAINT `FKrn8y9fe820jtkri7daw25wa5e` FOREIGN KEY (`role`) REFERENCES `role` (`id`),
   CONSTRAINT `login_ibfk_1` FOREIGN KEY (`role`) REFERENCES `role` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=115 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=125 DEFAULT CHARSET=utf8;
 
 /*Data for the table `login` */
 
-insert  into `login`(`id`,`username`,`password`,`role`,`enable_Master`,`enable_Institute`) values (16,'Admin','Admin',4,1,1),(30,'vidya@vidya.com','7894561230',3,1,1),(34,'ratan@gmail.com','7385620399',3,1,1),(38,'teacher','teacher',2,1,1),(39,'user','user',58,1,1),(48,'pdukalesdf@sfsd.cd','7539514682',2,1,1),(90,'asdfasdf@asdf.co','9875641230',2,1,1),(103,'sadf@sadfas.co','9856321470',1,1,1),(104,'pdukale9@gmail.com','9385620399',1,1,1),(106,'asdfas@asdfas.com','9857456129',2,1,1),(107,'asdfsdf@asdfa.com','9632587404',2,1,1),(108,'abhi@gmail.com','9874563215',2,1,1),(109,'reupesh@gmail.com','9658746321',2,1,0),(110,'anup@gmail.com','8520147963',2,1,0),(111,'abcd@gmail.com','9658743210',1,1,0),(112,'dipak@gmail.com','9657841230',1,1,0),(113,'nayan@gmail.com','7845456932',1,1,0),(114,'arpit@gmail.com','9658742310',1,1,1);
+insert  into `login`(`id`,`username`,`password`,`role`,`enable_Master`,`enable_Institute`) values (16,'Admin','Admin',4,1,1),(30,'vidya@vidya.com','7894561230',3,1,1),(34,'ratan@gmail.com','7385620399',3,1,1),(38,'teacher','teacher',2,1,1),(48,'pdukalesdf@sfsd.cd','7539514682',2,1,1),(90,'asdfasdf@asdf.co','9875641230',2,1,1),(103,'sadf@sadfas.co','9856321470',1,1,1),(104,'pdukale9@gmail.com','9385620399',1,1,1),(106,'asdfas@asdfas.com','9857456129',2,1,1),(107,'asdfsdf@asdfa.com','9632587404',2,1,1),(108,'abhi@gmail.com','9874563215',2,1,1),(109,'reupesh@gmail.com','9658746321',2,1,0),(110,'anup@gmail.com','8520147963',2,1,0),(111,'abcd@gmail.com','9658743210',1,1,1),(112,'dipak@gmail.com','9657841230',1,1,1),(113,'nayan@gmail.com','7845456932',1,1,1),(114,'arpit@gmail.com','9658742310',1,1,1),(115,'sdfasdf@dfas.com','9587461230',1,1,1),(116,'ssdf@asdfas.com','9857461233',1,1,1),(117,'sdfsdsd@sdfsd.com','9658741230',1,1,1),(118,'fasdf@asdfasd.co','8974561230',1,1,1),(119,'sfsadfasd@asdf.co','9658741230',1,1,1),(120,'sdfasdf@sdfsd.co','9658741230',1,1,1),(121,'rahul@gmail.com','9658741230',1,1,0),(122,'govind@gmail.com','8974563210',1,1,0),(123,'satish@gmail.com','9857461310',1,1,0),(124,'kiran@gmail.com','8974561230',1,1,0);
+
+/*Table structure for table `message` */
+
+DROP TABLE IF EXISTS `message`;
+
+CREATE TABLE `message` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `role_id` int(11) DEFAULT NULL,
+  `receiver_id` int(11) DEFAULT NULL,
+  `status` tinyint(1) DEFAULT NULL,
+  `text` varchar(500) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `Role foreign key` (`role_id`),
+  CONSTRAINT `Role foreign key` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `message` */
 
 /*Table structure for table `parent` */
 
@@ -127,11 +219,11 @@ CREATE TABLE `parent` (
   `contactno` varchar(12) NOT NULL,
   `email` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8;
 
 /*Data for the table `parent` */
 
-insert  into `parent`(`id`,`fname`,`lname`,`contactno`,`email`) values (29,'dfsdf','asdf','9856321470','sadf@sadfas.co'),(30,'Ashok','dukale','9385620399','pdukale9@gmail.com'),(32,'Pintu','Zintu','9658743210','abcd@gmail.com'),(33,'Vishnu','Sutar','9657841230','dipak@gmail.com'),(34,'Bajirao','Patil','7845456938','nayan@gmail.com'),(35,'Mahadev','sharma','9658742310','arpit@gmail.com');
+insert  into `parent`(`id`,`fname`,`lname`,`contactno`,`email`) values (29,'dfsdf','asdf','9856321470','sadf@sadfas.co'),(30,'Ashok','dukale','9385620399','pdukale9@gmail.com'),(32,'Pintu','Zintu','9658743210','abcd@gmail.com'),(33,'Vishnu','Sutar','9657841230','dipak@gmail.com'),(34,'Bajirao','Patil','7845456938','nayan@gmail.com'),(35,'Mahadev','sharma','9658742310','arpit@gmail.com'),(36,'sdfasf','fasdfasdf','9587461230','sdfasdf@dfas.com'),(37,'sdgfsadf','gfsda','9857461233','ssdf@asdfas.com'),(38,'SFsdfsd','fsdsd','9658741230','sdfsdsd@sdfsd.com'),(39,'sfasd','fasdf','8974561230','fasdf@asdfasd.co'),(40,'sdfasd','sdf','9658741230','sfsadfasd@asdf.co'),(41,'sdfasd','fsdafasdf','9658741230','sdfasdf@sdfsd.co'),(42,'Prabhakar','Sadaphal','9658741230','rahul@gmail.com'),(43,'Gopal','Agrawal','8974563210','govind@gmail.com'),(44,'Atish','Gujrathi','9857461310','satish@gmail.com'),(45,'Piraji','Sawale','8974561230','kiran@gmail.com');
 
 /*Table structure for table `permissions` */
 
@@ -160,6 +252,38 @@ CREATE TABLE `permissions` (
 
 insert  into `permissions`(`id`,`authorise_student`,`authorise_teacher`,`fill_attendance`,`fill_schedule`,`mail_parent`,`mail_student`,`mail_teacher`,`msg_parent`,`msg_student`,`msg_teacher`,`set_exam`,`update_results`,`alter_institute_structure`) values (13,1,1,1,1,1,1,1,1,1,1,1,1,1),(15,1,1,1,1,1,1,1,1,1,1,1,1,1),(16,1,1,1,1,1,1,1,1,1,1,1,1,1),(17,1,1,1,1,1,1,1,1,1,1,1,1,1),(18,1,0,0,0,0,0,0,0,0,0,0,0,0),(19,0,0,0,0,0,0,1,0,0,1,1,1,1),(20,1,0,0,0,0,1,1,0,0,1,0,0,1),(21,1,0,1,1,1,1,1,1,1,1,1,1,1);
 
+/*Table structure for table `persistent_logins` */
+
+DROP TABLE IF EXISTS `persistent_logins`;
+
+CREATE TABLE `persistent_logins` (
+  `username` varchar(64) NOT NULL,
+  `series` varchar(64) NOT NULL,
+  `token` varchar(64) NOT NULL,
+  `last_used` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`series`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `persistent_logins` */
+
+/*Table structure for table `result` */
+
+DROP TABLE IF EXISTS `result`;
+
+CREATE TABLE `result` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `obtained_marks` int(11) DEFAULT NULL,
+  `remarks` varchar(300) DEFAULT NULL,
+  `exam_subject_student_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `exam_subject_student foreign key` (`exam_subject_student_id`),
+  CONSTRAINT `exam_subject_student foreign key` FOREIGN KEY (`exam_subject_student_id`) REFERENCES `exam_subject_student_composit_table` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+/*Data for the table `result` */
+
+insert  into `result`(`id`,`obtained_marks`,`remarks`,`exam_subject_student_id`) values (1,60,'pass',2),(2,NULL,NULL,NULL);
+
 /*Table structure for table `role` */
 
 DROP TABLE IF EXISTS `role`;
@@ -172,7 +296,7 @@ CREATE TABLE `role` (
 
 /*Data for the table `role` */
 
-insert  into `role`(`id`,`name`) values (1,'ROLE_STUDENT'),(2,'ROLE_TEACHER'),(3,'ROLE_INSTITUTE_ADMIN'),(4,'ROLE_APP_ADMIN'),(52,'cleaner'),(54,'Security'),(55,'Manager'),(57,'tester'),(58,'ROLE_ADMIN');
+insert  into `role`(`id`,`name`) values (1,'ROLE_STUDENT'),(2,'ROLE_TEACHER'),(3,'ROLE_INSTITUTE_ADMIN'),(4,'ROLE_APP_ADMIN'),(5,'ROLE_PARENT'),(52,'cleaner'),(54,'Security'),(55,'Manager'),(57,'tester');
 
 /*Table structure for table `schedule` */
 
@@ -220,11 +344,45 @@ CREATE TABLE `student` (
   CONSTRAINT `parent` FOREIGN KEY (`parentid`) REFERENCES `parent` (`id`) ON DELETE CASCADE,
   CONSTRAINT `student_ibfk_1` FOREIGN KEY (`loginid`) REFERENCES `login` (`id`) ON DELETE CASCADE,
   CONSTRAINT `student_ibfk_2` FOREIGN KEY (`instid`) REFERENCES `institute` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
 
 /*Data for the table `student` */
 
-insert  into `student`(`id`,`loginid`,`fName`,`father`,`lName`,`parentid`,`contactno`,`email`,`instid`,`divid`) values (20,103,'sdfas','dfsdf','asdf',29,'9856321470','sadf@sadfas.co',50,NULL),(21,104,'Prasad','Ashok','dukale',30,'9385620399','pdukale9@gmail.com',50,NULL),(23,111,'chintu ','Pintu','Zintu',32,'9658743210','abcd@gmail.com',50,NULL),(24,112,'Dipak ','Vishnu','Sutar',33,'9657841230','dipak@gmail.com',50,NULL),(25,113,'Nayan','Bajirao','Patil',34,'7845456932','nayan@gmail.com',50,22),(26,114,'Arpit','Mahadev','sharma',35,'9658742310','arpit@gmail.com',50,NULL);
+insert  into `student`(`id`,`loginid`,`fName`,`father`,`lName`,`parentid`,`contactno`,`email`,`instid`,`divid`) values (20,103,'sdfas','dfsdf','asdf',29,'9856321470','sadf@sadfas.co',50,22),(21,104,'Prasad','Ashok','dukale',30,'9385620399','pdukale9@gmail.com',50,23),(23,111,'chintu ','Pintu','Zintu',32,'9658743210','abcd@gmail.com',50,23),(24,112,'Dipak ','Vishnu','Sutar',33,'9657841230','dipak@gmail.com',50,20),(25,113,'Nayan','Bajirao','Patil',34,'7845456932','nayan@gmail.com',50,23),(26,114,'Arpit','Mahadev','sharma',35,'9658742310','arpit@gmail.com',50,23),(27,115,'abcva','sdfasf','fasdfasdf',36,'9587461230','sdfasdf@dfas.com',50,22),(28,116,'vsxvsd','sdgfsadf','gfsda',37,'9857461233','ssdf@asdfas.com',50,22),(29,117,'sdfdsfsd','SFsdfsd','fsdsd',38,'9658741230','sdfsdsd@sdfsd.com',50,22),(30,118,'fsdaf','sfasd','fasdf',39,'8974561230','fasdf@asdfasd.co',50,22),(31,119,'sfsdf','sdfasd','sdf',40,'9658741230','sfsadfasd@asdf.co',50,22),(32,120,'sdfasdf','sdfasd','fsdafasdf',41,'9658741230','sdfasdf@sdfsd.co',50,22),(33,121,'Rahul','Prabhakar','Sadaphal',42,'9658741230','rahul@gmail.com',50,NULL),(34,122,'Govind','Gopal','Agrawal',43,'8974563210','govind@gmail.com',50,NULL),(35,123,'Satish','Atish','Gujrathi',44,'9857461310','satish@gmail.com',50,NULL),(36,124,'kiran','Piraji','Sawale',45,'8974561230','kiran@gmail.com',50,NULL);
+
+/*Table structure for table `subject` */
+
+DROP TABLE IF EXISTS `subject`;
+
+CREATE TABLE `subject` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) DEFAULT NULL,
+  `discription` varchar(500) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+/*Data for the table `subject` */
+
+insert  into `subject`(`id`,`name`,`discription`) values (1,'English','10th English sub'),(2,'Marathi','10th Marathi');
+
+/*Table structure for table `subject_div_composit` */
+
+DROP TABLE IF EXISTS `subject_div_composit`;
+
+CREATE TABLE `subject_div_composit` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `Div_id` int(11) NOT NULL,
+  `subject_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `gsc` (`Div_id`,`subject_id`),
+  KEY `sub foreign key` (`subject_id`),
+  CONSTRAINT `div foreign key` FOREIGN KEY (`Div_id`) REFERENCES `division` (`id`),
+  CONSTRAINT `sub foreign key` FOREIGN KEY (`subject_id`) REFERENCES `subject` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+
+/*Data for the table `subject_div_composit` */
+
+insert  into `subject_div_composit`(`id`,`Div_id`,`subject_id`) values (1,19,1),(2,19,2),(8,20,1),(9,20,2);
 
 /*Table structure for table `teacher` */
 
