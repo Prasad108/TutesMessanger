@@ -918,6 +918,7 @@ public class TeacherController {
 		public String AddStudentToDivision(Model model,@ModelAttribute("teacher") Teacher teacher) {		
 			System.out.println("**********inside AddStudentToDivision controller**********");
 			System.out.println("teachers insitute id is :"+teacher.getInstitute().getId());
+			
 			List<Student> studnetList=instituteService.getallStudentWhoAreNotInAnyDivision(instituteService.find(teacher.getInstitute().getId()));
 			for(Student s :studnetList)
 			{

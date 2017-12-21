@@ -1,5 +1,5 @@
 package com.app.pojo;
-// Generated 14 Nov, 2017 11:41:36 AM by Hibernate Tools 5.2.3.Final
+// Generated 21 Dec, 2017 11:23:34 AM by Hibernate Tools 5.2.3.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -22,6 +22,7 @@ public class Role implements java.io.Serializable {
 	private Integer id;
 	private String name;
 	private transient Set<Login> logins = new HashSet<Login>(0);
+	private transient Set<Message> messages = new HashSet<Message>(0);
 	private transient Set<Login> logins_1 = new HashSet<Login>(0);
 
 	public Role() {
@@ -39,9 +40,10 @@ public class Role implements java.io.Serializable {
 		this.name = name;
 	}
 
-	public Role(String name, Set<Login> logins, Set<Login> logins_1) {
+	public Role(String name, Set<Login> logins, Set<Message> messages, Set<Login> logins_1) {
 		this.name = name;
 		this.logins = logins;
+		this.messages = messages;
 		this.logins_1 = logins_1;
 	}
 
@@ -73,6 +75,15 @@ public class Role implements java.io.Serializable {
 
 	public void setLogins(Set<Login> logins) {
 		this.logins = logins;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "role")
+	public Set<Message> getMessages() {
+		return this.messages;
+	}
+
+	public void setMessages(Set<Message> messages) {
+		this.messages = messages;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "role")

@@ -1,6 +1,8 @@
 package com.app.pojo;
-// Generated 14 Nov, 2017 11:41:36 AM by Hibernate Tools 5.2.3.Final
+// Generated 21 Dec, 2017 11:23:34 AM by Hibernate Tools 5.2.3.Final
 
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,6 +11,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -28,13 +31,21 @@ public class Student implements java.io.Serializable {
 	private String lname;
 	private String contactno;
 	private String email;
+	private transient Set<ExamSubjectStudentCompositTable> examSubjectStudentCompositTables = new HashSet<ExamSubjectStudentCompositTable>(
+			0);
 
+	public Student() {
+	}
+
+	public Student(String father) {
+		this.father = father;
+	}
 	
 	public Student(int id, String father) {
 		this.id = id;
 		this.father = father;
 	}
-
+	
 	public Student(int id, Institute institute, Login login, Parent parent, String fname, String lname,
 			String contactno, String email, String father) {
 		this.id = id;
@@ -47,18 +58,10 @@ public class Student implements java.io.Serializable {
 		this.email = email;
 		this.father = father;
 	}
-	
-	public Student() {
-	}
-	
-	
-
-	public Student(String father) {
-		this.father = father;
-	}
 
 	public Student(Division division, Institute institute, Login login, Parent parent, String fname, String father,
-			String lname, String contactno, String email) {
+			String lname, String contactno, String email,
+			Set<ExamSubjectStudentCompositTable> examSubjectStudentCompositTables) {
 		this.division = division;
 		this.institute = institute;
 		this.login = login;
@@ -68,6 +71,7 @@ public class Student implements java.io.Serializable {
 		this.lname = lname;
 		this.contactno = contactno;
 		this.email = email;
+		this.examSubjectStudentCompositTables = examSubjectStudentCompositTables;
 	}
 
 	@Id
@@ -165,6 +169,16 @@ public class Student implements java.io.Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "student")
+	public Set<ExamSubjectStudentCompositTable> getExamSubjectStudentCompositTables() {
+		return this.examSubjectStudentCompositTables;
+	}
+
+	public void setExamSubjectStudentCompositTables(
+			Set<ExamSubjectStudentCompositTable> examSubjectStudentCompositTables) {
+		this.examSubjectStudentCompositTables = examSubjectStudentCompositTables;
 	}
 
 }
