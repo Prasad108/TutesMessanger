@@ -16,6 +16,43 @@
 		<org.springframework.Security.version>4.2.3.RELEASE</org.springframework.Security.version>
 	</properties>
 	<dependencies>
+	
+
+<!-- 	
+
+<dependency>
+    <groupId>com.amazonaws</groupId>
+    <artifactId>aws-java-sdk-sns</artifactId>
+    <version>1.11.250</version>
+</dependency>
+
+https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-sqs
+<dependency>
+    <groupId>com.amazonaws</groupId>
+    <artifactId>aws-java-sdk-sqs</artifactId>
+    <version>1.11.250</version>
+</dependency>
+
+https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-core
+<dependency>
+    <groupId>com.amazonaws</groupId>
+    <artifactId>aws-java-sdk-core</artifactId>
+    <version>1.11.250</version>
+</dependency>
+
+https://mvnrepository.com/artifact/com.amazonaws/jmespath-java
+<dependency>
+    <groupId>com.amazonaws</groupId>
+    <artifactId>jmespath-java</artifactId>
+    <version>1.11.250</version>
+</dependency>     
+   -->
+
+<dependency>
+    <groupId>com.amazonaws</groupId>
+    <artifactId>aws-java-sdk</artifactId>
+    <version>1.11.106</version>
+  </dependency>
 
 
 		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-core -->
@@ -331,6 +368,16 @@
 							<warName>ROOT</warName>
 						</configuration>
 					</plugin>
+					
+					<plugin>
+					      <groupId>org.apache.maven.plugins</groupId>
+					      <artifactId>maven-compiler-plugin</artifactId>
+					      <configuration>
+					         <source>1.8</source>
+					         <target>1.8</target>
+					      </configuration>
+					    </plugin>
+					    
 				</plugins>
 			</build>
 		</profile>
