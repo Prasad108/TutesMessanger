@@ -1,5 +1,5 @@
 package com.app.pojo;
-// Generated 21 Dec, 2017 5:29:32 PM by Hibernate Tools 5.2.3.Final
+// Generated 22 Dec, 2017 12:24:54 PM by Hibernate Tools 5.2.3.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -24,6 +24,7 @@ public class Exam implements java.io.Serializable {
 	private Integer id;
 	private transient ExamMode examMode;
 	private transient ExamType examType;
+	private transient Institute institute;
 	private String discription;
 	private Integer outOf;
 	private Integer passingMarks;
@@ -34,10 +35,11 @@ public class Exam implements java.io.Serializable {
 	public Exam() {
 	}
 
-	public Exam(ExamMode examMode, ExamType examType, String discription, Integer outOf, Integer passingMarks,
-			Byte regular, Set<ExamSubjectStudentCompositTable> examSubjectStudentCompositTables) {
+	public Exam(ExamMode examMode, ExamType examType, Institute institute, String discription, Integer outOf,
+			Integer passingMarks, Byte regular, Set<ExamSubjectStudentCompositTable> examSubjectStudentCompositTables) {
 		this.examMode = examMode;
 		this.examType = examType;
+		this.institute = institute;
 		this.discription = discription;
 		this.outOf = outOf;
 		this.passingMarks = passingMarks;
@@ -75,6 +77,16 @@ public class Exam implements java.io.Serializable {
 
 	public void setExamType(ExamType examType) {
 		this.examType = examType;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "insitute_id")
+	public Institute getInstitute() {
+		return this.institute;
+	}
+
+	public void setInstitute(Institute institute) {
+		this.institute = institute;
 	}
 
 	@Column(name = "discription", length = 500)

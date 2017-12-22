@@ -1,5 +1,5 @@
 package com.app.pojo;
-// Generated 21 Dec, 2017 11:23:34 AM by Hibernate Tools 5.2.3.Final
+// Generated 22 Dec, 2017 12:24:54 PM by Hibernate Tools 5.2.3.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -9,6 +9,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -20,6 +22,7 @@ import javax.persistence.Table;
 public class Subject implements java.io.Serializable {
 
 	private Integer id;
+	private transient Institute institute;
 	private String name;
 	private String discription;
 	private transient Set<ExamSubjectStudentCompositTable> examSubjectStudentCompositTables = new HashSet<ExamSubjectStudentCompositTable>(
@@ -29,9 +32,10 @@ public class Subject implements java.io.Serializable {
 	public Subject() {
 	}
 
-	public Subject(String name, String discription,
+	public Subject(Institute institute, String name, String discription,
 			Set<ExamSubjectStudentCompositTable> examSubjectStudentCompositTables,
 			Set<SubjectDivComposit> subjectDivComposits) {
+		this.institute = institute;
 		this.name = name;
 		this.discription = discription;
 		this.examSubjectStudentCompositTables = examSubjectStudentCompositTables;
@@ -48,6 +52,16 @@ public class Subject implements java.io.Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "institute_id")
+	public Institute getInstitute() {
+		return this.institute;
+	}
+
+	public void setInstitute(Institute institute) {
+		this.institute = institute;
 	}
 
 	@Column(name = "name", length = 100)
