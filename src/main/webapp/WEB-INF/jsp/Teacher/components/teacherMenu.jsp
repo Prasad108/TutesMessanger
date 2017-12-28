@@ -69,7 +69,7 @@
                           <span class="menu-arrow arrow_carrot-right"></span>
                       </a>
                       <ul class="sub">
-                          <li><a class="" href="">Add/Edit Exam</a></li>
+                          <li><a class="" href="AddEditExam">Add/Edit Exam</a></li>
                           <li><a class="" href="#">Add/Remove Subject</a></li>   
                           <li><a class="" href="#">Add/Remove Student</a></li>                        
                       </ul>
