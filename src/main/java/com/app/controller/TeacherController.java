@@ -23,6 +23,9 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import com.app.pojo.Branch;
 import com.app.pojo.Classes;
 import com.app.pojo.Division;
+import com.app.pojo.Exam;
+import com.app.pojo.ExamMode;
+import com.app.pojo.ExamType;
 import com.app.pojo.Institute;
 import com.app.pojo.Login;
 import com.app.pojo.Permissions;
@@ -33,6 +36,9 @@ import com.app.pojo.Teacher;
 import com.app.service.BranchService;
 import com.app.service.ClassesService;
 import com.app.service.DivisionService;
+import com.app.service.ExamModeService;
+import com.app.service.ExamService;
+import com.app.service.ExamTypeService;
 import com.app.service.InstituteService;
 import com.app.service.LoginService;
 import com.app.service.ParentService;
@@ -78,6 +84,15 @@ public class TeacherController {
 	
 	@Autowired
 	ParentService parentService;
+	
+	@Autowired
+	ExamService examService;
+	
+	@Autowired
+	ExamModeService examModeService;
+	
+	@Autowired
+	ExamTypeService examTypeService;
 	
 	Gson gson = new Gson();
 	
@@ -1058,7 +1073,7 @@ public class TeacherController {
 		}
 	 
 	 @RequestMapping(value="/showStudentOfDivision",method=RequestMethod.POST)
-	 public String displayStudentOfDivision(Model model,@ModelAttribute("teacher") Teacher teacher,HttpServletRequest req)
+	 	public String displayStudentOfDivision(Model model,@ModelAttribute("teacher") Teacher teacher,HttpServletRequest req)
 	 {
 		 System.out.println("**********inside displayStudentOfDivision controller**********");
 		 String id=req.getParameter("disabledSelectForDivisionForShowStudent");
@@ -1110,11 +1125,10 @@ public class TeacherController {
 		
 		 return "Teacher/StudentInDivision";
 	 }
-	 
-	 
+	  
 	 @RequestMapping(value="/GetStudentOfDivision/{id}", method=RequestMethod.GET)
 	 @ResponseBody
-	 public String GetStudentOfDivision(  @PathVariable("id") int DivID)
+	 	public String GetStudentOfDivision(  @PathVariable("id") int DivID)
 	 {
 		 System.out.println("**********inside GetStudentOfDivision controller**********");
 		
@@ -1151,10 +1165,8 @@ public class TeacherController {
 		
 		 return studentListJSON;
 	 }
-	 
-	 
-	 
-	/* @RequestMapping(value="/deleteStudentFromDivision", method=RequestMethod.GET)
+	 	 	 
+	 /* @RequestMapping(value="/deleteStudentFromDivision", method=RequestMethod.GET)
 	
 	 public String deleteStudentFromDivision(Model model,@ModelAttribute("teacher") Teacher teacher,HttpServletRequest req)
 	 {
@@ -1184,8 +1196,8 @@ public class TeacherController {
 			return classesListJSON;
 }
 	 
-	 @RequestMapping(value = "/GetDivisionListInJSON/{id}", method = RequestMethod.GET)
-	 @ResponseBody
+		 @RequestMapping(value = "/GetDivisionListInJSON/{id}", method = RequestMethod.GET)
+		 @ResponseBody
 	    public String GetDivisionListInJSON( @PathVariable("id") int id ){
 		 
 			System.out.println("**********from GetDivisionListInJSON controller**********");
@@ -1197,15 +1209,11 @@ public class TeacherController {
 			System.out.println(divisionListJSON);
 			
 			return divisionListJSON;
-}
-	 
-	 
-	 
-	 
-	 
+       }
+ 
 	 @RequestMapping(value="/GetStudentOfDivisionInJSON", method=RequestMethod.POST)
 	 @ResponseBody
-	 public String GetStudentOfDivisionInJSON(@RequestBody Division division)
+	 	public String GetStudentOfDivisionInJSON(@RequestBody Division division)
 	 {
 		 System.out.println("**********inside GetStudentOfDivisionInJSON controller**********");
 		
@@ -1242,12 +1250,10 @@ public class TeacherController {
 		
 		 return studentListJSON;
 	 }
-	 
-	 
-	 
+	 	 
 	 @RequestMapping(value="/DeleteSelectedStudentFromDivision", method=RequestMethod.POST)
 	 @ResponseBody
-	 public String DeleteSelectedStudentFromDivision(@RequestBody ArrayList<Student> studentList)
+	 	public String DeleteSelectedStudentFromDivision(@RequestBody ArrayList<Student> studentList)
 	 {
 		 System.out.println("**********inside DeleteSelectedStudentFromDivision controller**********");
 		 System.out.println(studentList);
@@ -1268,7 +1274,7 @@ public class TeacherController {
 	 
 	 @RequestMapping(value="/AddSelectedStudentToDivision/{id}", method=RequestMethod.POST)
 	 @ResponseBody
-	 public String AddSelectedStudentToDivision(@PathVariable("id") int id,@RequestBody ArrayList<Student> studentList)
+	 	public String AddSelectedStudentToDivision(@PathVariable("id") int id,@RequestBody ArrayList<Student> studentList)
 	 {
 		 System.out.println("**********inside AddSelectedStudentToDivision controller**********");
 		 
@@ -1283,4 +1289,72 @@ public class TeacherController {
 		 System.out.println(division.getName());		
 		 return gson.toJson(division);
 	 }
+	 
+	 	@RequestMapping("/AddEditExam")
+	 	public String AddEditExam(Model model) 
+	 	{
+	 		System.out.println("**********this is AddEditExam controller**********");
+	 		return "Teacher/Exam/AddEditExam";
+		}
+	 		 	
+	 	@RequestMapping(value="/GetExamsOFInstitute/{id}", method=RequestMethod.POST)
+		@ResponseBody
+		public String GetExamsOFInstitute(@PathVariable("id") int InstituteId)
+		 {
+			 System.out.println("**********inside GetExamsOFInstitute controller**********");
+			 List<Exam> examList= examService.getallOfParticularInstitute(InstituteId);
+			 
+			 String JSON="[";
+			 for(Exam e: examList)
+			 {
+				 JSON+="{";
+					JSON+="\"id\":"+e.getId()+",";
+					JSON+="\"examMode\":";
+							JSON+="{";
+								JSON+="\"id\":"+e.getExamMode().getId()+"},";
+					JSON+="\"examType\":";
+					JSON+="{";
+					JSON+="\"id\":"+e.getExamType().getId()+"},";
+					JSON+="\"discription\":\""+e.getDiscription()+"\",";
+				
+					JSON+="\"outOf\":"+e.getOutOf()+",";
+					JSON+="\"passingMarks\":"+e.getPassingMarks()+",";
+					JSON+="\"regular\":"+e.getRegular()+"";				
+					JSON+="},";
+				   
+			 }
+			 
+			 JSON=JSON.substring(0, JSON.length() - 1);
+				JSON+="]";
+			
+				System.out.println(JSON);
+			
+			
+			 return JSON;
+		 }
+	 	
+	 	
+	 	@RequestMapping(value="/GetExamsMode", method=RequestMethod.POST)
+		@ResponseBody
+		public String GetExamsMode()
+		 {
+			 System.out.println("**********inside GetExamsMode controller**********");			 
+			 List<ExamMode> examModeList= examModeService.getAll();
+			 String JSONexamModeList=gson.toJson(examModeList);		
+			 System.out.println(JSONexamModeList);
+			 return JSONexamModeList;
+		 }
+	 	
+	 	@RequestMapping(value="/GetExamsType", method=RequestMethod.POST)
+		@ResponseBody
+		public String GetExamsType()
+		 {
+			 System.out.println("**********inside GetExamsType controller**********");			 
+			 List<ExamType> examTypeList= examTypeService.getAll();
+			 String JSONexamTypeList=gson.toJson(examTypeList);		
+			 System.out.println(JSONexamTypeList);
+			 return JSONexamTypeList;
+		 }
+		 
+		 
 }
