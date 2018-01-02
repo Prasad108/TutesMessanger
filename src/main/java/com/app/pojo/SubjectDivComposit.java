@@ -22,7 +22,7 @@ public class SubjectDivComposit implements java.io.Serializable {
 
 	private Integer id;
 	private transient Division division;
-	private transient Subject subject;
+	private Subject subject;
 
 	public SubjectDivComposit() {
 	}

@@ -32,6 +32,8 @@ import com.app.pojo.Permissions;
 import com.app.pojo.Role;
 import com.app.pojo.Schedule;
 import com.app.pojo.Student;
+import com.app.pojo.Subject;
+import com.app.pojo.SubjectDivComposit;
 import com.app.pojo.Teacher;
 import com.app.service.BranchService;
 import com.app.service.ClassesService;
@@ -45,6 +47,7 @@ import com.app.service.ParentService;
 import com.app.service.PermissionsService;
 import com.app.service.ScheduleService;
 import com.app.service.StudentService;
+import com.app.service.SubjectService;
 import com.app.service.TeacherService;
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -93,6 +96,9 @@ public class TeacherController {
 	
 	@Autowired
 	ExamTypeService examTypeService;
+	
+	@Autowired
+	SubjectService subjectService;
 	
 	Gson gson = new Gson();
 	
@@ -1354,6 +1360,106 @@ public class TeacherController {
 			 String JSONexamTypeList=gson.toJson(examTypeList);		
 			 System.out.println(JSONexamTypeList);
 			 return JSONexamTypeList;
+		 }
+	 	
+	 	 @RequestMapping(value = "/SubjectInDivision", method = RequestMethod.GET)
+			public String ShowSubjectInDivision(Model model,@ModelAttribute("teacher") Teacher teacher) {		
+				System.out.println("**********inside Show subject of particular division controller**********");
+				
+				    Branch branch= new Branch();
+					Classes clsess=new Classes();
+					Division division =new Division();
+					model.addAttribute("Branch", branch);
+					model.addAttribute("Classes", clsess);
+					model.addAttribute("Division", division);
+			    	System.out.println(teacher.getId());
+			    	
+			    	Institute inst=teacherService.GetInstitute(teacher.getId());
+					System.out.println("institute is :"+inst);
+			    	
+			    	 List <Branch> branchlist=branchService.getallOfParticularInstitute(inst);
+					 System.out.println("we are going to print the branches of current isntitute :");
+					 for (Branch b : branchlist) {
+						    System.out.println(b);
+						}
+					
+					
+				 String	branchListJSON=gson.toJson(branchlist);
+				System.out.println(branchListJSON);
+				model.addAttribute("branchListJSON",branchListJSON );
+				return "Teacher/SubjectInDivision";
+			}
+	 	 
+	 	 
+	 	@RequestMapping(value="/GetSubjectOfDivisionInJSON", method=RequestMethod.POST)
+		 @ResponseBody
+		 	public String GetSubjectOfDivisionInJSON(@RequestBody Division division)
+		 {
+			 System.out.println("**********inside GetSubjectOfDivisionInJSON controller**********");
+			
+			 System.out.println(division);
+			 String subjectListJSON="";
+			 
+			try
+			{
+				System.out.println("in try");
+			List<Subject> subjectList=subjectService.findByDivId(division.getId());
+			for (Subject s : subjectList) {
+				    System.out.println(s.getName());
+				}
+			
+			subjectListJSON=gson.toJson(subjectList);
+			
+			if(subjectList.isEmpty())
+			{
+				subjectListJSON="{\"ErrorMessage\":\"Selected division does not contain any subject\"}";		
+			}
+			else
+			{
+				subjectListJSON=gson.toJson(subjectList);
+			}
+			}
+			catch(Exception e)
+			{
+				subjectListJSON="{\"ErrorMessage\":\"Selected division does not contain any subject\"}";
+				
+				e.printStackTrace();
+			}
+			
+			System.out.println(subjectListJSON);
+			
+			 return subjectListJSON;
+		 }
+		 	 
+		 
+	 	 
+		 @RequestMapping(value = "/deleteSubjectFromDivision/{id}/{divId}", method = RequestMethod.GET)
+		 @ResponseBody
+		 	public String deleteSubjectFromDivision( @PathVariable("id") int subId, @PathVariable("divId") int divId){
+			 
+				System.out.println("**********from deleteSubjectFromDivision controller**********");
+				
+				String result="";									
+				System.out.println("subject to be deleted is with id"+subId);		
+					try{
+						Subject s=subjectService.find(subId);
+						System.out.println("name of the subject is "+s.getName());
+						
+						subjectService.deleteByDivId(subId, divId);
+					
+					System.out.println("Subject is deleted with the id "+subId);
+					result="{\"message\":\"Subject with id "+subId+" is deleted \",\"status\":\"success\"}";
+					}
+					catch(Exception e)
+					{
+						System.out.println(e.getMessage());
+						e.printStackTrace();
+						System.out.println();
+						System.out.println("error in deletion with Subject id : "+subId);
+						result="{\"message\":\"ERROR...!! subject with id "+subId+" not deleted\",\"status\":\"fail\"}";
+					}
+				System.out.println(result);
+			return result;
 		 }
 		 
 		 
