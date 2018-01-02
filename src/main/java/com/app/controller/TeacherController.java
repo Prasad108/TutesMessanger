@@ -96,10 +96,11 @@ public class TeacherController {
 	
 	@Autowired
 	ExamTypeService examTypeService;
+
 	
 	@Autowired
 	SubjectService subjectService;
-	
+
 	Gson gson = new Gson();
 	
 	 @RequestMapping(value="/ModifyInstitueStructure",method = RequestMethod.GET)  
@@ -1361,6 +1362,7 @@ public class TeacherController {
 			 System.out.println(JSONexamTypeList);
 			 return JSONexamTypeList;
 		 }
+
 	 	
 	 	 @RequestMapping(value = "/SubjectInDivision", method = RequestMethod.GET)
 			public String ShowSubjectInDivision(Model model,@ModelAttribute("teacher") Teacher teacher) {		
@@ -1461,6 +1463,6 @@ public class TeacherController {
 				System.out.println(result);
 			return result;
 		 }
-		 
+	 
 		 
 }
