@@ -49,16 +49,11 @@ public class SubjectServiceImpl implements SubjectService{
 	public List<Subject> getall() {
 		return subjectDAO.getall();
 	}
-
+	
 	@Override
-	public List<Subject> findByDivId(int divId) {
-		return subjectDAO.findByDivId(divId);
+	public List<Subject> getallOfInstitute(int instituteId) {
+		return subjectDAO.getallOfInstitute(instituteId);
 	}
 
-	@Override
-	public void deleteByDivId(int subId, int divId) {
-		subjectDAO.deleteByDivId(subId, divId);
-		
-	}
 
 }

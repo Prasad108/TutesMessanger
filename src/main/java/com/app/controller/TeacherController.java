@@ -47,6 +47,7 @@ import com.app.service.ParentService;
 import com.app.service.PermissionsService;
 import com.app.service.ScheduleService;
 import com.app.service.StudentService;
+import com.app.service.SubjectDivCompositService;
 import com.app.service.SubjectService;
 import com.app.service.TeacherService;
 import com.fasterxml.jackson.core.JsonGenerationException;
@@ -100,6 +101,9 @@ public class TeacherController {
 	
 	@Autowired
 	SubjectService subjectService;
+	
+	@Autowired
+	SubjectDivCompositService subjectDivCompositService;
 
 	Gson gson = new Gson();
 	
@@ -1405,7 +1409,8 @@ public class TeacherController {
 			try
 			{
 				System.out.println("in try");
-			List<Subject> subjectList=subjectService.findByDivId(division.getId());
+			List<Subject> subjectList=subjectDivCompositService.findByDivId(division.getId());	
+			
 			for (Subject s : subjectList) {
 				    System.out.println(s.getName());
 				}
@@ -1434,6 +1439,39 @@ public class TeacherController {
 		 }
 		 	 
 		 
+	 	 @RequestMapping(value = "/addSubjectToDivision/{id}/{divId}", method = RequestMethod.GET)
+		 @ResponseBody
+		 	public String addSubjectToDivision( @PathVariable("id") int subId, @PathVariable("divId") int divId){
+			 
+				System.out.println("**********from addSubjectToDivision controller**********");
+				
+				String result="";									
+				System.out.println("subject to be added is with id"+subId);		
+					try{
+						Subject sub=subjectService.find(subId);
+						System.out.println("name of the subject is "+sub.getName());
+						
+						Division div=divisionService.find(divId);
+						System.out.println("name of the division is "+div.getName());
+						
+						SubjectDivComposit sdc=new SubjectDivComposit(div, sub);
+						subjectDivCompositService.create(sdc);
+					
+					System.out.println("Subject is added with the id "+subId);
+					result="{\"message\":\"Subject with id "+subId+" is added \",\"status\":\"success\"}";
+					}
+					catch(Exception e)
+					{
+						System.out.println(e.getMessage());
+						e.printStackTrace();
+						System.out.println();
+						System.out.println("error in adding with Subject id : "+subId);
+						result="{\"message\":\"ERROR...!! subject with id "+subId+" not added\",\"status\":\"fail\"}";
+					}
+				System.out.println(result);
+			return result;
+		 }
+	 
 	 	 
 		 @RequestMapping(value = "/deleteSubjectFromDivision/{id}/{divId}", method = RequestMethod.GET)
 		 @ResponseBody
@@ -1447,7 +1485,7 @@ public class TeacherController {
 						Subject s=subjectService.find(subId);
 						System.out.println("name of the subject is "+s.getName());
 						
-						subjectService.deleteByDivId(subId, divId);
+						subjectDivCompositService.deleteByDivId(subId, divId);
 					
 					System.out.println("Subject is deleted with the id "+subId);
 					result="{\"message\":\"Subject with id "+subId+" is deleted \",\"status\":\"success\"}";
@@ -1464,5 +1502,68 @@ public class TeacherController {
 			return result;
 		 }
 	 
+		 
+		 @RequestMapping(value="/GetSubjectNotInDivisionInJSON", method=RequestMethod.POST)
+		 @ResponseBody
+		 	public String GetSubjectNotInDivisionInJSON(@RequestBody Division division,@ModelAttribute("teacher") Teacher teacher)
+		 {
+			 System.out.println("**********inside Get Subject Not In Division controller**********");
+			
+			 Institute inst=teacherService.GetInstitute(teacher.getId());
+			 int instituteId=inst.getId();
+			 System.out.println(division);
+			 System.out.println(instituteId);
+			
+			 String subjectListNotInDivJSON="";
+			 
+			 List<Subject> subjectNotInDivList=new ArrayList<Subject>();
+			 
+			try
+			{
+		
+			List<Subject> subjectList=subjectDivCompositService.findByDivId(division.getId());
+			List<Subject> allSubjectOfInstituteList=subjectService.getallOfInstitute(instituteId);
+			
+			String match="";
+			
+			for (Subject allSubject : allSubjectOfInstituteList) {
+				    match="false";
+				    for(Subject divSubject : subjectList)
+				    {
+				    	if(allSubject.getId() == divSubject.getId())
+				    	{
+				    		match="true";
+				    		break;
+				    	}
+				    }
+				    
+				    if(match.equals("false"))
+				    {
+				    	subjectNotInDivList.add(allSubject);
+				    }
+				}
+			
+			subjectListNotInDivJSON=gson.toJson(subjectNotInDivList);
+			
+			if(subjectNotInDivList.isEmpty())
+			{
+				subjectListNotInDivJSON="{\"ErrorMessage\":\"Selected division having all subjects\"}";		
+			}
+			else
+			{
+				subjectListNotInDivJSON=gson.toJson(subjectNotInDivList);
+			}
+			}
+			catch(Exception e)
+			{
+				subjectListNotInDivJSON="{\"ErrorMessage\":\"Selected division having all subjects\"}";
+				
+				e.printStackTrace();
+			}
+			
+			System.out.println(subjectListNotInDivJSON);
+			
+			 return subjectListNotInDivJSON;
+		 }
 		 
 }

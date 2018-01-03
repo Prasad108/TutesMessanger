@@ -15,8 +15,7 @@ public interface SubjectDAO {
 	public void delet(int id);
 	public Subject find(int id);
 	public List<Subject> getall();
+	public List<Subject> getallOfInstitute(int instituteId);
 
-	public List<Subject> findByDivId(int divId);
 	
-	public void deleteByDivId(int subId,int divId);
 }

@@ -61,22 +61,14 @@ public class SubjectDAOImpl implements com.app.DAO.SubjectDAO{
 	public List<Subject> getall() {
 		return currentSession().createCriteria(Subject.class).list();
 	}
-
+	
 	@Override
 	@Transactional
-	public List<Subject> findByDivId(int divId) {
-		Query query=currentSession().createQuery("select sdc.subject from SubjectDivComposit sdc where sdc.division.id = :id");
-		query.setParameter("id",divId);
+	public List<Subject> getallOfInstitute(int instituteId) {
+		Query query=currentSession().createQuery("from Subject sub where sub.institute.id = :id");
+		query.setParameter("id",instituteId);
 		return query.list();
 	}
 
-	@Override
-	@Transactional
-	public void deleteByDivId(int subId, int divId) {
-		Query query=currentSession().createQuery("delete from SubjectDivComposit sdc where sdc.subject.id= :subId and sdc.division.id= :divId");
-		query.setParameter("subId",subId);
-		query.setParameter("divId",divId);
-		query.executeUpdate();
-	}
 
 }

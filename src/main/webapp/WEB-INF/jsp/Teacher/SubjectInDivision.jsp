@@ -10,9 +10,15 @@
    		<jsp:include page="/WEB-INF/jsp/Teacher/components/angular.jsp" />
    		<%-- <jsp:include page="/WEB-INF/jsp/Teacher/components/angular.jsp" />  --%>
    		
+   		 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+ <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+ 
+     <script data-require="ui-bootstrap@*" data-semver="0.12.1" src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.12.1.min.js"></script>
+   		
    		 <script>
 
-        var app = angular.module('myApp',[]);
+        var app = angular.module('myApp',['ui.bootstrap']);
   		
    		app.controller('subjectCtrl', ['$scope', '$http', '$filter', function($scope,$http,$filter) {
    			
@@ -27,11 +33,22 @@
    			$scope.subjectList=[];
    			$scope.classList=[];
    			$scope.divisionList=[];
+   			$scope.subjectNotInDivisionList=[];
+
+   	   	   $scope.filteredTodos = []
+     	  ,$scope.currentPage = 1
+     	  ,$scope.numPerPage = 10
+     	  ,$scope.maxSize = 3,
+     	  
+     	   $scope.totallenght=$scope.subjectNotInDivisionList.length/$scope.numPerPage*10;
+   	
    		
    			
    	//--------initialise variable to show/hide some division-----
    			$scope.NoSubjectInDivision=false;
    			$scope.ShowSubjectTable=false;
+   		    $scope.DivisionContainAllSubject=false;
+   		    $scope.ShowSubjectNotInDivisionTable=false;
    	
    			console.log($scope.branchList);
    		
@@ -41,6 +58,8 @@
    				
    				$scope.NoSubjectInDivision=false; //to remove error message	
    				$scope.ShowSubjectTable=false;    //do not show student table
+   			    $scope.DivisionContainAllSubject=false;
+   			    $scope.ShowSubjectNotInDivisionTable=false;
    				
    			 for( i=$scope.divisionList.length-1; i>=0; i--)
    			        { 
@@ -78,6 +97,8 @@
 	
 				$scope.NoSubjectInDivision=false; //to remove error message	
 				$scope.ShowSubjectTable=false;    //do not show student table
+				$scope.DivisionContainAllSubject=false;
+			    $scope.ShowSubjectNotInDivisionTable=false;
    				
 		   		console.log($scope.selectedClass.name);
 		   		
@@ -107,13 +128,23 @@
    			};
 
 
-   		
+ //---------------------------------------------on change division functionality--------------------------------
+ 
+           $scope.selectedDivision=function()
+           {
+        	 $scope.NoSubjectInDivision=false;
+      	     $scope.ShowSubjectTable=false;
+      		 $scope.DivisionContainAllSubject=false;
+      		 $scope.ShowSubjectNotInDivisionTable=false;
+           };
  
 
 //--------------------------------------------- To get Subject list on click button ----------------------------   			
    			$scope.getSubject=function(){
    				$scope.NoSubjectInDivision=false; //to remove error message	
    				$scope.ShowSubjectTable=false;    //do not show student table
+   			    $scope.DivisionContainAllSubject=false;
+   			    $scope.ShowSubjectNotInDivisionTable=false;
    				
 	   			if (!($scope.selectDivision === undefined || $scope.selectDivision === null))	
 	   			{
@@ -167,7 +198,8 @@
    		//-------------delete subject from division function-------------------
 		    $scope.deleteSubject=function(subject)
 		    { 
-
+		      $scope.DivisionContainAllSubject=false;
+		      $scope.ShowSubjectNotInDivisionTable=false;
 		      console.log("hello from delete subject from division function console");
 
 		      if (!($scope.selectDivision === undefined || $scope.selectDivision === null))	
@@ -188,7 +220,7 @@
 
 		 			
 		        	 $scope.deletemessage=response.data.message;
-		        	//delete the role from array
+		        	//delete the subject from array
 		        	 for( i=$scope.subjectList.length-1; i>=0; i--) {
 		        		    if( $scope.subjectList[i].id ==subject.id) $scope.subjectList.splice(i,1);
 		        		}  
@@ -207,6 +239,159 @@
  				}
 
 		    };
+
+
+	 //------------------------------------- show subject not in division------------------------------------
+	 
+			$scope.showSubjectNotInDivision=function(){
+				$scope.NoSubjectInDivision=false; //to remove error message	
+   				$scope.ShowSubjectTable=false;    //do not show student table
+   			    $scope.DivisionContainAllSubject=false;
+   			    $scope.ShowSubjectNotInDivisionTable=false;
+   				if (!($scope.selectDivision === undefined || $scope.selectDivision === null))	
+	   			{
+			   			 var data = JSON.stringify({id:$scope.selectDivision.id,name:$scope.selectDivision.name});
+			   			 	
+			   		//*********to get the subject list not in selected division ******
+				   			 $http({
+				   	            url: "GetSubjectNotInDivisionInJSON",
+				   	         	contentType : 'application/json; charset=utf-8',
+				   	    	 	dataType : 'json',
+				   	            method: "POST" ,        
+				   	            data: data
+				   	               
+				   	        })
+				   	        .then(function successCallback(response) {
+				   	                // if success then generate subject table
+					   	                
+					   	                console.log("response came"); 
+					   	         	if(response.data.ErrorMessage)
+					   	         		{
+					   	         		 console.log("there is error or division contain all subject");
+					   	         		 $scope.DivisionContainAllSubject=true;      //to add error message	
+					   	         		 $scope.ShowSubjectNotInDivisionTable=false;    //do not show student table
+					   	         		}
+					   	         	else{
+					   	         	console.log("succesess subjects are there");
+					   	            $scope.DivisionContainAllSubject=false;
+					   	            $scope.ShowSubjectNotInDivisionTable=true;    //show student table
+					   	        	$scope.subjectNotInDivisionList=response.data;	
+					   	        	 
+					   	             console.log($scope.subjectNotInDivisionList);
+					   	   			
+					   	        	 for( i=$scope.subjectNotInDivisionList.length-1; i>=0; i--) {
+							   	          console.log($scope.subjectNotInDivisionList[i].name);    	
+							        		}
+
+					   	        	$scope.totallenght=$scope.subjectNotInDivisionList.length/$scope.numPerPage*10;
+							   	    
+					   	        	 
+					   	        	 var begin = (($scope.currentPage - 1) * $scope.numPerPage)
+					        		    , end = begin + $scope.numPerPage;
+					        		    console.log("begin is "+begin+" end is "+end)
+					        		    $scope.filteredTodos = $scope.subjectNotInDivisionList.slice(begin, end); 
+					   	        	 
+					   	         	}
+				   	        }, 
+				   	    		 function errorCallback(response) {
+				   	                // failed
+				   	                console.log("error response came");    	          
+				   	        });
+	   				
+	   				}
+	   			else
+	   				{
+	   						console.log("division not selected");
+	   				}	
+	
+				};
+     
+
+  //----------------------------------add subject to particular division-----------------------------------------
+
+				$scope.addSubjectTodivision=function(subject)
+			    { 
+			      $scope.DivisionContainAllSubject=false;
+			     
+			      console.log("hello from add subject to division function console      ");
+
+			      if (!($scope.selectDivision === undefined || $scope.selectDivision === null))	
+		   			{
+			        $http({
+			            url: "addSubjectToDivision/"+subject.id+"/"+$scope.selectDivision.id,
+			            method: "GET",          
+			        })
+			        .then(function successCallback(response) {
+
+			        
+			        	 console.log(" Subject is added : "+subject.id);
+			        	 console.log("Subject is added and response recieved is :"+response.data.message);
+
+			        	if(response.data.status=="success"){
+			                // if success       	
+			        	
+			        	 $scope.addmessage=response.data.message;
+			        	//delete the subject from array
+			        	 for( i=$scope.filteredTodos.length-1; i>=0; i--) {
+			        		    if( $scope.filteredTodos[i].id ==subject.id) $scope.filteredTodos.splice(i,1);
+			        		}
+
+			        	 
+			        	}            
+			        }, 
+			      function errorCallback(response) {
+			                // failed
+			                 $scope.message=data.message;
+			        	 console.log(" subject add failed and response is "+data.message);      
+			        });
+
+		   			}
+			      else
+	 				{
+	 						console.log("division not selected");
+	 				}
+
+			    };
+
+
+//-------------------------------------filter for subject-----------------------------------------------------
+
+			    $scope.filterSubjectNotInDivision=function()
+	        	{
+
+	        		 
+	        		if(($scope.subject_filter.length) > 0 )
+	        			{
+	        			
+	        			console.log(angular.isArray($scope.subjectNotInDivisionList));
+	        			var searchFilter=$scope.subject_filter;
+	        			 console.log(searchFilter);
+	        			 
+	        			 $scope.filteredTodos= $filter('filter')($scope.subjectNotInDivisionList,searchFilter);
+	        			 
+	        			 console.log($scope.filteredTodos.length);
+	        			 
+	        			 $scope.totallenght=$scope.filteredTodos.length/$scope.numPerPage*10;
+	        		
+	        			 }
+	        		else
+	        			{
+	        			$scope.totallenght=$scope.subjectNotInDivisionList.length/$scope.numPerPage*10;
+	        			 
+	        			 var begin = (($scope.currentPage - 1) * $scope.numPerPage)
+		        		    , end = begin + $scope.numPerPage;
+		        		    console.log("begin is "+begin+" end is "+end)
+		        		    $scope.filteredTodos = $scope.subjectNotInDivisionList.slice(begin, end);
+	        			}
+	        	};
+
+
+	        	$scope.$watch('currentPage + numPerPage', function() {
+	       		    var begin = (($scope.currentPage - 1) * $scope.numPerPage)
+	       		    , end = begin + $scope.numPerPage;
+	       		    console.log("begin is "+begin+" end is "+end)
+	       		    $scope.filteredTodos = $scope.subjectNotInDivisionList.slice(begin, end);
+	       		  });
 		
    		}]);
    			
@@ -235,7 +420,7 @@
                               <div class="panel-heading">
                                   <h4 class="panel-title">
                                       <a class="accordion-toggle"  data-parent="#accordion" ng-click="getBranch()">
-                                          Select Branch, Class and Division to show Students
+                                          Select Branch, Class and Division to show Subject
                                       </a>
                                   </h4>
                               </div>
@@ -281,7 +466,9 @@
 											<div class="form-group">
 			                                          <div class="col-lg-offset-2 col-lg-10">
 			                                              <button class="btn btn-primary" ng-click="getSubject()" id="showSubjectSubmitBTN" type="submit">Show Subjects</button>
+			                     					      <button class="btn btn-primary" ng-click="showSubjectNotInDivision()" id="showSubjectSubmitBTN" type="submit">Add New Subject</button>
 			                     					 </div>
+			                     					 
 			                                </div>
 										</form>
 										</div>
@@ -297,6 +484,12 @@
                                   <strong>Selected division does not contain any subject</strong> 
                               </div>
                              
+                              <div ng-show="DivisionContainAllSubject" class="alert alert-block alert-danger fade in">
+                                  <button data-dismiss="alert" class="close close-sm" type="button">
+                                      <i class="icon-remove"></i>
+                                  </button>
+                                  <strong>Selected division contain all subject</strong> 
+                              </div>
                              
                          <section class="panel">
                        <div class="panel-body" ng-show="ShowSubjectTable">
@@ -323,6 +516,53 @@
                                   </button>
                                   <strong>There are no subject in This Division</strong> 
        </div>
+   </div> 
+  </section>
+  
+                           <section class="panel">
+                       <div class="panel-body" ng-show="ShowSubjectNotInDivisionTable">
+                       
+                         <form class="form-horizontal" method="get"> 
+                              <div class="form-group" ng-show="filteredTodos.length">
+                                  <label class="control-label col-lg-2" for="inputSuccess">Search Subject</label>
+                                     <div class="col-lg-10">
+                                        <div class="row">
+                                          <div class="col-lg-3">                                 
+                                              <input type="text" class="form-control" placeholder="search"  ng-model="subject_filter" ng-change="filterSubjectNotInDivision()">
+                                          </div>
+                                        </div>
+                                      </div>
+                               </div>
+                        </form>
+                       <br></br>
+                         <table id="example" class="table  " ng-show="ShowSubjectNotInDivisionTable"  ng-hide="!filteredTodos.length">
+                           <tbody>
+                             <tr>
+							   <th><i class=""></i>Subject Name</th>                               
+                               <th>Subject Description</th>                            
+                               <th><i class="icon_cogs"></i>Add Action</th>
+                             </tr>
+                             <tr ng-repeat="subject in filteredTodos | filter : subject_filter" ng-class="{selectedrow:subject.Selected}">
+									<td> {{ subject.name }}</td>
+   							 		<td> {{ subject.discription }}</td>
+   							 		<td>
+                                      <a class="btn btn-primary" ng-click="addSubjectTodivision(subject)" style="margin-left: 10%"><i class="icon_plus_alt2"></i></a>
+                                    </td>
+   							 </tr>
+                          </tbody>
+                  </table>
+                  
+                   <!-- ng-show="ShowSubjectNotInDivisionTable" ng-hide="filteredTodos.length" -->
+                    <pagination ng-model="currentPage" total-items="totallenght" max-size="maxSize" boundary-links="true"
+                    ng-show="ShowSubjectNotInDivisionTable" ng-hide="!filteredTodos.length">
+				</pagination> 
+					                  
+                  <div class="alert alert-block alert-success fade in" ng-show="!filteredTodos.length">
+                                  <button data-dismiss="alert" class="close close-sm" type="button">
+                                      <i class="icon-remove"></i>
+                                  </button>
+                                  <strong>All selected subjects are added in selected Division</strong> 
+                 </div>
    </div> 
   </section>             	
  </div>
