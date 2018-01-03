@@ -25,6 +25,7 @@
    			$scope.branchList=JSON.parse('${branchListJSON}');
    			$scope.teacher=JSON.parse('${teacherJSON}');
    			$scope.permissions=JSON.parse('${permissions}');
+   			$scope.institute=JSON.parse('${institute}');
    			
    			console.log("teacher is "+$scope.teacher);
    			console.log("teacher id is "+$scope.teacher["id"]);
@@ -269,12 +270,12 @@
 					   	         		{
 					   	         		 console.log("there is error or division contain all subject");
 					   	         		 $scope.DivisionContainAllSubject=true;      //to add error message	
-					   	         		 $scope.ShowSubjectNotInDivisionTable=false;    //do not show student table
+					   	         		 $scope.ShowSubjectNotInDivisionTable=false;    //do not show subject table
 					   	         		}
 					   	         	else{
 					   	         	console.log("succesess subjects are there");
 					   	            $scope.DivisionContainAllSubject=false;
-					   	            $scope.ShowSubjectNotInDivisionTable=true;    //show student table
+					   	            $scope.ShowSubjectNotInDivisionTable=true;    //show subject table
 					   	        	$scope.subjectNotInDivisionList=response.data;	
 					   	        	 
 					   	             console.log($scope.subjectNotInDivisionList);
@@ -305,6 +306,15 @@
 	   				}	
 	
 				};
+
+
+//----------------------------watch function---------------------------------------------------------------------
+				$scope.$watch('currentPage + numPerPage', function() {
+	       		    var begin = (($scope.currentPage - 1) * $scope.numPerPage)
+	       		    , end = begin + $scope.numPerPage;
+	       		    console.log("begin is "+begin+" end is "+end)
+	       		    $scope.filteredTodos = $scope.subjectNotInDivisionList.slice(begin, end);
+	       		  });
      
 
   //----------------------------------add subject to particular division-----------------------------------------
@@ -313,31 +323,37 @@
 			    { 
 			      $scope.DivisionContainAllSubject=false;
 			     
-			      console.log("hello from add subject to division function console      ");
+			      console.log("hello from add subject to division function console");
 
 			      if (!($scope.selectDivision === undefined || $scope.selectDivision === null))	
 		   			{
 			        $http({
-			            url: "addSubjectToDivision/"+subject.id+"/"+$scope.selectDivision.id,
-			            method: "GET",          
+			            url: "addSubjectToDivision/"+subject.id+"/"+$scope.selectDivision.id+"/"+$scope.institute.id,
+			            method: "POST",          
 			        })
 			        .then(function successCallback(response) {
 
 			        
 			        	 console.log(" Subject is added : "+subject.id);
-			        	 console.log("Subject is added and response recieved is :"+response.data.message);
-
-			        	if(response.data.status=="success"){
+			        	 console.log("Subject is added and response recieved is :"+response.data);
 			                // if success       	
 			        	
-			        	 $scope.addmessage=response.data.message;
+			             $scope.subjectNotInDivisionList=response.data;	
+					   	 console.log($scope.subjectNotInDivisionList);
+
+					     $scope.totallenght=$scope.subjectNotInDivisionList.length/$scope.numPerPage*10;
+
+					   	  var begin = (($scope.currentPage - 1) * $scope.numPerPage)
+		        		  , end = begin + $scope.numPerPage;
+		        		  console.log("begin is "+begin+" end is "+end)
+		        		  $scope.filteredTodos = $scope.subjectNotInDivisionList.slice(begin, end); 	
+			  
 			        	//delete the subject from array
+			        	
 			        	 for( i=$scope.filteredTodos.length-1; i>=0; i--) {
 			        		    if( $scope.filteredTodos[i].id ==subject.id) $scope.filteredTodos.splice(i,1);
 			        		}
-
-			        	 
-			        	}            
+	            
 			        }, 
 			      function errorCallback(response) {
 			                // failed
@@ -386,12 +402,7 @@
 	        	};
 
 
-	        	$scope.$watch('currentPage + numPerPage', function() {
-	       		    var begin = (($scope.currentPage - 1) * $scope.numPerPage)
-	       		    , end = begin + $scope.numPerPage;
-	       		    console.log("begin is "+begin+" end is "+end)
-	       		    $scope.filteredTodos = $scope.subjectNotInDivisionList.slice(begin, end);
-	       		  });
+	        	
 		
    		}]);
    			
@@ -500,7 +511,7 @@
                                <th>Subject Description</th>                            
                                <th><i class="icon_cogs"></i>Delete Action</th>
                              </tr>
-                             <tr ng-repeat="subject in subjectList" ng-class="{selectedrow:subject.Selected}">
+                             <tr ng-repeat="subject in subjectList | orderBy : 'name'" ng-class="{selectedrow:subject.Selected}">
 									<td> {{ subject.name }}</td>
    							 		<td> {{ subject.discription }}</td>
    							 		<td>
@@ -542,7 +553,7 @@
                                <th>Subject Description</th>                            
                                <th><i class="icon_cogs"></i>Add Action</th>
                              </tr>
-                             <tr ng-repeat="subject in filteredTodos | filter : subject_filter" ng-class="{selectedrow:subject.Selected}">
+                             <tr ng-repeat="subject in filteredTodos | filter : subject_filter | orderBy : 'name'" ng-class="{selectedrow:subject.Selected}">
 									<td> {{ subject.name }}</td>
    							 		<td> {{ subject.discription }}</td>
    							 		<td>
@@ -552,12 +563,12 @@
                           </tbody>
                   </table>
                   
-                   <!-- ng-show="ShowSubjectNotInDivisionTable" ng-hide="filteredTodos.length" -->
+            
                     <pagination ng-model="currentPage" total-items="totallenght" max-size="maxSize" boundary-links="true"
                     ng-show="ShowSubjectNotInDivisionTable" ng-hide="!filteredTodos.length">
 				</pagination> 
 					                  
-                  <div class="alert alert-block alert-success fade in" ng-show="!filteredTodos.length">
+                  <div class="alert alert-block alert-success fade in" ng-show="!subjectNotInDivisionList.length">
                                   <button data-dismiss="alert" class="close close-sm" type="button">
                                       <i class="icon-remove"></i>
                                   </button>

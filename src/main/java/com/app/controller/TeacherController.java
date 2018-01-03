@@ -1363,11 +1363,96 @@ public class TeacherController {
 			 System.out.println("**********inside GetExamsType controller**********");			 
 			 List<ExamType> examTypeList= examTypeService.getAll();
 			 String JSONexamTypeList=gson.toJson(examTypeList);		
-			 System.out.println(JSONexamTypeList);
+			 //System.out.println(JSONexamTypeList);
 			 return JSONexamTypeList;
 		 }
 
 	 	
+	 	@RequestMapping(value="/SaveExam/{id}", method=RequestMethod.POST)
+		@ResponseBody
+		public String SaveExam(@RequestBody Exam e,@PathVariable("id") int InstituteId)
+		 {
+			 System.out.println("**********inside SaveExam controller**********");	
+			 e.setInstitute(instituteService.find(InstituteId));
+			 
+			 examService.create(e);
+			 String JSON="";
+			 JSON+="{";
+				JSON+="\"id\":"+e.getId()+",";
+				JSON+="\"examMode\":";
+						JSON+="{";
+							JSON+="\"id\":"+e.getExamMode().getId()+"},";
+				JSON+="\"examType\":";
+				JSON+="{";
+				JSON+="\"id\":"+e.getExamType().getId()+"},";
+				JSON+="\"discription\":\""+e.getDiscription()+"\",";
+			
+				JSON+="\"outOf\":"+e.getOutOf()+",";
+				JSON+="\"passingMarks\":"+e.getPassingMarks()+",";
+				JSON+="\"regular\":"+e.getRegular()+"";				
+				JSON+="}";
+
+			 return JSON;
+		 }
+	 	
+	 	@RequestMapping(value="/DeleteExam/{id}", method=RequestMethod.POST)
+		@ResponseBody
+		public String DeleteExam(@PathVariable("id") int ExamId)
+		 {
+			 System.out.println("**********inside DeleteExam controller**********");	
+			 
+			 String result="";
+			 Exam e= examService.find(ExamId);
+			 result="{";
+			 result+="\"message\":\"success\"";
+			 result+="}";
+			
+			 try{
+				 examService.delet(e);
+			 }
+			 catch(Exception exception){
+				 result="{";
+				 result+="\"message\":\"failed\"";
+				 result+="}";
+			 }
+			 System.out.println(result);
+			 return result;
+		 }
+	 	
+	 	
+	 	
+	 	@RequestMapping(value="/UpdateExam/{id}", method=RequestMethod.POST)
+		@ResponseBody
+		public String UpdateExam(@RequestBody Exam e,@PathVariable("id") int InstituteId)
+		 {
+			 System.out.println("**********inside UpdateExam controller**********");	
+			 e.setInstitute(instituteService.find(InstituteId));
+			 examService.update(e);
+			
+			 String JSON="";
+			 JSON+="{";
+				JSON+="\"id\":"+e.getId()+",";
+				JSON+="\"examMode\":";
+						JSON+="{";
+							JSON+="\"id\":"+e.getExamMode().getId()+"},";
+				JSON+="\"examType\":";
+				JSON+="{";
+				JSON+="\"id\":"+e.getExamType().getId()+"},";
+				JSON+="\"discription\":\""+e.getDiscription()+"\",";
+			
+				JSON+="\"outOf\":"+e.getOutOf()+",";
+				JSON+="\"passingMarks\":"+e.getPassingMarks()+",";
+				JSON+="\"regular\":"+e.getRegular()+"";				
+				JSON+="}";
+				System.out.println(JSON);
+
+			 return JSON;
+		 }
+		 
+	 	 
+	
+		 
+		 
 	 	 @RequestMapping(value = "/SubjectInDivision", method = RequestMethod.GET)
 			public String ShowSubjectInDivision(Model model,@ModelAttribute("teacher") Teacher teacher) {		
 				System.out.println("**********inside Show subject of particular division controller**********");
@@ -1393,7 +1478,7 @@ public class TeacherController {
 				 String	branchListJSON=gson.toJson(branchlist);
 				System.out.println(branchListJSON);
 				model.addAttribute("branchListJSON",branchListJSON );
-				return "Teacher/SubjectInDivision";
+				return "Teacher/Subject/SubjectInDivision";
 			}
 	 	 
 	 	 
@@ -1439,14 +1524,14 @@ public class TeacherController {
 		 }
 		 	 
 		 
-	 	 @RequestMapping(value = "/addSubjectToDivision/{id}/{divId}", method = RequestMethod.GET)
+	 	 @RequestMapping(value = "/addSubjectToDivision/{subId}/{divId}/{instId}", method = RequestMethod.POST)
 		 @ResponseBody
-		 	public String addSubjectToDivision( @PathVariable("id") int subId, @PathVariable("divId") int divId){
+		 	public String addSubjectToDivision( @PathVariable("subId") int subId, @PathVariable("divId") int divId, @PathVariable("instId") int instId){
 			 
 				System.out.println("**********from addSubjectToDivision controller**********");
-				
-				String result="";									
-				System.out.println("subject to be added is with id"+subId);		
+												
+				System.out.println("subject to be added is with id"+subId);	
+				String subjectListNotInDivJSON="";
 					try{
 						Subject sub=subjectService.find(subId);
 						System.out.println("name of the subject is "+sub.getName());
@@ -1456,9 +1541,55 @@ public class TeacherController {
 						
 						SubjectDivComposit sdc=new SubjectDivComposit(div, sub);
 						subjectDivCompositService.create(sdc);
+						
+						
+						
+						List<Subject> subjectListOfDiv=subjectDivCompositService.findByDivId(divId);
+						List<Subject> allSubjectOfInstituteList=subjectService.getallOfInstitute(instId);
+						List<Subject> subjectNotInDivList=new ArrayList<Subject>();
+						
+						for(Subject s : subjectListOfDiv)
+						{
+						 System.out.println(s.getName());	
+						}
+						
+						System.out.println("\nInstitute subject");
+						for(Subject s : allSubjectOfInstituteList)
+						{
+						 System.out.println(s.getName());	
+						}
+						
+						String match="";
+						
+						for (Subject allSubject : allSubjectOfInstituteList) {
+							    match="false";
+							    for(Subject divSubject : subjectListOfDiv)
+							    {
+							    	if(allSubject.getId() == divSubject.getId())
+							    	{
+							    		match="true";
+							    		break;
+							    	}
+							    }
+							    
+							    if(match.equals("false"))
+							    {
+							    	subjectNotInDivList.add(allSubject);
+							    }
+							}
+						
+						System.out.println("\nSubject not in division");
+						for(Subject s : subjectNotInDivList)
+						{
+						 System.out.println(s.getName());	
+						}
+						
 					
 					System.out.println("Subject is added with the id "+subId);
-					result="{\"message\":\"Subject with id "+subId+" is added \",\"status\":\"success\"}";
+					
+					subjectListNotInDivJSON=gson.toJson(subjectNotInDivList);	
+					
+					//result="{\"message\":\"Subject with id "+subId+" is added \",\"status\":\"success\"}";
 					}
 					catch(Exception e)
 					{
@@ -1466,16 +1597,16 @@ public class TeacherController {
 						e.printStackTrace();
 						System.out.println();
 						System.out.println("error in adding with Subject id : "+subId);
-						result="{\"message\":\"ERROR...!! subject with id "+subId+" not added\",\"status\":\"fail\"}";
+					//result="{\"message\":\"ERROR...!! subject with id "+subId+" not added\",\"status\":\"fail\"}";
 					}
-				System.out.println(result);
-			return result;
+				System.out.println(subjectListNotInDivJSON);
+			return subjectListNotInDivJSON;
 		 }
 	 
 	 	 
-		 @RequestMapping(value = "/deleteSubjectFromDivision/{id}/{divId}", method = RequestMethod.GET)
+		 @RequestMapping(value = "/deleteSubjectFromDivision/{subId}/{divId}", method = RequestMethod.GET)
 		 @ResponseBody
-		 	public String deleteSubjectFromDivision( @PathVariable("id") int subId, @PathVariable("divId") int divId){
+		 	public String deleteSubjectFromDivision( @PathVariable("subId") int subId, @PathVariable("divId") int divId){
 			 
 				System.out.println("**********from deleteSubjectFromDivision controller**********");
 				
@@ -1565,5 +1696,164 @@ public class TeacherController {
 			
 			 return subjectListNotInDivJSON;
 		 }
+		 
+		 
+		 @RequestMapping(value = "/AddEditSubject", method = RequestMethod.GET)
+			public String AddEditSubject(Model model) {		
+				System.out.println("**********inside add and edit subject controller**********");
+				/*
+				    Branch branch= new Branch();
+					Classes clsess=new Classes();
+					Division division =new Division();
+					model.addAttribute("Branch", branch);
+					model.addAttribute("Classes", clsess);
+					model.addAttribute("Division", division);
+			    	System.out.println(teacher.getId());
+			    	
+			    	Institute inst=teacherService.GetInstitute(teacher.getId());
+					System.out.println("institute is :"+inst);
+			    	
+			    	 List <Branch> branchlist=branchService.getallOfParticularInstitute(inst);
+					 System.out.println("we are going to print the branches of current isntitute :");
+					 for (Branch b : branchlist) {
+						    System.out.println(b);
+						}
+					
+					
+				 String	branchListJSON=gson.toJson(branchlist);
+				System.out.println(branchListJSON);
+				model.addAttribute("branchListJSON",branchListJSON );*/
+				return "Teacher/Subject/AddEditSubject";
+			}
+		 
+		 
+		 @RequestMapping(value="/GetSubjectListofInstituteInJSON/{instId}", method=RequestMethod.POST)
+		 @ResponseBody
+		 	public String GetSubjectListofInstituteInJSON(@PathVariable("instId") int instId)
+		 {
+			 System.out.println("**********inside Get Subject of particular institute controller**********");
+			
+			 System.out.println(instId);
+			
+			 String subjectListOfInstituteJSON="";
+			 
+			try
+			{
+		
+			List<Subject> allSubjectOfInstituteList=subjectService.getallOfInstitute(instId);
+			
+			subjectListOfInstituteJSON=gson.toJson(allSubjectOfInstituteList);
+			
+			if(allSubjectOfInstituteList.isEmpty())
+			{
+				subjectListOfInstituteJSON="{\"ErrorMessage\":\"Selected Institute does not contain any subjects\"}";		
+			}
+			else
+			{
+				subjectListOfInstituteJSON=gson.toJson(allSubjectOfInstituteList);
+			}
+			}
+			catch(Exception e)
+			{
+				subjectListOfInstituteJSON="{\"ErrorMessage\":\"Selected Institute does not contain any subjects\"}";
+				
+				e.printStackTrace();
+			}
+			
+			System.out.println(subjectListOfInstituteJSON);
+			
+			 return subjectListOfInstituteJSON;
+		 }
+		 
+		 
+		 @RequestMapping(value = "/deleteSubjectFromInstitute/{subId}/{instId}", method = RequestMethod.POST)
+		 @ResponseBody
+		 	public String deleteSubjectFromInstitute(@PathVariable("subId") int subId,@PathVariable("instId") int instId){
+			 
+				System.out.println("**********from deleteSubjectFromInstitute controller**********");
+				
+				String subjectListOfInstituteAfterDeletJSON="";
+				
+				System.out.println("subject to be deleted is with id"+subId);		
+					try{
+						Subject s=subjectService.find(subId);
+						System.out.println("name of the subject is "+s.getName());
+						
+						subjectService.deleteFromInstitute(subId);
+						
+						List<Subject> allSubjectOfInstituteList=subjectService.getallOfInstitute(instId);
+						subjectListOfInstituteAfterDeletJSON=gson.toJson(allSubjectOfInstituteList);
+						System.out.println(subjectListOfInstituteAfterDeletJSON);
+						
+					
+					System.out.println("Subject is deleted with the id "+subId);
+					//subjectListOfInstituteAfterDeletJSON="{\"message\":\"Subject with id "+subId+" is deleted \",\"status\":\"success\"}";
+					}
+					catch(Exception e)
+					{
+						System.out.println(e.getMessage());
+						e.printStackTrace();
+						System.out.println();
+						System.out.println("error in deletion with Subject id : "+subId);
+					//	subjectListOfInstituteAfterDeletJSON="{\"message\":\"ERROR...!! subject with id "+subId+" not deleted\",\"status\":\"fail\"}";
+					}
+				System.out.println(subjectListOfInstituteAfterDeletJSON);
+			return subjectListOfInstituteAfterDeletJSON;
+		 }
+	 
+		 
+		 @RequestMapping(value = "/addSubjectToInstitute/{subName}/{subDescript}/{instId}", method = RequestMethod.POST)
+		 @ResponseBody
+		 	public String addSubjectToInstitute(@PathVariable("subName") String subName,@PathVariable("subDescript") String subDescript,@PathVariable("instId") int instId){
+			 
+				System.out.println("**********from addSubjectToInstitute controller**********");
+				
+				String result="";	
+				
+				System.out.println("subject to be added is with name "+subName+" in institute with id "+instId);		
+					try{
+						Institute inst=instituteService.find(instId);
+						System.out.println(inst.getName());
+						
+						Subject sub=new Subject(inst, subName, subDescript);
+						
+						subjectService.create(sub);
+					
+					System.out.println("Subject is added with the name "+subName);
+					result="{\"message\":\"Subject with name "+subName+" is added \",\"status\":\"success\"}";
+					}
+					catch(Exception e)
+					{
+						System.out.println(e.getMessage());
+						e.printStackTrace();
+						System.out.println();
+						System.out.println("error in add with Subject name : "+subName);
+						result="{\"message\":\"ERROR...!! subject with name "+subName+" not added\",\"status\":\"fail\"}";
+					}
+				System.out.println(result);
+			return result;
+		 }
+		 
+		 
+		 @RequestMapping(value="/UpdateSubject/{instId}", method=RequestMethod.POST)
+			@ResponseBody
+			public String UpdateSubject(@RequestBody Subject sub,@PathVariable("instId") int InstituteId)
+			 {
+				 System.out.println("**********inside UpdateSubject controller**********");	
+				 sub.setInstitute(instituteService.find(InstituteId));
+				 subjectService.update(sub);
+				
+				 String JSON="";
+				 JSON+="{";
+					JSON+="\"id\":"+sub.getId()+",";
+					JSON+="\"name\":\""+sub.getName()+"\",";
+					JSON+="\"discription\":\""+sub.getDiscription()+"\"";			
+					JSON+="}";
+					System.out.println(JSON);
+
+				 return JSON;
+			 }
+			 
+	  
 		 
 }

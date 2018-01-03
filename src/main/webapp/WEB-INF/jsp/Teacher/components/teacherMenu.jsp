@@ -82,6 +82,7 @@
                           <span class="menu-arrow arrow_carrot-right"></span>
                       </a>
                       <ul class="sub">
+                           <li><a class="" href="AddEditSubject">Add/Edit Subject</a></li>
                           <li><a class="" href="SubjectInDivision">Division's Subject</a></li>
                                                  
                       </ul>

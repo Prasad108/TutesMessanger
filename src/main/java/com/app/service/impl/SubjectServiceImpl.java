@@ -55,5 +55,11 @@ public class SubjectServiceImpl implements SubjectService{
 		return subjectDAO.getallOfInstitute(instituteId);
 	}
 
+	@Override
+	public void deleteFromInstitute(int subId) {
+	 subjectDAO.deleteFromInstitute(subId);
+		
+	}
+
 
 }

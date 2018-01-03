@@ -14,5 +14,7 @@ public interface SubjectService {
 	public Subject find(int id);
 	public List<Subject> getall();
 	public List<Subject> getallOfInstitute(int instituteId);
+	
+	public void deleteFromInstitute(int subId);
 
 }

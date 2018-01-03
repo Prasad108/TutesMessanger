@@ -41,6 +41,12 @@ public class Subject implements java.io.Serializable {
 		this.examSubjectStudentCompositTables = examSubjectStudentCompositTables;
 		this.subjectDivComposits = subjectDivComposits;
 	}
+	
+	public Subject(Institute institute, String name, String discription){
+		this.institute = institute;
+		this.name = name;
+		this.discription = discription;
+	}
 
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
