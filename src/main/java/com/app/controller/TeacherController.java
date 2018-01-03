@@ -1363,11 +1363,96 @@ public class TeacherController {
 			 System.out.println("**********inside GetExamsType controller**********");			 
 			 List<ExamType> examTypeList= examTypeService.getAll();
 			 String JSONexamTypeList=gson.toJson(examTypeList);		
-			 System.out.println(JSONexamTypeList);
+			 //System.out.println(JSONexamTypeList);
 			 return JSONexamTypeList;
 		 }
 
 	 	
+	 	@RequestMapping(value="/SaveExam/{id}", method=RequestMethod.POST)
+		@ResponseBody
+		public String SaveExam(@RequestBody Exam e,@PathVariable("id") int InstituteId)
+		 {
+			 System.out.println("**********inside SaveExam controller**********");	
+			 e.setInstitute(instituteService.find(InstituteId));
+			 
+			 examService.create(e);
+			 String JSON="";
+			 JSON+="{";
+				JSON+="\"id\":"+e.getId()+",";
+				JSON+="\"examMode\":";
+						JSON+="{";
+							JSON+="\"id\":"+e.getExamMode().getId()+"},";
+				JSON+="\"examType\":";
+				JSON+="{";
+				JSON+="\"id\":"+e.getExamType().getId()+"},";
+				JSON+="\"discription\":\""+e.getDiscription()+"\",";
+			
+				JSON+="\"outOf\":"+e.getOutOf()+",";
+				JSON+="\"passingMarks\":"+e.getPassingMarks()+",";
+				JSON+="\"regular\":"+e.getRegular()+"";				
+				JSON+="}";
+
+			 return JSON;
+		 }
+	 	
+	 	@RequestMapping(value="/DeleteExam/{id}", method=RequestMethod.POST)
+		@ResponseBody
+		public String DeleteExam(@PathVariable("id") int ExamId)
+		 {
+			 System.out.println("**********inside DeleteExam controller**********");	
+			 
+			 String result="";
+			 Exam e= examService.find(ExamId);
+			 result="{";
+			 result+="\"message\":\"success\"";
+			 result+="}";
+			
+			 try{
+				 examService.delet(e);
+			 }
+			 catch(Exception exception){
+				 result="{";
+				 result+="\"message\":\"failed\"";
+				 result+="}";
+			 }
+			 System.out.println(result);
+			 return result;
+		 }
+	 	
+	 	
+	 	
+	 	@RequestMapping(value="/UpdateExam/{id}", method=RequestMethod.POST)
+		@ResponseBody
+		public String UpdateExam(@RequestBody Exam e,@PathVariable("id") int InstituteId)
+		 {
+			 System.out.println("**********inside UpdateExam controller**********");	
+			 e.setInstitute(instituteService.find(InstituteId));
+			 examService.update(e);
+			
+			 String JSON="";
+			 JSON+="{";
+				JSON+="\"id\":"+e.getId()+",";
+				JSON+="\"examMode\":";
+						JSON+="{";
+							JSON+="\"id\":"+e.getExamMode().getId()+"},";
+				JSON+="\"examType\":";
+				JSON+="{";
+				JSON+="\"id\":"+e.getExamType().getId()+"},";
+				JSON+="\"discription\":\""+e.getDiscription()+"\",";
+			
+				JSON+="\"outOf\":"+e.getOutOf()+",";
+				JSON+="\"passingMarks\":"+e.getPassingMarks()+",";
+				JSON+="\"regular\":"+e.getRegular()+"";				
+				JSON+="}";
+				System.out.println(JSON);
+
+			 return JSON;
+		 }
+		 
+	 	 
+	
+		 
+		 
 	 	 @RequestMapping(value = "/SubjectInDivision", method = RequestMethod.GET)
 			public String ShowSubjectInDivision(Model model,@ModelAttribute("teacher") Teacher teacher) {		
 				System.out.println("**********inside Show subject of particular division controller**********");
