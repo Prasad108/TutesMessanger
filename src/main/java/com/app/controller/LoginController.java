@@ -309,10 +309,6 @@ public class LoginController {
 	}
 
 	
-	
-
-
-	
 	@RequestMapping(value = { "/"}, method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView welcomePage(Authentication authentication,Principal principal) {
 		System.out.println("*************** This is default controller **********************");
