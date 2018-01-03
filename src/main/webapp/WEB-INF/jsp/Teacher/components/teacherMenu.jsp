@@ -74,6 +74,18 @@
                           <li><a class="" href="#">Add/Remove Student</a></li>                        
                       </ul>
                   </li>
+                  
+                     <li class="sub-menu">
+                      <a href="javascript:;" class="">
+                          <i class="icon_desktop"></i>
+                          <span>Subject Manager</span>
+                          <span class="menu-arrow arrow_carrot-right"></span>
+                      </a>
+                      <ul class="sub">
+                          <li><a class="" href="SubjectInDivision">Division's Subject</a></li>
+                                                 
+                      </ul>
+                  </li>
 
                   <li class="sub-menu">
                       <a href="javascript:;" class="">
