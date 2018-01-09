@@ -1,7 +1,9 @@
 package com.app.controller;
 
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -23,6 +25,11 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.services.sns.AmazonSNSClient;
+import com.amazonaws.services.sns.model.MessageAttributeValue;
+import com.amazonaws.services.sns.model.PublishRequest;
+import com.amazonaws.services.sns.model.PublishResult;
 import com.app.pojo.Institute;
 import com.app.pojo.Login;
 import com.app.pojo.Permissions;
@@ -175,13 +182,7 @@ public class LoginController {
 		return output;
 	}
 
-	
-	
-	
-	
-	
-	
-	
+
 
 	@RequestMapping(value = "/redirectToHome", method = RequestMethod.GET)
 	public String redirectToHome(Model model,Authentication authentication,Principal principal,RedirectAttributes redirectAttributes) {
@@ -208,11 +209,36 @@ public class LoginController {
 		System.out.println("User has authorities: " + userDetails.getAuthorities());
 		
 		
-		
+/*		
 		model.addAttribute("title", "Spring Security Login Form - Database Authentication");
 		model.addAttribute("message", "This is default page!");
+		System.getProperties().put("http.proxyHost", "proxy-in.glb.my-it-solutions.net");
+		System.getProperties().put("http.proxyPort", "84");
+		System.getProperties().put("https.proxyHost", "proxy-in.glb.my-it-solutions.net");
+		System.getProperties().put("https.proxyPort", "84");
+*/
+
 		
-									
+		/*BasicAWSCredentials awsCreds = new BasicAWSCredentials("AKIAJ6J4N2HVEY5BLR5Q", "19JxAofqNuBtEjIKFeAf5L8ZpxLTU6OPPmvALNr+");
+		
+		
+		System.out.println("aws creds done");
+		  AmazonSNSClient snsClient = new AmazonSNSClient();
+	        String message = "My SMS message";
+	        String phoneNumber = "+919657939975";
+	        Map<String, MessageAttributeValue> smsAttributes = 
+	                new HashMap<String, MessageAttributeValue>();
+	        //<set SMS attributes>
+	       
+	        
+	     
+	            PublishResult result = snsClient.publish(new PublishRequest()
+	                            .withMessage(message)
+	                            .withPhoneNumber(phoneNumber)
+	                            .withMessageAttributes(smsAttributes));
+	            System.out.println(result);
+        */
+		
 				Login userLogin = loginService.findByUsername(authentication.getName());
 				Role userRole = userLogin.getRole();
 				int roleId = userRole.getId();
@@ -281,10 +307,6 @@ public class LoginController {
 		
 		return output;
 	}
-
-	
-	
-
 
 	
 	@RequestMapping(value = { "/"}, method = { RequestMethod.GET, RequestMethod.POST })

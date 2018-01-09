@@ -1,5 +1,5 @@
 package com.app.pojo;
-// Generated 14 Nov, 2017 11:41:36 AM by Hibernate Tools 5.2.3.Final
+// Generated 21 Dec, 2017 11:23:34 AM by Hibernate Tools 5.2.3.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -25,6 +25,7 @@ public class Division implements java.io.Serializable {
 	private transient Classes classes;
 	private String name;
 	private transient Set<Schedule> schedules = new HashSet<Schedule>(0);
+	private transient Set<SubjectDivComposit> subjectDivComposits = new HashSet<SubjectDivComposit>(0);
 	private transient Set<Student> students = new HashSet<Student>(0);
 	private transient Set<Schedule> schedules_1 = new HashSet<Schedule>(0);
 
@@ -48,11 +49,12 @@ public Division(Classes classes, String name) {
 		this.name = name;
 	}
 
-	public Division(Classes classes, String name, Set<Schedule> schedules, Set<Student> students,
-			Set<Schedule> schedules_1) {
+	public Division(Classes classes, String name, Set<Schedule> schedules, Set<SubjectDivComposit> subjectDivComposits,
+			Set<Student> students, Set<Schedule> schedules_1) {
 		this.classes = classes;
 		this.name = name;
 		this.schedules = schedules;
+		this.subjectDivComposits = subjectDivComposits;
 		this.students = students;
 		this.schedules_1 = schedules_1;
 	}
@@ -95,6 +97,15 @@ public Division(Classes classes, String name) {
 
 	public void setSchedules(Set<Schedule> schedules) {
 		this.schedules = schedules;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "division")
+	public Set<SubjectDivComposit> getSubjectDivComposits() {
+		return this.subjectDivComposits;
+	}
+
+	public void setSubjectDivComposits(Set<SubjectDivComposit> subjectDivComposits) {
+		this.subjectDivComposits = subjectDivComposits;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "division")

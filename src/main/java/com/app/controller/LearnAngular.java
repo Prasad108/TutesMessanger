@@ -183,7 +183,7 @@ public class LearnAngular {
 			
 				
 			System.out.println("object to be deleted is with id"+id);
-			if(id>4)
+			if(id>5)
 			{
 				roleService.delet(id);
 				System.out.println("Role is deleted with the id "+id);
@@ -205,7 +205,7 @@ public class LearnAngular {
 		 String result="";
 		 try {
 			 
-			 if(role.getId()>4)
+			 if(role.getId()>5)
 			 {
 				 roleService.update(role);
 				 result="{\"message\":\"Role :"+role+"is updated \"}";

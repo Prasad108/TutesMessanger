@@ -61,6 +61,32 @@
                          <!--  <li ng-show="permissions.authoriseTeacher"><a class="" href="#">Edit/Delete Teacher</a></li>       -->                 
                       </ul>
                   </li>
+                  
+                  <li class="sub-menu" ng-show="permissions.setExam ">
+                      <a href="javascript:;" class="">
+                          <i class="icon_desktop"></i>
+                          <span>Exam Manager</span>
+                          <span class="menu-arrow arrow_carrot-right"></span>
+                      </a>
+                      <ul class="sub">
+                          <li><a class="" href="AddEditExam">Add/Edit Exam</a></li>
+                          <li><a class="" href="#">Add/Remove Subject</a></li>   
+                          <li><a class="" href="#">Add/Remove Student</a></li>                        
+                      </ul>
+                  </li>
+                  
+                     <li class="sub-menu">
+                      <a href="javascript:;" class="">
+                          <i class="icon_desktop"></i>
+                          <span>Subject Manager</span>
+                          <span class="menu-arrow arrow_carrot-right"></span>
+                      </a>
+                      <ul class="sub">
+                           <li><a class="" href="AddEditSubject">Add/Edit Subject</a></li>
+                          <li><a class="" href="SubjectInDivision">Division's Subject</a></li>
+                                                 
+                      </ul>
+                  </li>
 
                   <li class="sub-menu">
                       <a href="javascript:;" class="">

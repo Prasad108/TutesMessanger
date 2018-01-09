@@ -14,8 +14,46 @@
 
 		<org.springframework.version>4.3.10.RELEASE</org.springframework.version>
 		<org.springframework.Security.version>4.2.3.RELEASE</org.springframework.Security.version>
+		<org.hibernate.version>5.2.5.Final</org.hibernate.version>
 	</properties>
 	<dependencies>
+	
+
+<!-- 	
+
+<dependency>
+    <groupId>com.amazonaws</groupId>
+    <artifactId>aws-java-sdk-sns</artifactId>
+    <version>1.11.250</version>
+</dependency>
+
+https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-sqs
+<dependency>
+    <groupId>com.amazonaws</groupId>
+    <artifactId>aws-java-sdk-sqs</artifactId>
+    <version>1.11.250</version>
+</dependency>
+
+https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-core
+<dependency>
+    <groupId>com.amazonaws</groupId>
+    <artifactId>aws-java-sdk-core</artifactId>
+    <version>1.11.250</version>
+</dependency>
+
+https://mvnrepository.com/artifact/com.amazonaws/jmespath-java
+<dependency>
+    <groupId>com.amazonaws</groupId>
+    <artifactId>jmespath-java</artifactId>
+    <version>1.11.250</version>
+</dependency>     
+   -->
+
+<dependency>
+    <groupId>com.amazonaws</groupId>
+    <artifactId>aws-java-sdk</artifactId>
+    <version>1.11.106</version>
+  </dependency>
 
 
 		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-core -->
@@ -51,17 +89,6 @@
 
 
 
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-entitymanager</artifactId>
-			<version>5.0.6.Final</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-validator</artifactId>
-			<version>5.4.1.Final</version>
-		</dependency>
 
 
 
@@ -200,12 +227,34 @@
 			<version>1.0.3</version>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
 		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-core</artifactId>
-			<version>4.0.1.Final</version>
+		    <groupId>org.hibernate</groupId>
+		    <artifactId>hibernate-core</artifactId>
+		    <version>5.2.10.Final</version>
 		</dependency>
 
+		
+		<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-validator -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>5.0.6.Final</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>5.4.1.Final</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-envers -->
+<dependency>
+    <groupId>org.hibernate</groupId>
+    <artifactId>hibernate-envers</artifactId>
+    <version>5.2.10.Final</version>
+</dependency>
+		
 
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -268,6 +317,14 @@
     <artifactId>json</artifactId>
     <version>20160810</version>
 </dependency>
+
+<!-- https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple -->
+<dependency>
+    <groupId>com.googlecode.json-simple</groupId>
+    <artifactId>json-simple</artifactId>
+    <version>1.1.1</version>
+</dependency>
+
 		
 
 	</dependencies>
@@ -331,6 +388,16 @@
 							<warName>ROOT</warName>
 						</configuration>
 					</plugin>
+					
+					<plugin>
+					      <groupId>org.apache.maven.plugins</groupId>
+					      <artifactId>maven-compiler-plugin</artifactId>
+					      <configuration>
+					         <source>1.8</source>
+					         <target>1.8</target>
+					      </configuration>
+					    </plugin>
+					    
 				</plugins>
 			</build>
 		</profile>
