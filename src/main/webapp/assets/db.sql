@@ -29,11 +29,11 @@ CREATE TABLE `branch` (
   KEY `FKnxfgigw3bfa77sdopkoiybuy6` (`instituteid`),
   CONSTRAINT `FKnxfgigw3bfa77sdopkoiybuy6` FOREIGN KEY (`instituteid`) REFERENCES `institute` (`id`),
   CONSTRAINT `branch_ibfk_1` FOREIGN KEY (`instituteid`) REFERENCES `institute` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
 /*Data for the table `branch` */
 
-insert  into `branch`(`id`,`instituteid`,`Name`) values (15,50,'Pune'),(16,50,'Mumbai');
+insert  into `branch`(`id`,`instituteid`,`Name`) values (15,50,'Pune'),(16,50,'Mumbai'),(17,61,'Nagpur');
 
 /*Table structure for table `classes` */
 
@@ -47,11 +47,11 @@ CREATE TABLE `classes` (
   KEY `FK8txt3facl8ithk4d24werxdj0` (`branchid`),
   CONSTRAINT `FK8txt3facl8ithk4d24werxdj0` FOREIGN KEY (`branchid`) REFERENCES `branch` (`id`),
   CONSTRAINT `branch constraint` FOREIGN KEY (`branchid`) REFERENCES `branch` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 
 /*Data for the table `classes` */
 
-insert  into `classes`(`id`,`branchid`,`name`) values (18,15,'10th '),(19,15,'11th');
+insert  into `classes`(`id`,`branchid`,`name`) values (18,15,'10th '),(19,15,'11th'),(20,17,'12th');
 
 /*Table structure for table `division` */
 
@@ -65,11 +65,11 @@ CREATE TABLE `division` (
   KEY `FK25iyw80l6c7ieoxnxa0c07f4g` (`classid`),
   CONSTRAINT `FK25iyw80l6c7ieoxnxa0c07f4g` FOREIGN KEY (`classid`) REFERENCES `classes` (`id`),
   CONSTRAINT `class constraint` FOREIGN KEY (`classid`) REFERENCES `classes` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
 
 /*Data for the table `division` */
 
-insert  into `division`(`id`,`classid`,`name`) values (19,18,'A'),(20,18,'B'),(21,18,'C'),(22,19,'PCM'),(23,19,'PCB');
+insert  into `division`(`id`,`classid`,`name`) values (19,18,'A'),(20,18,'B'),(21,18,'C'),(22,19,'PCM'),(23,19,'PCB'),(24,20,'PCMB');
 
 /*Table structure for table `exam` */
 
@@ -83,16 +83,22 @@ CREATE TABLE `exam` (
   `regular` tinyint(4) DEFAULT NULL,
   `exam_type_id` int(11) DEFAULT NULL,
   `exam_mode_id` int(11) DEFAULT NULL,
+  `insitute_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `exam_mode foreign key` (`exam_mode_id`),
-  KEY `exam_type foreign key` (`exam_type_id`),
+  KEY `FKa4rudfrulu7igoabmfnq4nndl` (`exam_mode_id`),
+  KEY `FKfahd9o24dqkyeyup3wrgyu8ql` (`exam_type_id`),
+  KEY `FKo12ytwci1fdjd7dpc5j0t9r0v` (`insitute_id`),
+  CONSTRAINT `FKa4rudfrulu7igoabmfnq4nndl` FOREIGN KEY (`exam_mode_id`) REFERENCES `exam_mode` (`id`),
+  CONSTRAINT `FKfahd9o24dqkyeyup3wrgyu8ql` FOREIGN KEY (`exam_type_id`) REFERENCES `exam_type` (`id`),
+  CONSTRAINT `FKo12ytwci1fdjd7dpc5j0t9r0v` FOREIGN KEY (`insitute_id`) REFERENCES `institute` (`id`),
   CONSTRAINT `exam_mode foreign key` FOREIGN KEY (`exam_mode_id`) REFERENCES `exam_mode` (`id`),
-  CONSTRAINT `exam_type foreign key` FOREIGN KEY (`exam_type_id`) REFERENCES `exam_type` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+  CONSTRAINT `exam_type foreign key` FOREIGN KEY (`exam_type_id`) REFERENCES `exam_type` (`id`),
+  CONSTRAINT `institute_foreign_key` FOREIGN KEY (`insitute_id`) REFERENCES `institute` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=121 DEFAULT CHARSET=utf8;
 
 /*Data for the table `exam` */
 
-insert  into `exam`(`id`,`discription`,`out_of`,`passing_marks`,`regular`,`exam_type_id`,`exam_mode_id`) values (1,NULL,80,27,1,2,2);
+insert  into `exam`(`id`,`discription`,`out_of`,`passing_marks`,`regular`,`exam_type_id`,`exam_mode_id`,`insitute_id`) values (38,'Unit Test 2017',100,40,1,1,3,50),(119,'Final 2018',200,50,0,2,2,50),(120,'Final 2017',200,80,0,3,2,50);
 
 /*Table structure for table `exam_mode` */
 
@@ -121,16 +127,20 @@ CREATE TABLE `exam_subject_student_composit_table` (
   `duration_in_minutes` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `composite_unique_key` (`student_id`,`subject_id`,`exam_id`),
-  KEY `subject foreign key exam_subject_student_composit_table` (`subject_id`),
-  KEY `exam foreign key exam_subject_student_composit_table` (`exam_id`),
+  UNIQUE KEY `UKjtcq62ds98kwh3bbd8gg8jnxi` (`student_id`,`subject_id`,`exam_id`),
+  KEY `FKiwdhevlshbvf82oc98yblqccu` (`exam_id`),
+  KEY `FK61k62of0arq5vt5ar8y65uvoh` (`subject_id`),
+  CONSTRAINT `FK56xga9as5cccvpw6rqjtbg2qc` FOREIGN KEY (`student_id`) REFERENCES `student` (`id`),
+  CONSTRAINT `FK61k62of0arq5vt5ar8y65uvoh` FOREIGN KEY (`subject_id`) REFERENCES `subject` (`id`),
+  CONSTRAINT `FKiwdhevlshbvf82oc98yblqccu` FOREIGN KEY (`exam_id`) REFERENCES `exam` (`id`),
   CONSTRAINT `exam foreign key exam_subject_student_composit_table` FOREIGN KEY (`exam_id`) REFERENCES `exam` (`id`),
   CONSTRAINT `student foreign key exam_subject_student_composit_table` FOREIGN KEY (`student_id`) REFERENCES `student` (`id`),
   CONSTRAINT `subject foreign key exam_subject_student_composit_table` FOREIGN KEY (`subject_id`) REFERENCES `subject` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `exam_subject_student_composit_table` */
 
-insert  into `exam_subject_student_composit_table`(`id`,`student_id`,`subject_id`,`exam_id`,`date-time`,`duration_in_minutes`) values (1,NULL,2,1,'2017-12-21',1),(2,26,2,1,NULL,1);
+insert  into `exam_subject_student_composit_table`(`id`,`student_id`,`subject_id`,`exam_id`,`date-time`,`duration_in_minutes`) values (1,NULL,1,38,NULL,NULL);
 
 /*Table structure for table `exam_type` */
 
@@ -202,7 +212,8 @@ CREATE TABLE `message` (
   `status` tinyint(1) DEFAULT NULL,
   `text` varchar(500) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `Role foreign key` (`role_id`),
+  KEY `FK3uaviomsxbnhtv592qo1vsl59` (`role_id`),
+  CONSTRAINT `FK3uaviomsxbnhtv592qo1vsl59` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`),
   CONSTRAINT `Role foreign key` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -276,13 +287,12 @@ CREATE TABLE `result` (
   `remarks` varchar(300) DEFAULT NULL,
   `exam_subject_student_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `exam_subject_student foreign key` (`exam_subject_student_id`),
+  KEY `FK6x12uwgitmtjgm503wyiofkxf` (`exam_subject_student_id`),
+  CONSTRAINT `FK6x12uwgitmtjgm503wyiofkxf` FOREIGN KEY (`exam_subject_student_id`) REFERENCES `exam_subject_student_composit_table` (`id`),
   CONSTRAINT `exam_subject_student foreign key` FOREIGN KEY (`exam_subject_student_id`) REFERENCES `exam_subject_student_composit_table` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `result` */
-
-insert  into `result`(`id`,`obtained_marks`,`remarks`,`exam_subject_student_id`) values (1,60,'pass',2),(2,NULL,NULL,NULL);
 
 /*Table structure for table `role` */
 
@@ -292,11 +302,11 @@ CREATE TABLE `role` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(20) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=utf8;
 
 /*Data for the table `role` */
 
-insert  into `role`(`id`,`name`) values (1,'ROLE_STUDENT'),(2,'ROLE_TEACHER'),(3,'ROLE_INSTITUTE_ADMIN'),(4,'ROLE_APP_ADMIN'),(5,'ROLE_PARENT'),(52,'cleaner'),(54,'Security'),(55,'Manager'),(57,'tester');
+insert  into `role`(`id`,`name`) values (1,'ROLE_STUDENT'),(2,'ROLE_TEACHER'),(3,'ROLE_INSTITUTE_ADMIN'),(4,'ROLE_APP_ADMIN'),(5,'ROLE_PARENT'),(6,'ROLE_TEMPLATE'),(57,'tester');
 
 /*Table structure for table `schedule` */
 
@@ -336,7 +346,8 @@ CREATE TABLE `student` (
   KEY `parent` (`parentid`),
   KEY `student_ibfk_1` (`loginid`),
   KEY `student_ibfk_2` (`instid`),
-  KEY `div_id_difk` (`divid`),
+  KEY `FK25ch4pvl5ikrkjkwqqttrjiws` (`divid`),
+  CONSTRAINT `FK25ch4pvl5ikrkjkwqqttrjiws` FOREIGN KEY (`divid`) REFERENCES `division` (`id`),
   CONSTRAINT `FKddkv9iq8sx7tndj2dnn9k88ux` FOREIGN KEY (`instid`) REFERENCES `institute` (`id`) ON DELETE CASCADE,
   CONSTRAINT `FKiuk6flu7v3kxbkl6mx1x741fb` FOREIGN KEY (`parentid`) REFERENCES `parent` (`id`) ON DELETE CASCADE,
   CONSTRAINT `FKkst5i99hukf1o65ca5tyf8jcl` FOREIGN KEY (`loginid`) REFERENCES `login` (`id`) ON DELETE CASCADE,
@@ -348,7 +359,7 @@ CREATE TABLE `student` (
 
 /*Data for the table `student` */
 
-insert  into `student`(`id`,`loginid`,`fName`,`father`,`lName`,`parentid`,`contactno`,`email`,`instid`,`divid`) values (20,103,'sdfas','dfsdf','asdf',29,'9856321470','sadf@sadfas.co',50,22),(21,104,'Prasad','Ashok','dukale',30,'9385620399','pdukale9@gmail.com',50,23),(23,111,'chintu ','Pintu','Zintu',32,'9658743210','abcd@gmail.com',50,23),(24,112,'Dipak ','Vishnu','Sutar',33,'9657841230','dipak@gmail.com',50,20),(25,113,'Nayan','Bajirao','Patil',34,'7845456932','nayan@gmail.com',50,23),(26,114,'Arpit','Mahadev','sharma',35,'9658742310','arpit@gmail.com',50,23),(27,115,'abcva','sdfasf','fasdfasdf',36,'9587461230','sdfasdf@dfas.com',50,22),(28,116,'vsxvsd','sdgfsadf','gfsda',37,'9857461233','ssdf@asdfas.com',50,22),(29,117,'sdfdsfsd','SFsdfsd','fsdsd',38,'9658741230','sdfsdsd@sdfsd.com',50,22),(30,118,'fsdaf','sfasd','fasdf',39,'8974561230','fasdf@asdfasd.co',50,22),(31,119,'sfsdf','sdfasd','sdf',40,'9658741230','sfsadfasd@asdf.co',50,22),(32,120,'sdfasdf','sdfasd','fsdafasdf',41,'9658741230','sdfasdf@sdfsd.co',50,22),(33,121,'Rahul','Prabhakar','Sadaphal',42,'9658741230','rahul@gmail.com',50,NULL),(34,122,'Govind','Gopal','Agrawal',43,'8974563210','govind@gmail.com',50,NULL),(35,123,'Satish','Atish','Gujrathi',44,'9857461310','satish@gmail.com',50,NULL),(36,124,'kiran','Piraji','Sawale',45,'8974561230','kiran@gmail.com',50,NULL);
+insert  into `student`(`id`,`loginid`,`fName`,`father`,`lName`,`parentid`,`contactno`,`email`,`instid`,`divid`) values (20,103,'sdfas','dfsdf','asdf',29,'9856321470','sadf@sadfas.co',50,23),(21,104,'Prasad','Ashok','dukale',30,'9385620399','pdukale9@gmail.com',50,23),(23,111,'chintu ','Pintu','Zintu',32,'9658743210','abcd@gmail.com',50,23),(24,112,'Dipak ','Vishnu','Sutar',33,'9657841230','dipak@gmail.com',50,20),(25,113,'Nayan','Bajirao','Patil',34,'7845456932','nayan@gmail.com',50,23),(26,114,'Arpit','Mahadev','sharma',35,'9658742310','arpit@gmail.com',50,23),(27,115,'abcva','sdfasf','fasdfasdf',36,'9587461230','sdfasdf@dfas.com',50,23),(28,116,'vsxvsd','sdgfsadf','gfsda',37,'9857461233','ssdf@asdfas.com',50,23),(29,117,'sdfdsfsd','SFsdfsd','fsdsd',38,'9658741230','sdfsdsd@sdfsd.com',50,23),(30,118,'fsdaf','sfasd','fasdf',39,'8974561230','fasdf@asdfasd.co',50,23),(31,119,'sfsdf','sdfasd','sdf',40,'9658741230','sfsadfasd@asdf.co',50,23),(32,120,'sdfasdf','sdfasd','fsdafasdf',41,'9658741230','sdfasdf@sdfsd.co',50,23),(33,121,'Rahul','Prabhakar','Sadaphal',42,'9658741230','rahul@gmail.com',50,NULL),(34,122,'Govind','Gopal','Agrawal',43,'8974563210','govind@gmail.com',50,NULL),(35,123,'Satish','Atish','Gujrathi',44,'9857461310','satish@gmail.com',50,NULL),(36,124,'kiran','Piraji','Sawale',45,'8974561230','kiran@gmail.com',50,NULL);
 
 /*Table structure for table `subject` */
 
@@ -358,12 +369,16 @@ CREATE TABLE `subject` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) DEFAULT NULL,
   `discription` varchar(500) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+  `institute_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK31tn17ut80e8s1jkyxdyfhp9x` (`institute_id`),
+  CONSTRAINT `FK31tn17ut80e8s1jkyxdyfhp9x` FOREIGN KEY (`institute_id`) REFERENCES `institute` (`id`),
+  CONSTRAINT `institute_id_foreign_key` FOREIGN KEY (`institute_id`) REFERENCES `institute` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 /*Data for the table `subject` */
 
-insert  into `subject`(`id`,`name`,`discription`) values (1,'English','10th English sub'),(2,'Marathi','10th Marathi');
+insert  into `subject`(`id`,`name`,`discription`,`institute_id`) values (1,'English','10th English sub',50),(2,'Marathi','10th Marathi',50),(3,'Biology','11th Biology',50),(4,'Chemistry','11th Chemistry',50),(5,'Maths','11th Maths',50),(6,'Maths','12th Maths',50);
 
 /*Table structure for table `subject_div_composit` */
 
@@ -375,14 +390,17 @@ CREATE TABLE `subject_div_composit` (
   `subject_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `gsc` (`Div_id`,`subject_id`),
-  KEY `sub foreign key` (`subject_id`),
+  UNIQUE KEY `UK99nkqs6we456shw0bj7socmk9` (`Div_id`,`subject_id`),
+  KEY `FKcgw7bcc6v725hws71q5sssk98` (`subject_id`),
+  CONSTRAINT `FKcgw7bcc6v725hws71q5sssk98` FOREIGN KEY (`subject_id`) REFERENCES `subject` (`id`),
+  CONSTRAINT `FKhm4bowjb4if0a6hqhhlrocwfi` FOREIGN KEY (`Div_id`) REFERENCES `division` (`id`),
   CONSTRAINT `div foreign key` FOREIGN KEY (`Div_id`) REFERENCES `division` (`id`),
   CONSTRAINT `sub foreign key` FOREIGN KEY (`subject_id`) REFERENCES `subject` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 /*Data for the table `subject_div_composit` */
 
-insert  into `subject_div_composit`(`id`,`Div_id`,`subject_id`) values (1,19,1),(2,19,2),(8,20,1),(9,20,2);
+insert  into `subject_div_composit`(`id`,`Div_id`,`subject_id`) values (6,19,1),(7,19,2),(4,19,3),(5,19,4),(1,22,1),(2,22,2),(3,23,1);
 
 /*Table structure for table `teacher` */
 
@@ -490,6 +508,302 @@ DELIMITER $$
     END */$$
 
 
+DELIMITER ;
+
+/* Procedure structure for procedure `TreeViewBranch` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `TreeViewBranch` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `TreeViewBranch`(IN Branch_Id INT,out JSON2 LONGTEXT)
+BEGIN
+    
+	DECLARE ClassId INT;
+	DECLARE ClassBranchId INT;
+	DECLARE ClassName VARCHAR(100);
+	
+	DECLARE done INT;
+	
+	DECLARE ClassCount INT;
+	
+	DECLARE strVar VARCHAR(1000);
+  
+	
+    
+	DECLARE ClassesCursor CURSOR FOR SELECT * FROM classes WHERE branchid = Branch_Id;
+	DECLARE CONTINUE HANDLER FOR NOT FOUND SET done=1;
+	
+	SET done = 0;
+	SET JSON2="[";
+		
+      
+	OPEN ClassesCursor;
+	
+	SET ClassCount=0;
+        
+		loop2: LOOP
+        
+        
+			FETCH ClassesCursor INTO ClassId,ClassBranchId,ClassName;
+        
+				IF done = 1 THEN 				
+					LEAVE loop2; 
+				END IF;
+				
+				SET JSON2=CONCAT(JSON2,'{\"label\":\"',ClassName,'\", \"value\":',ClassId,',\"type\":\"Class\"');
+				
+				CALL TreeViewClass(ClassId,@strVar);
+				
+				
+				
+				
+				IF LENGTH(@strVar) > 0 THEN
+										
+					SET JSON2=CONCAT(JSON2,',\"children\":', @strVar );
+									
+				END IF  ;
+				SET JSON2=CONCAT(JSON2,'},'); 
+				SET ClassCount=ClassCount+1;
+		
+		END LOOP loop2;
+		
+		IF ClassCount = 0 THEN
+			SET JSON2=LEFT(JSON2,LENGTH(JSON2)-LENGTH('"children": ]'));
+			SET JSON2=LEFT(JSON2,LENGTH(JSON2)-1);
+		ELSE
+		SET JSON2=LEFT(JSON2,LENGTH(JSON2)-1);
+		SET JSON2=CONCAT(JSON2,']'); 
+		
+		END IF;		
+				
+	CLOSE ClassesCursor;
+			
+	
+		
+		
+    END */$$
+DELIMITER ;
+
+/* Procedure structure for procedure `TreeViewClass` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `TreeViewClass` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `TreeViewClass`(IN Class_Id INT,OUT JSON3 LONGTEXT)
+BEGIN
+    
+	DECLARE DivId INT;
+	DECLARE DivClassId INT;
+	DECLARE DivName VARCHAR(100);
+	
+	DECLARE done INT;	
+	DECLARE DivCount INT; 	
+	DECLARE strVar VARCHAR(1000);
+    
+	DECLARE DivCursor CURSOR FOR SELECT * FROM `division` WHERE `classid` = Class_Id;
+	DECLARE CONTINUE HANDLER FOR NOT FOUND SET done=1;
+	
+	SET done = 0;
+	SET JSON3="[";
+		
+      
+	OPEN DivCursor;
+	
+	SET DivCount=0;
+        
+		loop3: LOOP
+        
+        
+			FETCH DivCursor INTO DivId,DivClassId,DivName;
+        
+				IF done = 1 THEN 				
+					LEAVE loop3; 
+				END IF;
+				
+				SET JSON3=CONCAT(JSON3,'{\"label\":\"',DivName,'\", \"value\":',DivId,',\"type\":\"Division\"');
+				
+				CALL TreeViewDivSubject(DivId,@strVar);
+				
+				
+				
+				
+				IF LENGTH(@strVar) > 0 THEN
+										
+					SET JSON3=CONCAT(JSON3,',\"children\":', @strVar );
+									
+				END IF  ;
+				SET JSON3=CONCAT(JSON3,'},'); 
+				SET DivCount=DivCount+1;
+		
+		END LOOP loop3;
+		
+		IF DivCount = 0 THEN
+			SET JSON3=LEFT(JSON3,LENGTH(JSON3)-LENGTH('"children": ]'));
+			SET JSON3=LEFT(JSON3,LENGTH(JSON3)-1);
+		ELSE
+		SET JSON3=LEFT(JSON3,LENGTH(JSON3)-1);
+		SET JSON3=CONCAT(JSON3,']'); 
+		
+		END IF;		
+				
+	CLOSE DivCursor;
+			
+	
+		
+		
+    END */$$
+DELIMITER ;
+
+/* Procedure structure for procedure `TreeViewDivSubject` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `TreeViewDivSubject` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `TreeViewDivSubject`(IN Divisions_Id INT,OUT JSON4 LONGTEXT )
+BEGIN
+    
+	DECLARE DivSubId INT;
+	DECLARE SubId INT;
+	DECLARE SubName VARCHAR(100);
+	
+	DECLARE done INT;	
+	DECLARE SubCount INT; 
+	DECLARE strVar VARCHAR(1000);	
+    
+	DECLARE SubDivCursor CURSOR FOR SELECT sd.`id`, s.`id`,s.`name` FROM `subject_div_composit` sd, `division` d,`subject` s WHERE d.`id`=sd.`Div_id` AND sd.`subject_id`=s.`id` AND `Div_id`=Divisions_Id;
+	DECLARE CONTINUE HANDLER FOR NOT FOUND SET done=1;
+	
+	
+	SET done = 0;
+	SET JSON4="[";
+		
+      
+	OPEN SubDivCursor;
+	
+	SET SubCount=0;
+        
+		loop4: LOOP
+        
+        
+			FETCH SubDivCursor INTO DivSubId,SubId,SubName;
+        
+				IF done = 1 THEN 				
+					LEAVE loop4; 
+				END IF;
+				
+				SET JSON4=CONCAT(JSON4,'{\"label\":\"',SubName,'\", \"value\":',DivSubId,',\"type\":\"Subject\",\"SubjectId\":',SubId);
+				
+								
+				
+				SET JSON4=CONCAT(JSON4,'},'); 
+				SET SubCount=SubCount+1;
+		
+		END LOOP loop4;
+		
+		IF SubCount = 0 THEN
+			SET JSON4=LEFT(JSON4,LENGTH(JSON4)-LENGTH('"children": ]'));
+			SET JSON4=LEFT(JSON4,LENGTH(JSON4)-1);
+		ELSE
+		SET JSON4=LEFT(JSON4,LENGTH(JSON4)-1);
+		SET JSON4=CONCAT(JSON4,']'); 
+		
+		END IF;		
+				
+	CLOSE SubDivCursor;
+			
+	
+		
+		
+    END */$$
+DELIMITER ;
+
+/* Procedure structure for procedure `TreeViewInstitute` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `TreeViewInstitute` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `TreeViewInstitute`(IN Insts_Id INT,out JSON LONGTEXT)
+BEGIN
+    
+	declare BranchId INT;
+	DECLARE BranchIstituteId INT;
+	declare BranchName varchar(100);
+	
+	DECLARE strVar VARCHAR(1000);
+	DECLARE intVar VARCHAR(100);
+	DECLARE done INT;
+	
+	DECLARE BranchCount INT;
+  
+	
+    
+	declare InstituteCursor cursor for select * from `branch` WHERE `instituteid`=Insts_Id;
+	DECLARE CONTINUE HANDLER FOR NOT FOUND SET done=1;
+	
+	set done = 0;
+	SET JSON="[";
+	
+	SELECT id,NAME into @intVar, @strVar FROM institute WHERE `id`=Insts_Id;
+	
+	SET JSON=CONCAT(JSON,'{\"label\":\"',@strVar,'\", \"value\":',@intVar,',\"type\":\"Institute\",\"children\": ['); 
+	
+      
+	open InstituteCursor;
+	
+	set BranchCount=0;
+        
+		loop1: loop
+        
+        
+			fetch InstituteCursor into BranchId,BranchIstituteId,BranchName;
+        
+				if done = 1 then 				
+					leave loop1; 
+				end if;
+				
+				SET JSON=CONCAT(JSON,'{\"label\":\"',BranchName,'\", \"value\":',BranchId,',\"type\":\"Branch\"');
+				
+				CALL TreeViewBranch(BranchId,@strVar);
+					
+				
+				if LENGTH(@strVar) > 0 then
+										
+					SET JSON=CONCAT(JSON,',\"children\":', @strVar );
+									
+				end if  ;
+				
+				SET JSON=CONCAT(JSON,'},'); 
+				SET BranchCount=BranchCount+1;
+		
+		end loop loop1;
+		
+		
+		if BranchCount = 0 Then
+			SET JSON=LEFT(JSON,LENGTH(JSON)-length(',"children": ]'));
+			
+		else
+		SET JSON=LEFT(JSON,LENGTH(JSON)-1);
+		SET JSON=CONCAT(JSON,']'); 
+		
+		END IF;
+		
+		
+		
+	close InstituteCursor;
+	
+	
+	SET JSON=CONCAT(JSON,'}'); 
+	
+	SET JSON=CONCAT(JSON,']'); 
+	
+	select "finally",length(JSON), JSON from dual;
+		
+		
+    END */$$
 DELIMITER ;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
