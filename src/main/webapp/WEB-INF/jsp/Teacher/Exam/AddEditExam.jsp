@@ -9,6 +9,12 @@
    		<jsp:include page="/WEB-INF/jsp/components/defaultHead.jsp" /> 
    		<%-- <jsp:include page="/WEB-INF/jsp/Teacher/components/angular.jsp" /> --%>
    		<%-- <jsp:include page="/WEB-INF/jsp/Teacher/components/angular.jsp" />  --%>
+   		  <!-- ivh-tree CSS -->    
+    <link href="${pageContext.request.contextPath}/css/ivh-treeview.css" rel="stylesheet">
+      <!-- ivh-tree CSS -->    
+    <link href="${pageContext.request.contextPath}/css/ivh-treeview.min.css" rel="stylesheet">
+   		
+   		<script src="${pageContext.request.contextPath}/js/ivh_treeViewscript.js"></script>
    		<style type="text/css">	
 	   		.error {
 	            border:2px solid red;
@@ -17,19 +23,25 @@
    		
    		 <script>
 
-  		  var app = angular.module('myApp', []);
+  		  var app = angular.module('myApp', ['ivh.treeview']);
+  		  
+  		app.config(function(ivhTreeviewOptionsProvider) {
+  			 ivhTreeviewOptionsProvider.set({
+  			   defaultSelectedState: false,
+  			   validate: true,
+  			   // Twisties can be images, custom html, or plain text
+  			   twistieCollapsedTpl: ' <span class="menu-arrow arrow_carrot-right"></span>',
+  			   twistieExpandedTpl: ' <span class="menu-arrow arrow_carrot-down"></span>',
+  			   twistieLeafTpl: ' <i class="icon_document_alt"></i>'
+  			 });
+  			});
+  		  
    		app.controller('teacherCtrl', function($scope, $http,$interval) {
 
    		
 	   			$scope.teacher=JSON.parse('${teacherJSON}');
 	   			$scope.permissions=JSON.parse('${permissions}');  
-	   			$scope.institute=JSON.parse('${institute}');				
-	   			console.log("teacher is "+$scope.teacher);
-	   			console.log("teacher id is "+$scope.teacher["id"]);
-	
-	   			$scope.examList=[];
-	   			$scope.examMode=[];
-	   			$scope.examType=[];
+	   			$scope.institute=JSON.parse('${institute}');	
 	   			
 	   			
 	   			$scope.ExamCreateSuccess=false;
@@ -38,10 +50,118 @@
 	   			$scope.ExamDeleteError=false;
 	   			$scope.ExamUpdateSuccess=false;
 	   			
-	   			$scope.ExamRegularArray=[{id:0,discription:'Regular'},{id:1,discription:'Repeat'}];
-	   			
 	   			$scope.EditExamid=null;
 	   			
+	   			$scope.ShowTreeStruct=false;
+	   			$scope.ShowSubjectList=false;
+	   			
+				$scope.ExamRegularArray=[{id:0,discription:'Regular'},{id:1,discription:'Repeat'}];
+	   			
+	   			
+
+	   			$scope.examList=[];
+	   			$scope.examMode=[];
+	   			$scope.examType=[];
+	   			$scope.selectedSubject=[];
+	   			//this.inst=[{"label":"Vidya", "value":50,"type":"Institute","children": [{"label":"Pune", "value":15,"type":"Branch","children":[{"label":"10th ", "value":18,"type":"Class","children":[{"label":"A", "value":19,"type":"Division"},{"label":"B", "value":20,"type":"Division"},{"label":"C", "value":21,"type":"Division"}]},{"label":"11th", "value":19,"type":"Class","children":[{"label":"PCM", "value":22,"type":"Division","children":[{"label":"English", "value":1,"type":"Subject","SubjectId":1},{"label":"Marathi", "value":2,"type":"Subject","SubjectId":2}]},{"label":"PCB", "value":23,"type":"Division","children":[{"label":"English", "value":3,"type":"Subject","SubjectId":1}]}]}]},{"label":"Mumbai", "value":16,"type":"Branch"}]}];
+
+	   			/* var o = [{"label":"Vidya", "value":50,"type":"Institute","children": [{"label":"Pune", "value":15,"type":"Branch","children":[{"label":"10th ", "value":18,"type":"Class","children":[{"label":"A", "value":19,"type":"Division"},{"label":"B", "value":20,"type":"Division"},{"label":"C", "value":21,"type":"Division"}]},{"label":"11th", "value":19,"type":"Class","children":[{"label":"PCM", "value":22,"type":"Division","children":[{"label":"English", "value":1,"type":"Subject","SubjectId":1},{"label":"Marathi", "value":2,"type":"Subject","SubjectId":2}]},{"label":"PCB", "value":23,"type":"Division","children":[{"label":"English", "value":3,"type":"Subject","SubjectId":1}]}]}]},{"label":"Mumbai", "value":16,"type":"Branch"}]}];
+
+	   				//called with every property and its value
+	   				function process(key,value) {
+	   				    console.log(key + " : "+value);
+	   				}
+	   				
+	   				function traverse(o,func) {
+	   				    for (var i in o) {
+	   				    	
+	   				        func.apply(this,[i,o[i]]);
+	   				        
+	   				        if (o[i] !== null && typeof(o[i])=="object") {
+	   				        	/* if(o[i].type=="Subject" )
+	   				        		{
+	   				        		$scope.selectedSubject.push(o[i]);
+	   				        		} 
+	   				            //going one step down in the object tree!!
+	   				            traverse(o[i],func);
+	   				        }
+	   				    }
+	   				} 
+
+	   				//that's all... no magic, no bloated framework
+	   				traverse(o,process);
+	   				
+	   				*/
+//------------------------------Tree Traverlsal and Add the selected Items in respective array ----------------------------------------------------- 		   				
+	   				$scope.TreeTraversalForSelectedItems=function (o) {
+	   				    for (var i in o) {
+	        
+	   				        if (o[i] !== null && typeof(o[i])=="object") {
+	   				        	
+	   				        	if(o[i].type=="Institute" && o[i].selected==true)
+   				        		{
+   				        			//console.log("Selected Institute is "+o[i].label);
+   				        			$scope.selectedInstitute.push(o[i]);
+   				        		}
+	   				        	
+	   				        	if(o[i].type=="Branch" && o[i].selected==true)
+   				        		{
+   				        			//console.log("Selected Branch is "+o[i].label);
+   				        			$scope.selectedBranch.push(o[i]);
+   				        		}
+	   				        	
+	   				        	if(o[i].type=="Class" && o[i].selected==true)
+   				        		{
+   				        			//console.log("Selected Class is "+o[i].label);
+   				        			$scope.selectedClass.push(o[i]);
+   				        		}
+	   				        	
+	   				        	if(o[i].type=="Division" && o[i].selected==true)
+   				        		{
+   				        			//console.log("Selected Division is "+o[i].label);
+   				        			$scope.selectedDivision.push(o[i]);
+   				        		}
+	   				        	
+	   				        	
+	   				        	if(o[i].type=="Subject" && o[i].selected==true)
+	   				        		{
+	   				        			//console.log("Selected subject is "+o[i].label);
+	   				        			$scope.selectedSubject.push(o[i]);
+	   				        		}
+	   				            //going one step down in the object tree!!
+	   				            $scope.TreeTraversalForSelectedItems(o[i]);
+	   				        }
+	   				    }
+	   				}
+	   		 	
+
+	   		  this.awesomeCallback = function(node, tree) {
+	   		    // Do something with node or tree
+	   			console.log("#");
+	   		  };
+//------------------------------Callback Function on select of any tree node -----------------------------------------------------
+	   		$scope.OnSelectCallback = function(node, isSelected, tree) {
+	   			
+	
+				// initially make all the arrays empty
+	   			$scope.selectedInstitute=[];
+	   			$scope.selectedBranch=[];
+	   			$scope.selectedClass=[];
+	   			$scope.selectedDivision=[];
+	   			$scope.selectedSubject=[];
+	   			
+	   			// call tree traversal function to get the selected itmes in arrays
+	   			$scope.TreeTraversalForSelectedItems(tree);   
+	   		
+	   			console.log("Total Institute Selected are  "+$scope.selectedInstitute.length);
+	   			console.log("Total Branch Selected are  "+$scope.selectedBranch.length);
+	   			console.log("Total Class Selected are  "+$scope.selectedClass.length);
+	   			console.log("Total Division Selected are  "+$scope.selectedDivision.length);
+	   			console.log("Total Subjects Selected are  "+$scope.selectedSubject.length);
+	   			console.log("*************************************************************************");
+  
+	   		  }
+	   					
 //------------------------------Get the Exam List for Institute ----------------------------------------------------- 	   				
 	   		 $http({
 	             url: "GetExamsOFInstitute/"+$scope.institute.id,
@@ -52,9 +172,9 @@
 	         	 console.log("WE got exams of this institute ");        	
 	         	 $scope.examList=response.data;
 	         	
-	         	for( i=$scope.examList.length-1; i>=0; i--) {
+	         	/* for( i=$scope.examList.length-1; i>=0; i--) {
 		   	          console.log($scope.examList[i].id + $scope.examList[i].discription);    	
-		        		}              
+		        		}      */         
 	         }, 
 	         function(data) { // optional
 	                 // failed
@@ -72,9 +192,9 @@
 	         	 console.log("WE got examsModes");        	
 	         	$scope.examMode=response.data;
 	         	
-	         	for( i=$scope.examMode.length-1; i>=0; i--) {
+	         	/* for( i=$scope.examMode.length-1; i>=0; i--) {
 		   	          console.log($scope.examMode[i].id + $scope.examMode[i].modeName);    	
-		        		}              
+		        		}       */        
 	         }, 
 	         function(data) { // optional
 	                 // failed
@@ -92,14 +212,34 @@
 	         	 console.log("WE got examType");        	
 	         	$scope.examType=response.data;
 	         	
-	         	for( i=$scope.examType.length-1; i>=0; i--) {
+	         	/* for( i=$scope.examType.length-1; i>=0; i--) {
 		   	          console.log($scope.examType[i].id + $scope.examType[i].typeName);    	
-		        		}              
+		        		}    */           
 	         }, 
 	         function(data) { // optional
 	                 // failed
 	                 
 	         	 console.log(" failed to get the examType");      
+	         });
+	         
+	   	//------------------------------Get Subject Tree Struct -----------------------------------------------------------------------	         
+	         console.log($scope.institute.id);
+	         
+	   		$http({
+	             url: "GetSubjectTreeStruct/"+$scope.institute.id,
+	             method: "POST",          
+	         })
+	         .then(function(response) {
+	                 // if success       	
+	         	 console.log("WE got SubjectTreeStruct");
+	                 console.log(response.data);
+	                 $scope.InstTreeStructureWithSubject=response.data;
+	         	          
+	         }, 
+	         function(data) { // optional
+	                 // failed
+	                 
+	         	 console.log(" failed to get the SubjectTreeStruct");      
 	         });
 	   		
 //------------------------------Create Exam Function-----------------------------------------------------------------------	   		
@@ -281,6 +421,21 @@
 	   			
 	   		};
 	   		
+	   		$scope.ShowTree=function()
+	   		{
+	   			debugger;
+	   			$scope.ShowTreeStruct=true;
+	   			$scope.ShowSubjectList=false;
+	   		};
+	   		
+	   		$scope.ShowSubjectList=function(){
+	   			
+	   			debugger;
+	   			$scope.ShowTreeStruct=false;
+	   			$scope.ShowSubjectList=true;
+	   			
+	   		};
+	   		
 	   		
 
    					   		  			 			  			
@@ -312,13 +467,13 @@
                           <header class="panel-heading tab-bg-primary ">
                               <ul class="nav nav-tabs">
                                   <li class="active">
-                                      <a data-toggle="tab" href="#home">Existing Exams</a>
+                                      <a data-toggle="tab" href="#ExistingExam">Existing Exams</a>
                                   </li>
                                   <li class="">
-                                      <a data-toggle="tab" href="#about">Create Exam</a>
+                                      <a data-toggle="tab" href="#CreateExam">Create Exam</a>
                                   </li>
                                   <li class="">
-                                      <a data-toggle="tab" href="#profile">Add Subjects to Exam</a>
+                                      <a data-toggle="tab" href="#AddSubjectToExam">Add Subjects to Exam</a>
                                   </li>
                                   <li class="">
                                       <a data-toggle="tab" href="#contact">Add Student To Exam</a>
@@ -327,7 +482,8 @@
                           </header>
                           <div class="panel-body">
                               <div class="tab-content">
-                                  <div id="home" class="tab-pane active">
+<!-- ------Existing Exam----------------------------------- -->
+                                  <div id="ExistingExam" class="tab-pane active">
       								   <div class="row">
 								                  <div class="col-lg-12">
 								                      <section class="panel">
@@ -478,17 +634,15 @@
 								              </div>
                                       
                                   </div>
-                                  
-                                  
-                                  
-                                  
-                 <div id="about" class="tab-pane"><div class="row">
-                  <div class="col-lg-12">
-                      <section class="panel">
-                          <header class="panel-heading">
-                             Add Exam
-                          </header>
-                          <div class="panel-body">
+<!-- ------Create Exam------------------------------------- -->                                    
+                				  <div id="CreateExam" class="tab-pane"><div class="row">
+						                  <div class="col-lg-12">
+						                      <section class="panel">
+						                          <header class="panel-heading">
+						                             Add Exam
+						                          </header>
+						                          <div class="panel-body">
+						                          
                          								 <div class="alert alert-info fade in" ng-show="ExamCreateSuccess">
 							                                  <button data-dismiss="alert" class="close close-sm" type="button">
 							                                      <i class="icon-remove"></i>
@@ -502,68 +656,129 @@
 							                                  </button>
 							                                <strong>Error in saving Exam</strong>
 							                              </div>
-                              <form class="form-horizontal " name="ExamForm" method="get">
-                                  <div class="form-group">
-                                      <label class="col-sm-2 control-label">Discription <span class="required">*</span></label>
-                                      <div class="col-sm-10">
-                                          <input ng-model="discription" type="text" class="form-control" required="required">
-                                      </div>
-                                  </div>
-                                   <div class="form-group">
-                                      <label class="col-sm-2 control-label">Out Of<span class="required">*</span></label>
-                                      <div class="col-sm-10">
-                                          <input ng-model="outOf" type="number" class="form-control" required="required">
-                                      </div>
-                                  </div>
-                                   <div class="form-group">
-                                      <label class="col-sm-2 control-label">Passing Marks<span class="required">*</span></label>
-                                      <div class="col-sm-10">
-                                          <input ng-model="passingMarks"  ng-class="{error : passingMarks>outOf }" type="number" class="form-control" required="required">
-                                      </div>
-                                  </div>
-                                  <div class="form-group">
-	                                   <div class="form-group">
-	                                      <label class="col-sm-2 control-label">Examination Type<span class="required">*</span></label>
-	                                      <div class="col-sm-10">
-	                                          <select class="form-control m-bot15"  ng-model="selectedExamType" ng-options="examType.typeName for (x,examType) in examType" ng-change="selectedBranch()" required="required" required="required" required> </select>
-	                                      </div>
-	                                  </div>
-                                  </div>
+							                              
+							<!-- ------------------------------------Form Start------------------------------------------------------ -->                             
+						                              <form class="form-horizontal " name="ExamForm" method="get">
+						                                  <div class="form-group">
+						                                      <label class="col-sm-2 control-label">Discription <span class="required">*</span></label>
+						                                      <div class="col-sm-10">
+						                                          <input ng-model="discription" type="text" class="form-control" required="required">
+						                                      </div>
+						                                  </div>
+						                                   <div class="form-group">
+						                                      <label class="col-sm-2 control-label">Out Of<span class="required">*</span></label>
+						                                      <div class="col-sm-10">
+						                                          <input ng-model="outOf" type="number" class="form-control" required="required">
+						                                      </div>
+						                                  </div>
+						                                   <div class="form-group">
+						                                      <label class="col-sm-2 control-label">Passing Marks<span class="required">*</span></label>
+						                                      <div class="col-sm-10">
+						                                          <input ng-model="passingMarks"  ng-class="{error : passingMarks>outOf }" type="number" class="form-control" required="required">
+						                                      </div>
+						                                  </div>
+						                                  <div class="form-group">
+							                                   <div class="form-group">
+							                                      <label class="col-sm-2 control-label">Examination Type<span class="required">*</span></label>
+							                                      <div class="col-sm-10">
+							                                          <select class="form-control m-bot15"  ng-model="selectedExamType" ng-options="examType.typeName for (x,examType) in examType" ng-change="selectedBranch()" required="required" required="required" required> </select>
+							                                      </div>
+							                                  </div>
+						                                  </div>
+						                                  
+						                                  <div class="form-group">
+							                                   <div class="form-group">
+							                                      <label class="col-sm-2 control-label">Examination Mode<span class="required">*</span></label>
+							                                      <div class="col-sm-10">
+							                                          <select class="form-control m-bot15"  ng-model="selectedExamMode" ng-options="examMode.modeName for (x,examMode) in examMode" ng-change="selectedBranch()" required="required" required="required" required> </select>
+							                                      </div>
+							                                  </div>
+						                                  </div>
+						                                  <div class="form-group">
+							                                   <div class="form-group">
+							                                      <label class="col-sm-2 control-label">Regular/ Repeat<span class="required">*</span></label>
+							                                      <div class="col-sm-10">
+							                                          
+						                                             <select ng-model="selectedRegular" class="form-control m-bot15" ng-options="ExamRegularArray.discription for (x,ExamRegularArray) in ExamRegularArray"  required="required" required>                                              
+																	</select>
+							                                      </div>
+							                                  </div>
+						                                  </div>
+						                                  
+						                                   
+						                                    <div class="form-group">
+						                                      <div class="col-lg-offset-2 col-lg-10">
+						                                          <button type="submit" class="btn btn-primary" ng-click="ExamForm.$valid && CreateExam()" ng-disabled="passingMarks>outOf">Create Exam</button>
+						                                      </div>
+						                                  </div>
+						                           
+						                              </form>
+						                              
+						  <!-- ------------------------------------Form End------------------------------------------------------ -->
+						                          </div>
+						                      </section>
+						                      
+						                  </div>
+             					 </div>
+             					 
+             					 </div>
+<!-- ------Add Subject To Exam ----------------------------------- -->                                 
+                                  <div id="AddSubjectToExam" class="tab-pane">
                                   
-                                  <div class="form-group">
-	                                   <div class="form-group">
-	                                      <label class="col-sm-2 control-label">Examination Mode<span class="required">*</span></label>
-	                                      <div class="col-sm-10">
-	                                          <select class="form-control m-bot15"  ng-model="selectedExamMode" ng-options="examMode.modeName for (x,examMode) in examMode" ng-change="selectedBranch()" required="required" required="required" required> </select>
-	                                      </div>
-	                                  </div>
-                                  </div>
-                                  <div class="form-group">
-	                                   <div class="form-group">
-	                                      <label class="col-sm-2 control-label">Regular/ Repeat<span class="required">*</span></label>
-	                                      <div class="col-sm-10">
-	                                          
-                                             <select ng-model="selectedRegular" class="form-control m-bot15" ng-options="ExamRegularArray.discription for (x,ExamRegularArray) in ExamRegularArray"  required="required" required>                                              
-											</select>
-	                                      </div>
-	                                  </div>
-                                  </div>
+										<section class="panel">
+				                          <div class="panel-body">
+					                              <form class="form-horizontal "  name="SelectExamForm"  method="get">
+					                                  <div class="form-group">
+					                                      <label class="control-label col-lg-2" for="inputSuccess">Select Exam To Add Subjects</label>
+					                                      <div class="col-lg-10">
+					                                          
+					
+					                                          <select class="form-control input-lg m-bot15" ng-model="selectedExamForAddSubject" ng-options="exam.discription for (x,exam) in examList"  required="required" required="required" required></select>
+					                                         
+					                                      </div>
+					                                  </div>
+					                              </form>
+					                               <button id="add-max" class="btn btn-primary  btn-sm" ng-disabled="SelectExamForm.$invalid" ng-click="ShowTree()" >Add Subject From Institute Structure</button>
+					                               <button id="add-without-image" class="btn btn-info  btn-sm" ng-disabled="SelectExamForm.$invalid" ng-click="ShowSubjectList()">Add Subject From Subject List</button>
+					                              </div>
+                                  		  </section>
+								                        
+										<section class="panel">
+				                          <div class="panel-body">	
+				                          
+				                          <div id="ShowTreeStrct" ng-hide="ShowTreeStruct" >	
+												{{selectedSubject}}
+											
+												<div  ng-controller="teacherCtrl as fancy">
+													
+													<div>Search <input type="text" ng-model="bagSearch" /></div>											
+													  <div
+													    ivh-treeview="InstTreeStructureWithSubject"
+													    ivh-treeview-filter="bagSearch"
+														ivh-treeview-validate="true"
+													    ivh-treeview-default-selected-state="false"
+													    ivh-treeview-on-cb-change="OnSelectCallback(ivhNode, ivhIsSelected, ivhTree)"
+														>
+													  </div>
+												  
+												  <h3>Selected subjects are</h3>
+											  
+											 
+											  </div>
                                   
-                                   
-                                    <div class="form-group">
-                                      <div class="col-lg-offset-2 col-lg-10">
-                                          <button type="submit" class="btn btn-primary" ng-click="ExamForm.$valid && CreateExam()" ng-disabled="passingMarks>outOf">Create Exam</button>
-                                      </div>
-                                  </div>
-                           
-                              </form>
-                          </div>
-                      </section>
-                      
-                  </div>
-              </div></div>
-                                  <div id="profile" class="tab-pane">Add Subjects to Exam</div>
-                                  <div id="contact" class="tab-pane">Add Student To Exam</div>
+                                  			</div>
+                                  			
+                                  			<div id="ShowStudenList" ng-hide="ShowSubjectList">
+                                  			<h1>Student List Here</h1>
+                                  			</div>
+                                  			
+                                  			</div>
+                                  		  </section>
+                                  
+                                    </div>
+								      
+                                  
+                                
                               </div>
                           </div>
                       </section>

@@ -66,7 +66,7 @@
 	</bean>
 	<!-- configure Hibernate 4 specific local session factory bean -->
 	<bean id="sessionFactory"
-		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean"
+		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean"
 		p:packagesToScan="com.app.pojo" p:dataSource-ref="dataSource">
 		<property name="hibernateProperties">
 			<value>
@@ -74,17 +74,29 @@
 				hibernate.format_sql=true
 				hibernate.show_sql=true
 				hibernate.hbm2ddl.auto=update
+				connection.autoReconnect=true
+				connection.autoReconnectForPools=true
+				connection.is-connection-validation-required=true
+				hibernate.c3p0.validate=true
+				connection.provider_class=org.hibernate.connection.C3P0ConnectionProvider
+				hibernate.c3p0.min_size=5
+				hibernate.c3p0.max_size=20
+				hibernate.c3p0.timeout=60
+				hibernate.c3p0.max_statements=50
+				hibernate.c3p0.preferredTestQuery=SELECT 1;
+				hibernate.c3p0.testConnectionOnCheckout=true
 			</value>
+			
+			
 		</property>
 	</bean>
 	<!-- configure tx mgr bean -->
 	<bean id="transactionManager"
-		class="org.springframework.orm.hibernate4.HibernateTransactionManager"
+		class="org.springframework.orm.hibernate5.HibernateTransactionManager"
 		p:sessionFactory-ref="sessionFactory">
 	</bean>
 	<!-- enable tx annotation suuport -->
 	<tx:annotation-driven />
-	
-	
+
 	
 </beans>

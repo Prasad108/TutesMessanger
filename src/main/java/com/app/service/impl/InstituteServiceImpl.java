@@ -78,4 +78,10 @@ public class InstituteServiceImpl implements InstituteService {
 		return InstituteDAO.getallStudentWhoAreNotInAnyDivision(institute);
 	}
 
+	@Override
+	public String GetSubjectTree(int InstId) {
+		
+		return InstituteDAO.GetSubjectTree(InstId);
+	}
+
 }

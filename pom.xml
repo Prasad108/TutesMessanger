@@ -14,6 +14,7 @@
 
 		<org.springframework.version>4.3.10.RELEASE</org.springframework.version>
 		<org.springframework.Security.version>4.2.3.RELEASE</org.springframework.Security.version>
+		<org.hibernate.version>5.2.5.Final</org.hibernate.version>
 	</properties>
 	<dependencies>
 	
@@ -88,17 +89,6 @@ https://mvnrepository.com/artifact/com.amazonaws/jmespath-java
 
 
 
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-entitymanager</artifactId>
-			<version>5.0.6.Final</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-validator</artifactId>
-			<version>5.4.1.Final</version>
-		</dependency>
 
 
 
@@ -237,12 +227,34 @@ https://mvnrepository.com/artifact/com.amazonaws/jmespath-java
 			<version>1.0.3</version>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
 		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-core</artifactId>
-			<version>4.0.1.Final</version>
+		    <groupId>org.hibernate</groupId>
+		    <artifactId>hibernate-core</artifactId>
+		    <version>5.2.10.Final</version>
 		</dependency>
 
+		
+		<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-validator -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>5.0.6.Final</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>5.4.1.Final</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-envers -->
+<dependency>
+    <groupId>org.hibernate</groupId>
+    <artifactId>hibernate-envers</artifactId>
+    <version>5.2.10.Final</version>
+</dependency>
+		
 
 		<dependency>
 			<groupId>javax.servlet</groupId>
