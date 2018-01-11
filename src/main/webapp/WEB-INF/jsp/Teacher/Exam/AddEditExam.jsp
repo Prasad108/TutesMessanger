@@ -54,6 +54,8 @@
 	   			
 	   			$scope.ShowTreeStruct=false;
 	   			$scope.ShowSubjectListVar=false;
+	   			$scope.ShowAddSubjectTable=false;
+	   			
 	   			
 				$scope.ExamRegularArray=[{id:0,discription:'Regular'},{id:1,discription:'Repeat'}];
 	   			
@@ -426,6 +428,7 @@
 	   			
 	   			$scope.ShowTreeStruct=true;
 	   			$scope.ShowSubjectListVar=false;
+	   			$scope.ShowAddSubjectTable=false;
 	   		};
 	   		
 	   		$scope.ShowSubjectList=function(){
@@ -433,6 +436,7 @@
 	   			
 	   			$scope.ShowTreeStruct=false;
 	   			$scope.ShowSubjectListVar=true;
+	   			$scope.ShowAddSubjectTable=false;
 	   			
 	   		};
 	   		
@@ -451,74 +455,83 @@
 			
 			$scope.flag=0;
 				
-				function traverseTillsubDivId(o,subDivId) {
-			console.log($scope.flag)
-			
-			if($scope.flag < 1)
-			{ 
-			
-			
-				    for (var i in o) {
-				
-				if($scope.flag < 1)
-				{ 
-				    	 
-				        if (o[i] !== null && typeof(o[i])=="object") {
+			function traverseTillsubDivId(o,subDivId) {
+					console.log($scope.flag)
+					
+					if($scope.flag < 1)
+					{ 
 					
 					
-				        	
-				        	if(o[i].type=="Institute")
-			        		{
-			        			//console.log("Selected Institute is "+o[i].label);
-			        			$scope.inst.label=o[i].label;
-							console.log($scope.inst.label);
-			        		}
-				        	
-				        	if(o[i].type=="Branch")
-			        		{
-			        			//console.log("Selected Branch is "+o[i].label);
-			        			$scope.branch.label=o[i].label;
-							console.log($scope.branch.label);
-			        		}
-				        	
-				        	if(o[i].type=="Class" )
-			        		{
-			        			//console.log("Selected Class is "+o[i].label);
-			        			$scope.classes.label=o[i].label;
-							console.log($scope.classes.label);
-			        		}
-				        	
-				        	if(o[i].type=="Division" )
-			        		{
-			        			//console.log("Selected Division is "+o[i].label);
-			        			$scope.div.label=o[i].label;
-							console.log($scope.div.label);
+						    for (var i in o) {
+						
+						if($scope.flag < 1)
+						{ 
+						    	 
+						        if (o[i] !== null && typeof(o[i])=="object") {
 							
-			        		}
-				        	
-				        	
-				        	if(o[i].type=="Subject" && o[i].value==subDivId)
-				        		{
-				        			//console.log("Selected subject is "+o[i].label);
-				        			$scope.subject.label=o[i].label;
-								console.log($scope.subject.label);
-								$scope.flag=2;
-								console.log("break **************************");
-								break;
-				        		}
-				        	 
-				            //going one step down in the object tree!!
-				            traverseTillsubDivId(o[i],subDivId);
-					}
-					}
-				        
-				    }
-				
-			}
+							
+						        	
+						        	if(o[i].type=="Institute")
+					        		{
+					        			//console.log("Selected Institute is "+o[i].label);
+					        			$scope.inst.label=o[i].label;
+									console.log($scope.inst.label);
+					        		}
+						        	
+						        	if(o[i].type=="Branch")
+					        		{
+					        			//console.log("Selected Branch is "+o[i].label);
+					        			$scope.branch.label=o[i].label;
+									console.log($scope.branch.label);
+					        		}
+						        	
+						        	if(o[i].type=="Class" )
+					        		{
+					        			//console.log("Selected Class is "+o[i].label);
+					        			$scope.classes.label=o[i].label;
+									console.log($scope.classes.label);
+					        		}
+						        	
+						        	if(o[i].type=="Division" )
+					        		{
+					        			//console.log("Selected Division is "+o[i].label);
+					        			$scope.div.label=o[i].label;
+									console.log($scope.div.label);
+									
+					        		}
+						        	
+						        	
+						        	if(o[i].type=="Subject" && o[i].value==subDivId)
+						        		{
+						        			//console.log("Selected subject is "+o[i].label);
+						        			$scope.subject.label=o[i].label;
+										console.log($scope.subject.label);
+										$scope.flag=2;
+										console.log("break **************************");
+										break;
+						        		}
+						        	 
+						            //going one step down in the object tree!!
+						            traverseTillsubDivId(o[i],subDivId);
+							}
+							}
+						        
+						    }
+						
+					  }
 			
-			} 
+				};
+				
+				$scope.ShowSubjectTable=function()
+				{
+					console.log("functino called");
+					$scope.ShowTreeStruct=false;
+		   			$scope.ShowSubjectListVar=false;
+		   			$scope.ShowAddSubjectTable=true;
+		   			console.log("ShowAddSubjectTable variable status "+$scope.ShowAddSubjectTable);
+				};
 		
-		traverseTillsubDivId(o,3);
+		//traverseTillsubDivId(o,3);
 		
 		console.log("inst "+$scope.inst.label);
 		console.log("branch "+$scope.branch.label);
@@ -838,7 +851,8 @@
 				                          <div class="panel-body">	
 				                          
 				                          <div id="ShowTreeStrct" ng-show="ShowTreeStruct" >	
-												{{selectedSubject}}
+												{{$parent.selectedSubject}}
+												
 											
 												<div  ng-controller="teacherCtrl as fancy">
 													
@@ -852,14 +866,17 @@
 														>
 													  </div>
 												  
-												  <h3>Selected subjects are</h3>
+												  <button  ng-show="selectedSubject.length>0" class="btn btn-primary  btn-sm" ng-click="ShowSubjectTable()">Add Subjects</button>
+												
 											  
 											 
 											  </div>
                                   
                                   			</div>
                                   			
-                                  			<div id="ShowSubjectListVar" ng-show="ShowSubjectListVar">
+                                  			<div ng-show="ShowAddSubjectTable" ><h1>Add subject Table is shown</h1></div>
+                                  			
+                                  			<div  ng-show="ShowSubjectListVar">
                                   			<h1>Student List Here</h1>
                                   			</div>
                                   			
