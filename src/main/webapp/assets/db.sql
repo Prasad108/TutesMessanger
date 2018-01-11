@@ -121,26 +121,29 @@ DROP TABLE IF EXISTS `exam_subject_student_composit_table`;
 CREATE TABLE `exam_subject_student_composit_table` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `student_id` int(11) DEFAULT NULL,
-  `subject_id` int(11) DEFAULT NULL,
   `exam_id` int(11) DEFAULT NULL,
   `date-time` date DEFAULT NULL,
   `duration_in_minutes` int(11) DEFAULT NULL,
+  `subject_div_id` int(11) DEFAULT NULL,
+  `out_of_marks` int(11) DEFAULT NULL,
+  `passing_marks` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `composite_unique_key` (`student_id`,`subject_id`,`exam_id`),
-  UNIQUE KEY `UKjtcq62ds98kwh3bbd8gg8jnxi` (`student_id`,`subject_id`,`exam_id`),
+  UNIQUE KEY `composite_unique_key` (`student_id`,`exam_id`),
+  UNIQUE KEY `UKjtcq62ds98kwh3bbd8gg8jnxi` (`student_id`,`exam_id`),
+  UNIQUE KEY `UK3qrcyk8csw9oujgr0vb3vcg7a` (`student_id`,`exam_id`),
   KEY `FKiwdhevlshbvf82oc98yblqccu` (`exam_id`),
-  KEY `FK61k62of0arq5vt5ar8y65uvoh` (`subject_id`),
+  KEY `FK4i0i0cq4pj64f82hcn7se3nts` (`subject_div_id`),
+  CONSTRAINT `FK4i0i0cq4pj64f82hcn7se3nts` FOREIGN KEY (`subject_div_id`) REFERENCES `subject_div_composit` (`id`),
   CONSTRAINT `FK56xga9as5cccvpw6rqjtbg2qc` FOREIGN KEY (`student_id`) REFERENCES `student` (`id`),
-  CONSTRAINT `FK61k62of0arq5vt5ar8y65uvoh` FOREIGN KEY (`subject_id`) REFERENCES `subject` (`id`),
   CONSTRAINT `FKiwdhevlshbvf82oc98yblqccu` FOREIGN KEY (`exam_id`) REFERENCES `exam` (`id`),
   CONSTRAINT `exam foreign key exam_subject_student_composit_table` FOREIGN KEY (`exam_id`) REFERENCES `exam` (`id`),
   CONSTRAINT `student foreign key exam_subject_student_composit_table` FOREIGN KEY (`student_id`) REFERENCES `student` (`id`),
-  CONSTRAINT `subject foreign key exam_subject_student_composit_table` FOREIGN KEY (`subject_id`) REFERENCES `subject` (`id`)
+  CONSTRAINT `subject_div_id foreign key` FOREIGN KEY (`subject_div_id`) REFERENCES `subject_div_composit` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `exam_subject_student_composit_table` */
 
-insert  into `exam_subject_student_composit_table`(`id`,`student_id`,`subject_id`,`exam_id`,`date-time`,`duration_in_minutes`) values (1,NULL,1,38,NULL,NULL);
+insert  into `exam_subject_student_composit_table`(`id`,`student_id`,`exam_id`,`date-time`,`duration_in_minutes`,`subject_div_id`,`out_of_marks`,`passing_marks`) values (1,NULL,38,'2018-01-10',30,6,50,20);
 
 /*Table structure for table `exam_type` */
 
@@ -306,7 +309,7 @@ CREATE TABLE `role` (
 
 /*Data for the table `role` */
 
-insert  into `role`(`id`,`name`) values (1,'ROLE_STUDENT'),(2,'ROLE_TEACHER'),(3,'ROLE_INSTITUTE_ADMIN'),(4,'ROLE_APP_ADMIN'),(5,'ROLE_PARENT'),(6,'ROLE_TEMPLATE'),(57,'tester');
+insert  into `role`(`id`,`name`) values (1,'ROLE_STUDENT'),(2,'ROLE_TEACHER'),(3,'ROLE_INSTITUTE_ADMIN'),(4,'ROLE_APP_ADMIN'),(5,'ROLE_PARENT'),(6,'ROLE_TEMPLATE'),(57,'tester 123');
 
 /*Table structure for table `schedule` */
 
@@ -396,11 +399,11 @@ CREATE TABLE `subject_div_composit` (
   CONSTRAINT `FKhm4bowjb4if0a6hqhhlrocwfi` FOREIGN KEY (`Div_id`) REFERENCES `division` (`id`),
   CONSTRAINT `div foreign key` FOREIGN KEY (`Div_id`) REFERENCES `division` (`id`),
   CONSTRAINT `sub foreign key` FOREIGN KEY (`subject_id`) REFERENCES `subject` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 /*Data for the table `subject_div_composit` */
 
-insert  into `subject_div_composit`(`id`,`Div_id`,`subject_id`) values (6,19,1),(7,19,2),(4,19,3),(5,19,4),(1,22,1),(2,22,2),(3,23,1);
+insert  into `subject_div_composit`(`id`,`Div_id`,`subject_id`) values (6,19,1),(7,19,2),(4,19,3),(5,19,4),(1,22,1),(2,22,2),(3,23,1),(8,23,3),(9,23,4);
 
 /*Table structure for table `teacher` */
 
