@@ -1,5 +1,5 @@
 package com.app.pojo;
-// Generated 10 Jan, 2018 5:07:20 PM by Hibernate Tools 5.2.6.Final
+// Generated 10 Jan, 2018 5:06:10 PM by Hibernate Tools 5.2.6.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -31,16 +31,16 @@ public class Institute implements java.io.Serializable {
 	private Date subscriptionTill;
 	private Boolean subscritionEnable;
 	private Boolean enable;
-	private transient Set<Branch> branches = new HashSet<Branch>(0);
-	private transient Set<Exam> exams = new HashSet<Exam>(0);
-	private transient Set<Teacher> teachers = new HashSet<Teacher>(0);
-	private transient Set<Exam> exams_1 = new HashSet<Exam>(0);
-	private transient Set<Student> students = new HashSet<Student>(0);
-	private transient Set<Subject> subjects = new HashSet<Subject>(0);
-	private transient Set<Subject> subjects_1 = new HashSet<Subject>(0);
-	private transient Set<Student> students_1 = new HashSet<Student>(0);
-	private transient Set<Teacher> teachers_1 = new HashSet<Teacher>(0);
-	private transient Set<Branch> branches_1 = new HashSet<Branch>(0);
+	private Set<Branch> branches = new HashSet<Branch>(0);
+	private Set<Exam> exams = new HashSet<Exam>(0);
+	private Set<Teacher> teachers = new HashSet<Teacher>(0);
+	private Set<Exam> exams_1 = new HashSet<Exam>(0);
+	private Set<Student> students = new HashSet<Student>(0);
+	private Set<Subject> subjects = new HashSet<Subject>(0);
+	private Set<Subject> subjects_1 = new HashSet<Subject>(0);
+	private Set<Student> students_1 = new HashSet<Student>(0);
+	private Set<Teacher> teachers_1 = new HashSet<Teacher>(0);
+	private Set<Branch> branches_1 = new HashSet<Branch>(0);
 
 	public Institute() {
 	}

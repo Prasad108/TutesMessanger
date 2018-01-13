@@ -1,5 +1,5 @@
 package com.app.pojo;
-// Generated 21 Dec, 2017 5:29:32 PM by Hibernate Tools 5.2.3.Final
+// Generated 10 Jan, 2018 5:06:10 PM by Hibernate Tools 5.2.6.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -27,15 +27,15 @@ import javax.persistence.UniqueConstraint;
 public class ExamSubjectStudentCompositTable implements java.io.Serializable {
 
 	private Integer id;
-	private transient Exam exam;
-	private transient Student student;
-	private transient  SubjectDivComposit subjectDivComposit;
+	private Exam exam;
+	private Student student;
+	private SubjectDivComposit subjectDivComposit;
 	private Date dateTime;
 	private Integer durationInMinutes;
 	private Integer outOfMarks;
 	private Integer passingMarks;
-	private transient Set<Result> results = new HashSet<Result>(0);
-	private transient Set<Result> results_1 = new HashSet<Result>(0);
+	private Set<Result> results = new HashSet<Result>(0);
+	private Set<Result> results_1 = new HashSet<Result>(0);
 
 	public ExamSubjectStudentCompositTable() {
 	}

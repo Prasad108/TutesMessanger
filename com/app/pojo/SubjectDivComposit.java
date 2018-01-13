@@ -1,5 +1,5 @@
 package com.app.pojo;
-// Generated 10 Jan, 2018 5:07:20 PM by Hibernate Tools 5.2.6.Final
+// Generated 10 Jan, 2018 5:06:10 PM by Hibernate Tools 5.2.6.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -24,9 +24,9 @@ import javax.persistence.UniqueConstraint;
 public class SubjectDivComposit implements java.io.Serializable {
 
 	private Integer id;
-	private transient Division division;
-	private transient Subject subject;
-	private transient Set<ExamSubjectStudentCompositTable> examSubjectStudentCompositTables = new HashSet<ExamSubjectStudentCompositTable>(
+	private Division division;
+	private Subject subject;
+	private Set<ExamSubjectStudentCompositTable> examSubjectStudentCompositTables = new HashSet<ExamSubjectStudentCompositTable>(
 			0);
 
 	public SubjectDivComposit() {

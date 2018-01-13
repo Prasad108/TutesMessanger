@@ -1,5 +1,5 @@
 package com.app.pojo;
-// Generated 22 Dec, 2017 12:24:54 PM by Hibernate Tools 5.2.3.Final
+// Generated 10 Jan, 2018 5:06:10 PM by Hibernate Tools 5.2.6.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -22,29 +22,22 @@ import javax.persistence.Table;
 public class Subject implements java.io.Serializable {
 
 	private Integer id;
-	private transient Institute institute;
+	private Institute institute;
 	private String name;
 	private String discription;
-	
-	private transient Set<SubjectDivComposit> subjectDivComposits = new HashSet<SubjectDivComposit>(0);
+	private Set<SubjectDivComposit> subjectDivComposits = new HashSet<SubjectDivComposit>(0);
+	private Set<SubjectDivComposit> subjectDivComposits_1 = new HashSet<SubjectDivComposit>(0);
 
 	public Subject() {
 	}
 
-	public Subject(Institute institute, String name, String discription,
-			
-			Set<SubjectDivComposit> subjectDivComposits) {
+	public Subject(Institute institute, String name, String discription, Set<SubjectDivComposit> subjectDivComposits,
+			Set<SubjectDivComposit> subjectDivComposits_1) {
 		this.institute = institute;
 		this.name = name;
 		this.discription = discription;
-		
 		this.subjectDivComposits = subjectDivComposits;
-	}
-	
-	public Subject(Institute institute, String name, String discription){
-		this.institute = institute;
-		this.name = name;
-		this.discription = discription;
+		this.subjectDivComposits_1 = subjectDivComposits_1;
 	}
 
 	@Id
@@ -87,10 +80,6 @@ public class Subject implements java.io.Serializable {
 		this.discription = discription;
 	}
 
-	
-
-	
-
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "subject")
 	public Set<SubjectDivComposit> getSubjectDivComposits() {
 		return this.subjectDivComposits;
@@ -98,6 +87,15 @@ public class Subject implements java.io.Serializable {
 
 	public void setSubjectDivComposits(Set<SubjectDivComposit> subjectDivComposits) {
 		this.subjectDivComposits = subjectDivComposits;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "subject")
+	public Set<SubjectDivComposit> getSubjectDivComposits_1() {
+		return this.subjectDivComposits_1;
+	}
+
+	public void setSubjectDivComposits_1(Set<SubjectDivComposit> subjectDivComposits_1) {
+		this.subjectDivComposits_1 = subjectDivComposits_1;
 	}
 
 }
