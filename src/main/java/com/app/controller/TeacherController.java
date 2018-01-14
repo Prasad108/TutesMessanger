@@ -3,6 +3,7 @@ package com.app.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -53,6 +54,7 @@ import com.app.service.TeacherService;
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.google.gson.Gson;
+import com.sun.istack.internal.logging.Logger;
 
 @Controller
 @SessionAttributes({ "teacher", "appAdmin","institute","login","permissions","teacherJSON"  })
@@ -111,7 +113,8 @@ public class TeacherController {
 	    public String  ModifyInstitueStructure(Model model,@ModelAttribute("teacher") Teacher teacher) {  
 	    	
 	    	System.out.println("**********this is ModifyInstitueStructure controller**********");
-	    			
+	    	
+	    	Logger.getLogger(TeacherController.class.getName(),TeacherController.class).log(Level.INFO, "**********this is ModifyInstitueStructure controller**********");	
 			Branch branch= new Branch();
 			Classes clsess=new Classes();
 			Division division =new Division();
