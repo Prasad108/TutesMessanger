@@ -40,6 +40,7 @@ import com.app.service.ClassesService;
 import com.app.service.DivisionService;
 import com.app.service.ExamModeService;
 import com.app.service.ExamService;
+import com.app.service.ExamSubjectStudentCompositTableService;
 import com.app.service.ExamTypeService;
 import com.app.service.InstituteService;
 import com.app.service.LoginService;
@@ -104,6 +105,9 @@ public class TeacherController {
 	
 	@Autowired
 	SubjectDivCompositService subjectDivCompositService;
+	
+	@Autowired
+	ExamSubjectStudentCompositTableService examSubStudCompService;
 
 	Gson gson = new Gson();
 	
@@ -1445,6 +1449,38 @@ public class TeacherController {
 				JSON+="}";
 				System.out.println(JSON);
 
+			 return JSON;
+		 }
+	 	
+	 	
+		@RequestMapping(value="/GetSubjectDivCompID/{examId}", method=RequestMethod.POST)
+		@ResponseBody
+	 	public String GetSubjectDivCompID(@PathVariable("examId") int examId)
+		 {
+			 System.out.println("**********inside GetSubjectDivCompID controller**********");
+			 List<SubjectDivComposit> subjectDivCompList=examSubStudCompService.findByExamId(examId);
+			 
+			 String JSON="[";
+			 
+			 for(SubjectDivComposit s : subjectDivCompList)
+			 {
+			  System.out.println("\n SubDivID : "+s.getId() );	 
+			 }
+			 
+			 for(SubjectDivComposit s : subjectDivCompList)
+			 {
+				 JSON+="{";
+					JSON+="\"id\":"+s.getId();			
+					JSON+="},";
+				   
+			 }
+			 
+			 JSON=JSON.substring(0, JSON.length() - 1);
+				JSON+="]";
+			
+				System.out.println(JSON);
+			
+			
 			 return JSON;
 		 }
 		 
