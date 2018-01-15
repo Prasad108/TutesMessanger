@@ -1,5 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd" >
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.org/dtd/hibernate-reverse-engineering-3.0.dtd" >
 
 <hibernate-reverse-engineering>
+  <table-filter match-schema="tutesmessanger" match-name=".*"/>
+  <table-filter match-catalog="tutesmessanger" match-name="branch"/>
+  <table-filter match-catalog="tutesmessanger" match-name="classes"/>
+  <table-filter match-catalog="tutesmessanger" match-name="division"/>
+  <table-filter match-catalog="tutesmessanger" match-name="exam"/>
+  <table-filter match-catalog="tutesmessanger" match-name="exam_mode"/>
+  <table-filter match-catalog="tutesmessanger" match-name="exam_subject_student_composit_table"/>
+  <table-filter match-catalog="tutesmessanger" match-name="exam_type"/>
+  <table-filter match-catalog="tutesmessanger" match-name="institute"/>
+  <table-filter match-catalog="tutesmessanger" match-name="login"/>
+  <table-filter match-catalog="tutesmessanger" match-name="message"/>
+  <table-filter match-catalog="tutesmessanger" match-name="parent"/>
+  <table-filter match-catalog="tutesmessanger" match-name="permissions"/>
+  <table-filter match-catalog="tutesmessanger" match-name="persistent_logins"/>
+  <table-filter match-catalog="tutesmessanger" match-name="result"/>
+  <table-filter match-catalog="tutesmessanger" match-name="role"/>
+  <table-filter match-catalog="tutesmessanger" match-name="schedule"/>
+  <table-filter match-catalog="tutesmessanger" match-name="student"/>
+  <table-filter match-catalog="tutesmessanger" match-name="subject"/>
+  <table-filter match-catalog="tutesmessanger" match-name="subject_div_composit"/>
+  <table-filter match-catalog="tutesmessanger" match-name="teacher"/>
 </hibernate-reverse-engineering>

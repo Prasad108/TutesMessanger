@@ -18,5 +18,6 @@ public interface InstituteDAO {
 	public List<Teacher> getallPendingTeacherForApproval(Institute institute);
 	public List<Student> getallPendingStudentForApproval(Institute institute);
 	public List<Student> getallStudentWhoAreNotInAnyDivision(Institute institute);
+	public String GetSubjectTree(int InstId);
 
 }

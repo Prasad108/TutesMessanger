@@ -1,5 +1,5 @@
 package com.app.pojo;
-// Generated 14 Nov, 2017 11:41:36 AM by Hibernate Tools 5.2.3.Final
+// Generated 10 Jan, 2018 5:07:20 PM by Hibernate Tools 5.2.6.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -32,8 +32,12 @@ public class Institute implements java.io.Serializable {
 	private Boolean subscritionEnable;
 	private Boolean enable;
 	private transient Set<Branch> branches = new HashSet<Branch>(0);
+	private transient Set<Exam> exams = new HashSet<Exam>(0);
 	private transient Set<Teacher> teachers = new HashSet<Teacher>(0);
+	private transient Set<Exam> exams_1 = new HashSet<Exam>(0);
 	private transient Set<Student> students = new HashSet<Student>(0);
+	private transient Set<Subject> subjects = new HashSet<Subject>(0);
+	private transient Set<Subject> subjects_1 = new HashSet<Subject>(0);
 	private transient Set<Student> students_1 = new HashSet<Student>(0);
 	private transient Set<Teacher> teachers_1 = new HashSet<Teacher>(0);
 	private transient Set<Branch> branches_1 = new HashSet<Branch>(0);
@@ -46,8 +50,9 @@ public class Institute implements java.io.Serializable {
 	}
 
 	public Institute(String name, String address, String contactno, String email, Date subscriptionTill,
-			Boolean subscritionEnable, Boolean enable, Set<Branch> branches, Set<Teacher> teachers,
-			Set<Student> students, Set<Student> students_1, Set<Teacher> teachers_1, Set<Branch> branches_1) {
+			Boolean subscritionEnable, Boolean enable, Set<Branch> branches, Set<Exam> exams, Set<Teacher> teachers,
+			Set<Exam> exams_1, Set<Student> students, Set<Subject> subjects, Set<Subject> subjects_1,
+			Set<Student> students_1, Set<Teacher> teachers_1, Set<Branch> branches_1) {
 		this.name = name;
 		this.address = address;
 		this.contactno = contactno;
@@ -56,8 +61,12 @@ public class Institute implements java.io.Serializable {
 		this.subscritionEnable = subscritionEnable;
 		this.enable = enable;
 		this.branches = branches;
+		this.exams = exams;
 		this.teachers = teachers;
+		this.exams_1 = exams_1;
 		this.students = students;
+		this.subjects = subjects;
+		this.subjects_1 = subjects_1;
 		this.students_1 = students_1;
 		this.teachers_1 = teachers_1;
 		this.branches_1 = branches_1;
@@ -149,6 +158,15 @@ public class Institute implements java.io.Serializable {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "institute")
+	public Set<Exam> getExams() {
+		return this.exams;
+	}
+
+	public void setExams(Set<Exam> exams) {
+		this.exams = exams;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "institute")
 	public Set<Teacher> getTeachers() {
 		return this.teachers;
 	}
@@ -158,12 +176,39 @@ public class Institute implements java.io.Serializable {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "institute")
+	public Set<Exam> getExams_1() {
+		return this.exams_1;
+	}
+
+	public void setExams_1(Set<Exam> exams_1) {
+		this.exams_1 = exams_1;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "institute")
 	public Set<Student> getStudents() {
 		return this.students;
 	}
 
 	public void setStudents(Set<Student> students) {
 		this.students = students;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "institute")
+	public Set<Subject> getSubjects() {
+		return this.subjects;
+	}
+
+	public void setSubjects(Set<Subject> subjects) {
+		this.subjects = subjects;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "institute")
+	public Set<Subject> getSubjects_1() {
+		return this.subjects_1;
+	}
+
+	public void setSubjects_1(Set<Subject> subjects_1) {
+		this.subjects_1 = subjects_1;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "institute")

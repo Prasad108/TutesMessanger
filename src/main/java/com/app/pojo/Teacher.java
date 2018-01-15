@@ -1,5 +1,5 @@
 package com.app.pojo;
-// Generated 14 Nov, 2017 11:41:36 AM by Hibernate Tools 5.2.3.Final
+// Generated 21 Dec, 2017 11:23:34 AM by Hibernate Tools 5.2.3.Final
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,12 +18,6 @@ import javax.persistence.Table;
 @Table(name = "teacher", catalog = "tutesmessanger")
 public class Teacher implements java.io.Serializable {
 
-	@Override
-	public String toString() {
-		return "Teacher [id=" + id + ", fname=" + fname + ", lname=" + lname + ", email=" + email + ", contactno="
-				+ contactno + "]";
-	}
-
 	private Integer id;
 	private transient Institute institute;
 	private transient Login login;
@@ -35,6 +29,8 @@ public class Teacher implements java.io.Serializable {
 
 	public Teacher() {
 	}
+	
+	
 
 	
 	
@@ -65,6 +61,12 @@ public class Teacher implements java.io.Serializable {
 		this.lname = lname;
 		this.email = email;
 		this.contactno = contactno;
+	}
+	
+	@Override
+	public String toString() {
+		return "Teacher [id=" + id + ", fname=" + fname + ", lname=" + lname + ", email=" + email + ", contactno="
+				+ contactno + "]";
 	}
 
 	@Id

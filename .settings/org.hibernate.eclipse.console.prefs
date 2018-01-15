@@ -1,0 +1,9 @@
+<<<<<<< HEAD
+default.configuration=
+eclipse.preferences.version=1
+hibernate3.enabled=false
+=======
+default.configuration=TutesMessanger
+eclipse.preferences.version=1
+hibernate3.enabled=true
+>>>>>>> branch 'for_Exam_subject_result' of https://github.com/Prasad108/TutesMessanger.git
