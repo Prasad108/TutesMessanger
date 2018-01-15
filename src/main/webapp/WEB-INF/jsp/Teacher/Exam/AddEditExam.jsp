@@ -59,7 +59,7 @@
 	   			
 				$scope.ExamRegularArray=[{id:0,discription:'Regular'},{id:1,discription:'Repeat'}];
 	   			
-	   			
+			
 
 	   			$scope.examList=[];
 	   			$scope.examMode=[];
@@ -151,6 +151,8 @@
 	   			$scope.selectedClass=[];
 	   			$scope.selectedDivision=[];
 	   			$scope.selectedSubject=[];
+
+	   	      $scope.SubjectDivCompIDList=[];
 	   			
 	   			// call tree traversal function to get the selected itmes in arrays
 	   			$scope.TreeTraversalForSelectedItems(tree);   
@@ -444,7 +446,7 @@
 	   		
 	   		
 	   		
-	   		var o = [{"label":"Vidya", "value":50,"type":"Institute","children": [{"label":"Pune", "value":15,"type":"Branch","children":[{"label":"10th ", "value":18,"type":"Class","children":[{"label":"A", "value":19,"type":"Division"},{"label":"B", "value":20,"type":"Division"},{"label":"C", "value":21,"type":"Division"}]},{"label":"11th", "value":19,"type":"Class","children":[{"label":"PCM", "value":22,"type":"Division","children":[{"label":"English", "value":1,"type":"Subject","SubjectId":1},{"label":"Marathi", "value":2,"type":"Subject","SubjectId":2}]},{"label":"PCB", "value":23,"type":"Division","children":[{"label":"English", "value":3,"type":"Subject","SubjectId":1}]}]}]},{"label":"Mumbai", "value":16,"type":"Branch"}]}];
+	   		var o = [{"label":"Vidya", "value":50,"type":"Institute","children": [{"label":"Pune", "value":15,"type":"Branch","children":[{"label":"10th ", "value":18,"type":"Class","children":[{"label":"A", "value":19,"type":"Division"},{"label":"B", "value":20,"type":"Division"},{"label":"C", "value":21,"type":"Division"}]},{"label":"11th", "value":19,"type":"Class","children":[{"label":"PCM", "value":22,"type":"Division","children":[{"label":"English", "value":1,"type":"Subject","SubjectId":1},{"label":"Marathi", "value":2,"type":"Subject","SubjectId":2}]},{"label":"PCB", "value":23,"type":"Division","children":[{"label":"English", "value":6,"type":"Subject","SubjectId":1}]}]}]},{"label":"Mumbai", "value":16,"type":"Branch"}]}];
 
 				//called with every property and its value
 				
@@ -458,8 +460,7 @@
 			$scope.flag=0;
 				
 			function traverseTillsubDivId(o,subDivId) {
-					console.log($scope.flag)
-					
+	
 					if($scope.flag < 1)
 					{ 
 					
@@ -532,6 +533,44 @@
 		   			$scope.ShowAddSubjectTable=true;
 		   			console.log("ShowAddSubjectTable variable status "+$scope.ShowAddSubjectTable);
 				};
+
+				$scope.ShowSelectedSubject=function()
+				{
+					console.log($scope.selectedExamForAddStudent.id);
+
+					$http({
+			             url: "GetSubjectDivCompID/"+$scope.selectedExamForAddStudent.id,
+			             method: "POST",          
+			         })
+			         .then(function(response) {
+			                 // if success       	
+			         	 console.log("WE got ids");
+			         	 
+			                 $scope.SubjectDivCompIDList=response.data;
+
+			                 for(var j=0;j< $scope.SubjectDivCompIDList.length; j++)
+	        				 {
+			                	 $scope.flag=0;
+			                     traverseTillsubDivId( $scope.InstTreeStructureWithSubject, $scope.SubjectDivCompIDList[j].id);
+
+	        				 }
+
+			                
+			                
+
+			                
+			         	          
+			         }, 
+			         function(data) { // optional
+			                 // failed
+			                 
+			         	 console.log(" failed to get the ids");      
+			         });
+
+					
+					    
+				
+				};
 		
 		//traverseTillsubDivId(o,3);
 		
@@ -582,7 +621,7 @@
                                       <a data-toggle="tab" href="#AddSubjectToExam">Add Subjects to Exam</a>
                                   </li>
                                   <li class="">
-                                      <a data-toggle="tab" href="#contact">Add Student To Exam</a>
+                                      <a data-toggle="tab" href="#AddStudentToExam">Add Student To Exam</a>
                                   </li>
                               </ul>
                           </header>
@@ -899,7 +938,63 @@
                                   
                                     </div>
 								      
+								<!-- ------Add Student To Exam ----------------------------------- -->                                 
+                                  <div id="AddStudentToExam" class="tab-pane">
                                   
+										<section class="panel">
+				                          <div class="panel-body">
+					                              <form class="form-horizontal "  name="SelectExamFormToAddStudent"  method="get">
+					                                  <div class="form-group">
+					                                      <label class="control-label col-lg-2" for="inputSuccess">Select Exam To Add Students</label>
+					                                      <div class="col-lg-10">
+
+					                                          <select class="form-control input-lg m-bot15" ng-model="selectedExamForAddStudent" ng-options="exam.discription for (x,exam) in examList"  required="required" required="required" required></select>
+					                                         
+					                                      </div>
+					                                  </div>
+					                              </form>
+					                               <button id="add-max" class="btn btn-primary  btn-sm" ng-disabled="SelectExamFormToAddStudent.$invalid" ng-click="ShowSelectedSubject()" style="margin-left: 17%">Show Selected Subjects</button>
+					                              <!--  <button id="add-without-image" class="btn btn-info  btn-sm" ng-disabled="SelectExamForm.$invalid" ng-click="ShowSubjectList()">Add Subject From Subject List</button> -->
+					                              </div>
+                                  		  </section>
+								                        
+										<!-- <section class="panel">
+				                          <div class="panel-body">	
+				                          
+				                          <div id="ShowTreeStrct" ng-show="ShowTreeStruct" >	
+												{{$parent.selectedSubject}}
+												
+											
+												<div  ng-controller="teacherCtrl as fancy">
+													
+													<div>Search <input type="text" ng-model="bagSearch" /></div>											
+													  <div
+													    ivh-treeview="InstTreeStructureWithSubject"
+													    ivh-treeview-filter="bagSearch"
+														ivh-treeview-validate="true"
+													    ivh-treeview-default-selected-state="false"
+													    ivh-treeview-on-cb-change="OnSelectCallback(ivhNode, ivhIsSelected, ivhTree)"
+														>
+													  </div>
+												  
+												  <button  ng-show="selectedSubject.length>0" class="btn btn-primary  btn-sm" ng-click="ShowSubjectTable()">Add Subjects</button>
+												
+											  
+											 
+											  </div>
+                                  
+                                  			</div>
+                                  			
+                                  			<div ng-show="ShowAddSubjectTable" ><h1>Add subject Table is shown</h1></div>
+                                  			
+                                  			<div  ng-show="ShowSubjectListVar">
+                                  			<h1>Student List Here</h1>
+                                  			</div>
+                                  			
+                                  			</div>
+                                  		  </section> -->
+                                  
+                                    </div>      
                                 
                               </div>
                           </div>
