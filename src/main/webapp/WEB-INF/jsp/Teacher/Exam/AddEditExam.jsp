@@ -160,7 +160,9 @@
 	   			console.log("Total Class Selected are  "+$scope.selectedClass.length);
 	   			console.log("Total Division Selected are  "+$scope.selectedDivision.length);
 	   			console.log("Total Subjects Selected are  "+$scope.selectedSubject.length);
+	   			console.log($scope.selectedSubject);
 	   			console.log("*************************************************************************");
+	   		
   
 	   		  }
 	   					
@@ -851,7 +853,8 @@
 				                          <div class="panel-body">	
 				                          
 				                          <div id="ShowTreeStrct" ng-show="ShowTreeStruct" >	
-												{{$parent.selectedSubject}}
+												
+												{{selectedSubject}}
 												
 											
 												<div  ng-controller="teacherCtrl as fancy">
@@ -874,7 +877,18 @@
                                   
                                   			</div>
                                   			
-                                  			<div ng-show="ShowAddSubjectTable" ><h1>Add subject Table is shown</h1></div>
+                                  			<div   ><h1>Add subject Table is shown</h1>
+                                  			
+                                  			<table>
+                                  			<th>Selected Subjects</th>
+                                  				<tr ng-repeat="subject in selectedSubject">
+                                  				
+                                  					<td>{{subject.label}}</td>
+                                  				</tr>
+                                  				</table>
+                                  			</div>
+                                  			
+                                  			
                                   			
                                   			<div  ng-show="ShowSubjectListVar">
                                   			<h1>Student List Here</h1>
