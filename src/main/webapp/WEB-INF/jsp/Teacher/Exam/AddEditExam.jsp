@@ -552,7 +552,16 @@
 	        				 {
 			                	 $scope.flag=0;
 			                     traverseTillsubDivId( $scope.InstTreeStructureWithSubject, $scope.SubjectDivCompIDList[j].id);
-
+			                   
+			                     if( $scope.flag>0)
+			                   		{
+				                    	 $scope.SubjectDivCompIDList[j].inst=$scope.inst;
+				                    	 $scope.SubjectDivCompIDList[j].branch=$scope.branch;
+				                    	 $scope.SubjectDivCompIDList[j].classes=$scope.classes;
+				                    	 $scope.SubjectDivCompIDList[j].div=$scope.div;			                    
+			                    	 }
+			                     console.log( $scope.SubjectDivCompIDList[j]);
+	
 	        				 }
 
 			                
