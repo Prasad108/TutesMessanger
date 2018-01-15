@@ -9,12 +9,19 @@
    		<jsp:include page="/WEB-INF/jsp/components/defaultHead.jsp" /> 
    		<%-- <jsp:include page="/WEB-INF/jsp/Teacher/components/angular.jsp" /> --%>
    		<%-- <jsp:include page="/WEB-INF/jsp/Teacher/components/angular.jsp" />  --%>
-   		  <!-- ivh-tree CSS -->    
+   		 <%--  <!-- ivh-tree CSS -->    
     <link href="${pageContext.request.contextPath}/css/ivh-treeview.css" rel="stylesheet">
       <!-- ivh-tree CSS -->    
     <link href="${pageContext.request.contextPath}/css/ivh-treeview.min.css" rel="stylesheet">
    		
-   		<script src="${pageContext.request.contextPath}/js/ivh_treeViewscript.js"></script>
+   		<script src="${pageContext.request.contextPath}/js/ivh_treeViewscript.js"></script> --%>
+   		
+   		<link href="<c:url value="/css/ivh-treeview.css" />" rel="stylesheet">
+   		<link href="<c:url value="/css/ivh-treeview.min.css" />" rel="stylesheet">
+   		 <script src="<c:url value="/js/ivh_treeViewscript.js" />"></script>
+    	
+    
+    
    		<style type="text/css">	
 	   		.error {
 	            border:2px solid red;
@@ -561,38 +568,17 @@
 				                    	 $scope.SubjectDivCompIDList[j].div=$scope.div;			                    
 			                    	 }
 			                     console.log( $scope.SubjectDivCompIDList[j]);
-	
 	        				 }
-
-			                
-			                
-
-			                
-			         	          
+		         	          
 			         }, 
 			         function(data) { // optional
 			                 // failed
 			                 
 			         	 console.log(" failed to get the ids");      
 			         });
-
-					
-					    
-				
 				};
 		
-		//traverseTillsubDivId(o,3);
-		
-		console.log("inst "+$scope.inst.label);
-		console.log("branch "+$scope.branch.label);
-		console.log("classes "+$scope.classes.label);
-		console.log("div "+$scope.div.label);
-		console.log("subject is "+$scope.subject.label);
-		
-	   		
-	   		
-
-   					   		  			 			  			
+					   		  			 			  			
    		});   	    
 		
    		</script> 
