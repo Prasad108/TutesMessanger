@@ -11,6 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.app.DAO.ExamSubjectStudentCompositTableDAO;
 import com.app.pojo.ExamSubjectStudentCompositTable;
+import com.app.pojo.Institute;
+import com.app.pojo.Student;
 import com.app.pojo.SubjectDivComposit;
 
 @Repository("ExamSubjectStudentCompositTableDAO")
@@ -67,6 +69,24 @@ public class ExamSubjectStudentCompositTableDAOImpl implements ExamSubjectStuden
 	 Query query=currentSession().createQuery("select sdc.subjectDivComposit from ExamSubjectStudentCompositTable sdc where sdc.exam.id = :id");
 	 query.setParameter("id",examId);
 		return query.list();
+	}
+
+	@Override
+	@Transactional
+	public List<Student> findByExamId(int examId, int subDivId) {
+		 Query query=currentSession().createQuery("select sdc.student from ExamSubjectStudentCompositTable sdc where sdc.exam.id = :examId and sdc.subjectDivComposit.id = :subDivId");
+		 query.setParameter("examId",examId);
+		 query.setParameter("subDivId",subDivId);
+			return query.list();
+	}
+
+	@Override
+	@Transactional
+	public ExamSubjectStudentCompositTable findByExamSubDivId(int examId, int subDivId) {
+		 Query query=currentSession().createQuery("from ExamSubjectStudentCompositTable sdc where sdc.exam.id = :examId and sdc.subjectDivComposit.id = :subDivId and sdc.student.id is null");
+		 query.setParameter("examId",examId);
+		 query.setParameter("subDivId",subDivId);
+		 return (ExamSubjectStudentCompositTable) query.uniqueResult();
 	}
 
 }

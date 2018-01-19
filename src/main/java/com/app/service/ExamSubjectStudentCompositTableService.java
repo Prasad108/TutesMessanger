@@ -3,6 +3,7 @@ package com.app.service;
 import java.util.List;
 
 import com.app.pojo.ExamSubjectStudentCompositTable;
+import com.app.pojo.Student;
 import com.app.pojo.SubjectDivComposit;
 
 public interface ExamSubjectStudentCompositTableService {
@@ -15,4 +16,6 @@ public interface ExamSubjectStudentCompositTableService {
 	public List<ExamSubjectStudentCompositTable> getall();
 	
 	public List<SubjectDivComposit> findByExamId(int examId);
+	public List<Student> findByExamId(int examId,int subDivId);
+	public ExamSubjectStudentCompositTable findByExamSubDivId(int examId,int subDivId);
 }

@@ -97,7 +97,7 @@ public class ExamSubjectStudentCompositTable implements java.io.Serializable {
 	}
 
 	@Temporal(TemporalType.DATE)
-	@Column(name = "date-time", length = 10)
+	@Column(name = "date_time", length = 10)
 	public Date getDateTime() {
 		return this.dateTime;
 	}

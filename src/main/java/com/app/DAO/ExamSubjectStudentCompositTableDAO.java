@@ -3,6 +3,7 @@ package com.app.DAO;
 import java.util.List;
 
 import com.app.pojo.ExamSubjectStudentCompositTable;
+import com.app.pojo.Student;
 import com.app.pojo.SubjectDivComposit;
 
 public interface ExamSubjectStudentCompositTableDAO {
@@ -15,4 +16,7 @@ public interface ExamSubjectStudentCompositTableDAO {
 	public List<ExamSubjectStudentCompositTable> getall();
 	
 	public List<SubjectDivComposit> findByExamId(int examId);
+	public List<Student> findByExamId(int examId,int subDivId);
+	public ExamSubjectStudentCompositTable findByExamSubDivId(int examId,int subDivId);
+	
 }
