@@ -97,7 +97,7 @@ public class ExamSubjectStudentCompositTable implements java.io.Serializable {
 	}
 
 	@Temporal(TemporalType.DATE)
-	@Column(name = "date-time", length = 10)
+	@Column(name = "date_time", length = 10)
 	public Date getDateTime() {
 		return this.dateTime;
 	}
@@ -149,6 +149,12 @@ public class ExamSubjectStudentCompositTable implements java.io.Serializable {
 
 	public void setResults_1(Set<Result> results_1) {
 		this.results_1 = results_1;
+	}
+
+	@Override
+	public String toString() {
+		return "ExamSubjectStudentCompositTable [id=" + id + ", dateTime=" + dateTime + ", durationInMinutes="
+				+ durationInMinutes + ", outOfMarks=" + outOfMarks + ", passingMarks=" + passingMarks + "]";
 	}
 
 }

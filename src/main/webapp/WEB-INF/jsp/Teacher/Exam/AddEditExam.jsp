@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+</<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
        <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>   
@@ -6,21 +6,16 @@
 <html ng-app="myApp" ng-controller="teacherCtrl" >
 	<head>
  		<title>Add/Edit Exam</title>
+ 		 		
    		<jsp:include page="/WEB-INF/jsp/components/defaultHead.jsp" /> 
-   		<%-- <jsp:include page="/WEB-INF/jsp/Teacher/components/angular.jsp" /> --%>
-   		<%-- <jsp:include page="/WEB-INF/jsp/Teacher/components/angular.jsp" />  --%>
-   		 <%--  <!-- ivh-tree CSS -->    
-    <link href="${pageContext.request.contextPath}/css/ivh-treeview.css" rel="stylesheet">
-      <!-- ivh-tree CSS -->    
-    <link href="${pageContext.request.contextPath}/css/ivh-treeview.min.css" rel="stylesheet">
-   		
-   		<script src="${pageContext.request.contextPath}/js/ivh_treeViewscript.js"></script> --%>
-   		
+  		
    		<link href="<c:url value="/css/ivh-treeview.css" />" rel="stylesheet">
    		<link href="<c:url value="/css/ivh-treeview.min.css" />" rel="stylesheet">
    		 <script src="<c:url value="/js/ivh_treeViewscript.js" />"></script>
-    	
-    
+   		 
+   		 <script type="text/javascript" src="${pageContext.request.contextPath}/js/pikaday.js"></script>
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/pikaday.css">   
+  
     
    		<style type="text/css">	
 	   		.error {
@@ -32,6 +27,8 @@
 
   		  var app = angular.module('myApp', ['ivh.treeview']);
   		  
+  		
+  		  
   		app.config(function(ivhTreeviewOptionsProvider) {
   			 ivhTreeviewOptionsProvider.set({
   			   defaultSelectedState: false,
@@ -42,9 +39,10 @@
   			   twistieLeafTpl: ' <i class="icon_document_alt"></i>'
   			 });
   			});
+  		
   		  
    		app.controller('teacherCtrl', function($scope, $http,$interval) {
-
+   			
    		
 	   			$scope.teacher=JSON.parse('${teacherJSON}');
 	   			$scope.permissions=JSON.parse('${permissions}');  
@@ -445,7 +443,7 @@
 	   		$scope.ShowSubjectList=function(){
 	   			
 	   			
-	   			$scope.ShowTreeStruct=false;
+	   			$scope.ShowTreeStruct=true;
 	   			$scope.ShowSubjectListVar=true;
 	   			$scope.ShowAddSubjectTable=false;
 	   			
@@ -534,11 +532,10 @@
 				
 				$scope.ShowSubjectTable=function()
 				{
-					console.log("functino called");
 					$scope.ShowTreeStruct=false;
 		   			$scope.ShowSubjectListVar=false;
 		   			$scope.ShowAddSubjectTable=true;
-		   			console.log("ShowAddSubjectTable variable status "+$scope.ShowAddSubjectTable);
+		   			
 				};
 
 				$scope.ShowSelectedSubject=function()
@@ -577,6 +574,89 @@
 			         	 console.log(" failed to get the ids");      
 			         });
 				};
+				
+				  
+				 
+				 $scope.datepickerActivate=function()
+				 {
+					 $('.datepicker').pikaday({ firstDay: 1 });
+				 };
+				 
+				 $scope.AddSubjectToExam=function(){
+					 
+					 $scope.ExamSubjectList=[];
+					 console.log($scope.selectedSubject);
+					 
+					  for(var i=0;i<$scope.selectedSubject.length;i++){
+						  var ExamSubject={};
+						  ExamSubject.exam={};
+						  ExamSubject.subjectDivComposit={};
+						 
+						 ExamSubject.exam.id=$scope.selectedExamForAddSubject.id;
+						 ExamSubject.subjectDivComposit.id=$scope.selectedSubject[i].value;
+						 ExamSubject.dateTime=new Date($scope.selectedSubject[i].ExamDate);
+						 ExamSubject.durationInMinutes= $scope.selectedSubject[i].DurationInMinutes;
+						 ExamSubject.outOfMarks=$scope.selectedSubject[i].OutOF;
+						 ExamSubject.passingMarks=$scope.selectedSubject[i].PassingMarks;
+						 $scope.ExamSubjectList.push(ExamSubject);
+						 
+					 } 
+					  
+					  console.log($scope.ExamSubjectList);
+					  
+					  var data=JSON.stringify($scope.ExamSubjectList);
+					  
+					  $http({
+				             url: "AddSubjectToExam",
+				             contentType : 'application/json; charset=utf-8',
+				   	    	 dataType : 'json', 
+				             method: "POST",    
+				             data :data
+				         })
+				         .then(function(response) {
+				                 // if success       	
+				         	 console.log("succcess"); 
+				                 var resp=response.data;
+				                 
+				                 if(resp.message="success")
+				                	 {// subjecte added to exam 
+				                	 $scope.SubjectAddedSuccess=true;
+				                	 $scope.SubjectAddedFailed=false;
+				                	 
+				                	 }
+				                 else
+				                	 {// failed to add subject to exam
+				                	 $scope.SubjectAddedFailed=true;
+				                	 $scope.SubjectAddedSuccess=false;
+				                	 }
+				         	
+		     	           		         	           
+				         }, 
+				         function(data) { // optional
+				                 // failed		                 
+				         	 console.log(" failed to AddSubjectToExam the exam"); 	         	
+				         });
+					 
+					 
+					 
+				 };
+				 
+//-------------------------------to scheck wheather all subjects have passing marks less than OutOf marks				 
+				 $scope.ValidateOutOFandPassing=function(){
+					 
+					 var result=true;
+					 for(var i=0;i<$scope.selectedSubject.length;i++){
+						 
+						 if($scope.selectedSubject[i].OutOF < $scope.selectedSubject[i].PassingMarks)
+							 {
+							 result=false;
+							 break;
+							 }
+					 }
+					 return result;
+				 };
+				 
+				
 		
 					   		  			 			  			
    		});   	    
@@ -886,40 +966,82 @@
 										<section class="panel">
 				                          <div class="panel-body">	
 				                          
-				                          <div id="ShowTreeStrct" ng-show="ShowTreeStruct" >	
-												
-												{{selectedSubject}}
-												
-											
-												<div  ng-controller="teacherCtrl as fancy">
+				                        	<div id="ShowTreeStrct" ng-show="ShowTreeStruct" >													
+										
 													
 													<div>Search <input type="text" ng-model="bagSearch" /></div>											
-													  <div
-													    ivh-treeview="InstTreeStructureWithSubject"
-													    ivh-treeview-filter="bagSearch"
-														ivh-treeview-validate="true"
-													    ivh-treeview-default-selected-state="false"
-													    ivh-treeview-on-cb-change="OnSelectCallback(ivhNode, ivhIsSelected, ivhTree)"
-														>
-													  </div>
+													  	<div
+														    ivh-treeview="InstTreeStructureWithSubject"
+														    ivh-treeview-filter="bagSearch"
+															ivh-treeview-validate="true"
+														    ivh-treeview-default-selected-state="false"
+														    ivh-treeview-on-cb-change="OnSelectCallback(ivhNode, ivhIsSelected, ivhTree)"
+															>
+													  	</div>
 												  
-												  <button  ng-show="selectedSubject.length>0" class="btn btn-primary  btn-sm" ng-click="ShowSubjectTable()">Add Subjects</button>
-												
-											  
-											 
-											  </div>
-                                  
+												  	<button  ng-show="selectedSubject.length>0" class="btn btn-primary  btn-sm" ng-click="ShowSubjectTable();datepickerActivate()">Add Subjects</button>
+  
                                   			</div>
                                   			
-                                  			<div   ><h1>Add subject Table is shown</h1>
+                                  			<div class="table-responsive" ng-show="ShowAddSubjectTable" ng-mouseover="datepickerActivate()">
                                   			
-                                  			<table>
-                                  			<th>Selected Subjects</th>
-                                  				<tr ng-repeat="subject in selectedSubject">
-                                  				
-                                  					<td>{{subject.label}}</td>
-                                  				</tr>
-                                  				</table>
+                                  						<div class="alert alert-info fade in" ng-show="SubjectAddedSuccess">
+							                                  <button data-dismiss="alert" class="close close-sm" type="button">
+							                                      <i class="icon-remove"></i>
+							                                  </button>
+							                                  <strong>Subjects Successfully added to Exam</strong> 
+							                              </div>
+							                              
+							                              
+							                               <div class="alert alert-block alert-danger fade in "  for="inputSuccess" ng-show="SubjectAddedfailed">
+							                                  <button data-dismiss="alert" class="close close-sm" type="button">
+							                                      <i class="icon-remove"></i>
+							                                  </button>
+							                                <strong>Failed to add Subjects  to Exam</strong>
+							                              </div>
+							                              
+							                     <button type="button" class="btn btn-info" ng-click="ShowTree()"> < Add Remove subjects from Exam</button>
+	                                  			
+	                                  			<form class="form-inline" role="form" name="AddSubjectToExamForm">
+	                                  			
+	                                  			<table class="table">
+	                                  				<tr>
+	                                  					<th>Selected Subject</th>
+	                                  					<th>Out Of Marks</th>
+	                                  					<th>Passing Marks</th>
+	                                  					<th>Duration in Min</th>
+	                                  					<th>Date</th>
+	                                  				</tr>
+	                                  			
+	                                  					<tr ng-repeat="subject in selectedSubject" >
+	                                  							<td>
+	                                  							{{subject.label}}
+	                                  							</td>
+	                                  							<td> 
+																      <div class="form-group">
+									                                      <input type="number" ng-model="subject.OutOF" class="form-control" id="exampleInputEmail2" placeholder="Out Of Marks" required="required">
+									                                  </div>
+									                             </td>
+									                             <td>
+									                                  <div class="form-group">
+									                                      <input type="number" ng-model="subject.PassingMarks" class="form-control" ng-class="{error : subject.PassingMarks>subject.OutOF }"  attrs="{data-tip= ' Passing are greater than Out Of Marks ': subject.PassingMarks>subject.OutOF }" id="exampleInputPassword2" placeholder="Passing Marks" required="required">
+									                                  </div>
+									                              </td>
+									                              <td>
+									                                  <div class="form-group">
+									                                      <input type="number" ng-model="subject.DurationInMinutes" class="form-control" id="exampleInputPassword2" placeholder="Duration in Minutes" required="required">
+									                                  </div>
+																 </td>
+																  <td>
+									                                  <div class="form-group">
+									                                      <input type="text" ng-model="subject.ExamDate" class="form-control datepicker" id="datepicker-topleft-forreal" placeholder="Date" required="required" >
+									                                  </div>
+																 </td>
+	                                  						</tr>
+	                                  				
+	                                  				</table>
+	                                  				<button type="submit" id="submitBtnAddSub" class="btn btn-primary" ng-click="AddSubjectToExamForm.$valid && ValidateOutOFandPassing() &&  AddSubjectToExam()">Save Subjects</button>
+	                                  				 </form>
                                   			</div>
                                   			
                                   			
@@ -1000,10 +1122,75 @@
 
           </div>
           </section>
- </section>   
+ </section>
+ 
+
      <!-- container section start -->
 <jsp:include page="/WEB-INF/jsp/components/defaultScript.jsp" />
    </section>
- <!-- container section start -->
+   
+   <script>
+   /*!
+    * Pikaday jQuery plugin.
+    *
+    * Copyright © 2013 David Bushell | BSD & MIT license | https://github.com/dbushell/Pikaday
+    */
+
+   (function (root, factory)
+   {
+       'use strict';
+
+       if (typeof exports === 'object') {
+           // CommonJS module
+           factory(require('jquery'), require('pikaday'));
+       } else if (typeof define === 'function' && define.amd) {
+           // AMD. Register as an anonymous module.
+           define(['jquery', 'pikaday'], factory);
+       } else {
+           // Browser globals
+           factory(root.jQuery, root.Pikaday);
+       }
+   }(this, function ($, Pikaday)
+   {
+       'use strict';
+
+       $.fn.pikaday = function()
+       {
+           var args = arguments;
+
+           if (!args || !args.length) {
+               args = [{ }];
+           }
+
+           return this.each(function()
+           {
+               var self   = $(this),
+                   plugin = self.data('pikaday');
+
+               if (!(plugin instanceof Pikaday)) {
+                   if (typeof args[0] === 'object') {
+                       var options = $.extend({}, args[0]);
+                       options.field = self[0];
+                       self.data('pikaday', new Pikaday(options));
+                   }
+               } else {
+                   if (typeof args[0] === 'string' && typeof plugin[args[0]] === 'function') {
+                       plugin[args[0]].apply(plugin, Array.prototype.slice.call(args,1));
+
+                       if (args[0] === 'destroy') {
+                           self.removeData('pikaday');
+                       }
+                   }
+               }
+           });
+       };
+
+   }));
+   
+   </script>
+  
+    
+  
+	
   </body>
 </html>

@@ -25,6 +25,7 @@ import com.app.pojo.Classes;
 import com.app.pojo.Division;
 import com.app.pojo.Exam;
 import com.app.pojo.ExamMode;
+import com.app.pojo.ExamSubjectStudentCompositTable;
 import com.app.pojo.ExamType;
 import com.app.pojo.Institute;
 import com.app.pojo.Login;
@@ -1578,8 +1579,7 @@ public class TeacherController {
 			 return subjectListNotInDivJSON;
 		 }
 		 
-		 
-		 
+
 		 
 		 @RequestMapping(value = "/AddEditSubject", method = RequestMethod.GET)
 			public String AddEditSubject(Model model) {		
@@ -1898,6 +1898,40 @@ public class TeacherController {
 					JSON+="}";
 					System.out.println(JSON);
 
+				 return JSON;
+			 }
+		 
+		 @RequestMapping(value="/AddSubjectToExam", method=RequestMethod.POST)
+			@ResponseBody
+			public String AddSubjectToExam(@RequestBody List<ExamSubjectStudentCompositTable> examSubjectStudentSubList)
+			 {
+				 System.out.println("**********inside AddSubjectToExam controller**********");	
+				
+				 String JSON="";
+				 java.util.Date dt = new java.util.Date();
+
+				 java.text.SimpleDateFormat sdf = 
+				      new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+				 String currentTime = sdf.format(dt);
+				 
+				 try {
+				for(ExamSubjectStudentCompositTable examSubjectStudentSub:examSubjectStudentSubList)
+				{
+					/*System.out.println("examsubdivcomp "+examSubjectStudentSub+"exam id:"+examSubjectStudentSub.getExam().getId()+" subdiv id "+examSubjectStudentSub.getSubjectDivComposit().getId());*/
+					System.out.println(examSubjectStudentSub);
+					System.out.println(examSubjectStudentSub.getExam().getId());
+					System.out.println(examSubjectStudentSub.getSubjectDivComposit().getId());
+					
+					examSubStudCompService.create(examSubjectStudentSub);
+				}
+				 JSON="{\"message\":\"success\"}";
+				 }
+				 catch(Exception e) {
+					 JSON="{\"message\":\"failed to save subjects to exam\"}";
+					 e.printStackTrace();
+					 
+				 }
 				 return JSON;
 			 }
 			 
