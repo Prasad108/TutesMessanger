@@ -1,4 +1,4 @@
-</<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
        <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>   
@@ -21,6 +21,9 @@
 	   		.error {
 	            border:2px solid red;
 	        }
+	        
+	      #subStrong { display:inline-block;color:maroon;
+	      }
    		</style>
    		
    		 <script>
@@ -60,6 +63,7 @@
 	   			$scope.ShowTreeStruct=false;
 	   			$scope.ShowSubjectListVar=false;
 	   			$scope.ShowAddSubjectTable=false;
+	   		    $scope.ShowSelectedSubjectTable=false;
 	   			
 	   			
 				$scope.ExamRegularArray=[{id:0,discription:'Regular'},{id:1,discription:'Repeat'}];
@@ -443,7 +447,7 @@
 	   		$scope.ShowSubjectList=function(){
 	   			
 	   			
-	   			$scope.ShowTreeStruct=true;
+	   			$scope.ShowTreeStruct=false;
 	   			$scope.ShowSubjectListVar=true;
 	   			$scope.ShowAddSubjectTable=false;
 	   			
@@ -504,7 +508,9 @@
 					        		{
 					        			//console.log("Selected Division is "+o[i].label);
 					        			$scope.div.label=o[i].label;
+					        			$scope.div.value=o[i].value;
 									console.log($scope.div.label);
+									console.log($scope.div.value);
 									
 					        		}
 						        	
@@ -551,10 +557,20 @@
 			         	 console.log("WE got ids");
 			         	 
 			                 $scope.SubjectDivCompIDList=response.data;
-
+			                 $scope.ShowSelectedSubjectTable=true;	
+                          
 			                 for(var j=0;j< $scope.SubjectDivCompIDList.length; j++)
 	        				 {
 			                	 $scope.flag=0;
+			                	 $scope.inst={};
+			         			$scope.branch={};
+			         			$scope.classes={};
+			         			$scope.div={};
+			         			$scope.subject={};
+			         			
+			         			$scope.flag=0;
+
+			                	 
 			                     traverseTillsubDivId( $scope.InstTreeStructureWithSubject, $scope.SubjectDivCompIDList[j].id);
 			                   
 			                     if( $scope.flag>0)
@@ -562,7 +578,9 @@
 				                    	 $scope.SubjectDivCompIDList[j].inst=$scope.inst;
 				                    	 $scope.SubjectDivCompIDList[j].branch=$scope.branch;
 				                    	 $scope.SubjectDivCompIDList[j].classes=$scope.classes;
-				                    	 $scope.SubjectDivCompIDList[j].div=$scope.div;			                    
+				                    	 $scope.SubjectDivCompIDList[j].div=$scope.div;	
+				                    	 $scope.SubjectDivCompIDList[j].subject=$scope.subject;	
+				                    		                    
 			                    	 }
 			                     console.log( $scope.SubjectDivCompIDList[j]);
 	        				 }
@@ -659,6 +677,102 @@
 				
 		
 					   		  			 			  			
+				$scope.selectExam=function(){
+
+					 $scope.ShowSelectedSubjectTable=false;
+					
+					};
+
+
+				$scope.addStudentSubmitButton=function(sub){
+                     console.log(sub.div.value);
+                     console.log(sub.id);
+
+                      $http({
+			   	            url: "GetStudentListNotInExamJSON/"+sub.id+"/"+sub.div.value+"/"+$scope.selectedExamForAddStudent.id,
+			   	         	contentType : 'application/json; charset=utf-8',
+			   	    	 	dataType : 'json',
+			   	            method: "POST" ,               
+			   	        })
+			   	        .then(function successCallback(response) {
+			   	                // if success   then generate subject table
+				   	                
+				   	                console.log("response came"); 
+				   	         	if(response.data.ErrorMessage)
+				   	         		{
+				   	         		 console.log("there is error no students");
+				   	 	
+				   	         		 $scope.ShowStudentNotInExam=false;    //do not show student table
+				   	         		 $scope.NoStudentInDivision=true;
+				   	         		}
+				   	         	else{
+				   	         	console.log("succesess students are there");
+				   	             $scope.ShowStudentNotInExam=true; //show student table
+				   	             $scope.NoStudentInDivision=false;   
+				   	        	sub.studentNotInExamList=response.data;	
+				   	        	 
+				   	             console.log(sub.studentNotInExamList);
+				   	   			
+				   	        	 for( i=sub.studentNotInExamList.length-1; i>=0; i--) {
+						   	          console.log(sub.studentNotInExamList[i].fname);    	
+						        		} 
+
+				   	        /* 	$scope.totallenght=$scope.studentOfExamList.length/$scope.numPerPage*10;
+						   	    
+			   	        	 
+			   	        	 var begin = (($scope.currentPage - 1) * $scope.numPerPage)
+			        		    , end = begin + $scope.numPerPage;
+			        		    console.log("begin is "+begin+" end is "+end)
+			        		    $scope.filteredTodos = $scope.studentOfExamList.slice(begin, end); */
+				   	        	 
+				   	         	} 
+			   	        }, 
+			   	    		 function errorCallback(response) {
+			   	                // failed
+			   	                console.log("error response came");    	          
+			   	        }); 
+					};
+
+			$scope.addStudent=function(student,sub){
+
+                        console.log("selected student is "+student.fname+" and its id is "+student.id+" subject id is "+sub.id+" exam id is "+$scope.selectedExamForAddStudent.id);
+
+                        $http({
+			   	            url: "AddStudentInExam/"+student.id+"/"+sub.id+"/"+$scope.selectedExamForAddStudent.id+"/"+sub.div.value,
+			   	         	contentType : 'application/json; charset=utf-8',
+			   	    	 	dataType : 'json',
+			   	            method: "POST" ,               
+			   	        })
+			   	        .then(function successCallback(response) {
+			   	                // if success   
+				   	                console.log("response came"); 
+				   	         	    sub.studentNotInExamList=response.data;	
+				   	         	   for( i=sub.studentNotInExamList.length-1; i>=0; i--) {
+					        		    if( sub.studentNotInExamList[i].id == student.id) sub.studentNotInExamList.splice(i,1);
+					        		} 
+				   	        
+			   	        }, 
+			   	    		 function errorCallback(response) {
+			   	                // failed
+			   	                console.log("error response came");    	          
+			   	        });  
+						};
+
+					
+
+					 /*   $scope.expand=function($event){
+						console.log("in expand function");
+						   if($($event.target).find('.collapse').hasClass('in')){
+							   console.log("if condition");
+							   $($event.target).find('.collapse').removeClass('in')
+						   }else{
+							   console.log("else condition");
+						        $($event.target).find('.collapse').addClass('in')
+						   }
+						};  */ 
+
+						
+	 			   		  			 			  			
    		});   	    
 		
    		</script> 
@@ -1055,8 +1169,9 @@
                                   
                                     </div>
 								      
-								<!-- ------Add Student To Exam ----------------------------------- -->                                 
-                                  <div id="AddStudentToExam" class="tab-pane">
+	<!-- ----------------------------Add Student To Exam ----------------------------------- -->   
+	                              
+                                  <div id="AddStudentToExam" class="tab-pane" >
                                   
 										<section class="panel">
 				                          <div class="panel-body">
@@ -1065,7 +1180,7 @@
 					                                      <label class="control-label col-lg-2" for="inputSuccess">Select Exam To Add Students</label>
 					                                      <div class="col-lg-10">
 
-					                                          <select class="form-control input-lg m-bot15" ng-model="selectedExamForAddStudent" ng-options="exam.discription for (x,exam) in examList"  required="required" required="required" required></select>
+					                                          <select class="form-control input-lg m-bot15" ng-model="selectedExamForAddStudent" ng-options="exam.discription for (x,exam) in examList"  required="required" required="required" required ng-change="selectExam()"></select>
 					                                         
 					                                      </div>
 					                                  </div>
@@ -1113,14 +1228,60 @@
                                   
                                     </div>      
                                 
-                              </div>
+                              </div>    
                           </div>
                       </section>
-                      <!--tab nav start--> 
-	                       	
-
-
-          </div>
+                      
+                         
+                                   <section class="panel" ng-show="ShowSelectedSubjectTable">
+				                        <div class="panel-body">	
+				                             <div id="ShowSelectedSubjectTable" >
+				                             <h2>Selected Subject List</h2>
+				                           <div class="panel-group m-bot20" id="accordion"> 
+				                           
+				                                     <div ng-show="NoStudentInDivision" class="alert alert-block alert-danger fade in">
+									                     <button data-dismiss="alert" class="close close-sm" type="button">
+									                          <i class="icon-remove"></i>
+									                     </button>
+									                     <strong>Selected division does not contain any student or All student are added in Exam</strong> 
+									                 </div>
+						                             
+						                             <div ng-repeat="sub in SubjectDivCompIDList" ng-class="{selectedrow:sub.Selected}">
+								                              <p><i style="display: none;">{{ sub.div.value }}</i>{{ sub.inst.label }}>{{ sub.branch.label }}>{{ sub.classes.label }}>{{ sub.div.label }}><strong id="subStrong">{{ sub.subject.label }}</strong>
+								                               
+								                               <button class="btn btn-primary btn-sm pull-right accordion-toggle" data-toggle="collapse"  ng-href="#collapseOne{{sub.id}}" ng-click="addStudentSubmitButton(sub)" id="addStudentSubmitBTN" type="submit" style="margin-right: 10px">Add Student</button>
+								                               <!-- <button class="btn btn-primary btn-sm pull-right accordion-toggle" data-toggle="collapse"  ng-href="#collapseTwo{{sub.id}}" ng-click="expand($event)" id="showStudentSubmitBTN" type="submit" style="margin-right: 10px">Exam's Student</button> --> 
+								                              </p>
+								                                 <div id="collapseOne{{sub.id}}" class="panel-collapse collapse">
+				                                                   <div class="panel-body" ng-show="ShowStudentNotInExam">
+								                                            <table  class="table" ng-show="ShowStudentNotInExam">
+													                           <tbody>
+													                             <tr>
+																				   <th><i class=""></i>Student Name</th>                                                          
+													                               <th><i class=""></i>Add Action</th>
+													                             </tr>
+													                             <tr ng-repeat="student in sub.studentNotInExamList | orderBy : 'fname'" ng-class="{selectedrow:student.Selected}">
+																						<td> {{ student.fname }} {{ student.father }} {{ student.lname }}</td>
+													   						
+													   							 		<td>
+													                                      <a class="btn btn-danger" ng-click="addStudent(student,sub)" style="margin-left: 3%"><i class="icon_plus_alt2"></i></a>
+													                                    </td>
+													   							 </tr>
+													                          </tbody>
+												                          </table>
+							                                       </div>
+							         
+				                                                </div>
+				                                                <!-- <div id="collapseTwo{{sub.id}}" class="panel-collapse collapse">
+				                                                   <div class="panel-body">
+							                                             trial1
+							                                       </div>
+				                                                </div> -->
+								                              <br> 
+						                             </div>
+         					 				</div> 
+         					 	</div>
+         			 	</div>
           </section>
  </section>
  

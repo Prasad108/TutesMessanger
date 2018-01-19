@@ -1484,7 +1484,125 @@ public class TeacherController {
 			
 			 return JSON;
 		 }
-		 
+		
+		
+		@RequestMapping(value="/GetStudentListNotInExamJSON/{subDivId}/{divId}/{examId}", method=RequestMethod.POST)
+		@ResponseBody
+	 	public String GetStudentListNotInExamJSON(@PathVariable("subDivId") int subDivId,@PathVariable("divId") int divId,@PathVariable("examId") int examId)
+		 {
+			 System.out.println("**********inside GetStudentListNotInExamJSON controller**********");
+			 
+			 String studentListNotExamJSON="";
+			 System.out.println("sub_divComposit id : "+subDivId);
+			 System.out.println("div id : "+divId);
+			 System.out.println("exam id : "+examId);
+			 List<Student> studentNotInExamList=new ArrayList<Student>();
+			
+				try
+				{
+			
+				List<Student> allStudentOfDivisionList=StudentService.findByDivId(divId);
+				List<Student> studentOfExamList=examSubStudCompService.findByExamId(examId, subDivId);
+				
+				String match="";
+				
+				  for(Student examStudent : studentOfExamList)
+				  {
+					  System.out.println("student id: "+examStudent.getId());
+				  }
+				
+				
+				for (Student allStudent : allStudentOfDivisionList) {
+					    match="false";
+					    for(Student examStudent : studentOfExamList)
+					    {
+					    	if(allStudent.getId() == examStudent.getId())
+					    	{
+					    		match="true";
+					    		break;
+					    	}
+					    }
+					    
+					    if(match.equals("false"))
+					    {
+					    	studentNotInExamList.add(allStudent);
+					    }
+					}
+				
+				studentListNotExamJSON=gson.toJson(studentNotInExamList);
+				
+				if(studentNotInExamList.isEmpty())
+				{
+					studentListNotExamJSON="{\"ErrorMessage\":\"Selected subject having all students\"}";		
+				}
+				else
+				{
+					studentListNotExamJSON=gson.toJson(studentNotInExamList);
+				}
+				}
+				catch(Exception e)
+				{
+					studentListNotExamJSON="{\"ErrorMessage\":\"Selected subject having all students\"}";
+					
+					e.printStackTrace();
+				}
+				
+				System.out.println(studentListNotExamJSON);
+			 
+			 
+			 return studentListNotExamJSON;
+		 }
+		
+		@RequestMapping(value="/AddStudentInExam/{studId}/{subDivId}/{examId}/{divId}", method=RequestMethod.POST)
+		 @ResponseBody
+		 	public String AddStudentInExam(@PathVariable("studId") int studId,@PathVariable("subDivId") int subDivId,@PathVariable("examId") int examId,@PathVariable("divId") int divId)
+		 {
+			 System.out.println("**********inside AddStudentInExam controller**********");
+			 String studentListNotExamJSON="";
+			 List<Student> studentNotInExamList=new ArrayList<Student>();
+			 try{
+				
+				 ExamSubjectStudentCompositTable examStudSubObj= examSubStudCompService.findByExamSubDivId(examId, subDivId);
+			     Student student=new Student();
+			     student.setId(studId);
+			     examStudSubObj.setStudent(student);
+		
+			     examSubStudCompService.create(examStudSubObj);
+			     
+			        List<Student> allStudentOfDivisionList=StudentService.findByDivId(divId);
+					List<Student> studentOfExamList=examSubStudCompService.findByExamId(examId, subDivId);
+					
+					String match="";
+					
+					for (Student allStudent : allStudentOfDivisionList) {
+						    match="false";
+						    for(Student examStudent : studentOfExamList)
+						    {
+						    	if(allStudent.getId() == examStudent.getId())
+						    	{
+						    		match="true";
+						    		break;
+						    	}
+						    }
+						    
+						    if(match.equals("false"))
+						    {
+						    	studentNotInExamList.add(allStudent);
+						    }
+						}
+					
+					studentListNotExamJSON=gson.toJson(studentNotInExamList);
+					
+			     
+				
+			}catch(Exception e){
+				e.printStackTrace();
+				
+			 }
+			 
+			 return studentListNotExamJSON;
+		 }
+		
 	 	 
 	 	@RequestMapping(value = "/deleteSubjectFromDivision/{subId}/{divId}", method = RequestMethod.GET)
 		 @ResponseBody

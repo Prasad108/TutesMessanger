@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.app.DAO.ExamSubjectStudentCompositTableDAO;
 import com.app.DAO.SubjectDivCompositDAO;
 import com.app.pojo.ExamSubjectStudentCompositTable;
+import com.app.pojo.Student;
 import com.app.pojo.SubjectDivComposit;
 import com.app.service.ExamSubjectStudentCompositTableService;
 
@@ -52,6 +53,16 @@ public class ExamSubjectStudentCompositTableServiceImpl implements ExamSubjectSt
 	@Override
 	public List<SubjectDivComposit> findByExamId(int examId) {
 		return examSubStudCompDAO.findByExamId(examId);
+	}
+
+	@Override
+	public List<Student> findByExamId(int examId, int subDivId) {
+		return examSubStudCompDAO.findByExamId(examId, subDivId);
+	}
+
+	@Override
+	public ExamSubjectStudentCompositTable findByExamSubDivId(int examId, int subDivId) {
+		return examSubStudCompDAO.findByExamSubDivId(examId, subDivId);
 	}
 
 }
