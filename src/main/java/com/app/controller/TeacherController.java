@@ -26,6 +26,7 @@ import com.app.pojo.Classes;
 import com.app.pojo.Division;
 import com.app.pojo.Exam;
 import com.app.pojo.ExamMode;
+import com.app.pojo.ExamSubjectStudentCompositTable;
 import com.app.pojo.ExamType;
 import com.app.pojo.Institute;
 import com.app.pojo.Login;
@@ -41,6 +42,7 @@ import com.app.service.ClassesService;
 import com.app.service.DivisionService;
 import com.app.service.ExamModeService;
 import com.app.service.ExamService;
+import com.app.service.ExamSubjectStudentCompositTableService;
 import com.app.service.ExamTypeService;
 import com.app.service.InstituteService;
 import com.app.service.LoginService;
@@ -106,6 +108,9 @@ public class TeacherController {
 	
 	@Autowired
 	SubjectDivCompositService subjectDivCompositService;
+	
+	@Autowired
+	ExamSubjectStudentCompositTableService examSubStudCompService;
 
 	Gson gson = new Gson();
 	
@@ -1450,7 +1455,157 @@ public class TeacherController {
 
 			 return JSON;
 		 }
-		 
+	 	
+	 	
+		@RequestMapping(value="/GetSubjectDivCompID/{examId}", method=RequestMethod.POST)
+		@ResponseBody
+	 	public String GetSubjectDivCompID(@PathVariable("examId") int examId)
+		 {
+			 System.out.println("**********inside GetSubjectDivCompID controller**********");
+			 List<SubjectDivComposit> subjectDivCompList=examSubStudCompService.findByExamId(examId);
+			 
+			 String JSON="[";
+			 
+			 for(SubjectDivComposit s : subjectDivCompList)
+			 {
+			  System.out.println("\n SubDivID : "+s.getId() );	 
+			 }
+			 
+			 for(SubjectDivComposit s : subjectDivCompList)
+			 {
+				 JSON+="{";
+					JSON+="\"id\":"+s.getId();			
+					JSON+="},";
+				   
+			 }
+			 
+			 JSON=JSON.substring(0, JSON.length() - 1);
+				JSON+="]";
+			
+				System.out.println(JSON);
+			
+			
+			 return JSON;
+		 }
+		
+		
+		@RequestMapping(value="/GetStudentListNotInExamJSON/{subDivId}/{divId}/{examId}", method=RequestMethod.POST)
+		@ResponseBody
+	 	public String GetStudentListNotInExamJSON(@PathVariable("subDivId") int subDivId,@PathVariable("divId") int divId,@PathVariable("examId") int examId)
+		 {
+			 System.out.println("**********inside GetStudentListNotInExamJSON controller**********");
+			 
+			 String studentListNotExamJSON="";
+			 System.out.println("sub_divComposit id : "+subDivId);
+			 System.out.println("div id : "+divId);
+			 System.out.println("exam id : "+examId);
+			 List<Student> studentNotInExamList=new ArrayList<Student>();
+			
+				try
+				{
+			
+				List<Student> allStudentOfDivisionList=StudentService.findByDivId(divId);
+				List<Student> studentOfExamList=examSubStudCompService.findByExamId(examId, subDivId);
+				
+				String match="";
+				
+				  for(Student examStudent : studentOfExamList)
+				  {
+					  System.out.println("student id: "+examStudent.getId());
+				  }
+				
+				
+				for (Student allStudent : allStudentOfDivisionList) {
+					    match="false";
+					    for(Student examStudent : studentOfExamList)
+					    {
+					    	if(allStudent.getId() == examStudent.getId())
+					    	{
+					    		match="true";
+					    		break;
+					    	}
+					    }
+					    
+					    if(match.equals("false"))
+					    {
+					    	studentNotInExamList.add(allStudent);
+					    }
+					}
+				
+				studentListNotExamJSON=gson.toJson(studentNotInExamList);
+				
+				if(studentNotInExamList.isEmpty())
+				{
+					studentListNotExamJSON="{\"ErrorMessage\":\"Selected subject having all students\"}";		
+				}
+				else
+				{
+					studentListNotExamJSON=gson.toJson(studentNotInExamList);
+				}
+				}
+				catch(Exception e)
+				{
+					studentListNotExamJSON="{\"ErrorMessage\":\"Selected subject having all students\"}";
+					
+					e.printStackTrace();
+				}
+				
+				System.out.println(studentListNotExamJSON);
+			 
+			 
+			 return studentListNotExamJSON;
+		 }
+		
+		@RequestMapping(value="/AddStudentInExam/{studId}/{subDivId}/{examId}/{divId}", method=RequestMethod.POST)
+		 @ResponseBody
+		 	public String AddStudentInExam(@PathVariable("studId") int studId,@PathVariable("subDivId") int subDivId,@PathVariable("examId") int examId,@PathVariable("divId") int divId)
+		 {
+			 System.out.println("**********inside AddStudentInExam controller**********");
+			 String studentListNotExamJSON="";
+			 List<Student> studentNotInExamList=new ArrayList<Student>();
+			 try{
+				
+				 ExamSubjectStudentCompositTable examStudSubObj= examSubStudCompService.findByExamSubDivId(examId, subDivId);
+			     Student student=new Student();
+			     student.setId(studId);
+			     examStudSubObj.setStudent(student);
+		
+			     examSubStudCompService.create(examStudSubObj);
+			     
+			        List<Student> allStudentOfDivisionList=StudentService.findByDivId(divId);
+					List<Student> studentOfExamList=examSubStudCompService.findByExamId(examId, subDivId);
+					
+					String match="";
+					
+					for (Student allStudent : allStudentOfDivisionList) {
+						    match="false";
+						    for(Student examStudent : studentOfExamList)
+						    {
+						    	if(allStudent.getId() == examStudent.getId())
+						    	{
+						    		match="true";
+						    		break;
+						    	}
+						    }
+						    
+						    if(match.equals("false"))
+						    {
+						    	studentNotInExamList.add(allStudent);
+						    }
+						}
+					
+					studentListNotExamJSON=gson.toJson(studentNotInExamList);
+					
+			     
+				
+			}catch(Exception e){
+				e.printStackTrace();
+				
+			 }
+			 
+			 return studentListNotExamJSON;
+		 }
+		
 	 	 
 	 	@RequestMapping(value = "/deleteSubjectFromDivision/{subId}/{divId}", method = RequestMethod.GET)
 		 @ResponseBody
@@ -1545,8 +1700,7 @@ public class TeacherController {
 			 return subjectListNotInDivJSON;
 		 }
 		 
-		 
-		 
+
 		 
 		 @RequestMapping(value = "/AddEditSubject", method = RequestMethod.GET)
 			public String AddEditSubject(Model model) {		
@@ -1865,6 +2019,40 @@ public class TeacherController {
 					JSON+="}";
 					System.out.println(JSON);
 
+				 return JSON;
+			 }
+		 
+		 @RequestMapping(value="/AddSubjectToExam", method=RequestMethod.POST)
+			@ResponseBody
+			public String AddSubjectToExam(@RequestBody List<ExamSubjectStudentCompositTable> examSubjectStudentSubList)
+			 {
+				 System.out.println("**********inside AddSubjectToExam controller**********");	
+				
+				 String JSON="";
+				 java.util.Date dt = new java.util.Date();
+
+				 java.text.SimpleDateFormat sdf = 
+				      new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+				 String currentTime = sdf.format(dt);
+				 
+				 try {
+				for(ExamSubjectStudentCompositTable examSubjectStudentSub:examSubjectStudentSubList)
+				{
+					/*System.out.println("examsubdivcomp "+examSubjectStudentSub+"exam id:"+examSubjectStudentSub.getExam().getId()+" subdiv id "+examSubjectStudentSub.getSubjectDivComposit().getId());*/
+					System.out.println(examSubjectStudentSub);
+					System.out.println(examSubjectStudentSub.getExam().getId());
+					System.out.println(examSubjectStudentSub.getSubjectDivComposit().getId());
+					
+					examSubStudCompService.create(examSubjectStudentSub);
+				}
+				 JSON="{\"message\":\"success\"}";
+				 }
+				 catch(Exception e) {
+					 JSON="{\"message\":\"failed to save subjects to exam\"}";
+					 e.printStackTrace();
+					 
+				 }
 				 return JSON;
 			 }
 			 
