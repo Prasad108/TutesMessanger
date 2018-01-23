@@ -534,7 +534,7 @@
 				
 				$scope.ShowSubjectTable=function()
 				{
-					console.log("functino called");
+					console.log("function called");
 					$scope.ShowTreeStruct=false;
 		   			$scope.ShowSubjectListVar=false;
 		   			$scope.ShowAddSubjectTable=true;
@@ -1063,6 +1063,7 @@
 					                                  </div>
 					                              </form>
 					                               <button id="add-max" class="btn btn-primary  btn-sm" ng-disabled="SelectExamFormToAddStudent.$invalid" ng-click="ShowSelectedSubject()" style="margin-left: 17%">Show Selected Subjects</button>
+					                               <button id="add-max" class="btn btn-primary  btn-sm" ng-disabled="SelectExamFormToAddStudent.$invalid" ng-click="ShowSelectedStudent()" >Show Selected Student s</button>
 					                              <!--  <button id="add-without-image" class="btn btn-info  btn-sm" ng-disabled="SelectExamForm.$invalid" ng-click="ShowSubjectList()">Add Subject From Subject List</button> -->
 					                              </div>
                                   		  </section>

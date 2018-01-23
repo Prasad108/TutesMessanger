@@ -66,7 +66,7 @@ public class ExamSubjectStudentCompositTableDAOImpl implements ExamSubjectStuden
 	@Override
 	@Transactional
 	public List<SubjectDivComposit> findByExamId(int examId) {
-	 Query query=currentSession().createQuery("select sdc.subjectDivComposit from ExamSubjectStudentCompositTable sdc where sdc.exam.id = :id");
+	 Query query=currentSession().createQuery("select distinct sdc.subjectDivComposit from ExamSubjectStudentCompositTable sdc where sdc.exam.id = :id");
 	 query.setParameter("id",examId);
 		return query.list();
 	}
