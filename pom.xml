@@ -11,7 +11,7 @@
 
 
 	<properties>
-
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<org.springframework.version>4.3.10.RELEASE</org.springframework.version>
 		<org.springframework.Security.version>4.2.3.RELEASE</org.springframework.Security.version>
 		<org.hibernate.version>5.2.5.Final</org.hibernate.version>
@@ -340,11 +340,13 @@ https://mvnrepository.com/artifact/com.amazonaws/jmespath-java
 				<configuration>
 					<source>1.8</source>
 					<target>1.8</target>
+					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
 			<plugin>
 				<artifactId>maven-war-plugin</artifactId>
 				<version>3.0.0</version>
+			
 			</plugin>
 			<plugin>
             <groupId>org.apache.maven.plugins</groupId>
