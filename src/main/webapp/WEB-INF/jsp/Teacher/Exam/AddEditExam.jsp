@@ -1029,7 +1029,7 @@
 				                };
 				            };
 				          	
-	   //----------------------------------add selected students to exam ------------------------------------------      
+	   //----------------------------------add selected students to exam ---------------------------------      
 				            $scope.addStudentToExam = function (sub) {
 				            	 var index =[];   
 				            	 sub.student_filter="";	          
