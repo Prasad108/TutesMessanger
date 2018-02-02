@@ -151,4 +151,10 @@ public class ExamSubjectStudentCompositTable implements java.io.Serializable {
 		this.results_1 = results_1;
 	}
 
+	@Override
+	public String toString() {
+		return "ExamSubjectStudentCompositTable [id=" + id + ", dateTime=" + dateTime + ", durationInMinutes="
+				+ durationInMinutes + ", outOfMarks=" + outOfMarks + ", passingMarks=" + passingMarks + "]";
+	}
+
 }

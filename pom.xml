@@ -289,12 +289,7 @@ https://mvnrepository.com/artifact/com.amazonaws/jmespath-java
 			<version>5.1.6</version>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/uk.gov.gchq.gaffer/array-list-store -->
-		<dependency>
-			<groupId>uk.gov.gchq.gaffer</groupId>
-			<artifactId>array-list-store</artifactId>
-			<version>0.6.3</version>
-		</dependency>
+		
 
 		<dependency>
 			<groupId>commons-logging</groupId>
@@ -311,19 +306,8 @@ https://mvnrepository.com/artifact/com.amazonaws/jmespath-java
 			<version>1.1.2</version>
 		</dependency>
 		
-		<!-- https://mvnrepository.com/artifact/org.json/json -->
-<dependency>
-    <groupId>org.json</groupId>
-    <artifactId>json</artifactId>
-    <version>20160810</version>
-</dependency>
+		
 
-<!-- https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple -->
-<dependency>
-    <groupId>com.googlecode.json-simple</groupId>
-    <artifactId>json-simple</artifactId>
-    <version>1.1.1</version>
-</dependency>
 
 		
 
@@ -362,6 +346,14 @@ https://mvnrepository.com/artifact/com.amazonaws/jmespath-java
 				<artifactId>maven-war-plugin</artifactId>
 				<version>3.0.0</version>
 			</plugin>
+			<plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>2.3.2</version>
+            <configuration>
+                <encoding>UTF-8</encoding>
+            </configuration>
+        </plugin>
 
 		</plugins>
 	</build>
@@ -397,6 +389,14 @@ https://mvnrepository.com/artifact/com.amazonaws/jmespath-java
 					         <target>1.8</target>
 					      </configuration>
 					    </plugin>
+					    <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>2.3.2</version>
+            <configuration>
+                <encoding>UTF-8</encoding>
+            </configuration>
+        </plugin>
 					    
 				</plugins>
 			</build>

@@ -27,7 +27,7 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
 
 		<!-- access denied page -->
 		<access-denied-handler error-page="/403" />
-		<form-login login-page="/login" default-target-url="/redirectToHome"
+		<form-login login-page="/login" default-target-url="/redirectToHome" always-use-default-target='true'
 			authentication-failure-url="/login?error" username-parameter="username"
 			password-parameter="password" />
 		<logout  invalidate-session="true"

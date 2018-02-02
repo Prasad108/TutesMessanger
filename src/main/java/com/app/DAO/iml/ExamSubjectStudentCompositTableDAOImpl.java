@@ -74,7 +74,7 @@ public class ExamSubjectStudentCompositTableDAOImpl implements ExamSubjectStuden
 	@Override
 	@Transactional
 	public List<Student> findByExamId(int examId, int subDivId) {
-		 Query query=currentSession().createQuery("select sdc.student from ExamSubjectStudentCompositTable sdc where sdc.exam.id = :examId and sdc.subjectDivComposit.id = :subDivId");
+		 Query query=currentSession().createQuery("select sdc.student from ExamSubjectStudentCompositTable sdc where sdc.exam.id = :examId and sdc.subjectDivComposit.id = :subDivId and sdc.student.id is not null");
 		 query.setParameter("examId",examId);
 		 query.setParameter("subDivId",subDivId);
 			return query.list();
@@ -87,6 +87,16 @@ public class ExamSubjectStudentCompositTableDAOImpl implements ExamSubjectStuden
 		 query.setParameter("examId",examId);
 		 query.setParameter("subDivId",subDivId);
 		 return (ExamSubjectStudentCompositTable) query.uniqueResult();
+	}
+
+	@Override
+	@Transactional
+	public void deletStudentFromExam(int StudId, int subDivId, int examId) {
+		 Query query=currentSession().createQuery("delete from ExamSubjectStudentCompositTable sdc where sdc.exam.id = :examId and sdc.subjectDivComposit.id = :subDivId and sdc.student.id =:StudId");
+		 query.setParameter("examId",examId);
+		 query.setParameter("subDivId",subDivId);
+		 query.setParameter("StudId",StudId);
+		 query.executeUpdate();
 	}
 
 }
