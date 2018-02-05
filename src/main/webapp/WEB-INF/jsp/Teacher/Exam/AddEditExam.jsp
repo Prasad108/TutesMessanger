@@ -892,6 +892,7 @@
 																                                      <div class="col-sm-10">
 																                                          <input ng-model="$parent.discriptionEditExam" type="text" class="form-control" required="required">
 																                                      </div>
+																                                    
 																                                        
 																                                  </div>
 																                                   <div class="form-group">
@@ -1132,23 +1133,36 @@
 	                                  							{{subject.label}}
 	                                  							</td>
 	                                  							<td> 
-																      <div class="form-group">
+																      <div class="form-group ">
 									                                      <input type="number" ng-model="subject.OutOF" class="form-control" id="exampleInputEmail2" placeholder="Out Of Marks" required="required">
+									                                    	<div ng-if="$index==0"><input class="checkbox-inline" type="checkbox" id="inlineCheckbox1" value="option1">
+									                                    		 Keep same for all
+									                                    	</div>
+															                                       
 									                                  </div>
 									                             </td>
 									                             <td>
 									                                  <div class="form-group">
 									                                      <input type="number" ng-model="subject.PassingMarks" class="form-control" ng-class="{error : subject.PassingMarks>subject.OutOF }"  attrs="{data-tip= ' Passing are greater than Out Of Marks ': subject.PassingMarks>subject.OutOF }" id="exampleInputPassword2" placeholder="Passing Marks" required="required">
+									                                      <div ng-if="$index==0"><input class="checkbox-inline" type="checkbox" id="inlineCheckbox1" value="option1">
+									                                    		 Keep same for all
+									                                    	</div>
 									                                  </div>
 									                              </td>
 									                              <td>
 									                                  <div class="form-group">
 									                                      <input type="number" ng-model="subject.DurationInMinutes" class="form-control" id="exampleInputPassword2" placeholder="Duration in Minutes" required="required">
+									                                      <div ng-if="$index==0"><input class="checkbox-inline" type="checkbox" id="inlineCheckbox1" value="option1">
+									                                    		 Keep same for all
+									                                    	</div>
 									                                  </div>
 																 </td>
 																  <td>
 									                                  <div class="form-group">
 									                                      <input type="text" ng-model="subject.ExamDate" class="form-control datepicker" id="datepicker-topleft-forreal" placeholder="Date" required="required" >
+									                                      <div ng-if="$index==0"><input class="checkbox-inline" type="checkbox" id="inlineCheckbox1" value="option1">
+									                                    		 Keep same for all
+									                                    	</div>
 									                                  </div>
 																 </td>
 	                                  						</tr>
