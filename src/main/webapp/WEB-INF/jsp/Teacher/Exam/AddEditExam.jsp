@@ -4,35 +4,36 @@
        <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>   
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html ng-app="myApp" ng-controller="teacherCtrl" >
-	<head>
- 		<title>Add/Edit Exam</title>
- 		 		
-   		<jsp:include page="/WEB-INF/jsp/components/defaultHead.jsp" /> 
-  		
-   		<link href="<c:url value="/css/ivh-treeview.css" />" rel="stylesheet">
-   		<link href="<c:url value="/css/ivh-treeview.min.css" />" rel="stylesheet">
-   		 <script src="<c:url value="/js/ivh_treeViewscript.js" />"></script>
-   		 
-   		 <script type="text/javascript" src="${pageContext.request.contextPath}/js/pikaday.js"></script>
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/pikaday.css">   
-  
+  <head>
+ 	<title>Add/Edit Exam</title>
+ 	<jsp:include page="/WEB-INF/jsp/components/defaultHead.jsp" /> 
+  	<link href="<c:url value="/css/ivh-treeview.css" />" rel="stylesheet">
+   	<link href="<c:url value="/css/ivh-treeview.min.css" />" rel="stylesheet">
+   	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/pikaday.css">
+   	
+   	<script src="<c:url value="/js/ivh_treeViewscript.js" />"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/pikaday.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script data-require="ui-bootstrap@*" data-semver="0.12.1" src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.12.1.min.js"></script>
     
-   		<style type="text/css">	
-	   		.error {
-	            border:2px solid red;
-	        }
+    <style type="text/css">	
+	  .error {
+	          border:2px solid red;
+	         }
 	        
-	      #subStrong { display:inline-block;color:maroon;
-	      }
-   		</style>
+	  #subStrong 
+	         { 
+	          display:inline-block;color:maroon;
+	         }
+	  
+   </style>
    		
-   		 <script>
+   <script>
+        var app = angular.module('myApp', ['ivh.treeview','ui.bootstrap']);
 
-  		  var app = angular.module('myApp', ['ivh.treeview']);
-  		  
-  		
-  		  
-  		app.config(function(ivhTreeviewOptionsProvider) {
+		app.config(function(ivhTreeviewOptionsProvider) {
   			 ivhTreeviewOptionsProvider.set({
   			   defaultSelectedState: false,
   			   validate: true,
@@ -43,14 +44,10 @@
   			 });
   			});
   		
-  		  
-   		app.controller('teacherCtrl', function($scope, $http,$interval) {
-   			
-   		
-	   			$scope.teacher=JSON.parse('${teacherJSON}');
+  	    app.controller('teacherCtrl', function($scope, $http,$interval,$filter) {
+   			    $scope.teacher=JSON.parse('${teacherJSON}');
 	   			$scope.permissions=JSON.parse('${permissions}');  
 	   			$scope.institute=JSON.parse('${institute}');	
-	   			
 	   			
 	   			$scope.ExamCreateSuccess=false;
 	   			$scope.ExamCreateError=false;
@@ -64,16 +61,26 @@
 	   			$scope.ShowSubjectListVar=false;
 	   			$scope.ShowAddSubjectTable=false;
 	   		    $scope.ShowSelectedSubjectTable=false;
-	   			
-	   			
+	   		    $scope.noneSelected=false;
+	   		   // $scope.ShowSelectAll=true;
+	   		   
 				$scope.ExamRegularArray=[{id:0,discription:'Regular'},{id:1,discription:'Repeat'}];
-	   			
-			
 
+				$scope.studentNotInExamList=[];
+				$scope.studentInExamList=[];
+			    $scope.filteredTodos = [],
+			    $scope.filteredTodos1 = [],
+			    $scope.currentPage = 1,
+			    $scope.numPerPage = 10,
+			    $scope.maxSize = 3,
+
+		        $scope.totallenght=$scope.studentNotInExamList.length/$scope.numPerPage*10;
+			    
 	   			$scope.examList=[];
 	   			$scope.examMode=[];
 	   			$scope.examType=[];
 	   			$scope.selectedSubject=[];
+                $scope.selectedstudentList=[];
 	   			//this.inst=[{"label":"Vidya", "value":50,"type":"Institute","children": [{"label":"Pune", "value":15,"type":"Branch","children":[{"label":"10th ", "value":18,"type":"Class","children":[{"label":"A", "value":19,"type":"Division"},{"label":"B", "value":20,"type":"Division"},{"label":"C", "value":21,"type":"Division"}]},{"label":"11th", "value":19,"type":"Class","children":[{"label":"PCM", "value":22,"type":"Division","children":[{"label":"English", "value":1,"type":"Subject","SubjectId":1},{"label":"Marathi", "value":2,"type":"Subject","SubjectId":2}]},{"label":"PCB", "value":23,"type":"Division","children":[{"label":"English", "value":3,"type":"Subject","SubjectId":1}]}]}]},{"label":"Mumbai", "value":16,"type":"Branch"}]}];
 
 	   			/* var o = [{"label":"Vidya", "value":50,"type":"Institute","children": [{"label":"Pune", "value":15,"type":"Branch","children":[{"label":"10th ", "value":18,"type":"Class","children":[{"label":"A", "value":19,"type":"Division"},{"label":"B", "value":20,"type":"Division"},{"label":"C", "value":21,"type":"Division"}]},{"label":"11th", "value":19,"type":"Class","children":[{"label":"PCM", "value":22,"type":"Division","children":[{"label":"English", "value":1,"type":"Subject","SubjectId":1},{"label":"Marathi", "value":2,"type":"Subject","SubjectId":2}]},{"label":"PCB", "value":23,"type":"Division","children":[{"label":"English", "value":3,"type":"Subject","SubjectId":1}]}]}]},{"label":"Mumbai", "value":16,"type":"Branch"}]}];
@@ -472,97 +479,83 @@
 	
 					if($scope.flag < 1)
 					{ 
-					
-					
-						    for (var i in o) {
-						
+                     for (var i in o)
+                      {
 						if($scope.flag < 1)
-						{ 
-						    	 
-						        if (o[i] !== null && typeof(o[i])=="object") {
-							
-							
+						  {
+						    if (o[i] !== null && typeof(o[i])=="object") 
+							  {
+							   if(o[i].type=="Institute")
+					        	{
+					        	 $scope.inst.label=o[i].label;
+								 console.log($scope.inst.label);
+					        	}
 						        	
-						        	if(o[i].type=="Institute")
-					        		{
-					        			//console.log("Selected Institute is "+o[i].label);
-					        			$scope.inst.label=o[i].label;
-									console.log($scope.inst.label);
-					        		}
+						       if(o[i].type=="Branch")
+					        	{
+					        	 $scope.branch.label=o[i].label;
+								 console.log($scope.branch.label);
+					        	}
 						        	
-						        	if(o[i].type=="Branch")
-					        		{
-					        			//console.log("Selected Branch is "+o[i].label);
-					        			$scope.branch.label=o[i].label;
-									console.log($scope.branch.label);
-					        		}
+						       if(o[i].type=="Class")
+					        	{
+					        	 $scope.classes.label=o[i].label;
+								 console.log($scope.classes.label);
+					        	}
 						        	
-						        	if(o[i].type=="Class" )
-					        		{
-					        			//console.log("Selected Class is "+o[i].label);
-					        			$scope.classes.label=o[i].label;
-									console.log($scope.classes.label);
-					        		}
+						       if(o[i].type=="Division")
+					        	{
+					        	 $scope.div.label=o[i].label;
+					        	 $scope.div.value=o[i].value;
+								 console.log($scope.div.label);
+								 console.log($scope.div.value);
+		                        }
 						        	
-						        	if(o[i].type=="Division" )
-					        		{
-					        			//console.log("Selected Division is "+o[i].label);
-					        			$scope.div.label=o[i].label;
-					        			$scope.div.value=o[i].value;
-									console.log($scope.div.label);
-									console.log($scope.div.value);
-									
-					        		}
-						        	
-						        	
-						        	if(o[i].type=="Subject" && o[i].value==subDivId)
-						        		{
-						        			//console.log("Selected subject is "+o[i].label);
-						        			$scope.subject.label=o[i].label;
-										console.log($scope.subject.label);
-										$scope.flag=2;
-										console.log("break **************************");
-										break;
-						        		}
+						       if(o[i].type=="Subject" && o[i].value==subDivId)
+						        {
+						         $scope.subject.label=o[i].label;
+								 console.log($scope.subject.label);
+								 $scope.flag=2;
+								 console.log("break **************************");
+								 break;
+						        }
 						        	 
-						            //going one step down in the object tree!!
-						            traverseTillsubDivId(o[i],subDivId);
-							}
-							}
-						        
-						    }
-						
+						         //going one step down in the object tree!!
+						         traverseTillsubDivId(o[i],subDivId);
+							  }
+						  }
 					  }
-			
-				};
+					}
+                };
 				
 				$scope.ShowSubjectTable=function()
 				{
 					$scope.ShowTreeStruct=false;
 		   			$scope.ShowSubjectListVar=false;
 		   			$scope.ShowAddSubjectTable=true;
-		   			
-				};
+	            };
 
+//------------------------------------To show selected subject for exam----------------------------------------------------
 				$scope.ShowSelectedSubject=function()
 				{
 					console.log($scope.selectedExamForAddStudent.id);
 
+		//*************************http post request to get subDiv composit id of selected exam***************** 
 					$http({
 			             url: "GetSubjectDivCompID/"+$scope.selectedExamForAddStudent.id,
 			             method: "POST",          
 			         })
-			         .then(function(response) {
-			                 // if success       	
+			         .then(function(response) { // if success       	
 			         	 console.log("WE got ids");
 			         	 
 			                 $scope.SubjectDivCompIDList=response.data;
-			                 $scope.ShowSelectedSubjectTable=true;	
+			                 $scope.ShowSelectedSubjectTable=true;
+			                 $scope.subjectNotInExam=false;  	
                           
 			                 for(var j=0;j< $scope.SubjectDivCompIDList.length; j++)
 	        				 {
-			                	 $scope.flag=0;
-			                	 $scope.inst={};
+			                	$scope.flag=0;
+			                	$scope.inst={};
 			         			$scope.branch={};
 			         			$scope.classes={};
 			         			$scope.div={};
@@ -580,22 +573,19 @@
 				                    	 $scope.SubjectDivCompIDList[j].classes=$scope.classes;
 				                    	 $scope.SubjectDivCompIDList[j].div=$scope.div;	
 				                    	 $scope.SubjectDivCompIDList[j].subject=$scope.subject;	
-				                    		                    
-			                    	 }
+				                    }
 			                     console.log( $scope.SubjectDivCompIDList[j]);
 	        				 }
-		         	          
-			         }, 
-			         function(data) { // optional
-			                 // failed
-			                 
+		             }, 
+			         function(data) { // optional // if failed
+			            $scope.subjectNotInExam=true; 
+			            $scope.ShowSelectedSubjectTable=false;    
 			         	 console.log(" failed to get the ids");      
 			         });
 				};
 				
 				  
-				 
-				 $scope.datepickerActivate=function()
+	             $scope.datepickerActivate=function()
 				 {
 					 $('.datepicker').pikaday({ firstDay: 1 });
 				 };
@@ -647,19 +637,14 @@
 				                	 $scope.SubjectAddedFailed=true;
 				                	 $scope.SubjectAddedSuccess=false;
 				                	 }
-				         	
-		     	           		         	           
-				         }, 
+		                 }, 
 				         function(data) { // optional
 				                 // failed		                 
 				         	 console.log(" failed to AddSubjectToExam the exam"); 	         	
 				         });
-					 
-					 
-					 
-				 };
+			 };
 				 
-//-------------------------------to scheck wheather all subjects have passing marks less than OutOf marks				 
+//-------------------------------to check wheather all subjects have passing marks less than OutOf marks-------------				 
 				 $scope.ValidateOutOFandPassing=function(){
 					 
 					 var result=true;
@@ -676,91 +661,530 @@
 				 
 				
 		
-					   		  			 			  			
+//------------------------------on change function after changing exam in dropdown select-----------------------		   		  			 			  			
 				$scope.selectExam=function(){
-
+					 $scope.subjectNotInExam=false; 
 					 $scope.ShowSelectedSubjectTable=false;
 					
 					};
 
+//---------------------------To show students not added in exam of perticular subject------------------------
+			$scope.OpenAdd=function(sub,SubjectDivCompIDList){
+				 $scope.selectStudentFirstMessage=false;
+				 $scope.ShowSelectAll=true;
+				 sub.student_filter="";
+				for(var i=0; i<SubjectDivCompIDList.length;i++)
+				{
 
-				$scope.addStudentSubmitButton=function(sub){
-                     console.log(sub.div.value);
-                     console.log(sub.id);
+				if(SubjectDivCompIDList[i].id==sub.id)
+					{
+										
+						$("#add"+sub.id).collapse('show');
+						$("#show"+sub.id).collapse('hide');
+										
+						}else{
+										
+						$("#add"+SubjectDivCompIDList[i].id).collapse('hide');
+						$("#show"+SubjectDivCompIDList[i].id).collapse('hide');
+						}
+					}
 
-                      $http({
-			   	            url: "GetStudentListNotInExamJSON/"+sub.id+"/"+sub.div.value+"/"+$scope.selectedExamForAddStudent.id,
-			   	         	contentType : 'application/json; charset=utf-8',
-			   	    	 	dataType : 'json',
-			   	            method: "POST" ,               
-			   	        })
-			   	        .then(function successCallback(response) {
-			   	                // if success   then generate subject table
-				   	                
-				   	                console.log("response came"); 
-				   	         	if(response.data.ErrorMessage)
-				   	         		{
-				   	         		 console.log("there is error no students");
-				   	 	
-				   	         		 $scope.ShowStudentNotInExam=false;    //do not show student table
-				   	         		 $scope.NoStudentInDivision=true;
-				   	         		}
-				   	         	else{
-				   	         	console.log("succesess students are there");
-				   	             $scope.ShowStudentNotInExam=true; //show student table
-				   	             $scope.NoStudentInDivision=false;   
-				   	        	sub.studentNotInExamList=response.data;	
-				   	        	 
-				   	             console.log(sub.studentNotInExamList);
-				   	   			
-				   	        	 for( i=sub.studentNotInExamList.length-1; i>=0; i--) {
-						   	          console.log(sub.studentNotInExamList[i].fname);    	
-						        		} 
+				    console.log(sub.div.value);
+		            console.log(sub.id);
 
-				   	        /* 	$scope.totallenght=$scope.studentOfExamList.length/$scope.numPerPage*10;
+		       //********************* http post request to get student not added in exam ************************
+		             $http({
+					     url: "GetStudentListNotInExamJSON/"+sub.id+"/"+sub.div.value+"/"+$scope.selectedExamForAddStudent.id,
+					     contentType : 'application/json; charset=utf-8',
+					   	 dataType : 'json',
+					   	 method: "POST" ,               
+					   	  }).then(function successCallback(response) {
+					   	          // if success   then generate student table
+						   	                
+						   	      console.log("response came"); 
+						   	      if(response.data.ErrorMessage)
+						   	       {
+						   	          console.log("there is error no students");
+
+						   	          $scope.studentNotInExamList.splice(0,$scope.studentNotInExamList.length);
+						   	          $scope.filteredTodos=$scope.studentNotInExamList;
+						   	          //$scope.ShowStudentNotInExam=false;    //do not show student table
+						   	         // $scope.NoStudentInDivision=true;
+						   	        }
+						   	        else{
+						   	         console.log("succesess students are there");
+						   	         // $scope.ShowStudentNotInExam=true; //show student table
+						   	         //$scope.studentNotInExamList.splice(0,$scope.studentNotInExamList.length);
+					   	             //$scope.filteredTodos.splice(0,$scope.filteredTodos.length);
+						   	           
+						   	            $scope.NoStudentInDivision=false;   
+						   	            $scope.studentNotInExamList=response.data;	
+ 	
+						   	             console.log($scope.studentNotInExamList);
+
+						   	          for (var i = 0; i < $scope.studentNotInExamList.length; i++) {
+						   	   				$scope.studentNotInExamList[i].Selected=false;
+						   	            };
+						   	            
+						   	     	$scope.totallenght=$scope.studentNotInExamList.length/$scope.numPerPage*10;
 						   	    
-			   	        	 
-			   	        	 var begin = (($scope.currentPage - 1) * $scope.numPerPage)
-			        		    , end = begin + $scope.numPerPage;
-			        		    console.log("begin is "+begin+" end is "+end)
-			        		    $scope.filteredTodos = $scope.studentOfExamList.slice(begin, end); */
-				   	        	 
-				   	         	} 
-			   	        }, 
-			   	    		 function errorCallback(response) {
-			   	                // failed
-			   	                console.log("error response came");    	          
-			   	        }); 
-					};
+						   	             $scope.CheckUncheckHeader(sub);
+						   	        	 for( i=$scope.studentNotInExamList.length-1; i>=0; i--) {
+								   	          console.log($scope.studentNotInExamList[i].fname);    	
+								        		} 
+						   	        	 console.log("current page: "+$scope.currentPage);
+						   	        	 var begin = (($scope.currentPage - 1) * $scope.numPerPage)
+						        		    , end = begin + $scope.numPerPage;
+						        		    console.log("begin is "+begin+" end is "+end)
+						        		    $scope.filteredTodos = $scope.studentNotInExamList.slice(begin, end);
+						   	        	} 
+					   	        }, 
+					   	    		 function errorCallback(response) {
+					   	                // failed
+					   	                console.log("error response came");    	          
+					   	        }); 
 
-			$scope.addStudent=function(student,sub){
+			};	
 
-                        console.log("selected student is "+student.fname+" and its id is "+student.id+" subject id is "+sub.id+" exam id is "+$scope.selectedExamForAddStudent.id);
+//---------------------------To show students added in exam for perticular subject------------------------	
+						$scope.OpenShow=function(sub,SubjectDivCompIDList){		
+							 console.log(sub.id);
+							 $scope.selectStudentFirstMessage=false;
+							 $scope.ShowSelectAll1=true;
+							 sub.student_filter1="";			
+							for(var i=0; i<SubjectDivCompIDList.length;i++)
+							{
+								console.log("in for loop : "+SubjectDivCompIDList[i].id);
+								
+								if(SubjectDivCompIDList[i].id==sub.id)
+								{
+									console.log("in if condition");
+									console.log($("#add"+sub.id));
+									$("#add"+sub.id).collapse('hide');
+									$("#show"+sub.id).collapse('show');
+									
+								}else{
 
-                        $http({
-			   	            url: "AddStudentInExam/"+student.id+"/"+sub.id+"/"+$scope.selectedExamForAddStudent.id+"/"+sub.div.value,
-			   	         	contentType : 'application/json; charset=utf-8',
-			   	    	 	dataType : 'json',
-			   	            method: "POST" ,               
-			   	        })
-			   	        .then(function successCallback(response) {
-			   	                // if success   
-				   	                console.log("response came"); 
-				   	         	    sub.studentNotInExamList=response.data;	
-				   	         	   for( i=sub.studentNotInExamList.length-1; i>=0; i--) {
-					        		    if( sub.studentNotInExamList[i].id == student.id) sub.studentNotInExamList.splice(i,1);
-					        		} 
-				   	        
-			   	        }, 
-			   	    		 function errorCallback(response) {
-			   	                // failed
-			   	                console.log("error response came");    	          
-			   	        });  
+									console.log("in else condition");
+									console.log($("#add"+SubjectDivCompIDList[i].id));
+									$("#add"+SubjectDivCompIDList[i].id).collapse('hide');
+									$("#show"+SubjectDivCompIDList[i].id).collapse('hide');
+								}
+							}
+
+     //****************************** http post request to get student added in exam ************************
+							   $http({
+					   	            url: "GetStudentListOfExamJSON/"+sub.id+"/"+sub.div.value+"/"+$scope.selectedExamForAddStudent.id,
+					   	         	contentType : 'application/json; charset=utf-8',
+					   	    	 	dataType : 'json',
+					   	            method: "POST" ,               
+					   	        })
+					   	        .then(function successCallback(response) {
+					   	                // if success   then generate student table
+						   	                
+						   	             console.log("response came"); 
+						   	         	if(response.data.ErrorMessage)
+						   	         		{
+						   	         		 console.log("there is error no students");
+
+						   	         		$scope.studentInExamList.splice(0,$scope.studentInExamList.length);
+						   	         	    $scope.filteredTodos1=$scope.studentInExamList;
+						   	         		 //$scope.ShowStudentNotInExam=false;    //do not show student table
+						   	         		// $scope.NoStudentInDivision=true;
+						   	         		}
+						   	         	else{
+						   	         	console.log("succesess students are there");
+						   	            // $scope.ShowStudentNotInExam=true; //show student table
+						   	            //$scope.studentNotInExamList.splice(0,$scope.studentNotInExamList.length);
+					   	         		//$scope.filteredTodos.splice(0,$scope.filteredTodos.length);
+						   	           
+						   	            //$scope.NoStudentInDivision=false;   
+						   	            $scope.studentInExamList=response.data;	
+	
+						   	             console.log($scope.studentInExamList);
+
+						   	          for (var i = 0; i < $scope.studentInExamList.length; i++) {
+						   	   				$scope.studentInExamList[i].Selected=false;
+						   	            };
+						   	            
+						   	     	$scope.totallenght=$scope.studentInExamList.length/$scope.numPerPage*10;
+						   	    
+						   	            $scope.CheckUncheckHeader1(sub);
+						   	        	 for( i=$scope.studentInExamList.length-1; i>=0; i--) {
+								   	          console.log($scope.studentInExamList[i].fname);    	
+								        		} 
+						   	        	 console.log("current page: "+$scope.currentPage);
+						   	        	 var begin = (($scope.currentPage - 1) * $scope.numPerPage)
+						        		    , end = begin + $scope.numPerPage;
+						        		    console.log("begin is "+begin+" end is "+end)
+						        		    $scope.filteredTodos1 = $scope.studentInExamList.slice(begin, end);
+						   	        	} 
+					   	        }, 
+					   	    		 function errorCallback(response) {
+					   	                // failed
+					   	                console.log("error response came");    	          
+					   	        }); 
+							
 						};
 
-					
+	//------------------------check uncheck function on chekbox at table header for add student------------------------
+						$scope.CheckUncheckHeader = function (sub) {
+			   			    sub.IsAllChecked = true;
+			                
+			                for (var i = 0; i < $scope.studentNotInExamList.length; i++) {
+				                console.log($scope.studentNotInExamList[i].Selected);
+			                    if (!$scope.studentNotInExamList[i].Selected) {
+			                        sub.IsAllChecked = false;
+			                        break;
+			                    }
+			                };
+			            };
 
-					 /*   $scope.expand=function($event){
+    //------------------------check uncheck function on chekbox at table header for show student------------------------
+                        $scope.CheckUncheckHeader1 = function (sub) {
+			   			    sub.IsAllChecked1 = true;
+			                
+			                for (var i = 0; i < $scope.studentInExamList.length; i++) {
+				                console.log($scope.studentInExamList[i].Selected1);
+			                    if (!$scope.studentInExamList[i].Selected1) {
+			                        sub.IsAllChecked1 = false;
+			                        break;
+			                    }
+			                };
+			            };
+
+			           // $scope.CheckUncheckHeader();
+    //------------------------check uncheck all function on chekbox in table for add student------------------------
+						 $scope.CheckUncheckAll = function (sub) {
+				            	$scope.selectStudentFirstMessage=false;
+				                //$scope.deleteSucessStudent=false;
+				               
+				            	console.log("CheckUncheckAll :"+sub.IsAllChecked)
+				            	
+				                for (var i = 0; i < $scope.studentNotInExamList.length; i++) {
+				                	 $scope.studentNotInExamList[i].Selected = sub.IsAllChecked;
+				                }
+				                
+				                for (var i = 0; i < $scope.studentNotInExamList.length; i++) {
+				                	console.log($scope.studentNotInExamList[i].Selected);  
+				                }
+				            };
+
+    //------------------------check uncheck all function on chekbox in table for show student------------------------
+				            $scope.CheckUncheckAll1 = function (sub) {
+				            	$scope.selectStudentFirstMessage=false;
+				                //$scope.deleteSucessStudent=false;
+				               
+				            	console.log("CheckUncheckAll :"+sub.IsAllChecked1)
+				            	
+				                for (var i = 0; i < $scope.studentInExamList.length; i++) {
+				                	$scope.studentInExamList[i].Selected1 = sub.IsAllChecked1;
+				                }
+				                for (var i = 0; i < $scope.studentInExamList.length; i++) {
+				                	console.log($scope.studentInExamList[i].Selected1);
+				                }
+				            };
+
+    //---------------------------watch function for add student table------------------------------------------
+				           	$scope.$watch('currentPage + numPerPage', function() {
+				           		console.log("current page: "+$scope.currentPage);
+         	          		    var begin = (($scope.currentPage - 1) * $scope.numPerPage)
+         	          		    , end = begin + $scope.numPerPage;
+         	          		    console.log("begin is "+begin+" end is "+end);
+         	          		    $scope.filteredTodos = $scope.studentNotInExamList.slice(begin, end);
+         	          		  });
+
+    //---------------------------watch function for show student table------------------------------------------
+				         	$scope.$watch('currentPage + numPerPage', function() {
+				           		console.log("current page: "+$scope.currentPage);
+         	          		    var begin = (($scope.currentPage - 1) * $scope.numPerPage)
+         	          		    , end = begin + $scope.numPerPage;
+         	          		    console.log("begin is "+begin+" end is "+end);
+         	          		    $scope.filteredTodos1 = $scope.studentInExamList.slice(begin, end);
+         	          		  });
+
+    //----------------------------filter student on add student table to add in exam--------------------------------------------
+				            $scope.filterStudent=function(sub)
+				        	{
+                             if((sub.student_filter.length) > 0 )
+				        	  {
+				        		$scope.ShowSelectAll=false;
+				        		var searchFilter=sub.student_filter;
+				        		console.log(searchFilter);
+				        			 
+				        		$scope.filteredTodos= $filter('filter')($scope.studentNotInExamList,searchFilter);
+				        		console.log($scope.filteredTodos.length);
+				        			 
+				        		$scope.totallenght=$scope.filteredTodos.length/$scope.numPerPage*10;
+				        			 	
+				        		$scope.filteredCheckUncheckHeader(sub);
+				        	  }
+				        	 else
+				        	  {
+				        	   $scope.totallenght=$scope.studentNotInExamList.length/$scope.numPerPage*10;
+				        	   $scope.ShowSelectAll=true;
+				        			 
+				        	   var begin = (($scope.currentPage - 1) * $scope.numPerPage),
+				        	       end = begin + $scope.numPerPage;
+					        	   console.log("begin is "+begin+" end is "+end);
+					        	   $scope.filteredTodos = $scope.studentNotInExamList.slice(begin, end);
+				        	  }
+				        	};
+
+	  //----------------------------filter student on show student table delete from exam--------------------------------------------
+				        	 $scope.filterStudent1=function(sub)
+					        	{
+                                 if((sub.student_filter1.length) > 0 )
+					        	  {
+					        	   $scope.ShowSelectAll1=false;
+					        	   var searchFilter=sub.student_filter1;
+					        	   console.log(searchFilter);
+					        			 
+					        	   $scope.filteredTodos1= $filter('filter')($scope.studentInExamList,searchFilter);
+					        	   console.log($scope.filteredTodos1.length);
+					        			 
+					        	   $scope.totallenght=$scope.filteredTodos1.length/$scope.numPerPage*10;
+					        			 	
+					        	   $scope.filteredCheckUncheckHeader1(sub);
+					        	  }
+					        	 else
+					        	  {
+					        	   $scope.totallenght=$scope.studentInExamList.length/$scope.numPerPage*10;
+					        	   $scope.ShowSelectAll1=true;
+					        			 
+					        	   var begin = (($scope.currentPage - 1) * $scope.numPerPage),
+					        	       end = begin + $scope.numPerPage;
+						        	   console.log("begin is "+begin+" end is "+end)
+						        	   $scope.filteredTodos1 = $scope.studentInExamList.slice(begin, end);
+					        	  }
+					        	};
+
+		//-----------------------------	check uncheck all function on chekbox on filtered table for add student-----------------				        	
+				        	$scope.filterCheckUncheckAll=function(sub)
+				        	{
+				        		$scope.selectStudentFirstMessage=false;
+				        		//$scope.deleteSucessStudent=false;
+				        		
+				        		 for (var i = 0; i < $scope.filteredTodos.length; i++) {
+				                     			 
+				        			 $scope.filteredTodos[i].Selected = sub.IsFilteredAllChecked;
+				        			 
+				        			 for(var j=0;j< $scope.studentNotInExamList.length; j++)
+				        				 {
+				        				 if( $scope.filteredTodos[i] == $scope.studentNotInExamList[j] )
+				        					 {  
+				        					 $scope.studentNotInExamList[j].Selected = sub.IsFilteredAllChecked;
+				        					 break;
+				        					 }
+				        				 }
+				                 }
+				        	};
+
+		//-----------------------------	check uncheck all function on chekbox on filtered table for show student-----------------				        	
+				        	$scope.filterCheckUncheckAll1=function(sub)
+				        	{
+				        		$scope.selectStudentFirstMessage=false;
+				        		//$scope.deleteSucessStudent=false;
+				        		
+				        		 for (var i = 0; i < $scope.filteredTodos1.length; i++) {
+				                     			 
+				        			 $scope.filteredTodos1[i].Selected1 = sub.IsFilteredAllChecked1;
+				        			 
+				        			 for(var j=0;j< $scope.studentInExamList.length; j++)
+				        				 {
+				        				 if( $scope.filteredTodos1[i] == $scope.studentInExamList[j] )
+				        					 {  
+				        					 $scope.studentInExamList[j].Selected1 = sub.IsFilteredAllChecked1;
+				        					 break;
+				        					 }
+				        				 }
+				                 }
+				        	};
+
+		 //------------------------check uncheck function on chekbox at filtered table header for add student------------------------	        	
+				        	$scope.filteredCheckUncheckHeader = function (sub) {
+				                sub.IsFilteredAllChecked = true;
+				                $scope.selectStudentFirstMessage=false;
+				               // $scope.deleteSucessStudent=false;
+				                
+				                for (var i = 0; i < $scope.filteredTodos.length; i++) {
+				                    if (!$scope.filteredTodos[i].Selected) {
+				                       sub.IsFilteredAllChecked = false;
+				                        break;
+				                    }
+				                };
+				            };
+
+	     //------------------------check uncheck function on chekbox at filtered table header for show student------------------------
+				        	$scope.filteredCheckUncheckHeader1 = function (sub) {
+				              sub.IsFilteredAllChecked1 = true;
+				                $scope.selectStudentFirstMessage=false;
+				               // $scope.deleteSucessStudent=false;
+				                
+				                for (var i = 0; i < $scope.filteredTodos1.length; i++) {
+				                    if (!$scope.filteredTodos1[i].Selected1) {
+				                        sub.IsFilteredAllChecked1 = false;
+				                        break;
+				                    }
+				                };
+				            };
+				          	
+	   //----------------------------------add selected students to exam ---------------------------------      
+				            $scope.addStudentToExam = function (sub) {
+				            	 var index =[];   
+				            	 sub.student_filter="";	          
+				            	 for (var i = 0; i < $scope.studentNotInExamList.length; i++) {
+				                     if ($scope.studentNotInExamList[i].Selected) {
+				                         console.log($scope.studentNotInExamList[i].fname);
+				                         index.push(i);
+				                         $scope.selectedstudentList.push($scope.studentNotInExamList[i]);  //--------push selected student in selectedStudentList array
+				                     }
+				                 }
+				            	
+				            	 for (var i = 0; i < $scope.studentNotInExamList.length; i++){
+				            		 for (var j = 0; j < $scope.selectedstudentList.length; j++){
+				            			 if( $scope.studentNotInExamList[i] == $scope.selectedstudentList[j])
+				            				 {
+				            				 $scope.studentNotInExamList.splice(i,1);              //remove selected student from studentList
+				            				 }
+				            		 }
+				            	 }
+				       
+				            	 console.log($scope.studentNotInExamList);
+				            		 
+				            		 $scope.totallenght=$scope.studentNotInExamList.length/$scope.numPerPage*10;
+				            		 console.log("current page: "+$scope.currentPage);
+				            		 var begin = (($scope.currentPage - 1) * $scope.numPerPage), end = begin + $scope.numPerPage;
+					        		 console.log("begin is "+begin+" end is "+end);
+					        		 $scope.filteredTodos = $scope.studentNotInExamList.slice(begin, end);
+				            
+				            	 if($scope.selectedstudentList.length != 0)           //----check selectedStudentList is empty or not
+				            		 {
+				            		// $scope.deleteSucessStudent=false; 
+				            		$scope.selectStudentFirstMessage=false;
+				            		  console.log("selectedstudentList is not empty");
+				            		  
+				      //****************** http post request to add selected student *******************
+				                    $http({
+							   	            url: "addSelectedStudentToExam/"+sub.id+"/"+$scope.selectedExamForAddStudent.id+"/"+sub.div.value,
+							   	         	contentType : 'application/json; charset=utf-8',
+							   	    	 	dataType : 'json',
+							   	            method: "POST" ,        
+							   	            data: JSON.stringify($scope.selectedstudentList)
+							   	         })
+							   	        .then(function successCallback(response) {
+							   	                // if success   
+							   	        	//$scope.deleteSucessStudent=true; 
+							   	        	console.log("success response came"); 
+							   	        	$scope.ShowSelectAll=true;
+							   	        	$scope.PaginationInitialSetup(sub);
+							   	        }, 
+							   	    		 function errorCallback(response) {
+							   	                // failed
+							   	              //  $scope.deleteSucessStudent=false;
+							   	                 console.log("error response came");    	           
+							   	        });  
+				            	 }
+				            	 else
+				                 {
+				            	  console.log("selectedstudentList is empty");
+				            	  $scope.selectStudentFirstMessage=true;
+				            	 }
+				            	  $scope.selectedstudentList.splice(0, $scope.selectedstudentList.length); //-----empty selectedStudentList array
+				            };
+
+
+//---------------------------------------------delete selected students from exam -----------------------------------   
+
+				            $scope.deleteStudentFromExam = function (sub) {
+				            	 var index =[]; 
+				            	 sub.student_filter1="";	 
+				            	 console.log($scope.studentInExamList);           
+				            	 for (var i = 0; i < $scope.studentInExamList.length; i++) {
+				                     if ($scope.studentInExamList[i].Selected1) {
+				                         console.log($scope.studentInExamList[i].fname);
+				                         index.push(i);
+				                         $scope.selectedstudentList.push($scope.studentInExamList[i]);  //--------push selected student in selectedStudentList array
+				                     }
+				                 }
+				            	
+				            	 for (var i = 0; i < $scope.studentInExamList.length; i++){
+				            		 for (var j = 0; j < $scope.selectedstudentList.length; j++){
+				            			 if( $scope.studentInExamList[i] == $scope.selectedstudentList[j])
+				            				 {
+				            				 $scope.studentInExamList.splice(i,1);              //remove selected student from studentList
+				            				 }
+				            		 }
+				            	 }
+				       
+				            	 console.log($scope.studentInExamList);
+				            		 
+				            		 $scope.totallenght=$scope.studentInExamList.length/$scope.numPerPage*10;
+				            		 console.log("current page: "+$scope.currentPage);
+				            		 var begin = (($scope.currentPage - 1) * $scope.numPerPage), end = begin + $scope.numPerPage;
+					        		    console.log("begin is "+begin+" end is "+end)
+					        		    $scope.filteredTodos1 = $scope.studentInExamList.slice(begin, end);
+				            
+				            	 if($scope.selectedstudentList.length != 0)           //----check selectedStudentList is empty or not
+				            		 {
+				            		// $scope.deleteSucessStudent=false; 
+				            		  $scope.selectStudentFirstMessage=false;
+				            		  console.log("selectedstudentList is not empty");
+				            		  
+				 //************************ http post request to delete selected student**********************
+				                    $http({
+							   	            url: "deleteSelectedStudentFromExam/"+sub.id+"/"+$scope.selectedExamForAddStudent.id+"/"+sub.div.value,
+							   	         	contentType : 'application/json; charset=utf-8',
+							   	    	 	dataType : 'json',
+							   	            method: "POST" ,        
+							   	            data: JSON.stringify($scope.selectedstudentList)
+							   	               
+							   	        })
+							   	        .then(function successCallback(response) {
+							   	                // if success   
+							   	        	//$scope.deleteSucessStudent=true; 
+							   	        	console.log("success response came"); 
+							   	     	    $scope.ShowSelectAll1=true;
+							   	        	$scope.PaginationInitialSetup1(sub);
+							   	        }, 
+							   	    		 function errorCallback(response) {
+							   	                // failed
+							   	              //  $scope.deleteSucessStudent=false;
+							   	                 console.log("error response came");    	           
+							   	        });  
+				            	 }
+				            	 else
+				                 {
+				            	  console.log("selectedstudentList is empty");
+				            	  $scope.selectStudentFirstMessage=true;
+				            	 }
+				            	  $scope.selectedstudentList.splice(0, $scope.selectedstudentList.length); //-----empty selectedStudentList array
+				            };
+
+
+				                  $scope.PaginationInitialSetup=function(sub){
+				            	   $scope.totallenght=$scope.studentNotInExamList.length/$scope.numPerPage*10;
+				            		$scope.CheckUncheckHeader(sub);
+				            		$scope.filteredCheckUncheckHeader(sub);
+				            		console.log("current page: "+$scope.currentPage);
+				                  	var begin = (($scope.currentPage - 1) * $scope.numPerPage),
+				                  	end = begin + $scope.numPerPage;
+				           		    console.log("begin is "+begin+" end is "+end);
+				           		    $scope.filteredTodos = $scope.studentNotInExamList.slice(begin, end);
+				              	   };	 	
+
+				                   $scope.PaginationInitialSetup1=function(sub){
+					            	   $scope.totallenght=$scope.studentInExamList.length/$scope.numPerPage*10;
+					            		$scope.CheckUncheckHeader1(sub);
+					            		$scope.filteredCheckUncheckHeader(sub);
+					            		console.log("current page: "+$scope.currentPage);
+					                    var begin = (($scope.currentPage - 1) * $scope.numPerPage),
+					                    end = begin + $scope.numPerPage;
+					           		    console.log("begin is "+begin+" end is "+end);
+					           		    $scope.filteredTodos1 = $scope.studentInExamList.slice(begin, end);
+					               };
+
+				     /*   $scope.expand=function($event){
 						console.log("in expand function");
 						   if($($event.target).find('.collapse').hasClass('in')){
 							   console.log("if condition");
@@ -770,24 +1194,18 @@
 						        $($event.target).find('.collapse').addClass('in')
 						   }
 						};  */ 
+    });   	    
 
-						
-	 			   		  			 			  			
-   		});   	    
-		
-   		</script> 
-   		
-		
-		
-   	</head>
+   </script> 
+ </head>
+ 
 <body ng-cloak class="ng-cloak">
 
 <section id="container" class="">
-   <!-- Default header -->
+<!-- Default header -->
 <jsp:include page="/WEB-INF/jsp/components/defaultHeader.jsp" /> 
 
-
- <!-- Default Menue -->
+<!-- Default Menu -->
 <jsp:include page="/WEB-INF/jsp/Teacher/components/teacherMenu.jsp" />  
 <!-- <div ng-include="/WEB-INF/jsp/Teacher/components/teacherMenu.jsp"></div> -->
 
@@ -892,6 +1310,7 @@
 																                                      <div class="col-sm-10">
 																                                          <input ng-model="$parent.discriptionEditExam" type="text" class="form-control" required="required">
 																                                      </div>
+																                                    
 																                                        
 																                                  </div>
 																                                   <div class="form-group">
@@ -1132,23 +1551,36 @@
 	                                  							{{subject.label}}
 	                                  							</td>
 	                                  							<td> 
-																      <div class="form-group">
+																      <div class="form-group ">
 									                                      <input type="number" ng-model="subject.OutOF" class="form-control" id="exampleInputEmail2" placeholder="Out Of Marks" required="required">
+									                                    	<div ng-if="$index==0"><input class="checkbox-inline" type="checkbox" id="inlineCheckbox1" value="option1">
+									                                    		 Keep same for all
+									                                    	</div>
+															                                       
 									                                  </div>
 									                             </td>
 									                             <td>
 									                                  <div class="form-group">
 									                                      <input type="number" ng-model="subject.PassingMarks" class="form-control" ng-class="{error : subject.PassingMarks>subject.OutOF }"  attrs="{data-tip= ' Passing are greater than Out Of Marks ': subject.PassingMarks>subject.OutOF }" id="exampleInputPassword2" placeholder="Passing Marks" required="required">
+									                                      <div ng-if="$index==0"><input class="checkbox-inline" type="checkbox" id="inlineCheckbox1" value="option1">
+									                                    		 Keep same for all
+									                                    	</div>
 									                                  </div>
 									                              </td>
 									                              <td>
 									                                  <div class="form-group">
 									                                      <input type="number" ng-model="subject.DurationInMinutes" class="form-control" id="exampleInputPassword2" placeholder="Duration in Minutes" required="required">
+									                                      <div ng-if="$index==0"><input class="checkbox-inline" type="checkbox" id="inlineCheckbox1" value="option1">
+									                                    		 Keep same for all
+									                                    	</div>
 									                                  </div>
 																 </td>
 																  <td>
 									                                  <div class="form-group">
 									                                      <input type="text" ng-model="subject.ExamDate" class="form-control datepicker" id="datepicker-topleft-forreal" placeholder="Date" required="required" >
+									                                      <div ng-if="$index==0"><input class="checkbox-inline" type="checkbox" id="inlineCheckbox1" value="option1">
+									                                    		 Keep same for all
+									                                    	</div>
 									                                  </div>
 																 </td>
 	                                  						</tr>
@@ -1231,26 +1663,163 @@
                               </div>    
                           </div>
                       </section>
-                      
+                    
+					<div ng-show="subjectNotInExam" class="alert alert-block alert-danger fade in">
+		               <button data-dismiss="alert" class="close close-sm" type="button">
+		                    <i class="icon-remove"></i>
+		              </button>
+				      <strong>There is no subject selected for this exam</strong> 
+				   </div>
                          
                                    <section class="panel" ng-show="ShowSelectedSubjectTable">
 				                        <div class="panel-body">	
 				                             <div id="ShowSelectedSubjectTable" >
 				                             <h2>Selected Subject List</h2>
 				                           <div class="panel-group m-bot20" id="accordion"> 
-				                           
-				                                     <div ng-show="NoStudentInDivision" class="alert alert-block alert-danger fade in">
-									                     <button data-dismiss="alert" class="close close-sm" type="button">
-									                          <i class="icon-remove"></i>
-									                     </button>
-									                     <strong>Selected division does not contain any student or All student are added in Exam</strong> 
-									                 </div>
+				                                   
+													  <div ng-repeat="sub in SubjectDivCompIDList" ng-class="{selectedrow:sub.Selected}">
+														 <div class="panel panel-default">
+														      <div class="panel-heading">
+																 <h4 class="panel-title">
+																      <i style="display: none;">{{ sub.div.value }}</i>{{ sub.inst.label }}>{{ sub.branch.label }}>{{ sub.classes.label }}>{{ sub.div.label }}><strong id="subStrong">{{ sub.subject.label }}</strong>
+																	<span style="position: relative;top: -30px">
+																	  <button type="button" class="btn btn-success btn-sm pull-right" ng-click="OpenShow(sub,SubjectDivCompIDList)" style="margin-right: 10px">Exam's Students</button>
+																	  <button type="button" class="btn btn-success btn-sm pull-right" ng-click="OpenAdd(sub,SubjectDivCompIDList)" style="margin-right: 10px">Add Student</button>
+																    </span> 
+																 </h4>   
+															  </div>
+															 
+															   <div id="add{{sub.id}}" class="collapse">
+																	<div class="panel-body">
+																	
+																	<div ng-show="!studentNotInExamList.length" class="alert alert-block alert-danger fade in">
+													                     <button data-dismiss="alert" class="close close-sm" type="button">
+													                          <i class="icon-remove"></i>
+													                     </button>
+													                     <strong>Selected division does not contain any student or All student are added in Exam</strong> 
+													                 </div>
+																	
+																	<div ng-show="studentNotInExamList.length">
+																	     <div class="row">
+									                                          <div class="col-lg-3">
+									                                            
+									                                              <input type="text" class="form-control" placeholder="Search Student"  ng-model="sub.student_filter" ng-change="filterStudent(sub);disableSuccessMessage()">
+									                                          </div>
+									                                          <div class="col-lg-2">
+									                                               <button class="btn btn-primary" ng-click="addStudentToExam(sub);disableSuccessMessage()" id="addStudentSubmitBTN" type="submit" style="margin-left: 150px">Add To Exam</button>
+									                                          </div>
+																	     </div>
+																	     <br>
+																	     <div class="alert alert-block alert-danger fade in col-lg-6" ng-show="selectStudentFirstMessage">
+			                                                               <button data-dismiss="alert" class="close close-sm" type="button">
+			                                                               <i class="icon-remove"></i>
+			                                                               </button>
+			                                                               <strong>No Student Selected</strong>
+			                                                             </div>
+																	     <br>
+																	    <table  class="table">
+													                           <tbody>
+													                             <tr>
+													                             	<th>
+													                             	   <label ng-show="ShowSelectAll">                              <!-- ;disableSuccessMessage() -->
+                                                                                       <input type="checkbox" ng-model="sub.IsAllChecked" ng-change="CheckUncheckAll(sub)" /> Select All</label>
+                                                                                       <label ng-show="!ShowSelectAll">
+                                                                                       <input type="checkbox" ng-model="sub.IsFilteredAllChecked" ng-change="filterCheckUncheckAll(sub);disableSuccessMessage()" /> Select Filtered All</label>
+                                                                                    </th>
+																				    <th>
+																				       <i class=""></i>Student Name
+																				   </th>                                                          
+													                               
+													                             </tr>
+													                             <tr ng-repeat="student in filteredTodos | orderBy : 'fname' | filter : sub.student_filter" ng-class="{selectedrow:student.Selected}">
+																						<td><input  type="checkbox" ng-model="student.Selected" ng-change="CheckUncheckHeader(sub);filteredCheckUncheckHeader(sub);disableSuccessMessage()" /></td>
+																						<td> {{ student.fname }} {{ student.father }} {{ student.lname }}</td>
+													   							 </tr>
+													                          </tbody>
+												                      </table> 
+												                      
+																     									                      
+														              <pagination  ng-hide="!studentNotInExamList.length"
+																	      ng-model="$parent.currentPage"
+																	      total-items="$parent.totallenght"
+																	      max-size="$parent.maxSize"  
+																	      boundary-links="true">
+																	    </pagination>
+																	
+																	</div>
+																	</div>
+															  </div>
+															 
+															  <div id="show{{sub.id}}" class="collapse">
+																 <div class="panel-body">
+																	
+																	<div ng-show="!studentInExamList.length" class="alert alert-block alert-danger fade in">
+													                     <button data-dismiss="alert" class="close close-sm" type="button">
+													                          <i class="icon-remove"></i>
+													                     </button>
+													                     <strong>Selected division does not contain any student added for selected Exam</strong> 
+													                 </div>
+																	
+																	<div ng-show="studentInExamList.length">
+																	     <div class="row">
+									                                          <div class="col-lg-3">
+									                                            
+									                                              <input type="text" class="form-control" placeholder="Search Student"  ng-model="sub.student_filter1" ng-change="filterStudent1(sub);disableSuccessMessage()">
+									                                          </div>
+									                                          <div class="col-lg-2">
+									                                               <button class="btn btn-primary" ng-click="deleteStudentFromExam(sub);disableSuccessMessage()" id="deleteStudentSubmitBTN" type="submit" style="margin-left: 150px">Remove From Exam</button>
+									                                          </div>
+																	     </div>
+																	     <br>
+																	     <div class="alert alert-block alert-danger fade in col-lg-6" ng-show="selectStudentFirstMessage">
+			                                                               <button data-dismiss="alert" class="close close-sm" type="button">
+			                                                               <i class="icon-remove"></i>
+			                                                               </button>
+			                                                               <strong>No Student Selected</strong>
+			                                                             </div>
+																	     <br>
+																	    <table  class="table">
+													                           <tbody>
+													                             <tr>
+													                             	<th>
+													                             	   <label ng-show="ShowSelectAll1">                              <!-- ;disableSuccessMessage() -->
+                                                                                       <input type="checkbox" ng-model="sub.IsAllChecked1" ng-change="CheckUncheckAll1(sub)" /> Select All</label>
+                                                                                       <label ng-show="!ShowSelectAll1">
+                                                                                       <input type="checkbox" ng-model="sub.IsFilteredAllChecked1" ng-change="filterCheckUncheckAll1(sub);disableSuccessMessage()" /> Select Filtered All</label>
+                                                                                    </th>
+																				    <th>
+																				       <i class=""></i>Student Name
+																				   </th>                                                          
+													                               
+													                             </tr>
+													                             <tr ng-repeat="student in filteredTodos1 | orderBy : 'fname' | filter : sub.student_filter1" ng-class="{selectedrow:student.Selected1}">
+																						<td><input  type="checkbox" ng-model="student.Selected1" ng-change="CheckUncheckHeader1(sub);filteredCheckUncheckHeader1(sub);disableSuccessMessage()" /></td>
+																						<td> {{ student.fname }} {{ student.father }} {{ student.lname }}</td>
+													   							 </tr>
+													                          </tbody>
+												                      </table> 
+												                      
+																     									                      
+														              <pagination  ng-hide="!studentInExamList.length"
+																	      ng-model="$parent.currentPage"
+																	      total-items="$parent.totallenght"
+																	      max-size="$parent.maxSize"  
+																	      boundary-links="true">
+																	    </pagination>
+																	
+																	</div>
+																	</div>
+															  </div> 
+														</div>
+													</div> 
+													
 						                             
-						                             <div ng-repeat="sub in SubjectDivCompIDList" ng-class="{selectedrow:sub.Selected}">
+						                             
+						                           <!--   <div ng-repeat="sub in SubjectDivCompIDList" ng-class="{selectedrow:sub.Selected}">
 								                              <p><i style="display: none;">{{ sub.div.value }}</i>{{ sub.inst.label }}>{{ sub.branch.label }}>{{ sub.classes.label }}>{{ sub.div.label }}><strong id="subStrong">{{ sub.subject.label }}</strong>
 								                               
 								                               <button class="btn btn-primary btn-sm pull-right accordion-toggle" data-toggle="collapse"  ng-href="#collapseOne{{sub.id}}" ng-click="addStudentSubmitButton(sub)" id="addStudentSubmitBTN" type="submit" style="margin-right: 10px">Add Student</button>
-								                               <!-- <button class="btn btn-primary btn-sm pull-right accordion-toggle" data-toggle="collapse"  ng-href="#collapseTwo{{sub.id}}" ng-click="expand($event)" id="showStudentSubmitBTN" type="submit" style="margin-right: 10px">Exam's Student</button> --> 
+								                               <button class="btn btn-primary btn-sm pull-right accordion-toggle" data-toggle="collapse"  ng-href="#collapseTwo{{sub.id}}" ng-click="expand($event)" id="showStudentSubmitBTN" type="submit" style="margin-right: 10px">Exam's Student</button> 
 								                              </p>
 								                                 <div id="collapseOne{{sub.id}}" class="panel-collapse collapse">
 				                                                   <div class="panel-body" ng-show="ShowStudentNotInExam">
@@ -1272,13 +1841,9 @@
 							                                       </div>
 							         
 				                                                </div>
-				                                                <!-- <div id="collapseTwo{{sub.id}}" class="panel-collapse collapse">
-				                                                   <div class="panel-body">
-							                                             trial1
-							                                       </div>
-				                                                </div> -->
+				                                          
 								                              <br> 
-						                             </div>
+						                             </div> -->
          					 				</div> 
          					 	</div>
          			 	</div>
@@ -1294,7 +1859,7 @@
    /*!
     * Pikaday jQuery plugin.
     *
-    * Copyright Â© 2013 David Bushell | BSD & MIT license | https://github.com/dbushell/Pikaday
+    * Copyright © 2013 David Bushell | BSD & MIT license | https://github.com/dbushell/Pikaday
     */
 
    (function (root, factory)
