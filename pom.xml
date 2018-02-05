@@ -28,11 +28,28 @@
 			<dependency> <groupId>com.amazonaws</groupId> <artifactId>jmespath-java</artifactId> 
 			<version>1.11.250</version> </dependency> -->
 
-		<dependency>
+	<!-- 	<dependency>
 			<groupId>com.amazonaws</groupId>
 			<artifactId>aws-java-sdk</artifactId>
 			<version>1.11.106</version>
-		</dependency>
+		</dependency> -->
+		
+		<!-- https://mvnrepository.com/artifact/com.sun.istack/maven-istack-commons-plugin -->
+
+		
+<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
+<dependency>
+    <groupId>com.fasterxml.jackson.core</groupId>
+    <artifactId>jackson-core</artifactId>
+    <version>2.9.4</version>
+</dependency>
+
+<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+<dependency>
+    <groupId>com.fasterxml.jackson.core</groupId>
+    <artifactId>jackson-databind</artifactId>
+    <version>2.9.4</version>
+</dependency>
 
 
 		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-core -->
