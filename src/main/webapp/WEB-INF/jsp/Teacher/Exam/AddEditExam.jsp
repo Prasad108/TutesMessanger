@@ -43,6 +43,9 @@
   			 });
   			});
   		
+  		
+  		
+  		
   		  
    		app.controller('teacherCtrl', function($scope, $http,$interval) {
    			
