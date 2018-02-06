@@ -620,9 +620,7 @@
 		   	   				$scope.selectedstudentList.splice(i,1);
 		   	   				i--;
 		                } */
-		         $scope.selectedstudentList.splice(0,$scope.selectedstudentList.length);
-
-	   				         
+		         $scope.selectedstudentList.splice(0,$scope.selectedstudentList.length);      
 		                for (var i = 0; i < $scope.studentList.length; i++) {
 		                    if ($scope.studentList[i].Selected) {
 		                    	$scope.selectedstudentList.push($scope.studentList[i]);                   

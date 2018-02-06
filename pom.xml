@@ -11,49 +11,45 @@
 
 
 	<properties>
-
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<org.springframework.version>4.3.10.RELEASE</org.springframework.version>
 		<org.springframework.Security.version>4.2.3.RELEASE</org.springframework.Security.version>
 		<org.hibernate.version>5.2.5.Final</org.hibernate.version>
 	</properties>
 	<dependencies>
-	
 
-<!-- 	
 
+		<!-- <dependency> <groupId>com.amazonaws</groupId> <artifactId>aws-java-sdk-sns</artifactId> 
+			<version>1.11.250</version> </dependency> https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-sqs 
+			<dependency> <groupId>com.amazonaws</groupId> <artifactId>aws-java-sdk-sqs</artifactId> 
+			<version>1.11.250</version> </dependency> https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-core 
+			<dependency> <groupId>com.amazonaws</groupId> <artifactId>aws-java-sdk-core</artifactId> 
+			<version>1.11.250</version> </dependency> https://mvnrepository.com/artifact/com.amazonaws/jmespath-java 
+			<dependency> <groupId>com.amazonaws</groupId> <artifactId>jmespath-java</artifactId> 
+			<version>1.11.250</version> </dependency> -->
+
+	<!-- 	<dependency>
+			<groupId>com.amazonaws</groupId>
+			<artifactId>aws-java-sdk</artifactId>
+			<version>1.11.106</version>
+		</dependency> -->
+		
+		<!-- https://mvnrepository.com/artifact/com.sun.istack/maven-istack-commons-plugin -->
+
+		
+<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
 <dependency>
-    <groupId>com.amazonaws</groupId>
-    <artifactId>aws-java-sdk-sns</artifactId>
-    <version>1.11.250</version>
+    <groupId>com.fasterxml.jackson.core</groupId>
+    <artifactId>jackson-core</artifactId>
+    <version>2.9.4</version>
 </dependency>
 
-https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-sqs
+<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
 <dependency>
-    <groupId>com.amazonaws</groupId>
-    <artifactId>aws-java-sdk-sqs</artifactId>
-    <version>1.11.250</version>
+    <groupId>com.fasterxml.jackson.core</groupId>
+    <artifactId>jackson-databind</artifactId>
+    <version>2.9.4</version>
 </dependency>
-
-https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-core
-<dependency>
-    <groupId>com.amazonaws</groupId>
-    <artifactId>aws-java-sdk-core</artifactId>
-    <version>1.11.250</version>
-</dependency>
-
-https://mvnrepository.com/artifact/com.amazonaws/jmespath-java
-<dependency>
-    <groupId>com.amazonaws</groupId>
-    <artifactId>jmespath-java</artifactId>
-    <version>1.11.250</version>
-</dependency>     
-   -->
-
-<dependency>
-    <groupId>com.amazonaws</groupId>
-    <artifactId>aws-java-sdk</artifactId>
-    <version>1.11.106</version>
-  </dependency>
 
 
 		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-core -->
@@ -77,14 +73,14 @@ https://mvnrepository.com/artifact/com.amazonaws/jmespath-java
 			<artifactId>spring-security-web</artifactId>
 			<version>${org.springframework.Security.version}</version>
 		</dependency>
-		
+
 		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-taglibs -->
-<dependency>
-    <groupId>org.springframework.security</groupId>
-    <artifactId>spring-security-taglibs</artifactId>
-   	<version>${org.springframework.Security.version}</version>
-</dependency>
-		
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-taglibs</artifactId>
+			<version>${org.springframework.Security.version}</version>
+		</dependency>
+
 
 
 
@@ -229,12 +225,12 @@ https://mvnrepository.com/artifact/com.amazonaws/jmespath-java
 
 		<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
 		<dependency>
-		    <groupId>org.hibernate</groupId>
-		    <artifactId>hibernate-core</artifactId>
-		    <version>5.2.10.Final</version>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>5.2.10.Final</version>
 		</dependency>
 
-		
+
 		<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-validator -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
@@ -247,14 +243,14 @@ https://mvnrepository.com/artifact/com.amazonaws/jmespath-java
 			<artifactId>hibernate-validator</artifactId>
 			<version>5.4.1.Final</version>
 		</dependency>
-		
+
 		<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-envers -->
-<dependency>
-    <groupId>org.hibernate</groupId>
-    <artifactId>hibernate-envers</artifactId>
-    <version>5.2.10.Final</version>
-</dependency>
-		
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-envers</artifactId>
+			<version>5.2.10.Final</version>
+		</dependency>
+
 
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -289,7 +285,7 @@ https://mvnrepository.com/artifact/com.amazonaws/jmespath-java
 			<version>5.1.6</version>
 		</dependency>
 
-		
+
 
 		<dependency>
 			<groupId>commons-logging</groupId>
@@ -305,11 +301,16 @@ https://mvnrepository.com/artifact/com.amazonaws/jmespath-java
 			<artifactId>standard</artifactId>
 			<version>1.1.2</version>
 		</dependency>
-		
-		
+  <dependency>
+        <groupId>javax.xml.bind</groupId>
+        <artifactId>jaxb-api</artifactId>
+        <version>2.3.0</version>
+    </dependency>
 
 
-		
+
+
+
 
 	</dependencies>
 	<build>
@@ -340,11 +341,21 @@ https://mvnrepository.com/artifact/com.amazonaws/jmespath-java
 				<configuration>
 					<source>1.8</source>
 					<target>1.8</target>
+					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
 			<plugin>
 				<artifactId>maven-war-plugin</artifactId>
 				<version>3.0.0</version>
+
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<encoding>UTF-8</encoding>
+				</configuration>
 			</plugin>
 
 		</plugins>
@@ -372,16 +383,24 @@ https://mvnrepository.com/artifact/com.amazonaws/jmespath-java
 							<warName>ROOT</warName>
 						</configuration>
 					</plugin>
-					
+
 					<plugin>
-					      <groupId>org.apache.maven.plugins</groupId>
-					      <artifactId>maven-compiler-plugin</artifactId>
-					      <configuration>
-					         <source>1.8</source>
-					         <target>1.8</target>
-					      </configuration>
-					    </plugin>
-					    
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-compiler-plugin</artifactId>
+						<configuration>
+							<source>1.8</source>
+							<target>1.8</target>
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-compiler-plugin</artifactId>
+						<version>2.3.2</version>
+						<configuration>
+							<encoding>UTF-8</encoding>
+						</configuration>
+					</plugin>
+
 				</plugins>
 			</build>
 		</profile>
