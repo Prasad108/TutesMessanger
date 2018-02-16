@@ -3,24 +3,27 @@ package com.app.controller;
 
 import java.util.ArrayList;
 
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.app.pojo.Exam;
 import com.app.pojo.Institute;
 import com.app.pojo.Teacher;
 import com.app.service.AppAdminService;
 import com.app.service.InstituteService;
 import com.app.service.LoginService;
 import com.app.service.PermissionsService;
-import com.app.service.TeacherService;
 import com.app.service.RoleService;
+import com.app.service.TeacherService;
+import com.google.gson.Gson;
 
 @Controller
 @SessionAttributes({"addInstitute"})
@@ -46,7 +49,7 @@ public class AppAdmin {
 	AppAdminService appAdminService; 
 	
 	
-	
+	Gson gson = new Gson();
 	
 	 @RequestMapping(value="/dashboard",method = RequestMethod.GET)  
 	    public    String  appAdminDashboard() {  
@@ -123,13 +126,18 @@ public class AppAdmin {
 				System.out.println("**********this is from AppAdmin/GoToAddInstitute controller**********");		
 				ArrayList<Institute> Institutelist= new ArrayList<Institute>();
 				Institutelist.addAll(instituteService.getall());
-				model.addAttribute("listOfInstitute", Institutelist);
-				Institute inst= new Institute();
-				model.addAttribute("Institute", inst);
+				
+				String instituteListInJSON = gson.toJson(Institutelist);
+				
+				model.addAttribute("instituteListInJSON", instituteListInJSON);
+				
+				
+				/*Institute inst= new Institute();
+				model.addAttribute("Institute", inst);*/
 		        return "appAdmin/ExistingInstitutes";			
 	} 
 	    
-	    @RequestMapping(value="/updateInstitute",method = RequestMethod.POST)  
+	  /*  @RequestMapping(value="/updateInstitute",method = RequestMethod.POST)  
 	    public String  updateInstitute(Model model,@ModelAttribute("Institute") Institute inst) {  			
 	    	
 	    	System.out.println(inst);
@@ -147,8 +155,20 @@ public class AppAdmin {
 				model.addAttribute("Institute", inst2);
 				model.addAttribute("SuccessMessage", "institute updated successfully");
 		        return "appAdmin/ExistingInstitutes";			
-	} 
+	} */
 	   
+	    @RequestMapping(value="/updateInstitute",method=RequestMethod.POST)
+	    @ResponseBody
+	    public String updateInstitute(@RequestBody Institute inst)
+	    {
+	    	 System.out.println("**********inside UpdateInstitute controller**********");
+	    	 
+			 instituteService.update(inst);
+			 
+				
+		   
+		  return gson.toJson(inst);
+	    }
 	  
 	    
 	    	
