@@ -24,6 +24,8 @@
     <!--external css-->
     <!-- font icon -->
     <link href="${pageContext.request.contextPath}/css/elegant-icons-style.css" rel="stylesheet" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/pikaday.css">
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/pikaday.js"></script>
     <link href="${pageContext.request.contextPath}/css/font-awesome.min.css" rel="stylesheet" />
     <!-- Custom styles -->
     <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
@@ -43,57 +45,127 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/pikaday.js"></script>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/css/pikaday.css">   
   
-  
+   <script
+     src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
         <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
 
-<script type="text/javascript">
-$(document).ready(function(){
-
-
-	$('#instId').attr('readonly','readonly'); 
-	
-
-		$('.instEdit').on('click',function(){
-			// for parsing the date
-			var from =$(this).closest('tr').children()[6].textContent.split("-");//date table column
-						
-			var date = new Date(from[2], from[1] - 1, from[0]);
+<script>
+var app=angular.module('myApp',[]);
+app.controller('myController',function($scope,$http,$filter){
+$scope.instituteSaved=false;
+$scope.institutes=[];
+			$scope.instituteform=
+				{
+					
+					id:"",
+					name:"",
+					address:"",
+					contactno:"",
+					email:"",
+					subscriptionTill:"",
+				};
+				
+			$http({
+			    url: 'GetExistingInstitutes',
+			    contentType : 'application/json; charset=utf-8',
+			  	 dataType : 'json', 
+			    method: 'GET',    
+			    
+			}).then(function successCallback(response) {
+			    $scope.institutes = response.data;
+			   
+			}, function errorCallback(response) {
+			 console.log(response.statusText);
+			});
 			
-		
-			 $("#instId").val($(this).closest('tr').children()[1].textContent);
-			 $("#instName").val($(this).closest('tr').children()[2].textContent);
-			 $("#instAddress").val($(this).closest('tr').children()[5].textContent);
-			 $("#instContactno").val($(this).closest('tr').children()[4].textContent);
-			 $("#instEmail").val($(this).closest('tr').children()[3].textContent);
-			 $(".instdate").val(date);
+			
+	/*-----------		Edit Institute     -----------------*/
+			$scope.EditInstitute = function(institute) {
+				console.log("loading form data");
+				$scope.instituteform.id=institute.id;
+				$scope.instituteform.name=institute.name;
+				$scope.instituteform.address=institute.address;
+				$scope.instituteform.contactno=institute.contactno;
+				$scope.instituteform.email=institute.email;
+				$scope.instituteform.subscriptionTill=institute.subscriptionTill;
+				};
 
-		   
-		});
+//-------------------------------Update isntitute function -------------------------------		
+			$scope.UpdateInstitute = function(instituteform) {
+			var collectionDate = instituteform.subscriptionTill;
+			//$scope.instituteform.subscriptionTill= $filter('date')(new Date(collectionDate),'yyyy-MM-dd');
+			console.log(instituteform.subscriptionTill);
+			$scope.instituteform.subscriptionTill =new Date(collectionDate);
+		  
+			$http(
+					{
+						url : "updateInstitute",
+						contentType : 'application/json; charset=utf-8',
+						dataType : 'json',
+						method : "POST",
+						data : instituteform
+					})
+					
+					
+					.then(function successCallback(response) {
+						
+						$scope.SuccessMessage="Institute is Modified Successfully."
+						$scope.instituteSaved=true;
+				    	console.log("success");
+				    	if(response.data.message==null)
+				    		{
+				    		
+					    		var newInstitute=response.data;
+					    		
+					    		console.log(newInstitute);
+					    		for(var i=0;i<$scope.institutes.length;i++)
+					    		{
+					    			if($scope.institutes[i].id==$scope.instituteform.id)
+				    				{
+					    				$scope.institutes[i]=newInstitute
+					    			    
+				    				}
+					    		}
+				    		}
+				    	  
+				    
+				   		
+				   }, function errorCallback(response) {
+				    console.log(response.statusText);
+				   });
+			};
 
-});
+			
+			$scope.datepickerActivate = function() {
+				
+				$('.datepicker').pikaday({
+					firstDay : 1
+				});
+			};
+
+  });
 
 
 </script>
 </head>
-<body>
+<body ng-app="myApp" ng-controller="myController"  ng-cloak class="ng-cloak">
 	<section id="container" class=""> <!-- Default header --> <jsp:include
 		page="/WEB-INF/jsp/components/defaultHeader.jsp" /> <!-- App admin  Menu -->
 	<jsp:include page="/WEB-INF/jsp/appAdmin/components/appAdminMenu.jsp" />
-
-
-
-	   <aside>
+ 
+  
+ <aside>
   <section id="main-content">
           <section class="wrapper">  
-           <c:if test="${!empty SuccessMessage}">
-  					  <div class="alert alert-success fade in">
+           
+  				<div class="alert alert-success fade in" ng-show="instituteSaved">
                                   <button data-dismiss="alert" class="close close-sm" type="button">
                                       <i class="icon-remove"></i>
                                   </button>
-                                  <strong>${SuccessMessage}</strong> 
-                              </div>
-		</c:if>		
+                                  <strong>{{SuccessMessage}}</strong> 
+                                  </div>	
+		
               <div class="row">
                   <div class="col-lg-12">
                       <section class="panel">
@@ -113,34 +185,39 @@ $(document).ready(function(){
                                    <th><i class="icon_calendar"></i> Date</th>                               
                                   <th><i class="icon_cogs"></i> Action</th>
                               </tr>
-                              <c:forEach items="${listOfInstitute}" var="institute" >
-                            <c:set var="count" value="${count + 1}" scope="page"/>
-                              <tr>
-                                  <td>${count}</td>
-                                    <td>${institute.id}</td>
-                                  <td>${institute.name}</td>
+                        
+                            <tr ng-repeat="institute in institutes">
+                              
+                                  <td>{{$index+1}}</td>
+                                  <td>{{institute.id}}</td>
+                                  <td>{{institute.name}}</td>
+                                  <td>{{institute.email}}</td>
+                                  <td>{{institute.contactno}}</td>
+                                  <td>{{institute.address}}</td>
+                                  <td>{{institute.subscriptionTill | date :  "dd.MM.y" }}</td>
                                   
-                                   <td>${institute.email}</td>
-                                   <td>${institute.contactno}</td>
-                                   <td>${institute.address}</td>
-                                  
-                                  <td> <fmt:formatDate value="${institute.subscriptionTill}" pattern="dd-MM-yyyy" /></td>
                                    <td>
                                   <div class="btn-group">
                                   
-                                      <a class="btn btn-primary tooltips instEdit" title="" data-toggle="modal" data-placement="left" data-original-title="Edit Institute"  href="#editInstituteModal" ><i class="icon_plus_alt2"></i></a>
+                                   <a class="btn btn-primary"  data-toggle="modal" ng-click="EditInstitute(institute);datepickerActivate()" href="#myModal" ><i  class="icon_plus_alt2"  ></i></a>     	
+                                   <a class="btn btn-danger" ng-click="DeleteInstitute(institute)" href="#"><i   class="icon_close_alt2"></i></a>
+                                  
+                                  
+                                  
+                                  
+                                    <!--   <a class="btn btn-primary tooltips instEdit" title="" data-toggle="modal" data-placement="left" data-original-title="Edit Institute"  href="#editInstituteModal" ><i class="icon_plus_alt2"></i></a>
                                     
                                       <a class="btn btn-success tooltips" title="" data-toggle="tooltip" data-placement="top" data-original-title="Enable Institute" href="#"><i  class="icon_check_alt2 " ></i></a>
-                                      <a class="btn btn-danger tooltips" title="Disable Institute" data-toggle="tooltip" data-placement="right"  href="#"><i class="icon_close_alt2"></i></a>
+                                      <a class="btn btn-danger tooltips" title="Disable Institute" data-toggle="tooltip" data-placement="right"  href="#"><i class="icon_close_alt2"></i></a> -->
                                        <!-- Modal -->
-		                              <div class="modal fade" id="editInstituteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		                              <div id="myModal" class="modal fade" id="editInstituteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		                                  <div class="modal-dialog">
 		                                      <div class="modal-content">
 		                                          <div class="modal-header">
 		                                              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 		                                              <h4 class="modal-title">Modify Institute</h4>
 		                                          </div>
-		                                          <div class="modal-body">
+		                               <div class="modal-body">
 												
 														<div class="row">
 										                  <div class="col-lg-12">
@@ -150,60 +227,76 @@ $(document).ready(function(){
 										                          </header>
 										                          <div class="panel-body">
 										                              <div class="form">
-										                                 <form:form class="form-validate form-horizontal " id="register_form" method="post" action="updateInstitute" modelAttribute="Institute">
-										                                      <div class="form-group ">
-										                                      	
-										                                      	 <br></br>
-										                                          <label for="fullname" class="control-label col-lg-2">Institute Id </label>
-										                                           <br></br>
-										                                           <div class="col-lg-10">
-										                                              <form:input path="id" class=" form-control" id="instId" name="fullname" type="text" autocomplete="off" required="required" maxlength="50" readonly="readonly"  />
-										                                          </div>
-										                                      	<br></br>
-										                                          <label for="fullname" class="control-label col-lg-2">Institute Name <span class="required">*</span></label>
-										                                           <br></br>
-										                                           <div class="col-lg-10">
-										                                              <form:input path="name" class=" form-control" id="instName" name="fullname" type="text" autocomplete="off" required="required" maxlength="50"/>
-										                                          </div>
-										                                          <br></br>
-										                                          <label for="fullname" class="control-label col-lg-2">Institute Address <span class="required">*</span></label>
-										                                           <br></br>
-										                                           <div class="col-lg-10">
-										                                              <form:input path="address" class=" form-control" id="instAddress" name="address" type="text" autocomplete="off" required="required" maxlength="50"/>
-										                                          </div>
-										                                          <br></br>
-										                                           <label for="fullname" class="control-label col-lg-2">Contact Number <span class="required">*</span></label>
-										                                           <br></br>
-										                                           <div class="col-lg-10">
-										                                              <form:input path="contactno" class=" form-control" id="instContactno" name="contactno" type="text" pattern="[789][0-9]{9}" title="Please enter Valid contact number" autocomplete="off" required="required" maxlength="12"/>
-										                                          </div>
-										                                          <br></br>
-										                                          <label for="fullname" class="control-label col-lg-2">Email Address <span class="required">*</span></label>
-										                                           <br></br>
-										                                          <div class="col-lg-10">
-										                                              <form:input path="email" class=" form-control" id="instEmail" name="instEmail" type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" autocomplete="off" required="required" maxlength="50"/>
-										                                          </div>
-										                                          <br></br>
-										                                          <label for="fullname" class="control-label col-lg-2">Subscription till<span class="required">*</span></label>
-										                                          <br></br>
-										                                          <div class="col-lg-10">
-										                                              <form:input path="subscriptionTill" class=" form-control instdate" id="datepicker-topleft-forreal"  name="subscriptionTill" type="text" autocomplete="off" required="required" />
-										                                          </div>
-										                                      </div>
-										                                    
-										                                      <div class="form-group">
-										                                          <div class="col-lg-offset-2 col-lg-10">
-										                                              <button class="btn btn-primary" type="submit">Update</button>
-										                                                                                      </div>
-										                                      </div>
-										                                  </form:form>
+										                              
+										                              
+										                                <form class="form-horizontal " name="EditInstituteForm" method="get">
+																                                  <div class="form-group">
+																                                      <label class="col-sm-2 control-label">Institute Id <span class="required">*</span></label>
+																                                      <div class="col-sm-10">
+																                                          <input ng-model="instituteform.id" type="text" class="form-control" required="required" autocomplete="off" required="required" maxlength="50" readonly="readonly"  >
+																                                      </div>
+																                                    
+																                                        
+																                                  </div>
+																                                   <div class="form-group">
+																                                      <label class="col-sm-2 control-label">Institute Name<span class="required">*</span></label>
+																                                      <div class="col-sm-10">
+																                                          <input ng-model="instituteform.name" type="text" class="form-control" required="required" autocomplete="off" >
+																                                      </div>
+																                                  </div>
+																                                   <div class="form-group">
+																                                      <label class="col-sm-2 control-label">Institute Address<span class="required">*</span></label>
+																                                      <div class="col-sm-10">
+																                                          <input ng-model="instituteform.address"  type="text" class="form-control" required="required" autocomplete="off" >
+																                                      </div>
+																                                  </div>
+																                                  <div class="form-group">
+																	                                   <div class="form-group">
+																	                                      <label class="col-sm-2 control-label">Contact No<span class="required">*</span></label>
+																	                                      <div class="col-sm-10">
+																	                                          <input ng-model="instituteform.contactno" type="text" class="form-control" pattern="[789][0-9]{9}" title="Please enter Valid contact number" autocomplete="off" required="required" maxlength="12"> 
+																	                                      </div>
+																	                                  </div>
+																                                  </div>
+																                                  
+																                                  <div class="form-group">
+																	                                   <div class="form-group">
+																	                                      <label class="col-sm-2 control-label">Email<span class="required">*</span></label>
+																	                                      <div class="col-sm-10">
+																	                                          <input ng-model="instituteform.email" type="email" class="form-control" required="required" autocomplete="off">
+																	                                      </div>
+																	                                  </div>
+																                                  </div>
+																                                  <div class="form-group">
+																	                                   <div class="form-group">
+																	                                      <label class="col-sm-2 control-label">Subscription Till<span class="required">*</span></label>
+																	                                      <div class="col-sm-10">
+																	                                     
+																	                                          <input ng-model="instituteform.subscriptionTill" type="text" class="form-control datepicker" id="datepicker-topleft-forreal" placeholder="Date" required="required">                                              
+																                                          
+																	                                      </div>
+																	                                  </div>
+																                                  </div>
+																                                  
+																                                   
+																                                    <div class="form-group">
+																                                      <div class="col-lg-offset-2 col-lg-10">
+																                                          <button type="submit" data-dismiss="modal" class="btn btn-primary" ng-click="UpdateInstitute(instituteform)" ng-disabled="!EditInstituteForm.$valid || !EditInstituteForm.$dirty">Update Institute</button>
+																                                      </div>
+																                                  </div>
+																                           
+																                              </form>
+										                              
+										                              
+										                              
+										                              
 										                              </div>
 										                          </div>
 										                      </section>
 										                  </div>
 										              </div>
 												
-		                                          </div>
+		                                          </div> 
 		                                          <div class="modal-footer">
 		                                              <button data-dismiss="modal" class="btn btn-default" type="button">Close</button>
 		                                             
@@ -220,14 +313,18 @@ $(document).ready(function(){
                                   
                               </tr>
                              
-                              </c:forEach>
-                                                     
+               
                            </tbody>
                         </table>
                       </section>
                   </div>
                </div>
                </aside>
+ 
+ 
+
+
+  	 
               <!-- page end-->
  </section>
  
@@ -305,8 +402,15 @@ $(document).ready(function(){
 
     </script>
     
-    
+   <!--  this is extra added from addeditexam
+   
+   
+   
+ -->
+ 
 
+ 
+ 
   	<script src="${pageContext.request.contextPath}/js/jquery.js"></script>
 	<script src="${pageContext.request.contextPath}/js/jquery-ui-1.10.4.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/jquery-1.8.3.min.js"></script>
@@ -321,7 +425,65 @@ $(document).ready(function(){
     <!--custome script for all page-->
     <script src="${pageContext.request.contextPath}/js/scripts.js"></script>
    
-	
+	 <script>
+   /*!
+    * Pikaday jQuery plugin.
+    *
+    * Copyright © 2013 David Bushell | BSD & MIT license | https://github.com/dbushell/Pikaday
+    */
+
+   (function (root, factory)
+   {
+       'use strict';
+
+       if (typeof exports === 'object') {
+           // CommonJS module
+           factory(require('jquery'), require('pikaday'));
+       } else if (typeof define === 'function' && define.amd) {
+           // AMD. Register as an anonymous module.
+           define(['jquery', 'pikaday'], factory);
+       } else {
+           // Browser globals
+           factory(root.jQuery, root.Pikaday);
+       }
+   }(this, function ($, Pikaday)
+   {
+       'use strict';
+
+       $.fn.pikaday = function()
+       {
+           var args = arguments;
+
+           if (!args || !args.length) {
+               args = [{ }];
+           }
+
+           return this.each(function()
+           {
+               var self   = $(this),
+                   plugin = self.data('pikaday');
+
+               if (!(plugin instanceof Pikaday)) {
+                   if (typeof args[0] === 'object') {
+                       var options = $.extend({}, args[0]);
+                       options.field = self[0];
+                       self.data('pikaday', new Pikaday(options));
+                   }
+               } else {
+                   if (typeof args[0] === 'string' && typeof plugin[args[0]] === 'function') {
+                       plugin[args[0]].apply(plugin, Array.prototype.slice.call(args,1));
+
+                       if (args[0] === 'destroy') {
+                           self.removeData('pikaday');
+                       }
+                   }
+               }
+           });
+       };
+
+   }));
+   
+   </script>
     	
 </body>
 </html>
