@@ -65,6 +65,8 @@
 	<!-- <link href="${pageContext.request.contextPath}/css/xcharts.min.css" rel=" stylesheet">	
 	<link href="${pageContext.request.contextPath}/css/jquery-ui-1.10.4.min.css" rel="stylesheet"> -->
 	
+	 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/pikaday.css">
+	
 	
 
 	

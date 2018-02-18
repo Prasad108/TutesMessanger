@@ -28,11 +28,11 @@
 			<dependency> <groupId>com.amazonaws</groupId> <artifactId>jmespath-java</artifactId> 
 			<version>1.11.250</version> </dependency> -->
 
-	<!-- 	<dependency>
+		<dependency>
 			<groupId>com.amazonaws</groupId>
 			<artifactId>aws-java-sdk</artifactId>
-			<version>1.11.106</version>
-		</dependency> -->
+			<version>1.11.280</version>
+		</dependency>
 		
 		<!-- https://mvnrepository.com/artifact/com.sun.istack/maven-istack-commons-plugin -->
 
