@@ -34,6 +34,23 @@
 			<version>1.11.280</version>
 		</dependency>
 		
+		<!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-aws -->
+<dependency>
+    <groupId>org.springframework.cloud</groupId>
+    <artifactId>spring-cloud-aws</artifactId>
+    <version>1.2.2.RELEASE</version>
+    <type>pom</type>
+</dependency>
+
+<!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-aws-context -->
+<dependency>
+    <groupId>org.springframework.cloud</groupId>
+    <artifactId>spring-cloud-aws-context</artifactId>
+    <version>1.0.0.RELEASE</version>
+</dependency>
+
+		
+		
 		<!-- https://mvnrepository.com/artifact/com.sun.istack/maven-istack-commons-plugin -->
 
 		
