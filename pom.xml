@@ -28,11 +28,11 @@
 			<dependency> <groupId>com.amazonaws</groupId> <artifactId>jmespath-java</artifactId> 
 			<version>1.11.250</version> </dependency> -->
 
-		<dependency>
+		<!-- <dependency>
 			<groupId>com.amazonaws</groupId>
 			<artifactId>aws-java-sdk</artifactId>
 			<version>1.11.280</version>
-		</dependency>
+		</dependency> -->
 		
 		<!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-aws -->
 <dependency>
