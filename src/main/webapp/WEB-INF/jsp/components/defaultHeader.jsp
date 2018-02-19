@@ -264,9 +264,9 @@
                             </li> -->
                             
                         </ul>
-                    </li> --%>
+                    </li> 
                     <!-- user login dropdown end -->
-                </ul>
+                </ul> --%>
                 <!-- notificatoin dropdown end-->
             </div>
       </header>      
