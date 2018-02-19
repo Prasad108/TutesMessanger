@@ -90,10 +90,19 @@ public class LoginController {
 				int roleId = userRole.getId();
 				switch (roleId) {
 				case 1:
-					output = "hello";// student
+					output = "Student/Home";// student
+					Student student=StudentService.findByLoginId(userLogin.getId());	
+					//student.setInstitute(studentService.GetInstitute(student.getId()));
+					//student.setLogin(userLogin);
+					model.addAttribute("student",student);
+				
 					System.out.println("student logged in");
+					
+					String studentJSON =gson.toJson(student);
+					System.out.println(studentJSON);
 					break;
 
+					
 				case 2:
 					// ** Teacher 
 					output = "Teacher/home"; 		

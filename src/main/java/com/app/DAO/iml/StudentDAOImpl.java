@@ -3,6 +3,7 @@ package com.app.DAO.iml;
 import java.util.List;
 
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.app.pojo.Institute;
+import com.app.pojo.Login;
 import com.app.pojo.Student;
 import com.app.pojo.Teacher;
 
@@ -101,7 +103,7 @@ public class StudentDAOImpl implements com.app.DAO.StudentDAO {
 	}
 
 
-@Override
+	@Override
 	@Transactional
 	public void deleteSelectedFromDiv(int id) {
 	
@@ -111,6 +113,39 @@ public class StudentDAOImpl implements com.app.DAO.StudentDAO {
 		System.out.println("success query");
 		
 	}
+
+     @Override
+     @Transactional
+     public void changePassword(String newPassword, Login login) 
+     {
+    	 String query = "UPDATE login SET password = '"+ newPassword +"' WHERE id = '"+ login.getId() + "'";
+
+ 		 currentSession().createSQLQuery(query);
+ 		 SQLQuery sqlQuery = currentSession().createSQLQuery(query);
+ 		 sqlQuery.executeUpdate();
+	
+     }
+
+     @Override
+     @Transactional
+     public Boolean checkPassword(String oldPassword, Integer id) 
+     {
+    	 Login  login = (Login) currentSession().createQuery("select l from Login l where l.id= :id and l.password= :oldPassword").setParameter("id", id).setParameter("oldPassword", oldPassword).uniqueResult();
+  		
+ 		 if(login != null)
+ 			 return true;
+ 		 return false;
+     }
+
+     @Override
+ 	@Transactional
+ 	public void changeUserName(String newUserName, Login login) {
+ 		String query= "UPDATE login SET username ='"+newUserName+"'WHERE id='"+login.getId()+"'";
+ 		
+ 		currentSession().createSQLQuery(query);
+ 		 SQLQuery sqlQuery = currentSession().createSQLQuery(query);
+ 		 sqlQuery.executeUpdate();
+ 	}
 
 
 }
