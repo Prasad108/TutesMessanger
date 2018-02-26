@@ -76,6 +76,14 @@
   	          $scope.InstituteFormAdminForm.adminContactNo="";
   	          $scope.InstituteFormAdminForm.adminEmail="";
   	    };
+  	    
+  	  $scope.datepickerActivate = function() {
+			$('.datepicker').pikaday({
+				firstDay : 1
+			});
+		};
+		
+		 $scope.datepickerActivate();
   	   
   	  
   	

@@ -294,7 +294,7 @@ public class LoginController {
 					break;
 
 				case 4:
-					output = "AppAdmin/ExistingInstitutes";// app Admin
+					output = "AppAdmin/";// app Admin
 					System.out.println("admin logged in");
 					break;
 

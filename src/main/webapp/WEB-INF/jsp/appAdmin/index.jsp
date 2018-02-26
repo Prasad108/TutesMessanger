@@ -15,7 +15,7 @@
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/css/pikaday.css">
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
 		<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-		<script src="${pageContext.request.contextPath}/app/angular-route.js"></script>
+		<script src="${pageContext.request.contextPath}/app/angular-ui-router.js"></script>
 		<script src="${pageContext.request.contextPath}/app/appAdmin/app.js"></script>
 		<script src="${pageContext.request.contextPath}/app/appAdmin/addNewInstitute/addNewIsntituteController.js"></script>
 		<script src="${pageContext.request.contextPath}/app/appAdmin/existingInstitute/existingInstituteController.js"></script>
@@ -31,10 +31,9 @@
 	 
   
 		 <section id="main-content">
-		         
-				    	<div ng-view></div>				         
-		        
-				              <!-- page end-->
+		   <section class="wrapper">		           
+				    	<ui-view></ui-view>				         
+           <!-- page end-->
 		 </section>
 		 
 </section>
@@ -53,7 +52,7 @@
    /*!
     * Pikaday jQuery plugin.
     *
-    * Copyright © 2013 David Bushell | BSD & MIT license | https://github.com/dbushell/Pikaday
+    * Copyright ï¿½ 2013 David Bushell | BSD & MIT license | https://github.com/dbushell/Pikaday
     */
 
    (function (root, factory)

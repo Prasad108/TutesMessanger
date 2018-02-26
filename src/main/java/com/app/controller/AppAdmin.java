@@ -61,23 +61,14 @@ public class AppAdmin {
 	
 	
 	
-	 @RequestMapping(value="/dashboard",method = RequestMethod.GET)  
+	 @RequestMapping(value="/",method = RequestMethod.GET)  
 	    public    String  appAdminDashboard() {  
 	    	
 	    	System.out.println("*************this is /appAdmin/dashboard controller*********************");	    		    				
-	        return "appAdmin/dashboard";
+	        return "appAdmin/index";
 	    }
 	
-	    @RequestMapping(value="/AddNewInstitute",method = RequestMethod.GET)  
-	    public String  AddNewInstitute(Model model) {  
-	    	
-	    	System.out.println("**********this is AddNewInstitute controller**********");
-	    	Institute inst= new Institute();
-	    	model.addAttribute("Institute", inst);
-			String output="appAdmin/AddNewInstitute";
-			
-	        return output;  
-	    }
+	    
 	    
 	    
 	   
@@ -119,16 +110,6 @@ public class AppAdmin {
 			
 	        return output;  
 	    }
-	 
-	
-        @RequestMapping(value="/ExistingInstitutes",method = RequestMethod.GET)  
-	    public String  ExistingInstitutes(Model m)
-        {  			
-	      		System.out.println("**********this is from AppAdmin/GoToAddInstitute controller**********");		
-
-		        return "appAdmin/ExistingInstitutes";			
-	     } 
-	    
 	    
 	 
 	    @RequestMapping(value="/GetExistingInstitutes",method=RequestMethod.GET,produces="application/json")
