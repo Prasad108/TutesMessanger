@@ -17,8 +17,11 @@
 		<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
 		<script src="${pageContext.request.contextPath}/app/angular-ui-router.js"></script>
 		<script src="${pageContext.request.contextPath}/app/appAdmin/app.js"></script>
+		
 		<script src="${pageContext.request.contextPath}/app/appAdmin/addNewInstitute/addNewIsntituteController.js"></script>
 		<script src="${pageContext.request.contextPath}/app/appAdmin/existingInstitute/existingInstituteController.js"></script>
+		<script src="${pageContext.request.contextPath}/app/appAdmin/addNewInstitute/addNewIsntituteComponent.js"></script>
+		<script src="${pageContext.request.contextPath}/app/appAdmin/existingInstitute/existingInstituteComponent.js"></script>
 
 </head>
 <body    ng-cloak class="ng-cloak">
@@ -31,20 +34,16 @@
 	 
   
 		 <section id="main-content">
-		   <section class="wrapper">		           
-				    	<ui-view></ui-view>				         
-           <!-- page end-->
-		 </section>
+			   <section class="wrapper">	
+			   <div class="row">	           
+					    	<ui-view></ui-view>				         
+	           <!-- page end-->
+	           </div>
+			 </section>
 		 
-</section>
+		</section>
+	</section>
 	
-    
-   <!--  this is extra added from addeditexam
-   
-   
-   
- -->
- 
 
  <jsp:include page="/WEB-INF/jsp/components/defaultScript.jsp" />
 

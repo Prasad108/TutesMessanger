@@ -1,6 +1,11 @@
-
+(function(){
 	
-	app.controller('existingInstituteController',function($scope,$http,$filter){
+
+	angular.module('myApp').controller('existingInstituteController',existingInstituteController);
+	
+	existingInstituteController.$inject=['$scope','$http','$filter'];
+	
+	function existingInstituteController($scope,$http,$filter){
 		console.log("This is from existingInstituteController");
 		$scope.instituteSaved=false;
 		$scope.institutes=[];
@@ -94,9 +99,11 @@
 					};
 					$scope.datepickerActivate();
 
-		  });
+		  };
 
 
 
 	
+	
+}())
 	

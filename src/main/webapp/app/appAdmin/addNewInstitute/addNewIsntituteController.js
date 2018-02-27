@@ -1,6 +1,11 @@
-
+(function(){
 	
-	app.controller("addNewIsntituteController",function($scope,$http,$filter){
+
+	angular.module('myApp').controller("addNewIsntituteController",addNewIsntituteController);
+	
+	addNewIsntituteController.$inject=['$scope','$http','$filter'];
+	
+	function addNewIsntituteController($scope,$http,$filter){
   	  
 		console.log("This is from addNewInstituteController");
 		$scope.instituteSaved=false;
@@ -87,6 +92,9 @@
   	   
   	  
   	
-    });
+    };
 
+	
+
+}())
 	
