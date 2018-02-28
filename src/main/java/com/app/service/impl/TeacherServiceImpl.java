@@ -208,7 +208,9 @@ public class TeacherServiceImpl implements TeacherService {
 					 List<Division>divList=divisionService.getallOfParticularClass(c);
 					 for(Division d :divList)
 					 {
-						 str+="<li><a class='divisionSchedule' id='"+d.getId()+"' data-toggle='modal'  href='#myModal'>"+d.getName()+"</a></li>";						 
+						
+						 str+="<li><a class='divisionSchedule' id='"+d.getId()+"' ng-click=\"viewSchedule("+d.getId()+");viewName('"+d.getName()+"')\" data-toggle='modal'  href='#myModal'>"+d.getName()+"</a></li>";
+						 System.out.println(str);
 					 }
 				}catch(Exception e)
 				{

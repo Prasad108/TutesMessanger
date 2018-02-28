@@ -9,7 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -598,15 +600,30 @@ public class TeacherController {
 	        return "Teacher/ModifyInstitueStructure";
 	    }
 	 
+	   /* suraj method*/
+	 @RequestMapping(value="/getInstituteStructure",method=RequestMethod.POST)
+	 @ResponseBody
+	 public String getInstituteStructure(@ModelAttribute("teacher") Teacher teacher,@ModelAttribute("institute") Institute institute)
+	 {
+		 System.out.println("**********this is getInstitueStructure controller**********");	
+		 System.out.println(teacher);
+		 String str=teacherService.InstituteStucture(teacher);
+		 System.out.println(str);
+		 Gson gson=new Gson();
+		 String response=gson.toJson(str);
+		 return response;
+		 
+	 }
+	 
 	 @RequestMapping(value="/ViewInstitueStructure",method = RequestMethod.GET)  
 	    public String  ViewInstitueStructure(Model model,@ModelAttribute("teacher") Teacher teacher,@ModelAttribute("institute") Institute institute) {  
 	    	
 		 System.out.println("**********this is ViewInstitueStructure controller**********");	    
-		 System.out.println(teacher);
+		/* System.out.println(teacher);
 		 String str=teacherService.InstituteStucture(teacher);
 				
 		 System.out.println(str);
-		 model.addAttribute("structure", str);
+		 model.addAttribute("structure", str);*/
 		 		 
 	        return "Teacher/ExistingInstituteStructure";
 	    }
@@ -647,21 +664,57 @@ public class TeacherController {
 	    	
 	    	System.out.println("**********this is scheduletree controller**********");
 	    	String str=teacherService.InstituteStuctureForSchedule(teacher);
+	    
 			Schedule schedule= new Schedule();
 					
 			 model.addAttribute("structure", str);
 			 model.addAttribute("Schedule", schedule);
-	    
+			 
 			
 	        return "Teacher/InstStructForSchedule";
 	    }
-
-	 @RequestMapping(value = "/GetCalender/{id}", method = RequestMethod.GET)
+	 
+	 
+	 @RequestMapping(value = "/GetCalender", method = RequestMethod.POST)
 	 @ResponseBody
-	   	public String GetCalender( @PathVariable("id") int id ){
+	   	public String GetCalender(@RequestBody int id,@ModelAttribute("teacher") Teacher teacher ){
+		// int id=1;
+		  // System.out.println(teacher.getInstitute().getId());
+			System.out.println("**********from GetCalender controller and division id is :"+id +"**********"+teacher.getInstitute().getId());		
+			Division d=divisionService.find(id);
+			System.out.println("division is "+d);
+			Schedule schedule= scheduleService.fordivision(id);
+			
+			System.out.println(schedule);
+			String result="";
+			try {
+				result=schedule.getString();
+				
+				
+			}catch(Exception e)
+			{
+				result="<div class='alert alert-block alert-danger fade in'>";
+				result+="<button data-dismiss='alert' class='close close-sm' type='button'>";
+				result+="<i class='icon-remove'></i>";
+				result+="</button>";
+				result+="<strong>No Calender Saved !</strong> Please save calender for division.";
+				result+="</div> ";
+			}		
+				
+			System.out.println(result);
+			Gson gson=new Gson();
+			String response=gson.toJson(result);
+			System.out.println(response);
+			
+		return response;
+	 }
+
+	/* @RequestMapping(value = "/GetCalender/{id}", method = RequestMethod.GET)
+	 @ResponseBody
+	   	public String GetCalender( @PathVariable("id") int id,@ModelAttribute("teacher") Teacher teacher ){
 		 
-		 
-			System.out.println("**********from GetCalender controller and division id is :"+id +"**********");		
+		   System.out.println(teacher.getInstitute().getId());
+			System.out.println("**********from GetCalender controller and division id is :"+id +"**********"+teacher.getInstitute().getId());		
 			Division d=divisionService.find(id);
 			System.out.println("division is "+d);
 			Schedule schedule= scheduleService.fordivision(id);
@@ -687,13 +740,80 @@ public class TeacherController {
 			
 		return result;
 	 }
-
+*/
+	 
+	 @RequestMapping(value="updateDivisionScheduleMethod",method=RequestMethod.POST)
+	 public ResponseEntity updateDivisionScheduleMethod(Model model,@RequestBody Schedule schedule,@ModelAttribute("teacher") Teacher teacher)
+	 {
+		 ResponseEntity output;
+		 System.out.println("**********this is updateDivisionScheduleMethod controller**********");
+	    	
+	    	System.out.println(schedule);
+	    	String string=schedule.getString();
+	    	System.out.println("before updating string is"+schedule.getString());
+	    	String result=string.replace("\"","\'");
+	    	System.out.println(result);
+	    	schedule.setString(result);
+	    	// if the schedule already exist update it 
+	    	try { 
+	    		
+	    		
+	    		// get the id of the existing schedule 
+	    		//System.out.println("division is is"+schedule.getDivision().getId());
+	    		Schedule s1=scheduleService.fordivision(schedule.getId());
+	    		s1.setString(schedule.getString());
+	    		System.out.println("after updating string is"+schedule.getString());
+	    		System.out.println("we are updating the record :"+s1);
+	    		// update the variable for the calender string 
+	    		scheduleService.update(s1);
+	    		System.out.println("------------------------schedule is updated------------------------- ");
+	    		//model.addAttribute("SuccessMessage", "Schedule Updated for the division");
+	    		output=new ResponseEntity(HttpStatus.OK);
+	    	
+	    	}catch(Exception e)
+	    	{
+	    		
+	    		System.out.println("shcedule do not exist for this division creating new ");
+	    		try {
+	    			
+	    			System.out.println("finding the division of the schedule with the id :"+schedule.getId());
+	    			
+	    			Division d=divisionService.find(schedule.getId());
+	    			
+	    			System.out.println("------devision is :"+d);
+	    			schedule.setDivision(d);
+	    			System.out.println("we are going to create the new shcedule");
+	    			System.out.println("we aer about to save the :"+schedule );
+	    			scheduleService.create(schedule);
+	    			
+	    			System.out.println("------------------------schedule is saved------------------------- ");
+	    			// model.addAttribute("SuccessMessage", "Schedule created for the  division");
+	    			output=new ResponseEntity(HttpStatus.OK);
+	    			
+	    		}catch(Exception e1)
+	    		{
+	    			
+	    		// model.addAttribute("ErrorMessage", "error in saving Schedule for the division");
+	    		 System.out.println("------------------------error in schedule creation------------------------- ");
+	    		 output=new ResponseEntity(HttpStatus.FAILED_DEPENDENCY);
+	    		}
+	    		
+	    	}
+	    	
+			Schedule schedule2= new Schedule();
+			String str=teacherService.InstituteStuctureForSchedule(teacher);
+					
+			 model.addAttribute("structure", str);
+			 model.addAttribute("Schedule", schedule2);
+			 return output;
+	    
+	 }
 	 @RequestMapping(value="/updateDivisionSchedule",method = RequestMethod.POST)  
-	    public String  updateDivisionSchedule(Model model,@ModelAttribute("Schedule") Schedule schedule,@ModelAttribute("teacher") Teacher teacher) {  
+	    public String  updateDivisionSchedule(Model model,@RequestBody Schedule schedule,@ModelAttribute("teacher") Teacher teacher) {  
 	    	
 	    	System.out.println("**********this is updateDivisionSchedule controller**********");
 	    	
-	    	System.out.println(schedule);
+	    	/*System.out.println(schedule);
 	    	// if the schedule already exist update it 
 	    	try { 
 	    		
@@ -740,7 +860,7 @@ public class TeacherController {
 					
 			 model.addAttribute("structure", str);
 			 model.addAttribute("Schedule", schedule2);
-	    
+	    */
 			
 	        return "Teacher/InstStructForSchedule";
 	    }
@@ -1045,7 +1165,26 @@ public class TeacherController {
 		 return "Teacher/editProfile";
      }
 	 
-	 @RequestMapping(value="/editTeacher",method = RequestMethod.POST)
+	 
+	 @RequestMapping(value="/editTeacher",consumes=MediaType.APPLICATION_JSON_VALUE,method = RequestMethod.POST)
+     public String editTeacher(Model model,@ModelAttribute("teacher") Teacher teacher1,@RequestBody Teacher teacher2) 
+	 {
+		 System.out.println("**********this is editTeacher controller suraj**********");
+		 teacher1.setFname(teacher2.getFname());
+		 teacher1.setLname(teacher2.getLname());
+		 teacher1.setEmail(teacher2.getEmail());
+		 teacher1.setContactno(teacher2.getContactno());
+		 
+		 teacherService.update(teacher1);
+		 model.addAttribute("teacher",teacher1);
+		 model.addAttribute("teacherJSON",gson.toJson(teacher1));
+		 
+		 model.addAttribute("profileEditSuccess","Your profile updated successfully");
+		
+		 return "Teacher/showProfile";
+  }
+	 
+	 /*@RequestMapping(value="/editTeacher",method = RequestMethod.POST)
 	 	public String editTeacher(Model model,@ModelAttribute("teacher") Teacher teacher1,@ModelAttribute("EditTeacher") Teacher teacher2) 
 	 {
 		 System.out.println("**********this is editTeacher controller**********");
@@ -1061,7 +1200,7 @@ public class TeacherController {
 		 model.addAttribute("profileEditSuccess","Your profile updated successfully");
 		
 		 return "Teacher/showProfile";
-     }
+     }*/
 	 
 	 @RequestMapping(value = "/StudentInDivision", method = RequestMethod.GET)
 		public String ShowStudentInDivision(Model model,@ModelAttribute("teacher") Teacher teacher) {		
@@ -1315,6 +1454,13 @@ public class TeacherController {
 	 		System.out.println("**********this is AddEditExam controller**********");
 	 		return "Teacher/Exam/AddEditExam";
 		}
+	 	
+	 	@RequestMapping("/studentResult")
+	 	public String studentResult(Model model) 
+	 	{
+	 		System.out.println("**********this is ExamList in Result controller**********");
+	 		return "Teacher/Result/ExamList";
+		}
 	 		 	
 	 	@RequestMapping(value="/GetExamsOFInstitute/{id}", method=RequestMethod.POST)
 		@ResponseBody
@@ -1455,6 +1601,39 @@ public class TeacherController {
 
 			 return JSON;  
 		 }
+	 	
+	 	
+		@RequestMapping(value="/GetSubjectDivCompIDResult/{examId}", method=RequestMethod.POST)
+		@ResponseBody
+	 	public String GetSubjectDivCompIDResult(@PathVariable("examId") int examId)
+		 {
+			 System.out.println("**********inside GetSubjectDivCompID controller**********");
+			 List<SubjectDivComposit> subjectDivCompList=examSubStudCompService.findByExamId(examId);
+			 
+			 String JSON="[";
+			 
+			 for(SubjectDivComposit s : subjectDivCompList)
+			 {
+			  System.out.println("\n SubDivID : "+s.getId() );	 
+			 }
+			 
+			 for(SubjectDivComposit s : subjectDivCompList)
+			 {
+				 JSON+="{";
+					JSON+="\"id\":"+s.getId();			
+					JSON+="},";
+				   
+			 }
+			 
+			 JSON=JSON.substring(0, JSON.length() - 1);
+				JSON+="]";
+			
+				System.out.println(JSON);
+			
+			
+			 return JSON;
+		 }
+		
 	 	
 	 	
 		@RequestMapping(value="/GetSubjectDivCompID/{examId}", method=RequestMethod.POST)

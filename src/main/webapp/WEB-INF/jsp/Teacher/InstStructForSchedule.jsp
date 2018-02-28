@@ -13,8 +13,8 @@
 
 
 <jsp:include page="/WEB-INF/jsp/Teacher/components/angular.jsp" />
-<script>
-$(document).ready(function(){
+<!-- <script>
+/* $(document).ready(function(){
 
 	$('#divId').attr('readonly','readonly'); 
 	
@@ -95,7 +95,7 @@ $(document).ready(function(){
 		    	 }
 
 		}); */
-
+ */
 	 
 	
 	 });	
@@ -116,6 +116,133 @@ $(document).ready(function(){
 	});
 
 });
+
+</script> -->
+<script>
+				var app=angular.module("myApp",[]);
+				app.controller("teacherCtrl",function($scope,$http,$sce){
+				
+					$scope.teacher=JSON.parse('${teacherJSON}');
+		   			$scope.permissions=JSON.parse('${permissions}');  				
+		   			console.log("teacher is "+$scope.teacher);
+		   			console.log("teacher id is "+$scope.teacher["id"]+"permissions are "+ $scope.permissions);  
+		   			console.log($scope.permissions);
+					
+					
+				    $scope.updateSuccess=false;
+				    $scope.updateError=false;
+					$scope.calender;
+					console.log("inside controller");
+					
+					$scope.schedule={
+							id:"",
+							string:"",
+							divName:"",
+					}	
+					
+					
+	/*-------------	 take divid from TeacherService------------------------------*/
+					var divId;
+					//var divisionName;
+					$scope.viewSchedule=function(id){
+					 divId=id;
+					 console.log(id);
+					
+					// console.log(name);
+					// divisionName=division;
+					 console.log("if button clicked")
+					  console.log(divId);
+					// console.log(division);
+					 $scope.schedule.id=id;
+					 
+											 
+					};
+					
+			        
+					 //var divisionName;
+					$scope.viewName=function(Name)
+					{
+						console.log("inside name function");
+						$scope.schedule.divName=Name;
+						/* console.log(name);
+						$scope.schedule.divName=name; */
+						console.log($scope.schedule.divName);
+						
+					}; 
+					
+				//	console.log(divId);
+					console.log($scope.schedule);
+					
+	/*----------------------	 function of view shcedule -----------------------------*/			
+					$scope.viewSchedule1=function()
+					{
+						
+						console.log("inside function");
+						
+						 $http({
+							    url: 'GetCalender',
+							    method: 'POST', 
+							    data : divId, 
+							    
+							}).then(function successCallback(response) {
+								
+								$scope.calender=$sce.trustAsHtml(response.data);
+							  
+							    console.log(response.data);
+							    console.log("inside controller calender is");
+							    console.log($scope.calender);
+							   
+							}, function errorCallback(response) {
+							 console.log(response.statusText);
+							});
+						
+						
+						
+						
+					};
+		/*--------------------------update schedule-------------------------*/
+		$scope.updateSchedule=function(schedule)
+		{
+			
+		//	$scope.schedule.id=divId;
+			console.log("inside Update schedule");
+			console.log(divId);
+			$http({
+				 url: 'updateDivisionScheduleMethod',
+				    method: 'POST', 
+				    data : schedule, 
+			     }).then(function successCallback(response){
+			    	 console.log("updated")
+			    	 clearform();
+			    	 $scope.SaveSuccessMessage="Schedule Updated Successfully."
+			    	 $scope.updateSuccess=true;
+			    	 $scope.calender="";
+			    	 
+			     },function errorCallback(response){
+			    	console.log("not updated"); 
+			    	$scope.ErrorMessage="Error while Updating."
+			    		$scope.updateError=true;
+			     });
+				
+				
+			
+			
+			
+		};
+		function clearform(){
+			$scope.schedule.id="";
+			$scope.schedule.string="";
+			$scope.schedule.divName="";
+			
+		};
+					
+					
+					
+	});
+					
+					
+					
+			
 
 </script>
 
@@ -265,22 +392,23 @@ $(document).ready(function(){
  <section id="main-content">
           <section class="wrapper">
           <div class="row">
-             <c:if test="${!empty ErrorMessage}">
-  					  <div class="alert alert-block alert-danger fade in">
+         
+  					  <div class="alert alert-success fade in" ng-show="updateSuccess">
                                   <button data-dismiss="alert" class="close close-sm" type="button">
                                       <i class="icon-remove"></i>
                                   </button>
-                                <strong> ${ErrorMessage} </strong> 
+                                <strong> {{SaveSuccessMessage}} </strong> 
+                             
                               </div>
-			</c:if>
-			<c:if test="${!empty SaveSuccessMessage}">
-  					  <div class="alert alert-success fade in">
+			
+			
+  					  <div class="alert alert-block alert-danger fade in" ng-show="updateError">
                                   <button data-dismiss="alert" class="close close-sm" type="button">
                                       <i class="icon-remove"></i>
                                   </button>
-                                  <strong>${SaveSuccessMessage}</strong> 
+                                  <strong>{{ErrorMessage}}</strong> 
                               </div>
-		</c:if>	
+		
           
           
           
@@ -298,8 +426,9 @@ $(document).ready(function(){
                                           </div>
                                           <div class="modal-body">
 
-                                             <a class="btn btn-success showDivsionsSchedule" href="#">View Schedule</a>
-                                             <a class="btn btn-warning editDivsionsSchedule" data-toggle="modal"   href="#myModal2">Edit/Add Schedule</a>
+                                           <!--   <a class="btn btn-success showDivsionsSchedule" ng-click="viewSchedule()">View Schedule</a> -->
+                                              <button class="btn btn-warning editDivsionsSchedule"data-dismiss="modal"  type="submit" data-toggle="modal" ng-click="viewSchedule1()">ViewSchedule</button>
+                                             <button class="btn btn-warning editDivsionsSchedule" data-toggle="modal" type="submit"  href="#myModal2">Edit/Add Schedule</button>
                                              
 								                                <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 								                                  <div class="modal-dialog">
@@ -311,20 +440,20 @@ $(document).ready(function(){
 								                                          <div class="modal-body">
 								                     <!------------------------------- form starts over hear ---------------------->
 								                                           <div class="form">
-																				<form:form class="form-validate form-horizontal " id="Division_form" action="updateDivisionSchedule" method="post" modelAttribute="Schedule">
+																				<form class="form-validate form-horizontal " ng-submit="updateSchedule(schedule)"id="Division_form" method="post">
 																				
 																				 <div class="form-group ">
 																				 
 										                                          <label for="fullname" class="control-label col-lg-2">Division Id </label>
 										                                          
 										                                           <div class="col-lg-10">
-										                                              <form:input path="division.id" class=" form-control" id="divId" name="divid" type="text" autocomplete="off" required="required" maxlength="50" readonly="readonly"  />
+										                                              <input name="divid" ng-model="schedule.id" class=" form-control" type="text" autocomplete="off" required="required" maxlength="50" readonly="readonly"  />
 										                                          </div>
 										                                          
 										                                          <label for="fullname" class="control-label col-lg-2">Calendar String </label>
 										                                          
 										                                           <div class="col-lg-10">
-										                                              <form:input path="string" class=" form-control" id="divString" name="divString" type="text" autocomplete="off" required="required" maxlength="1000" readonly="readonly"  />
+										                                              <input class=" form-control" type="text" ng-model="schedule.string" autocomplete="off" required="required" maxlength="1000"  />
 										                                          </div>
 										                                          
 																				 <div class="form-group">
@@ -334,7 +463,7 @@ $(document).ready(function(){
 										                                      </div>
 										                                         
 																				 </div>
-																				</form:form>
+																				</form>
 																				</div>
 								                   <!------------------------------- form ends over hear ---------------------->
 								                                          </div>
@@ -357,7 +486,11 @@ $(document).ready(function(){
           	</div>
           	
           	          </div>
-          	          <div id="show_calender" class="googleCalendar" style="text-align: center;" >
+          	        <!--  <iframe ng-bind-html="calender" ng-src="{{calender}}" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+          	         <iframe>{{calender}}</iframe> -->
+          	          <div ng-bind-html="calender"></div>
+          	          <!-- <div class="tree" ng-bind-html="calender">
+          	          <div id="show_calender" ng-bind-html="calender" class="googleCalendar" style="text-align: center;" > -->
  <!-- <iframe src="https://calendar.google.com/calendar/embed?mode=WEEK&amp;height=600&amp;wkst=1&amp;bgcolor=%23FFFFFF&amp;src=ci5fi0t0u5i8927il2ula0kbgs%40group.calendar.google.com&amp;color=%2329527A&amp;ctz=Asia%2FCalcutta" style="border:solid 1px #777" width="800" height="600" frameborder="0" scrolling="no"></iframe> -->
 </div> 
           	          

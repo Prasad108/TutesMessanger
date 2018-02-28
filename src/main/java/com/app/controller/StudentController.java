@@ -3,6 +3,7 @@ package com.app.controller;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -43,13 +44,55 @@ public class StudentController {
 		 		 
 	        return "Student/Home";
 	    }
+	 @RequestMapping(value="/getSchedule",method=RequestMethod.POST)
+	 @ResponseBody
+	 public String getSchedule(@ModelAttribute("student") Student student)
+	 {
+		 System.out.println("**********this is from Student getSchedule Controller controller**********");	    
+ 		 String output="";
+			try {
+				
+				Integer i=student.getDivision().getId();
+				System.out.println("Division id is "+i);
+				
+				try {
+					Schedule schedule = scheduleService.fordivision(i);
+					if (!schedule.getString().isEmpty()) {
+						
+						System.out.println("schedule Found");
+						output=schedule.getString();
+						output="{\"schedule\":\""+schedule.getString()+"\",\"status\":\"success\"}";
+					} else {
+						output="{\"message\":\"For Your Division Schedule is not uploaded\",\"status\":\"error\"}";
+						
+						System.out.println("schedule not found for divisino");
+					}
+				}
+				catch(Exception e3)
+				{
+					output="{\"message\":\"For Your Division Schedule is not uploaded\",\"status\":\"error\"}";
+					System.out.println("schedule not found for divisino");
+					System.out.println("cathced the exception  3");
+				}
+				
+			}
+			catch(Exception e2) {
+				System.out.println("cathced the exception  e23");
+				output="{\"message\":\"Student do not have any division\",\"status\":\"error\"}";
+				
+				
+				
+			}
+			System.out.println(output);
+	        return output;
+	 }
 	 
 	 @RequestMapping(value="/Schedule",method = RequestMethod.GET)  
 	    public String  Schedule(Model model,@ModelAttribute("student") Student student) {  
 	    	
 		 System.out.println("**********this is from Student Schedule Controller controller**********");	    
 		 		 
-			try {
+			/*try {
 				
 				Integer i=student.getDivision().getId();
 				System.out.println("Division id is "+i);
@@ -80,7 +123,7 @@ public class StudentController {
 				model.addAttribute("scheduleErrorNoDivisionAssigned", "Student do not have any division");
 				
 				
-			}
+			}*/
 	 
 	        return "Student/Schedule";
 	    }

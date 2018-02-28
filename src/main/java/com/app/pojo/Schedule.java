@@ -22,7 +22,7 @@ public class Schedule implements java.io.Serializable {
 	private Integer id;
 	private transient Division division;
 	private String string;
-
+	
 	public Schedule() {
 	}
 

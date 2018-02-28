@@ -55,10 +55,10 @@
                       <ul class="sub" >
                           <li ng-show="permissions.authoriseStudent"><a class="" href="StudentRequestManager">Student Requests</a></li>
                            <li ng-show="permissions.authoriseTeacher"><a class="" href="TeacherRequestForApproval">Teacher Request </a></li>    
-                       <!--    <li ng-show="permissions.authoriseStudent"><a class="" href="#">Edit/Delete Student</a></li> -->
+                       <!--    <li ng-if="permissions.authoriseStudent"><a class="" href="#">Edit/Delete Student</a></li> -->
                            <li ng-show="permissions.authoriseStudent"><a class="" href="AddStudentToDivision">Add Student to Division</a></li>
                            <li ng-show="permissions.authoriseStudent"><a class="" href="StudentInDivision">Division's student</a></li>
-                         <!--  <li ng-show="permissions.authoriseTeacher"><a class="" href="#">Edit/Delete Teacher</a></li>       -->                 
+                         <!--  <li ng-if="permissions.authoriseTeacher"><a class="" href="#">Edit/Delete Teacher</a></li>       -->                 
                       </ul>
                   </li>
                   
@@ -100,7 +100,17 @@
                           <li><a class="" href="teacherChangePassword">Change Password</a></li>
                       </ul>
                   </li>  
-                  
+                  <li  class="sub-menu">
+                      <a href="javascript:;" class="">
+                          <i class="icon_desktop"></i>
+                          <span>Result</span>
+                          <span class="menu-arrow arrow_carrot-right"></span>
+                      </a>
+                      <ul class="sub" >
+                          <li ng-show="permissions.updateResults"><a class="" href="studentResult">View Result's</a></li>
+                                        
+                      </ul>
+                  </li>
                     
                    <li>
                       <a class="" href="${pageContext.request.contextPath}/logout" >
