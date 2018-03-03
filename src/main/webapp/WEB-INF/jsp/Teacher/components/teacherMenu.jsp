@@ -5,7 +5,7 @@
               <!-- sidebar menu start-->
               <ul class="sidebar-menu">                
                   <li class="active">
-                      <a class="" href="home">
+                      <a class="" ui-sref="Home">
                           <i class="icon_house_alt"></i>
                           <span>Home{{4+4}}</span>
                       </a>
@@ -41,7 +41,7 @@
                           <span class="menu-arrow arrow_carrot-right"></span>
                       </a>
                       <ul class="sub">
-                          <li><a class="" href="ViewInstitueStructure">View Structure</a></li>
+                          <li><a class="" ui-sref="existingInstituteStructure" >View Structure</a></li>
                           <li ng-show="permissions.alterInstituteStructure"><a class="" href="ModifyInstitueStructure">Modify Structure</a></li>                        
                       </ul>
                   </li>
@@ -53,7 +53,7 @@
                           <span class="menu-arrow arrow_carrot-right"></span>
                       </a>
                       <ul class="sub" >
-                          <li ng-show="permissions.authoriseStudent"><a class="" href="StudentRequestManager">Student Requests</a></li>
+                          <li ng-show="permissions.authoriseStudent"><a class="" ui-sref="studentRequest">Student Requests</a></li>
                            <li ng-show="permissions.authoriseTeacher"><a class="" href="TeacherRequestForApproval">Teacher Request </a></li>    
                        <!--    <li ng-if="permissions.authoriseStudent"><a class="" href="#">Edit/Delete Student</a></li> -->
                            <li ng-show="permissions.authoriseStudent"><a class="" href="AddStudentToDivision">Add Student to Division</a></li>

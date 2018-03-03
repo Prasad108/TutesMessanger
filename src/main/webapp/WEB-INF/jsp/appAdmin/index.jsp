@@ -22,6 +22,9 @@
 		<script src="${pageContext.request.contextPath}/app/appAdmin/existingInstitute/existingInstituteController.js"></script>
 		<script src="${pageContext.request.contextPath}/app/appAdmin/addNewInstitute/addNewIsntituteComponent.js"></script>
 		<script src="${pageContext.request.contextPath}/app/appAdmin/existingInstitute/existingInstituteComponent.js"></script>
+		<script src="${pageContext.request.contextPath}/app/appAdmin/menu/menuController.js"></script>
+		<script src="${pageContext.request.contextPath}/app/appAdmin/menu/menuComponent.js"></script>
+		
 
 </head>
 <body    ng-cloak class="ng-cloak">
@@ -30,7 +33,12 @@
 		<!-- Default header --> 
 		<jsp:include page="/WEB-INF/jsp/components/defaultHeader.jsp" /> 
 		<!-- App admin  Menu -->
-		<jsp:include page="/WEB-INF/jsp/appAdmin/components/appAdminMenu.jsp" />
+		
+		<!-- <app-admin-menu></app-admin-menu> -->
+		
+		
+	  	<jsp:include page="/WEB-INF/jsp/appAdmin/components/appAdminMenu.jsp" /> - 
+	
 	 
   
 		 <section id="main-content">

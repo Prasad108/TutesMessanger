@@ -18,7 +18,7 @@
 
 
 </script>
-<script src="${pageContext.request.contextPath}/app/Teacher/profile/editProfile/editProfileController.js"></script>
+<script src="${pageContext.request.contextPath}/app/teacher/profile/editProfile/editProfileController.js"></script>
 
 
 </head>

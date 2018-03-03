@@ -116,6 +116,28 @@ public class TeacherController {
 
 	Gson gson = new Gson();
 	
+	 @RequestMapping(value="/",method = RequestMethod.GET)  
+	    public String  IndexController(Model model,@ModelAttribute("Branch") Branch branch1,@ModelAttribute("teacher") Teacher teacher) {  
+	    	
+	    	System.out.println("**********this is IndexController controller**********");
+	    	branch1.setInstitute(teacher.getInstitute());
+	    	
+	    				
+	        return "Teacher/index";
+	    }
+	 
+	 @RequestMapping(value = "/getSessionVariables", method = RequestMethod.GET)
+	 @ResponseBody
+	   	public String getSessionVariables(@ModelAttribute("teacher") Teacher teacher,@ModelAttribute("teacherJSON") String teacherJson, @ModelAttribute("institute") String instituteJson, @ModelAttribute("permissions") String permissionsJson){
+		
+			System.out.println("**********from getSessionVariables controller***************** ");		
+			String response="{\"teacherJson\":"+teacherJson+",\"instituteJson\":"+instituteJson+",\"permissionsJson\":"+permissionsJson+"}";
+			
+			
+			
+		return response;
+	 }
+	
 	 @RequestMapping(value="/ModifyInstitueStructure",method = RequestMethod.GET)  
 	    public String  ModifyInstitueStructure(Model model,@ModelAttribute("teacher") Teacher teacher) {  
 	    	
@@ -1005,6 +1027,23 @@ public class TeacherController {
 			String studentListJSON=gson.toJson(studnetList);
 			model.addAttribute("StudentListJSON", studentListJSON);
 			return "Teacher/StudentRequestManager";
+
+		}
+	 
+	 @RequestMapping(value = "/StudentRequestManagerList", method = RequestMethod.GET)
+	 @ResponseBody
+		public String StudentRequestManagerList(@ModelAttribute("teacher") Teacher teacher) {		
+			System.out.println("**********inside StudentRequestManagerList controller**********");
+			System.out.println("teachers insitute id is :"+teacher.getInstitute().getId());
+			List<Student> studnetList=instituteService.getallPendingStudentForApproval(instituteService.find(teacher.getInstitute().getId()));
+			for(Student s :studnetList)
+			{
+				System.out.println(s.getFname());
+			}
+			
+			String studentListJSON=gson.toJson(studnetList);
+			
+			return studentListJSON;
 
 		}
 	 

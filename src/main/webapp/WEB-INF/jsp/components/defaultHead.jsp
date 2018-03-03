@@ -7,7 +7,10 @@
     <link rel="shortcut icon" href="${pageContext.request.contextPath}/img/favicon.png">
 
    
-	 <script src="${pageContext.request.contextPath}/app/angular.js"></script> 
+	 <script src="${pageContext.request.contextPath}/app/angular.js"></script>
+	  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-sanitize.js"></script>
+	 
+	
 	
 
     <!-- Bootstrap CSS -->    
