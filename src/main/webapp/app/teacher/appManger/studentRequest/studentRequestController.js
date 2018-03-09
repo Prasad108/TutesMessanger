@@ -13,7 +13,7 @@
         }, 
       function errorCallback(response) {              
                  $scope.message=data.message;
-        	 console.log(" teacher deletion failed and response is "+data.message);      
+        	 console.log(" failed to get the studentlist for approval with message : "+data.message);      
         });
 
     

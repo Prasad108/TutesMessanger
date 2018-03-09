@@ -53,10 +53,10 @@
                           <span class="menu-arrow arrow_carrot-right"></span>
                       </a>
                       <ul class="sub" >
-                          <li ng-show="permissions.authoriseStudent"><a class="" ui-sref="studentRequest">Student Requests</a></li>
-                           <li ng-show="permissions.authoriseTeacher"><a class="" href="TeacherRequestForApproval">Teacher Request </a></li>    
+                          <li ng-show="permissions.authoriseStudent"><a class="" ui-sref="studentRequest" ui-sref-active="active">Student Requests</a></li>
+                           <li ng-show="permissions.authoriseTeacher"><a class="" ui-sref="teacherRequest" ui-sref-active="active">Teacher Request </a></li>    
                        <!--    <li ng-if="permissions.authoriseStudent"><a class="" href="#">Edit/Delete Student</a></li> -->
-                           <li ng-show="permissions.authoriseStudent"><a class="" href="AddStudentToDivision">Add Student to Division</a></li>
+                           <li ng-show="permissions.authoriseStudent"><a class="" ui-sref="addStudentToDivision" ui-sref-active="active">Add Student to Division</a></li>
                            <li ng-show="permissions.authoriseStudent"><a class="" href="StudentInDivision">Division's student</a></li>
                          <!--  <li ng-if="permissions.authoriseTeacher"><a class="" href="#">Edit/Delete Teacher</a></li>       -->                 
                       </ul>

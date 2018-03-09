@@ -546,7 +546,7 @@
                                   </button>
                                   <strong>There are no student who do not have Division</strong> 
                               </div>
-          
+         			 </section>
         		</div>
         		</section> 
   		</section>   
