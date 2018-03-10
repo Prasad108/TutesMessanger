@@ -5,7 +5,7 @@
               <!-- sidebar menu start-->
               <ul class="sidebar-menu">                
                   <li class="active">
-                      <a class="" href="home">
+                      <a class="" ui-sref="Home">
                           <i class="icon_house_alt"></i>
                           <span>Home{{4+4}}</span>
                       </a>
@@ -41,7 +41,7 @@
                           <span class="menu-arrow arrow_carrot-right"></span>
                       </a>
                       <ul class="sub">
-                          <li><a class="" href="ViewInstitueStructure">View Structure</a></li>
+                          <li><a class="" ui-sref="existingInstituteStructure" >View Structure</a></li>
                           <li ng-show="permissions.alterInstituteStructure"><a class="" href="ModifyInstitueStructure">Modify Structure</a></li>                        
                       </ul>
                   </li>
@@ -53,12 +53,12 @@
                           <span class="menu-arrow arrow_carrot-right"></span>
                       </a>
                       <ul class="sub" >
-                          <li ng-show="permissions.authoriseStudent"><a class="" href="StudentRequestManager">Student Requests</a></li>
-                           <li ng-show="permissions.authoriseTeacher"><a class="" href="TeacherRequestForApproval">Teacher Request </a></li>    
-                       <!--    <li ng-show="permissions.authoriseStudent"><a class="" href="#">Edit/Delete Student</a></li> -->
-                           <li ng-show="permissions.authoriseStudent"><a class="" href="AddStudentToDivision">Add Student to Division</a></li>
+                          <li ng-show="permissions.authoriseStudent"><a class="" ui-sref="studentRequest" ui-sref-active="active">Student Requests</a></li>
+                           <li ng-show="permissions.authoriseTeacher"><a class="" ui-sref="teacherRequest" ui-sref-active="active">Teacher Request </a></li>    
+                       <!--    <li ng-if="permissions.authoriseStudent"><a class="" href="#">Edit/Delete Student</a></li> -->
+                           <li ng-show="permissions.authoriseStudent"><a class="" ui-sref="addStudentToDivision" ui-sref-active="active">Add Student to Division</a></li>
                            <li ng-show="permissions.authoriseStudent"><a class="" href="StudentInDivision">Division's student</a></li>
-                         <!--  <li ng-show="permissions.authoriseTeacher"><a class="" href="#">Edit/Delete Teacher</a></li>       -->                 
+                         <!--  <li ng-if="permissions.authoriseTeacher"><a class="" href="#">Edit/Delete Teacher</a></li>       -->                 
                       </ul>
                   </li>
                   
@@ -100,7 +100,17 @@
                           <li><a class="" href="teacherChangePassword">Change Password</a></li>
                       </ul>
                   </li>  
-                  
+                  <li  class="sub-menu">
+                      <a href="javascript:;" class="">
+                          <i class="icon_desktop"></i>
+                          <span>Result</span>
+                          <span class="menu-arrow arrow_carrot-right"></span>
+                      </a>
+                      <ul class="sub" >
+                          <li ng-show="permissions.updateResults"><a class="" href="studentResult">View Result's</a></li>
+                                        
+                      </ul>
+                  </li>
                     
                    <li>
                       <a class="" href="${pageContext.request.contextPath}/logout" >

@@ -3,11 +3,46 @@
      <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
        <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>  
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+        
+
+
 <html ng-app="myApp" ng-controller="teacherCtrl">
 	<head>
- 		<title>Teacher </title>
-   		<jsp:include page="/WEB-INF/jsp/components/defaultHead.jsp" />   		
+	<jsp:include page="/WEB-INF/jsp/components/defaultHead.jsp" />   		
    		<jsp:include page="/WEB-INF/jsp/Teacher/components/angular.jsp" />
+   		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-sanitize.js"></script>
+   		
+	
+	<script>
+	  var app=angular.module("myApp",['ngSanitize']);
+	  app.controller("teacherCtrl",function($scope,$http){
+		  $scope.structure;
+		  console.log("in view institute");
+		  
+		  $http({
+			    url: 'getInstituteStructure',
+			    contentType : 'application/json; charset=utf-8',
+			  	 dataType : 'json', 
+			    method: 'POST',    
+			    
+			}).then(function successCallback(response) {
+			    $scope.structure = response.data;
+			    
+			   /*  $("#regTitle").html("Hello World"); */
+			   
+			}, function errorCallback(response) {
+			 console.log(response.statusText);
+			});
+		  
+		  
+		  
+	  });
+	
+	
+	</script>
+ 		<title>Teacher </title>
+   		
    		<style type="text/css">
 
 
@@ -132,9 +167,10 @@
  <section id="main-content">
           <section class="wrapper">
           <div class="row">
-          	<h1> This is Existing Institute Structure page </h1>
-          	<div class="tree">
-          	 ${structure}
+          	<h1> This is Existing Institute 
+ page </h1>
+          	<div class="tree" ng-bind-html="structure">
+          	
           	</div>
           </div>
           </section>

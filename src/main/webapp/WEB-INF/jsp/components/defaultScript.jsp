@@ -44,7 +44,7 @@
 	
 	
 	
-	
+	  <script src="${pageContext.request.contextPath}/js/pikaday.js"></script>
 	
 	
   <script>

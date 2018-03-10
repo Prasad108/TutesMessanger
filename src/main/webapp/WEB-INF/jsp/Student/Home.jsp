@@ -20,13 +20,17 @@
 
  <!-- Default Menue -->
 <jsp:include page="/WEB-INF/jsp/Student/components/studentMenu.jsp" />  
-<!-- <div ng-include="/WEB-INF/jsp/Teacher/components/teacherMenu.jsp"></div> -->
+<!-- <div ng-include="/WEB-INF/jsp/Student/components/teacherMenu.jsp"></div> -->
 
  <section id="main-content">
           <section class="wrapper">
           <div class="row">
 	          	<h1> Student Home page</h1>  
-	                  	
+	            <!-- <h2>welcome</h2>      	
+	          	{{student.fname}} 
+	          	{{student.lname}}  
+	          	{{student.email}}  
+	          	{{student.contactno}} -->              	
 	          	            
           </div>
           </section>

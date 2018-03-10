@@ -17,6 +17,7 @@ public interface TeacherService {
 	public Institute GetInstitute(int id);
 	public List<Teacher> getall();
 	public Login getLoginIdByEmail(String email);
+	
 	public void changePassword(String newPassword , Login login);
 	public Boolean checkPassword(String oldPassword, Integer id);
 	

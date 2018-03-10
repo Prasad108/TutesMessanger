@@ -2,31 +2,44 @@ package com.app.controller;
 
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
-
-
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.app.pojo.Branch;
+import com.app.pojo.Exam;
 import com.app.pojo.Institute;
+import com.app.pojo.Student;
+import com.app.pojo.Subject;
 import com.app.pojo.Teacher;
 import com.app.service.AppAdminService;
 import com.app.service.InstituteService;
 import com.app.service.LoginService;
 import com.app.service.PermissionsService;
 import com.app.service.TeacherService;
+
 import com.app.service.RoleService;
 
 @Controller
 @SessionAttributes({"addInstitute"})
 @RequestMapping("/AppAdmin")
 public class AppAdmin {
-		
+	
+	Gson gson =new Gson();
 	@Autowired
 	InstituteService instituteService;
 	
@@ -48,91 +61,81 @@ public class AppAdmin {
 	
 	
 	
-	 @RequestMapping(value="/dashboard",method = RequestMethod.GET)  
+	 @RequestMapping(value="/",method = RequestMethod.GET)  
 	    public    String  appAdminDashboard() {  
 	    	
 	    	System.out.println("*************this is /appAdmin/dashboard controller*********************");	    		    				
-	        return "appAdmin/dashboard";
+	        return "appAdmin/index";
 	    }
 	
-	    @RequestMapping(value="/AddNewInstitute",method = RequestMethod.GET)  
-	    public String  AddNewInstitute(Model model) {  
-	    	
-	    	System.out.println("**********this is AddNewInstitute controller**********");
-	    	Institute inst= new Institute();
-	    	model.addAttribute("Institute", inst);
-			String output="appAdmin/AddNewInstitute";
-			
-	        return output;  
-	    }
 	    
 	    
-	    @RequestMapping(value="/RegisterInstitute",method = RequestMethod.POST)  
-	    public String  RegisterInstitute(Model model,@ModelAttribute("Institute") Institute inst ) {  
-	    	
-	    	System.out.println("**********this is RegisterInstitute controller**********");
-	    	String output="appAdmin/CreateInstituteAdmin";
-	    	System.out.println(inst);
-	    	model.addAttribute("addInstitute", inst);
-	    	Teacher t= new Teacher();
-	    	model.addAttribute("Teacher", t);
-	    	
-			System.out.println("redirecting to the page: "+ output );
-			
-	        return output;  
-	    }
+	    
+	   
 	    	
 	    
-	    @RequestMapping(value="/SaveInstituteAdmin",method = RequestMethod.POST)  
-	    public String  SaveInstituteAdmin(Model model,@ModelAttribute("addInstitute") Institute inst ,@ModelAttribute("Teacher") Teacher teacher ) {  
+	    @RequestMapping(value="/SaveInstituteAdminInstitute",consumes=MediaType.APPLICATION_JSON_VALUE,method = RequestMethod.POST)
+	    @ResponseBody
+	    public ResponseEntity SaveInstituteAdmin(@RequestBody com.app.pojo.composit.InstituteNameAdminName instadmin,Model model) {  
 	    	 
 	    	System.out.println("**********this is SaveInstituteAdmin controller**********");
-	    	String output="appAdmin/";   	 
+	    	ResponseEntity output; 
+	    	Institute inst=new Institute();
+	    	inst.setAddress(instadmin.getInstAddress());
+	    	inst.setEmail(instadmin.getInstEmail());
+	    	
+	    	inst.setName(instadmin.getInstName());
+	    	inst.setSubscriptionTill(instadmin.getInstSubscriptionTill());
+	    	inst.setContactno(instadmin.getInstContactNo());
+	    	Teacher teacher=new Teacher(instadmin.getAdminName(),instadmin.getAdminSurname(),instadmin.getAdminEmail(),instadmin.getAdminContactNo());
+	    	
 			try{	
 				
 				//call to the service which creates the institute with its Admin, uid-pwd and permissions
 				appAdminService.AddInstituteWithAdmin(inst, teacher);
 				
-		    	model.addAttribute("SuccessMessage", "institute Saved with It's Admin"); 
-		    	
-		    	// add the existing institute into list ans show it on the 
-		    	ArrayList<Institute> Institutelist= new ArrayList<Institute>();
-				Institutelist.addAll(instituteService.getall());
-				model.addAttribute("listOfInstitute", Institutelist);
-				Institute inst1= new Institute();
-				model.addAttribute("Institute", inst1);
-				output+="ExistingInstitutes";
+		    
+				output=new ResponseEntity(HttpStatus.OK);
 				
 			}
 			catch(Exception e)
 			{
 				// mostly error will be that their is duplicate entry in record 
-				model.addAttribute("ErrorMessage", "Duplicate entry Name of the Institute or other attribute already exist try again with unique values");
+				
 		    	System.out.println("duplicate key unique key voilation");
-		    	e.printStackTrace();
-		    	output+="AddNewInstitute";
+		    	//e.printStackTrace();
+		    	output=new ResponseEntity(HttpStatus.FAILED_DEPENDENCY);
 			}   	
 			
-				
+			
 	        return output;  
 	    }
 	    
-	
-	    @RequestMapping(value="/ExistingInstitutes",method = RequestMethod.GET)  
-	    public String  ExistingInstitutes(Model model) {  			
-				System.out.println("**********this is from AppAdmin/GoToAddInstitute controller**********");		
-				ArrayList<Institute> Institutelist= new ArrayList<Institute>();
-				Institutelist.addAll(instituteService.getall());
-				model.addAttribute("listOfInstitute", Institutelist);
-				Institute inst= new Institute();
-				model.addAttribute("Institute", inst);
-		        return "appAdmin/ExistingInstitutes";			
-	} 
+	 
+	    @RequestMapping(value="/GetExistingInstitutes",method=RequestMethod.GET,produces="application/json")
+	    @ResponseBody
+		public String ExistingInstitutes1()
+		{
+	    	ArrayList<Institute> Institutelist= new ArrayList<Institute>();
+			Institutelist.addAll(instituteService.getall());
+		
+			Institute inst= new Institute();
+		
+	    	System.out.println("**********this is from AppAdmin/GetAllInstitute controller**********");
+		
+			String response=gson.toJson(Institutelist);
+		
+			return response;
+		}  
 	    
-	    @RequestMapping(value="/updateInstitute",method = RequestMethod.POST)  
-	    public String  updateInstitute(Model model,@ModelAttribute("Institute") Institute inst) {  			
+	    
+	    
+	    
+	    @RequestMapping(value="/updateInstitute",consumes=MediaType.APPLICATION_JSON_VALUE,method = RequestMethod.POST)
+	    @ResponseBody
+	    public String  updateInstitute(@RequestBody Institute inst,Model model) {  			
 	    	
-	    	System.out.println(inst);
+	    
 				System.out.println("**********this is from updateInstitute controller**********");	
 				Institute inst1=instituteService.find(inst.getId());
 				inst.setEnable(inst1.getEnable());
@@ -146,7 +149,7 @@ public class AppAdmin {
 				Institute inst2= new Institute();
 				model.addAttribute("Institute", inst2);
 				model.addAttribute("SuccessMessage", "institute updated successfully");
-		        return "appAdmin/ExistingInstitutes";			
+		        return gson.toJson(inst);			
 	} 
 	   
 	  

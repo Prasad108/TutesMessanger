@@ -51,6 +51,7 @@ public class AppAdminServiceImpl implements AppAdminService {
     	
     	// created the object of login with username as email-id and pwd as contact no
     	Login login= new Login(r,teacher.getEmail(), teacher.getContactno()); 
+    	login.setEnableInstitute(true);
     	// save login credentials    
     	loginService.create(login);  
     			    	

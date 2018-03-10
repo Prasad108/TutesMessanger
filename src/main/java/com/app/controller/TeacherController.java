@@ -7,9 +7,11 @@ import java.util.logging.Level;
 
 import javax.servlet.http.HttpServletRequest;
 
-
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -114,10 +116,34 @@ public class TeacherController {
 
 	Gson gson = new Gson();
 	
+	 private static final Logger LOGGER = Logger.getLogger(TeacherController.class);
+	
+	 @RequestMapping(value="/",method = RequestMethod.GET)  
+	    public String  IndexController(Model model,@ModelAttribute("Branch") Branch branch1,@ModelAttribute("teacher") Teacher teacher) {  
+	    	
+	    	 LOGGER.info("**********this is IndexController controller**********");
+	    	branch1.setInstitute(teacher.getInstitute());
+	    	
+	    				
+	        return "Teacher/index";
+	    }
+	 
+	 @RequestMapping(value = "/getSessionVariables", method = RequestMethod.GET)
+	 @ResponseBody
+	   	public String getSessionVariables(@ModelAttribute("teacher") Teacher teacher,@ModelAttribute("teacherJSON") String teacherJson, @ModelAttribute("institute") String instituteJson, @ModelAttribute("permissions") String permissionsJson){
+		
+			 LOGGER.info("**********from getSessionVariables controller***************** ");		
+			String response="{\"teacherJson\":"+teacherJson+",\"instituteJson\":"+instituteJson+",\"permissionsJson\":"+permissionsJson+"}";
+			
+			
+			
+		return response;
+	 }
+	
 	 @RequestMapping(value="/ModifyInstitueStructure",method = RequestMethod.GET)  
 	    public String  ModifyInstitueStructure(Model model,@ModelAttribute("teacher") Teacher teacher) {  
 	    	
-	    	System.out.println("**********this is ModifyInstitueStructure controller**********");
+	    	 LOGGER.info("**********this is ModifyInstitueStructure controller**********");
 	    	
 	    	/*Logger.getLogger(TeacherController.class.getName(),TeacherController.class).log(Level.INFO, "**********this is ModifyInstitueStructure controller**********");*/	
 			Branch branch= new Branch();
@@ -127,12 +153,12 @@ public class TeacherController {
 			model.addAttribute("Classes", clsess);
 			model.addAttribute("Division", division);
 			Institute inst=teacherService.GetInstitute(teacher.getId());
-			System.out.println("institute is :"+inst);
+			 LOGGER.info("institute is :"+inst);
 			
 			 List <Branch> branchlist=branchService.getallOfParticularInstitute(inst);
-			 System.out.println("we are going to print the branches of current institute :");
+			  LOGGER.info("we are going to print the branches of current institute :");
 			 for (Branch b : branchlist) {
-				    System.out.println(b);
+				     LOGGER.info(b);
 				}
 								
 			model.addAttribute("BranchesOfInst",branchlist );
@@ -143,11 +169,11 @@ public class TeacherController {
 	 @RequestMapping(value="/AddNewBranch",method = RequestMethod.POST)  
 	    public String  AddNewBranch(Model model,@ModelAttribute("Branch") Branch branch1,@ModelAttribute("teacher") Teacher teacher) {  
 	    	
-	    	System.out.println("**********this is AddNewBranch controller**********");
+	    	 LOGGER.info("**********this is AddNewBranch controller**********");
 	    	branch1.setInstitute(teacher.getInstitute());
 	    	
 	    	branchService.create(branch1);
-	    	System.out.println("new Branch is saved ");
+	    	 LOGGER.info("new Branch is saved ");
 	    	model.addAttribute("SuccessMessage", "New branch is Saved with the name "+branch1.getName());
 	    	
 	    	Branch branch= new Branch();
@@ -159,12 +185,12 @@ public class TeacherController {
 	    	
 	    	
 	    	Institute inst=teacherService.GetInstitute(teacher.getId());
-			System.out.println("institute is :"+inst);
+			 LOGGER.info("institute is :"+inst);
 	    	
 	    	 List <Branch> branchlist=branchService.getallOfParticularInstitute(inst);
-			 System.out.println("we are going to print the branches of current isntitute :");
+			  LOGGER.info("we are going to print the branches of current isntitute :");
 			 for (Branch b : branchlist) {
-				    System.out.println(b);
+				     LOGGER.info(b);
 				}
 			
 			model.addAttribute("BranchesOfInst",branchlist );
@@ -175,14 +201,14 @@ public class TeacherController {
 	 @RequestMapping(value="/DeleteBranch",method = RequestMethod.POST)  
 	    public String  DeleteBranch(Model model,@ModelAttribute("teacher") Teacher teacher,@ModelAttribute("Classes") Classes clas) {  
 	    	
-	    	System.out.println("**********this is Delete Branch controller**********");
+	    	 LOGGER.info("**********this is Delete Branch controller**********");
 	   Branch branch1=clas.getBranch();
-	    	System.out.println("teacher id is "+teacher);
-	    	System.out.println("branch name is "+branch1.getName()+" and its id is "+branch1.getId());
+	    	 LOGGER.info("teacher id is "+teacher);
+	    	 LOGGER.info("branch name is "+branch1.getName()+" and its id is "+branch1.getId());
 	   
 	    	try{
 	    		branchService.delet(branch1.getId());
-		    	System.out.println("Branch is deleted ");
+		    	 LOGGER.info("Branch is deleted ");
 		    	model.addAttribute("SuccessMessage", "Branch is deleted successfully");
 	    	}
 	    	catch(Exception e)
@@ -199,15 +225,15 @@ public class TeacherController {
 			model.addAttribute("Branch", branch);
 			model.addAttribute("Classes", clsess);
 			model.addAttribute("Division", division);
-	    	System.out.println(teacher.getId());
+	    	 LOGGER.info(teacher.getId());
 	    	
 	    	Institute inst=teacherService.GetInstitute(teacher.getId());
-			System.out.println("institute is :"+inst);
+			 LOGGER.info("institute is :"+inst);
 	    	
 	    	 List <Branch> branchlist=branchService.getallOfParticularInstitute(inst);
-			 System.out.println("we are going to print the branches of current isntitute :");
+			  LOGGER.info("we are going to print the branches of current isntitute :");
 			 for (Branch b : branchlist) {
-				    System.out.println(b);
+				     LOGGER.info(b);
 				}
 				
 		
@@ -220,15 +246,15 @@ public class TeacherController {
 	 @RequestMapping(value="/modalRenameBranch",method = RequestMethod.POST)  
 	    public String  modalRenameBranch(Model model,@ModelAttribute("teacher") Teacher teacher,@ModelAttribute("Classes") Classes clas) {  
 	    	
-	    	System.out.println("**********this is Rename Branch controller**********");
+	    	 LOGGER.info("**********this is Rename Branch controller**********");
 	        Branch branch1=clas.getBranch();
-	    	System.out.println("teacher id is "+teacher);
-	    	System.out.println("branch name is "+branch1.getName()+" and its id is "+branch1.getId());
+	    	 LOGGER.info("teacher id is "+teacher);
+	    	 LOGGER.info("branch name is "+branch1.getName()+" and its id is "+branch1.getId());
 	    	branch1.setInstitute(teacher.getInstitute());
 	   
 	    	try{
 	    		branchService.update(branch1);
-		    	System.out.println("Branch is renamed");
+		    	 LOGGER.info("Branch is renamed");
 		    	model.addAttribute("SuccessMessage", "Branch is renamed successfully");
 	    	}
 	    	catch(Exception e)
@@ -245,15 +271,15 @@ public class TeacherController {
 			model.addAttribute("Branch", branch);
 			model.addAttribute("Classes", clsess);
 			model.addAttribute("Division", division);
-	    	System.out.println(teacher.getId());
+	    	 LOGGER.info(teacher.getId());
 	    	
 	    	Institute inst=teacherService.GetInstitute(teacher.getId());
-			System.out.println("institute is :"+inst);
+			 LOGGER.info("institute is :"+inst);
 	    	
 	    	 List <Branch> branchlist=branchService.getallOfParticularInstitute(inst);
-			 System.out.println("we are going to print the branches of current isntitute :");
+			  LOGGER.info("we are going to print the branches of current isntitute :");
 			 for (Branch b : branchlist) {
-				    System.out.println(b);
+				     LOGGER.info(b);
 				}
 				
 		
@@ -267,14 +293,14 @@ public class TeacherController {
 	    public String  AddNewClass(Model model,@ModelAttribute("Classes") Classes clas,@ModelAttribute("teacher") Teacher teacher) {  
 	    	
 		 
-	    	System.out.println("**********this is AddNewClass controller**********");
+	    	 LOGGER.info("**********this is AddNewClass controller**********");
 	    	
 	    	
 	    	Branch branch= branchService.find(clas.getBranch().getId()) ;
 	    	Classes c=new Classes(branch, clas.getName());
 	    	try{	
 			    	classesService.create(c);	    		
-			    	System.out.println("new Classes is saved ");
+			    	 LOGGER.info("new Classes is saved ");
 			    	model.addAttribute("SuccessMessage", "New Class is Saved with the name "+clas.getName());
 			    	
 	    	}
@@ -282,7 +308,7 @@ public class TeacherController {
 			{
 				// mostly error will be that their is duplicate entry in record 
 				model.addAttribute("ErrorMessage", "Duplicate entry Name of the Class or other attribute already exist try again with unique values");
-		    	System.out.println("duplicate key unique key voilation");
+		    	 LOGGER.info("duplicate key unique key voilation");
 		    	e.printStackTrace();
 		    	
 			}
@@ -296,12 +322,12 @@ public class TeacherController {
 				model.addAttribute("Classes", clsess);
 				model.addAttribute("Division", division);
 	    		Institute inst=teacherService.GetInstitute(teacher.getId());
-				System.out.println("institute is :"+inst);
+				 LOGGER.info("institute is :"+inst);
 		    	
 		    	 List <Branch> branchlist=branchService.getallOfParticularInstitute(inst);
-				 System.out.println("we are going to print the branches of current isntitute :");
+				  LOGGER.info("we are going to print the branches of current isntitute :");
 				 for (Branch b : branchlist) {
-					    System.out.println(b);
+					     LOGGER.info(b);
 					}
 					
 			
@@ -314,15 +340,15 @@ public class TeacherController {
 	 @RequestMapping(value="/DeleteClassFromBranch",method = RequestMethod.POST)  
 	    public String  DeleteClassFromBranch(Model model,@ModelAttribute("teacher") Teacher teacher,@ModelAttribute("Division") Division div) {  
 	    	
-	    	System.out.println("**********this is Delete Class controller**********");
+	    	 LOGGER.info("**********this is Delete Class controller**********");
 	        Branch branch1=div.getClasses().getBranch();
 	        Classes classes=div.getClasses();
-	    	System.out.println("teacher id is "+teacher);
-	    	System.out.println("class name is "+classes.getName()+" and its id is "+classes.getId());
+	    	 LOGGER.info("teacher id is "+teacher);
+	    	 LOGGER.info("class name is "+classes.getName()+" and its id is "+classes.getId());
 	   
 	    	try{
 	    		classesService.delet(classes.getId());
-		    	System.out.println("Class is deleted ");
+		    	 LOGGER.info("Class is deleted ");
 		    	model.addAttribute("SuccessMessage", "Class is deleted successfully");
 	    	}
 	    	catch(Exception e)
@@ -337,15 +363,15 @@ public class TeacherController {
 			model.addAttribute("Branch", branch);
 			model.addAttribute("Classes", clsess);
 			model.addAttribute("Division", division);
-	    	System.out.println(teacher.getId());
+	    	 LOGGER.info(teacher.getId());
 	    	
 	    	Institute inst=teacherService.GetInstitute(teacher.getId());
-			System.out.println("institute is :"+inst);
+			 LOGGER.info("institute is :"+inst);
 	    	
 	    	 List <Branch> branchlist=branchService.getallOfParticularInstitute(inst);
-			 System.out.println("we are going to print the branches of current isntitute :");
+			  LOGGER.info("we are going to print the branches of current isntitute :");
 			 for (Branch b : branchlist) {
-				    System.out.println(b);
+				     LOGGER.info(b);
 				}
 				
 			model.addAttribute("BranchesOfInst",branchlist );
@@ -356,16 +382,16 @@ public class TeacherController {
 	 @RequestMapping(value="/modalRenameClass",method = RequestMethod.POST)  
 	    public String  modalRenameClass(Model model,@ModelAttribute("teacher") Teacher teacher,@ModelAttribute("Division") Division div) {  
 	    	
-	    	System.out.println("**********this is Rename Class controller**********");
+	    	 LOGGER.info("**********this is Rename Class controller**********");
 	        Branch branch1=div.getClasses().getBranch();
 	        Classes classes=div.getClasses();
-	    	System.out.println("teacher id is "+teacher);
-	    	System.out.println("class name is "+classes.getName()+" and its id is "+classes.getId());
+	    	 LOGGER.info("teacher id is "+teacher);
+	    	 LOGGER.info("class name is "+classes.getName()+" and its id is "+classes.getId());
 	     	branch1.setInstitute(teacher.getInstitute());
 	        classes.setBranch(branch1);
 	    	try{
 	    		classesService.update(classes);
-		    	System.out.println("Class is renamed");
+		    	 LOGGER.info("Class is renamed");
 		    	model.addAttribute("SuccessMessage", "Class is renamed successfully");
 	    	}
 	    	catch(Exception e)
@@ -380,15 +406,15 @@ public class TeacherController {
 			model.addAttribute("Branch", branch);
 			model.addAttribute("Classes", clsess);
 			model.addAttribute("Division", division);
-	    	System.out.println(teacher.getId());
+	    	 LOGGER.info(teacher.getId());
 	    	
 	    	Institute inst=teacherService.GetInstitute(teacher.getId());
-			System.out.println("institute is :"+inst);
+			 LOGGER.info("institute is :"+inst);
 	    	
 	    	 List <Branch> branchlist=branchService.getallOfParticularInstitute(inst);
-			 System.out.println("we are going to print the branches of current isntitute :");
+			  LOGGER.info("we are going to print the branches of current isntitute :");
 			 for (Branch b : branchlist) {
-				    System.out.println(b);
+				     LOGGER.info(b);
 				}
 				
 			model.addAttribute("BranchesOfInst",branchlist );
@@ -400,7 +426,7 @@ public class TeacherController {
 	 @ResponseBody
 	    public String GetClassesList( @PathVariable("id") int id ){
 		 
-			System.out.println("**********from GetClassesList controller**********");
+			 LOGGER.info("**********from GetClassesList controller**********");
 			
 			List<Classes> classList=classesService.getallOfParticularBranch(branchService.find(id));
 			String JSON="[{\"value\":0,\"name\":\"--- Select Class---\"},";
@@ -409,11 +435,11 @@ public class TeacherController {
 				JSON+="\"value\":"+c.getId()+",";
 				JSON+="\"name\":\""+c.getName()+"\"";
 				JSON+="},";
-			    System.out.println(c);
+			     LOGGER.info(c);
 			}
 			JSON=JSON.substring(0, JSON.length() - 1);
 			JSON+="]";
-			System.out.println(JSON);
+			 LOGGER.info(JSON);
 			
 			return JSON;
 }
@@ -422,7 +448,7 @@ public class TeacherController {
 	 @ResponseBody
 	    public String GetDivisionList( @PathVariable("id") int id ){
 		 
-			System.out.println("**********from GetDivisionList controller**********");
+			 LOGGER.info("**********from GetDivisionList controller**********");
 			List<Division> divisionList=divisionService.getallOfParticularClass(classesService.find(id));
 			//List<Classes> classList=classesService.getallOfParticularBranch(branchService.find(id));
 			String JSON="[{\"value\":0,\"name\":\"--- Select Division---\"},";
@@ -431,11 +457,11 @@ public class TeacherController {
 				JSON+="\"value\":"+div.getId()+",";
 				JSON+="\"name\":\""+div.getName()+"\"";
 				JSON+="},";
-			    System.out.println(div);
+			     LOGGER.info(div);
 			}
 			JSON=JSON.substring(0, JSON.length() - 1);
 			JSON+="]";
-			System.out.println(JSON);
+			 LOGGER.info(JSON);
 			
 			
 		return JSON;
@@ -445,14 +471,14 @@ public class TeacherController {
 	   	public String  AddNewDivision(Model model,@ModelAttribute("Division") Division div,@ModelAttribute("teacher") Teacher teacher) {  
 	    	
 		 
-	    	System.out.println("**********this is AddNewDivision controller**********");	 
+	    	 LOGGER.info("**********this is AddNewDivision controller**********");	 
 	    	
 	    	Classes clas2=classesService.find(div.getClasses().getId());	    	
 	    	Division newDiv=new Division(clas2, div.getName());
 	    		    	
 	    	try{	
 	    		divisionService.create(newDiv);	    		
-			    	System.out.println("new Division is saved ");
+			    	 LOGGER.info("new Division is saved ");
 			    	model.addAttribute("SuccessMessage", "New Division is Saved with the name "+newDiv.getName());
 			    	
 	    	}
@@ -460,7 +486,7 @@ public class TeacherController {
 			{
 				// mostly error will be that their is duplicate entry in record 
 				model.addAttribute("ErrorMessage", "Duplicate entry Name of the Class or other attribute already exist try again with unique values");
-		    	System.out.println("duplicate key unique key voilation");
+		    	 LOGGER.info("duplicate key unique key voilation");
 		    	e.printStackTrace();
 		    	
 			} 
@@ -472,12 +498,12 @@ public class TeacherController {
 				model.addAttribute("Classes", clsess);
 				model.addAttribute("Division", division);
 	    		Institute inst=teacherService.GetInstitute(teacher.getId());
-				System.out.println("institute is :"+inst);
+				 LOGGER.info("institute is :"+inst);
 		    	
 		    	 List <Branch> branchlist=branchService.getallOfParticularInstitute(inst);
-				 System.out.println("we are going to print the branches of current isntitute :");
+				  LOGGER.info("we are going to print the branches of current isntitute :");
 				 for (Branch b : branchlist) {
-					    System.out.println(b);
+					     LOGGER.info(b);
 					}
 				model.addAttribute("BranchesOfInst",branchlist );
 	    	}
@@ -487,18 +513,18 @@ public class TeacherController {
 	 @RequestMapping(value="/DeleteDivisionFromClass",method = RequestMethod.POST)  
 	    public String  DeleteDivisionFromClass(Model model,@ModelAttribute("teacher") Teacher teacher,HttpServletRequest req) {  
 	    	
-	    	System.out.println("**********this is Delete Division controller**********");
+	    	 LOGGER.info("**********this is Delete Division controller**********");
 	    	String divID=req.getParameter("disabledSelectForDivisionForDelete");
 	        int id=Integer.valueOf(divID);
 	    	String classID=req.getParameter("disabledSelectForClassesForDeleteDivision");
-	    	System.out.println("div id is "+id);
-	    	System.out.println("class id is "+classID);
+	    	 LOGGER.info("div id is "+id);
+	    	 LOGGER.info("class id is "+classID);
 	 
-	    	System.out.println("teacher id is "+teacher);
+	    	 LOGGER.info("teacher id is "+teacher);
 	    
 	    	try{
 	    		divisionService.delet(id);
-		    	System.out.println("Division is deleted ");
+		    	 LOGGER.info("Division is deleted ");
 		    	model.addAttribute("SuccessMessage", "Division is deleted successfully");
 	    	}
 	    	catch(Exception e)
@@ -513,15 +539,15 @@ public class TeacherController {
 			model.addAttribute("Branch", branch);
 			model.addAttribute("Classes", clsess);
 			model.addAttribute("Division", division);
-	    	System.out.println(teacher.getId());
+	    	 LOGGER.info(teacher.getId());
 	    	
 	    	Institute inst=teacherService.GetInstitute(teacher.getId());
-			System.out.println("institute is :"+inst);
+			 LOGGER.info("institute is :"+inst);
 	    	
 	    	 List <Branch> branchlist=branchService.getallOfParticularInstitute(inst);
-			 System.out.println("we are going to print the branches of current isntitute :");
+			  LOGGER.info("we are going to print the branches of current isntitute :");
 			 for (Branch b : branchlist) {
-				    System.out.println(b);
+				     LOGGER.info(b);
 				}
 			model.addAttribute("BranchesOfInst",branchlist );
 	    	 return "Teacher/ModifyInstitueStructure";
@@ -530,13 +556,13 @@ public class TeacherController {
 	 @RequestMapping(value="/modalRenameDivision",method = RequestMethod.POST)  
 	    public String  modalRenameDivision(Model model,@ModelAttribute("teacher") Teacher teacher,HttpServletRequest req) {  
 	    	
-	    	System.out.println("**********this is Rename Division controller**********");
+	    	 LOGGER.info("**********this is Rename Division controller**********");
 	    	String id=req.getParameter("selectedDivisionIdToRename");
 	    	
 	    	Integer intObject = new Integer(id);
 	    	int DivId = intObject.intValue();
 	     	String DivName=req.getParameter("selectedDivisionForRename");
-	    	System.out.println("Div is "+DivName+" and its id is "+DivId);
+	    	 LOGGER.info("Div is "+DivName+" and its id is "+DivId);
 	    	
 	  
 	    	String id1=req.getParameter("selectedClassIdToRenameDivision");
@@ -567,7 +593,7 @@ public class TeacherController {
 	        
 	    	try{
 	    		divisionService.update(div);
-		    	System.out.println("Division is renamed");
+		    	 LOGGER.info("Division is renamed");
 		    	model.addAttribute("SuccessMessage", "Division is renamed successfully");
 	    	}
 	    	catch(Exception e)
@@ -582,15 +608,15 @@ public class TeacherController {
 			model.addAttribute("Branch", branch1);
 			model.addAttribute("Classes", clsess);
 			model.addAttribute("Division", division);
-	    	System.out.println(teacher.getId());
+	    	 LOGGER.info(teacher.getId());
 	    	
 	    	Institute inst=teacherService.GetInstitute(teacher.getId());
-			System.out.println("institute is :"+inst);
+			 LOGGER.info("institute is :"+inst);
 	    	
 	    	 List <Branch> branchlist=branchService.getallOfParticularInstitute(inst);
-			 System.out.println("we are going to print the branches of current isntitute :");
+			  LOGGER.info("we are going to print the branches of current isntitute :");
 			 for (Branch b : branchlist) {
-				    System.out.println(b);
+				     LOGGER.info(b);
 				}
 				
 			model.addAttribute("BranchesOfInst",branchlist );
@@ -598,15 +624,30 @@ public class TeacherController {
 	        return "Teacher/ModifyInstitueStructure";
 	    }
 	 
+	   /* suraj method*/
+	 @RequestMapping(value="/getInstituteStructure",method=RequestMethod.POST)
+	 @ResponseBody
+	 public String getInstituteStructure(@ModelAttribute("teacher") Teacher teacher,@ModelAttribute("institute") Institute institute)
+	 {
+		  LOGGER.info("**********this is getInstitueStructure controller**********");	
+		  LOGGER.info(teacher);
+		 String str=teacherService.InstituteStucture(teacher);
+		  LOGGER.info(str);
+		 Gson gson=new Gson();
+		 String response=gson.toJson(str);
+		 return response;
+		 
+	 }
+	 
 	 @RequestMapping(value="/ViewInstitueStructure",method = RequestMethod.GET)  
 	    public String  ViewInstitueStructure(Model model,@ModelAttribute("teacher") Teacher teacher,@ModelAttribute("institute") Institute institute) {  
 	    	
-		 System.out.println("**********this is ViewInstitueStructure controller**********");	    
-		 System.out.println(teacher);
+		  LOGGER.info("**********this is ViewInstitueStructure controller**********");	    
+		/*  LOGGER.info(teacher);
 		 String str=teacherService.InstituteStucture(teacher);
 				
-		 System.out.println(str);
-		 model.addAttribute("structure", str);
+		  LOGGER.info(str);
+		 model.addAttribute("structure", str);*/
 		 		 
 	        return "Teacher/ExistingInstituteStructure";
 	    }
@@ -614,7 +655,7 @@ public class TeacherController {
 	 @RequestMapping("/teacherChangePassword")
 	 	public String changePasswordShow(Model map) 
 	 {
-		 System.out.println("**********this is teacherChangePassword controller**********");	    	
+		  LOGGER.info("**********this is teacherChangePassword controller**********");	    	
 		 
 		 String oldPassword = "a", newPassword = "a";
 		 map.addAttribute("oldPassword",oldPassword);
@@ -625,14 +666,14 @@ public class TeacherController {
 	 @RequestMapping(value="/teacherChangePassword" , method=RequestMethod.POST)
 	 	public String changePassword(Model map ,@RequestParam("oldPassword") String oldPassword ,@RequestParam("newPassword") String newPassword,@ModelAttribute("teacher") Teacher teacher ) 
 	 {
-		 System.out.println("**********this is teacherChangePassword controller**********");	    	
-		System.out.println(teacher.toString());
+		  LOGGER.info("**********this is teacherChangePassword controller**********");	    	
+		 LOGGER.info(teacher.toString());
 		Login login =  teacherService.getLoginIdByEmail(teacher.getEmail());
-		System.out.println(login.getId());
+		 LOGGER.info(login.getId());
 		teacher.setLogin(login);
-		System.out.println(teacher.getLogin().getId());
-		System.out.println(oldPassword+"taking password");
-		System.out.println(newPassword+"taking password");
+		 LOGGER.info(teacher.getLogin().getId());
+		 LOGGER.info(oldPassword+"taking password");
+		 LOGGER.info(newPassword+"taking password");
 		
 		Boolean flag=  teacherService.checkPassword(oldPassword , login.getId());
 		
@@ -645,28 +686,30 @@ public class TeacherController {
 	 @RequestMapping(value="/scheduletree",method = RequestMethod.GET)  
 	    public String  scheduletree(Model model,@ModelAttribute("teacher") Teacher teacher,@ModelAttribute("institute") Institute institute) {  
 	    	
-	    	System.out.println("**********this is scheduletree controller**********");
+	    	 LOGGER.info("**********this is scheduletree controller**********");
 	    	String str=teacherService.InstituteStuctureForSchedule(teacher);
+	    
 			Schedule schedule= new Schedule();
 					
 			 model.addAttribute("structure", str);
 			 model.addAttribute("Schedule", schedule);
-	    
+			 
 			
 	        return "Teacher/InstStructForSchedule";
 	    }
-
-	 @RequestMapping(value = "/GetCalender/{id}", method = RequestMethod.GET)
+	 
+	 
+	 @RequestMapping(value = "/GetCalender", method = RequestMethod.POST)
 	 @ResponseBody
-	   	public String GetCalender( @PathVariable("id") int id ){
-		 
-		 
-			System.out.println("**********from GetCalender controller and division id is :"+id +"**********");		
+	   	public String GetCalender(@RequestBody int id,@ModelAttribute("teacher") Teacher teacher ){
+		// int id=1;
+		  //  LOGGER.info(teacher.getInstitute().getId());
+			 LOGGER.info("**********from GetCalender controller and division id is :"+id +"**********"+teacher.getInstitute().getId());		
 			Division d=divisionService.find(id);
-			System.out.println("division is "+d);
+			 LOGGER.info("division is "+d);
 			Schedule schedule= scheduleService.fordivision(id);
 			
-			System.out.println(schedule);
+			 LOGGER.info(schedule);
 			String result="";
 			try {
 				result=schedule.getString();
@@ -682,18 +725,119 @@ public class TeacherController {
 				result+="</div> ";
 			}		
 				
-			System.out.println(result);
+			 LOGGER.info(result);
+			Gson gson=new Gson();
+			String response=gson.toJson(result);
+			 LOGGER.info(response);
+			
+		return response;
+	 }
+
+	/* @RequestMapping(value = "/GetCalender/{id}", method = RequestMethod.GET)
+	 @ResponseBody
+	   	public String GetCalender( @PathVariable("id") int id,@ModelAttribute("teacher") Teacher teacher ){
+		 
+		    LOGGER.info(teacher.getInstitute().getId());
+			 LOGGER.info("**********from GetCalender controller and division id is :"+id +"**********"+teacher.getInstitute().getId());		
+			Division d=divisionService.find(id);
+			 LOGGER.info("division is "+d);
+			Schedule schedule= scheduleService.fordivision(id);
+			
+			 LOGGER.info(schedule);
+			String result="";
+			try {
+				result=schedule.getString();
+				
+				
+			}catch(Exception e)
+			{
+				result="<div class='alert alert-block alert-danger fade in'>";
+				result+="<button data-dismiss='alert' class='close close-sm' type='button'>";
+				result+="<i class='icon-remove'></i>";
+				result+="</button>";
+				result+="<strong>No Calender Saved !</strong> Please save calender for division.";
+				result+="</div> ";
+			}		
+				
+			 LOGGER.info(result);
 			
 			
 		return result;
 	 }
-
+*/
+	 
+	 @RequestMapping(value="updateDivisionScheduleMethod",method=RequestMethod.POST)
+	 public ResponseEntity updateDivisionScheduleMethod(Model model,@RequestBody Schedule schedule,@ModelAttribute("teacher") Teacher teacher)
+	 {
+		 ResponseEntity output;
+		  LOGGER.info("**********this is updateDivisionScheduleMethod controller**********");
+	    	
+	    	 LOGGER.info(schedule);
+	    	String string=schedule.getString();
+	    	 LOGGER.info("before updating string is"+schedule.getString());
+	    	String result=string.replace("\"","\'");
+	    	 LOGGER.info(result);
+	    	schedule.setString(result);
+	    	// if the schedule already exist update it 
+	    	try { 
+	    		
+	    		
+	    		// get the id of the existing schedule 
+	    		// LOGGER.info("division is is"+schedule.getDivision().getId());
+	    		Schedule s1=scheduleService.fordivision(schedule.getId());
+	    		s1.setString(schedule.getString());
+	    		 LOGGER.info("after updating string is"+schedule.getString());
+	    		 LOGGER.info("we are updating the record :"+s1);
+	    		// update the variable for the calender string 
+	    		scheduleService.update(s1);
+	    		 LOGGER.info("------------------------schedule is updated------------------------- ");
+	    		//model.addAttribute("SuccessMessage", "Schedule Updated for the division");
+	    		output=new ResponseEntity(HttpStatus.OK);
+	    	
+	    	}catch(Exception e)
+	    	{
+	    		
+	    		 LOGGER.info("shcedule do not exist for this division creating new ");
+	    		try {
+	    			
+	    			 LOGGER.info("finding the division of the schedule with the id :"+schedule.getId());
+	    			
+	    			Division d=divisionService.find(schedule.getId());
+	    			
+	    			 LOGGER.info("------devision is :"+d);
+	    			schedule.setDivision(d);
+	    			 LOGGER.info("we are going to create the new shcedule");
+	    			 LOGGER.info("we aer about to save the :"+schedule );
+	    			scheduleService.create(schedule);
+	    			
+	    			 LOGGER.info("------------------------schedule is saved------------------------- ");
+	    			// model.addAttribute("SuccessMessage", "Schedule created for the  division");
+	    			output=new ResponseEntity(HttpStatus.OK);
+	    			
+	    		}catch(Exception e1)
+	    		{
+	    			
+	    		// model.addAttribute("ErrorMessage", "error in saving Schedule for the division");
+	    		  LOGGER.info("------------------------error in schedule creation------------------------- ");
+	    		 output=new ResponseEntity(HttpStatus.FAILED_DEPENDENCY);
+	    		}
+	    		
+	    	}
+	    	
+			Schedule schedule2= new Schedule();
+			String str=teacherService.InstituteStuctureForSchedule(teacher);
+					
+			 model.addAttribute("structure", str);
+			 model.addAttribute("Schedule", schedule2);
+			 return output;
+	    
+	 }
 	 @RequestMapping(value="/updateDivisionSchedule",method = RequestMethod.POST)  
-	    public String  updateDivisionSchedule(Model model,@ModelAttribute("Schedule") Schedule schedule,@ModelAttribute("teacher") Teacher teacher) {  
+	    public String  updateDivisionSchedule(Model model,@RequestBody Schedule schedule,@ModelAttribute("teacher") Teacher teacher) {  
 	    	
-	    	System.out.println("**********this is updateDivisionSchedule controller**********");
+	    	 LOGGER.info("**********this is updateDivisionSchedule controller**********");
 	    	
-	    	System.out.println(schedule);
+	    	/* LOGGER.info(schedule);
 	    	// if the schedule already exist update it 
 	    	try { 
 	    		
@@ -702,36 +846,36 @@ public class TeacherController {
 	    		Schedule s1=scheduleService.fordivision(schedule.getDivision().getId());
 	    		s1.setString(schedule.getString());
 	    		
-	    		System.out.println("we are updating the record :"+s1);
+	    		 LOGGER.info("we are updating the record :"+s1);
 	    		// update the variable for the calender string 
 	    		scheduleService.update(s1);
-	    		System.out.println("------------------------schedule is updated------------------------- ");
+	    		 LOGGER.info("------------------------schedule is updated------------------------- ");
 	    		model.addAttribute("SuccessMessage", "Schedule Updated for the division");
 	    	
 	    	}catch(Exception e)
 	    	{
 	    		
-	    		System.out.println("shcedule do not exist for this division creating new ");
+	    		 LOGGER.info("shcedule do not exist for this division creating new ");
 	    		try {
 	    			
-	    			System.out.println("finding the division of the schedule with the id :"+schedule.getDivision().getId());
+	    			 LOGGER.info("finding the division of the schedule with the id :"+schedule.getDivision().getId());
 	    			
 	    			Division d=divisionService.find(schedule.getDivision().getId());
 	    			
-	    			System.out.println("------devision is :"+d);
+	    			 LOGGER.info("------devision is :"+d);
 	    			schedule.setDivision(d);
-	    			System.out.println("we are going to create the new shcedule");
-	    			System.out.println("we aer about to save the :"+schedule );
+	    			 LOGGER.info("we are going to create the new shcedule");
+	    			 LOGGER.info("we aer about to save the :"+schedule );
 	    			scheduleService.create(schedule);
 	    			
-	    			System.out.println("------------------------schedule is saved------------------------- ");
+	    			 LOGGER.info("------------------------schedule is saved------------------------- ");
 	    			 model.addAttribute("SuccessMessage", "Schedule created for the  division");
 	    			
 	    		}catch(Exception e1)
 	    		{
 	    			
 	    		 model.addAttribute("ErrorMessage", "error in saving Schedule for the division");
-	    		 System.out.println("------------------------error in schedule creation------------------------- ");
+	    		  LOGGER.info("------------------------error in schedule creation------------------------- ");
 	    		}
 	    	}
 	    	
@@ -740,7 +884,7 @@ public class TeacherController {
 					
 			 model.addAttribute("structure", str);
 			 model.addAttribute("Schedule", schedule2);
-	    
+	    */
 			
 	        return "Teacher/InstStructForSchedule";
 	    }
@@ -748,20 +892,20 @@ public class TeacherController {
 	 @RequestMapping(value="/updateDivisionScheduleService",method = RequestMethod.POST)  
 	    public String  updateDivisionScheduleService(@RequestBody Schedule schedule, HttpServletRequest request,@ModelAttribute("teacher") Teacher teacher) {  
 	    	
-	    	System.out.println("**********this is updateDivisionScheduleService controller**********");
+	    	 LOGGER.info("**********this is updateDivisionScheduleService controller**********");
 	    	
 	    	String result="";
 	    	
 	    	try {
 	    		
 	    	scheduleService.update(schedule);
-	    	System.out.println("shcedule updated successfully");
+	    	 LOGGER.info("shcedule updated successfully");
 	    	result="shcedule updated successfully";
 	    	
 	    	
 	    	}catch(Exception e)
 	    	{
-	    		System.out.println("error in chedule update");
+	    		 LOGGER.info("error in chedule update");
 	    		result="error in updating shcedule";
 	    		  		
 	    	}
@@ -771,7 +915,7 @@ public class TeacherController {
 
 	 @RequestMapping(value = "/TeacherHome", method = RequestMethod.GET)
 		public String TeacherHome(@ModelAttribute("teacher") Teacher teacher) {		
-			System.out.println("**********inside Teacher Home Page controller**********");
+			 LOGGER.info("**********inside Teacher Home Page controller**********");
 			
 			return "Teacher/home";
 
@@ -779,8 +923,8 @@ public class TeacherController {
 	 
 	 @RequestMapping(value = "/TeacherRequestForApproval", method = RequestMethod.GET)
 		public String TeacherRequestForApproval(Model model,@ModelAttribute("teacher") Teacher teacher) {		
-			System.out.println("**********inside TeacherRequestForApproval controller**********");
-			System.out.println("teachers insitute id is :"+teacher.getInstitute().getId());
+			 LOGGER.info("**********inside TeacherRequestForApproval controller**********");
+			 LOGGER.info("teachers insitute id is :"+teacher.getInstitute().getId());
 			List<Teacher> teacherList=instituteService.getallPendingTeacherForApproval(instituteService.find(teacher.getInstitute().getId()));
 			String teacherListJSON=gson.toJson(teacherList);
 			model.addAttribute("TeacherListJSON", teacherListJSON);
@@ -788,27 +932,38 @@ public class TeacherController {
 
 		}
 	 
+	 @RequestMapping(value = "/TeacherRequestForApprovalListJSON", method = RequestMethod.GET)
+	 @ResponseBody
+		public String TeacherRequestForApprovalListJSON(@ModelAttribute("teacher") Teacher teacher) {		
+			 LOGGER.info("**********inside TeacherRequestForApprovalListJSON controller**********");
+			 LOGGER.info("teachers insitute id is :"+teacher.getInstitute().getId());
+			List<Teacher> teacherList=instituteService.getallPendingTeacherForApproval(instituteService.find(teacher.getInstitute().getId()));
+			String teacherListJSON=gson.toJson(teacherList);
+			return teacherListJSON;
+
+		}
+	 
 	 @RequestMapping(value = "/deleteTeacherApprovalRequest/{id}", method = RequestMethod.GET)
 	 @ResponseBody
 	 	public String deleteTeacherApprovalRequest( @PathVariable("id") int id ){
 		 
-			System.out.println("**********from /deleteTeacherApprovalRequest/{id} controller**********");
+			 LOGGER.info("**********from /deleteTeacherApprovalRequest/{id} controller**********");
 			
 			String result="";									
-			System.out.println("teacher to be deleted is with id"+id);		
+			 LOGGER.info("teacher to be deleted is with id"+id);		
 				try{Teacher t=teacherService.find(id);
 				loginService.delet(loginService.find(t.getLogin().getId()));
-				System.out.println("Teacher is deleted with the id "+id);
+				 LOGGER.info("Teacher is deleted with the id "+id);
 				result="{\"message\":\"Teacher with id "+id+" is deleted \",\"status\":\"success\"}";
 				}
 				catch(Exception e)
 				{
-					System.out.println(e.getMessage());
-					System.out.println(e);
-					System.out.println("error in deletion with teacher id : "+id);
+					 LOGGER.info(e.getMessage());
+					 LOGGER.info(e);
+					 LOGGER.info("error in deletion with teacher id : "+id);
 					result="{\"message\":\"ERROR...!! Teacher with id "+id+" not deleted\",\"status\":\"fail\"}";
 				}
-			System.out.println(result);
+			 LOGGER.info(result);
 		return result;
 	 }
 	 
@@ -829,16 +984,16 @@ public class TeacherController {
 			  @RequestParam("alterInstituteStructure") boolean alterInstituteStructure
 			  ){
 		 
-			System.out.println("**********from /approveTeacherApprovalRequest/{id} controller**********");
+			 LOGGER.info("**********from /approveTeacherApprovalRequest/{id} controller**********");
 			
 			String result="";
-			System.out.println("authoriseTeacher"+authoriseTeacher+"fillAttendance:"+fillAttendance);
+			 LOGGER.info("authoriseTeacher"+authoriseTeacher+"fillAttendance:"+fillAttendance);
 			Permissions p=new Permissions( authoriseStudent,  authoriseTeacher,  fillAttendance,  fillSchedule,
 					 mailParent,  mailStudent,  mailTeacher,  msgParent,  msgStudent,
 					 msgTeacher,  setExam,  updateResults,  alterInstituteStructure);
 			
-			System.out.println("permssions are :"+p);  
-			System.out.println("teacher to be updated is with id"+id);		
+			 LOGGER.info("permssions are :"+p);  
+			 LOGGER.info("teacher to be updated is with id"+id);		
 				try
 				{
 					Teacher t=teacherService.find(id);		//find teacher								
@@ -848,24 +1003,24 @@ public class TeacherController {
 					Login l=loginService.find(t.getLogin().getId()); // get login of teacher
 					l.setEnableInstitute(true);				 // enable the institute flag 
 					loginService.update(l);				     //update login
-					System.out.println("Teacher is updated with the id "+id);
+					 LOGGER.info("Teacher is updated with the id "+id);
 					result="{\"message\":\"Teacher with id "+id+" is updated \",\"status\":\"success\"}";
 				}
 				catch(Exception e)
 				{
-					System.out.println(e.getMessage());
-					System.out.println(e);
-					System.out.println("error in updation with teacher id : "+id);
+					 LOGGER.info(e.getMessage());
+					 LOGGER.info(e);
+					 LOGGER.info("error in updation with teacher id : "+id);
 					result="{\"message\":\"ERROR...!! Teacher with id "+id+" not updated\",\"c\":\"fail\"}";
 				}
-			System.out.println(result);
+			 LOGGER.info(result);
 		return result;
 	 }
 	 
 	 @RequestMapping(value="/home",method = RequestMethod.GET)  
 	    public String  taecherhome() {  
 	    	
-	    	System.out.println("*************this is /Teacher/home controller*********************");
+	    	 LOGGER.info("*************this is /Teacher/home controller*********************");
 	    	
 	    	
 	    				
@@ -874,12 +1029,12 @@ public class TeacherController {
 
 	 @RequestMapping(value = "/StudentRequestManager", method = RequestMethod.GET)
 		public String StudentRequestManager(Model model,@ModelAttribute("teacher") Teacher teacher) {		
-			System.out.println("**********inside StudentRequestManager controller**********");
-			System.out.println("teachers insitute id is :"+teacher.getInstitute().getId());
+			 LOGGER.info("**********inside StudentRequestManager controller**********");
+			 LOGGER.info("teachers insitute id is :"+teacher.getInstitute().getId());
 			List<Student> studnetList=instituteService.getallPendingStudentForApproval(instituteService.find(teacher.getInstitute().getId()));
 			for(Student s :studnetList)
 			{
-				System.out.println(s.getFname());
+				 LOGGER.info(s.getFname());
 			}
 			
 			String studentListJSON=gson.toJson(studnetList);
@@ -888,32 +1043,49 @@ public class TeacherController {
 
 		}
 	 
+	 @RequestMapping(value = "/StudentRequestManagerList", method = RequestMethod.GET)
+	 @ResponseBody
+		public String StudentRequestManagerList(@ModelAttribute("teacher") Teacher teacher) {		
+			 LOGGER.info("**********inside StudentRequestManagerList controller**********");
+			 LOGGER.info("teachers insitute id is :"+teacher.getInstitute().getId());
+			List<Student> studnetList=instituteService.getallPendingStudentForApproval(instituteService.find(teacher.getInstitute().getId()));
+			for(Student s :studnetList)
+			{
+				 LOGGER.info(s.getFname());
+			}
+			
+			String studentListJSON=gson.toJson(studnetList);
+			
+			return studentListJSON;
+
+		}
+	 
 	 @RequestMapping(value = "/deleteStudentApprovalRequest/{id}", method = RequestMethod.GET)
 	 @ResponseBody
 	 	public String deleteStudentApprovalRequest( @PathVariable("id") int id ){
 		 
-			System.out.println("**********from /deleteStudentApprovalRequest/{id} controller**********");
+			 LOGGER.info("**********from /deleteStudentApprovalRequest/{id} controller**********");
 			
 			String result="";									
-			System.out.println("student to be deleted is with id"+id);		
+			 LOGGER.info("student to be deleted is with id"+id);		
 				try{
 					Student s=StudentService.find(id);
-					System.out.println("first name of the student is "+s.getFname());
+					 LOGGER.info("first name of the student is "+s.getFname());
 					Login login= loginService.find(s.getLogin().getId());
-					System.out.println("login id is "+login.getId());
+					 LOGGER.info("login id is "+login.getId());
 				loginService.delet(login);
-				System.out.println("Student is deleted with the id "+id);
+				 LOGGER.info("Student is deleted with the id "+id);
 				result="{\"message\":\"Student with id "+id+" is deleted \",\"status\":\"success\"}";
 				}
 				catch(Exception e)
 				{
-					System.out.println(e.getMessage());
+					 LOGGER.info(e.getMessage());
 					e.printStackTrace();
-					System.out.println();
-					System.out.println("error in deletion with Student id : "+id);
+					
+					 LOGGER.info("error in deletion with Student id : "+id);
 					result="{\"message\":\"ERROR...!! student with id "+id+" not deleted\",\"status\":\"fail\"}";
 				}
-			System.out.println(result);
+			 LOGGER.info(result);
 		return result;
 	 }
 	 
@@ -921,12 +1093,12 @@ public class TeacherController {
 	 @ResponseBody
 	 	public String StudentRequestApprover( @PathVariable("id") int id){
 		 
-			System.out.println("**********from /StudentRequestApprover/{id} controller**********");
+			 LOGGER.info("**********from /StudentRequestApprover/{id} controller**********");
 			
 			String result="";
 			
 			
-			System.out.println("studnet to be updated is with id"+id);		
+			 LOGGER.info("studnet to be updated is with id"+id);		
 				try
 				{
 					Student s=StudentService.find(id);		//find teacher								
@@ -934,60 +1106,101 @@ public class TeacherController {
 					Login l=loginService.find(s.getLogin().getId()); // get login of teacher
 					l.setEnableInstitute(true);				 // enable the institute flag 
 					loginService.update(l);				     //update login
-					System.out.println("Student is updated with the id "+id);
+					 LOGGER.info("Student is updated with the id "+id);
 					result="{\"message\":\"Studen with id "+id+" is updated \",\"status\":\"success\"}";
 				}
 				catch(Exception e)
 				{
-					System.out.println(e.getMessage());
-					System.out.println(e);
-					System.out.println("error in updation with Student id : "+id);
+					 LOGGER.info(e.getMessage());
+					 LOGGER.info(e);
+					 LOGGER.info("error in updation with Student id : "+id);
 					result="{\"message\":\"ERROR...!! Student with id "+id+" not updated\",\"c\":\"fail\"}";
 				}
-			System.out.println(result);
+			 LOGGER.info(result);
 		return result;
 	 }
 	 
 	 @RequestMapping(value = "/AddStudentToDivision", method = RequestMethod.GET)
 		public String AddStudentToDivision(Model model,@ModelAttribute("teacher") Teacher teacher) {		
-			System.out.println("**********inside AddStudentToDivision controller**********");
-			System.out.println("teachers insitute id is :"+teacher.getInstitute().getId());
+			 LOGGER.info("**********inside AddStudentToDivision controller**********");
+			 LOGGER.info("teachers insitute id is :"+teacher.getInstitute().getId());
 			
 			List<Student> studnetList=instituteService.getallStudentWhoAreNotInAnyDivision(instituteService.find(teacher.getInstitute().getId()));
 			for(Student s :studnetList)
 			{
-				System.out.println(s.getFname());
+				 LOGGER.info(s.getFname());
 			}
 			
 			String studentListJSON=gson.toJson(studnetList);
 			model.addAttribute("StudentListJSON", studentListJSON);
 			
 		 	Institute inst=teacherService.GetInstitute(teacher.getId());
-			System.out.println("institute is :"+inst);
+			 LOGGER.info("institute is :"+inst);
 	    	
 	    	 List <Branch> branchlist=branchService.getallOfParticularInstitute(inst);
-			 System.out.println("we are going to print the branches of current isntitute :");
+			  LOGGER.info("we are going to print the branches of current isntitute :");
 			 for (Branch b : branchlist) {
-				    System.out.println(b);
+				     LOGGER.info(b);
 				}
 			
 			
 		 String	branchListJSON=gson.toJson(branchlist);
-		System.out.println(branchListJSON);
+		 LOGGER.info(branchListJSON);
 		model.addAttribute("branchListJSON",branchListJSON );
 			return "Teacher/AddStudentToDivision";
 
 		}
 	 
+	 @RequestMapping(value = "/AddStudentToDivisionGetStuendNotInAnyDivision", method = RequestMethod.GET)
+	 @ResponseBody
+		public String AddStudentToDivisionGetStuendNotInAnyDivision(Model model,@ModelAttribute("teacher") Teacher teacher) {		
+			 LOGGER.info("**********inside AddStudentToDivisionGetStuendNotInAnyDivision controller**********");
+			 LOGGER.info("teachers insitute id is :"+teacher.getInstitute().getId());
+			
+			List<Student> studnetList=instituteService.getallStudentWhoAreNotInAnyDivision(instituteService.find(teacher.getInstitute().getId()));
+			for(Student s :studnetList)
+			{
+				 LOGGER.info(s.getFname());
+			}
+			
+			String studentListJSON=gson.toJson(studnetList);
+			
+			return studentListJSON;
+
+		}
+	 
+	 @RequestMapping(value = "/BranchListOfInstitute", method = RequestMethod.GET)
+	 @ResponseBody
+		public String BranchListOfInstitute(@ModelAttribute("teacher") Teacher teacher) {		
+			 LOGGER.info("**********inside BranchListOfInstitute controller**********");
+			 LOGGER.info("teachers insitute id is :"+teacher.getInstitute().getId());
+			
+			 Institute inst=teacherService.GetInstitute(teacher.getId());
+			 LOGGER.info("institute is :"+inst);
+	    	
+	    	 List <Branch> branchlist=branchService.getallOfParticularInstitute(inst);
+			  LOGGER.info("we are going to print the branches of current isntitute :");
+			 for (Branch b : branchlist) {
+				     LOGGER.info(b);
+				}
+	
+			 String	branchListJSON=gson.toJson(branchlist);
+			 LOGGER.info(branchListJSON);
+			
+			return branchListJSON;
+
+		}
+	 
+	 
 	 @RequestMapping(value = "/changeTUsername", method = RequestMethod.POST)
 		public String changeTUsername(@ModelAttribute("teacher") Teacher teacher,HttpServletRequest request,Model model) {		
-			System.out.println("**********inside changeTUsername controller**********");
+			 LOGGER.info("**********inside changeTUsername controller**********");
 			String currentUserName=request.getParameter("currentUsername");
 			String newUserName=request.getParameter("newUsername");
 			String existName=teacher.getLogin().getUsername();
 			
-			System.out.println("from form "+currentUserName +" from teacherobject"+existName);
-			System.out.println("new username "+newUserName);
+			 LOGGER.info("from form "+currentUserName +" from teacherobject"+existName);
+			 LOGGER.info("new username "+newUserName);
 			if(existName.equals(currentUserName) )
 			{
 				teacherService.changeUserName(newUserName,teacher.getLogin());	
@@ -1006,14 +1219,14 @@ public class TeacherController {
 	 
 	 @RequestMapping(value = "/changeTPassword", method = RequestMethod.POST)
 		public String changeTPassword(@ModelAttribute("teacher") Teacher teacher,HttpServletRequest request,Model model) {		
-			System.out.println("**********inside changeTPassword controller**********");
+			 LOGGER.info("**********inside changeTPassword controller**********");
 			String currentPassword=request.getParameter("currentPassword");
 			String newPassword=request.getParameter("newPassword");
 			
 			String existPassword=teacher.getLogin().getPassword();
 			
-			System.out.println("from form "+currentPassword +" from teacherobject"+existPassword);
-			System.out.println("new username "+newPassword);
+			 LOGGER.info("from form "+currentPassword +" from teacherobject"+existPassword);
+			 LOGGER.info("new username "+newPassword);
 			if(existPassword.equals(currentPassword) )
 			{
 				teacherService.changePassword(newPassword,teacher.getLogin());	
@@ -1033,22 +1246,23 @@ public class TeacherController {
 	 @RequestMapping("/teacherShowProfile")
 	 	public String teacherShowProfile(Model model) 
 	 {
-		 System.out.println("**********this is teacherShowProfile controller**********");	    	
+		  LOGGER.info("**********this is teacherShowProfile controller**********");	    	
 		 return "Teacher/showProfile";
    	 }
 	 
 	 @RequestMapping(value="/teacherEditProfile")
 	 	public String teacherEditProfile(Model model) 
 	 {
-		 System.out.println("**********this is teacherEditProfile controller**********");	 
+		  LOGGER.info("**********this is teacherEditProfile controller**********");	 
 		 model.addAttribute("EditTeacher", new Teacher());
 		 return "Teacher/editProfile";
      }
 	 
-	 @RequestMapping(value="/editTeacher",method = RequestMethod.POST)
-	 	public String editTeacher(Model model,@ModelAttribute("teacher") Teacher teacher1,@ModelAttribute("EditTeacher") Teacher teacher2) 
+	 
+	 @RequestMapping(value="/editTeacher",consumes=MediaType.APPLICATION_JSON_VALUE,method = RequestMethod.POST)
+     public String editTeacher(Model model,@ModelAttribute("teacher") Teacher teacher1,@RequestBody Teacher teacher2) 
 	 {
-		 System.out.println("**********this is editTeacher controller**********");
+		  LOGGER.info("**********this is editTeacher controller suraj**********");
 		 teacher1.setFname(teacher2.getFname());
 		 teacher1.setLname(teacher2.getLname());
 		 teacher1.setEmail(teacher2.getEmail());
@@ -1061,11 +1275,29 @@ public class TeacherController {
 		 model.addAttribute("profileEditSuccess","Your profile updated successfully");
 		
 		 return "Teacher/showProfile";
-     }
+  }
+	 
+	 /*@RequestMapping(value="/editTeacher",method = RequestMethod.POST)
+	 	public String editTeacher(Model model,@ModelAttribute("teacher") Teacher teacher1,@ModelAttribute("EditTeacher") Teacher teacher2) 
+	 {
+		  LOGGER.info("**********this is editTeacher controller**********");
+		 teacher1.setFname(teacher2.getFname());
+		 teacher1.setLname(teacher2.getLname());
+		 teacher1.setEmail(teacher2.getEmail());
+		 teacher1.setContactno(teacher2.getContactno());
+		 
+		 teacherService.update(teacher1);
+		 model.addAttribute("teacher",teacher1);
+		 model.addAttribute("teacherJSON",gson.toJson(teacher1));
+		 
+		 model.addAttribute("profileEditSuccess","Your profile updated successfully");
+		
+		 return "Teacher/showProfile";
+     }*/
 	 
 	 @RequestMapping(value = "/StudentInDivision", method = RequestMethod.GET)
 		public String ShowStudentInDivision(Model model,@ModelAttribute("teacher") Teacher teacher) {		
-			System.out.println("**********inside Show student of particular division controller**********");
+			 LOGGER.info("**********inside Show student of particular division controller**********");
 			
 			    Branch branch= new Branch();
 				Classes clsess=new Classes();
@@ -1073,20 +1305,20 @@ public class TeacherController {
 				model.addAttribute("Branch", branch);
 				model.addAttribute("Classes", clsess);
 				model.addAttribute("Division", division);
-		    	System.out.println(teacher.getId());
+		    	 LOGGER.info(teacher.getId());
 		    	
 		    	Institute inst=teacherService.GetInstitute(teacher.getId());
-				System.out.println("institute is :"+inst);
+				 LOGGER.info("institute is :"+inst);
 		    	
 		    	 List <Branch> branchlist=branchService.getallOfParticularInstitute(inst);
-				 System.out.println("we are going to print the branches of current isntitute :");
+				  LOGGER.info("we are going to print the branches of current isntitute :");
 				 for (Branch b : branchlist) {
-					    System.out.println(b);
+					     LOGGER.info(b);
 					}
 				
 				
 			 String	branchListJSON=gson.toJson(branchlist);
-			System.out.println(branchListJSON);
+			 LOGGER.info(branchListJSON);
 			model.addAttribute("branchListJSON",branchListJSON );
 			return "Teacher/StudentInDivision";
 		}
@@ -1094,18 +1326,18 @@ public class TeacherController {
 	 @RequestMapping(value="/showStudentOfDivision",method=RequestMethod.POST)
 	 	public String displayStudentOfDivision(Model model,@ModelAttribute("teacher") Teacher teacher,HttpServletRequest req)
 	 {
-		 System.out.println("**********inside displayStudentOfDivision controller**********");
+		  LOGGER.info("**********inside displayStudentOfDivision controller**********");
 		 String id=req.getParameter("disabledSelectForDivisionForShowStudent");
 		 String DivName=req.getParameter("");
 		 int DivID=Integer.parseInt(id);
-		 System.out.println(DivID);
+		  LOGGER.info(DivID);
 		 
 		try
 		{
-			System.out.println("in try");
+			 LOGGER.info("in try");
 		List<Student> studentList= StudentService.findByDivId(DivID);
 		for (Student s : studentList) {
-			    System.out.println(s.getFname()+" "+s.getLname());
+			     LOGGER.info(s.getFname()+" "+s.getLname());
 			}
 		
 		String studentListJSON=gson.toJson(studentList);
@@ -1130,15 +1362,15 @@ public class TeacherController {
 			model.addAttribute("Branch", branch);
 			model.addAttribute("Classes", clsess);
 			model.addAttribute("Division", division);
-	    	System.out.println(teacher.getId());
+	    	 LOGGER.info(teacher.getId());
 	    	
 	    	Institute inst=teacherService.GetInstitute(teacher.getId());
-			System.out.println("institute is :"+inst);
+			 LOGGER.info("institute is :"+inst);
 	    	
 	    	 List <Branch> branchlist=branchService.getallOfParticularInstitute(inst);
-			 System.out.println("we are going to print the branches of current isntitute :");
+			  LOGGER.info("we are going to print the branches of current isntitute :");
 			 for (Branch b : branchlist) {
-				    System.out.println(b);
+				     LOGGER.info(b);
 				}
 			model.addAttribute("BranchesOfInst",branchlist );
 		
@@ -1149,17 +1381,17 @@ public class TeacherController {
 	 @ResponseBody
 	 	public String GetStudentOfDivision(  @PathVariable("id") int DivID)
 	 {
-		 System.out.println("**********inside GetStudentOfDivision controller**********");
+		  LOGGER.info("**********inside GetStudentOfDivision controller**********");
 		
-		 System.out.println(DivID);
+		  LOGGER.info(DivID);
 		 String studentListJSON="";
 		 
 		try
 		{
-			System.out.println("in try");
+			 LOGGER.info("in try");
 		List<Student> studentList= StudentService.findByDivId(DivID);
 		for (Student s : studentList) {
-			    System.out.println(s.getFname()+" "+s.getLname());
+			     LOGGER.info(s.getFname()+" "+s.getLname());
 			}
 		
 		studentListJSON=gson.toJson(studentList);
@@ -1180,7 +1412,7 @@ public class TeacherController {
 			e.printStackTrace();
 		}
 		
-		System.out.println(studentListJSON);
+		 LOGGER.info(studentListJSON);
 		
 		 return studentListJSON;
 	 }
@@ -1189,10 +1421,10 @@ public class TeacherController {
 	
 	 public String deleteStudentFromDivision(Model model,@ModelAttribute("teacher") Teacher teacher,HttpServletRequest req)
 	 {
-		 System.out.println("**********inside deleteStudentFromDivision controller**********");
+		  LOGGER.info("**********inside deleteStudentFromDivision controller**********");
 		 String [] name=req.getParameterValues("selectedstudent");
 		 for(int i=0;i<name.length;i++){
-	       System.out.println("selected student "+name);
+	        LOGGER.info("selected student "+name);
 		 }
 		
 		
@@ -1204,13 +1436,13 @@ public class TeacherController {
 	 @ResponseBody
 	    public String GetClassesListINJSON( @PathVariable("id") int id ){
 		 
-			System.out.println("**********from GetClassesListINJSON controller**********");
+			 LOGGER.info("**********from GetClassesListINJSON controller**********");
 			
 			List<Classes> classList=classesService.getallOfParticularBranch(branchService.find(id));
 			
          		String classesListJSON=gson.toJson(classList);
 			
-			System.out.println(classesListJSON);
+			 LOGGER.info(classesListJSON);
 			
 			return classesListJSON;
 }
@@ -1219,13 +1451,13 @@ public class TeacherController {
 		 @ResponseBody
 	    public String GetDivisionListInJSON( @PathVariable("id") int id ){
 		 
-			System.out.println("**********from GetDivisionListInJSON controller**********");
-			System.out.println(id);
+			 LOGGER.info("**********from GetDivisionListInJSON controller**********");
+			 LOGGER.info(id);
 			List<Division> divisionList=divisionService.getallOfParticularClass(classesService.find(id));
 			
          		String divisionListJSON=gson.toJson(divisionList);
 			
-			System.out.println(divisionListJSON);
+			 LOGGER.info(divisionListJSON);
 			
 			return divisionListJSON;
        }
@@ -1234,17 +1466,17 @@ public class TeacherController {
 	 @ResponseBody
 	 	public String GetStudentOfDivisionInJSON(@RequestBody Division division)
 	 {
-		 System.out.println("**********inside GetStudentOfDivisionInJSON controller**********");
+		  LOGGER.info("**********inside GetStudentOfDivisionInJSON controller**********");
 		
-		 System.out.println(division);
+		  LOGGER.info(division);
 		 String studentListJSON="";
 		 
 		try
 		{
-			System.out.println("in try");
+			 LOGGER.info("in try");
 		List<Student> studentList= StudentService.findByDivId(division.getId());
 		for (Student s : studentList) {
-			    System.out.println(s.getFname()+" "+s.getLname());
+			     LOGGER.info(s.getFname()+" "+s.getLname());
 			}
 		
 		studentListJSON=gson.toJson(studentList);
@@ -1265,7 +1497,7 @@ public class TeacherController {
 			e.printStackTrace();
 		}
 		
-		System.out.println(studentListJSON);
+		 LOGGER.info(studentListJSON);
 		
 		 return studentListJSON;
 	 }
@@ -1274,16 +1506,16 @@ public class TeacherController {
 	 @ResponseBody
 	 	public String DeleteSelectedStudentFromDivision(@RequestBody ArrayList<Student> studentList)
 	 {
-		 System.out.println("**********inside DeleteSelectedStudentFromDivision controller**********");
-		 System.out.println(studentList);
+		  LOGGER.info("**********inside DeleteSelectedStudentFromDivision controller**********");
+		  LOGGER.info(studentList);
 		 for(Student s:studentList)
 		 {
-			 System.out.println(s.getFname()+" "+s.getId());
+			  LOGGER.info(s.getFname()+" "+s.getId());
 			 
 			StudentService.deleteSelectedFromDiv(s.getId());
 		 }
 		
-		/* System.out.println();
+		/*  LOGGER.info();
 		 ObjectMapper mapper = new ObjectMapper();
 		 JSONObject jsonObj = new JSONObject(json);*/
 		
@@ -1295,32 +1527,39 @@ public class TeacherController {
 	 @ResponseBody
 	 	public String AddSelectedStudentToDivision(@PathVariable("id") int id,@RequestBody ArrayList<Student> studentList)
 	 {
-		 System.out.println("**********inside AddSelectedStudentToDivision controller**********");
+		  LOGGER.info("**********inside AddSelectedStudentToDivision controller**********");
 		 
 		 Division division=divisionService.find(id);
-		 System.out.println("division name is "+division.getName());
+		  LOGGER.info("division name is "+division.getName());
 		 
 		 for(Student s:studentList)
 		 {
-			 System.out.println(s.getFname());
+			  LOGGER.info(s.getFname());
 			 StudentService.SetDivisionId(s.getId(), id);
 		 }
-		 System.out.println(division.getName());		
+		  LOGGER.info(division.getName());		
 		 return gson.toJson(division);
 	 }
 	 
 	 	@RequestMapping("/AddEditExam")
 	 	public String AddEditExam(Model model) 
 	 	{
-	 		System.out.println("**********this is AddEditExam controller**********");
+	 		 LOGGER.info("**********this is AddEditExam controller**********");
 	 		return "Teacher/Exam/AddEditExam";
+		}
+	 	
+	 	@RequestMapping("/studentResult")
+	 	public String studentResult(Model model) 
+	 	{
+	 		 LOGGER.info("**********this is ExamList in Result controller**********");
+	 		return "Teacher/Result/ExamList";
 		}
 	 		 	
 	 	@RequestMapping(value="/GetExamsOFInstitute/{id}", method=RequestMethod.POST)
 		@ResponseBody
 		public String GetExamsOFInstitute(@PathVariable("id") int InstituteId)
 		 {
-			 System.out.println("**********inside GetExamsOFInstitute controller**********");
+			  LOGGER.info("**********inside GetExamsOFInstitute controller**********");
 			 List<Exam> examList= examService.getallOfParticularInstitute(InstituteId);
 			 
 			 String JSON="[";
@@ -1346,7 +1585,7 @@ public class TeacherController {
 			 JSON=JSON.substring(0, JSON.length() - 1);
 				JSON+="]";
 			
-				System.out.println(JSON);
+				 LOGGER.info(JSON);
 			
 			
 			 return JSON;
@@ -1357,10 +1596,10 @@ public class TeacherController {
 		@ResponseBody
 		public String GetExamsMode()
 		 {
-			 System.out.println("**********inside GetExamsMode controller**********");			 
+			  LOGGER.info("**********inside GetExamsMode controller**********");			 
 			 List<ExamMode> examModeList= examModeService.getAll();
 			 String JSONexamModeList=gson.toJson(examModeList);		
-			// System.out.println(JSONexamModeList);
+			//  LOGGER.info(JSONexamModeList);
 			 return JSONexamModeList;
 		 }
 	 	
@@ -1368,10 +1607,10 @@ public class TeacherController {
 		@ResponseBody
 		public String GetExamsType()
 		 {
-			 System.out.println("**********inside GetExamsType controller**********");			 
+			  LOGGER.info("**********inside GetExamsType controller**********");			 
 			 List<ExamType> examTypeList= examTypeService.getAll();
 			 String JSONexamTypeList=gson.toJson(examTypeList);		
-			 //System.out.println(JSONexamTypeList);
+			 // LOGGER.info(JSONexamTypeList);
 			 return JSONexamTypeList;
 		 }
 	 	
@@ -1379,7 +1618,7 @@ public class TeacherController {
 		@ResponseBody
 		public String SaveExam(@RequestBody Exam e,@PathVariable("id") int InstituteId)
 		 {
-			 System.out.println("**********inside SaveExam controller**********");	
+			  LOGGER.info("**********inside SaveExam controller**********");	
 			 e.setInstitute(instituteService.find(InstituteId));
 			 
 			 examService.create(e);
@@ -1406,7 +1645,7 @@ public class TeacherController {
 		@ResponseBody
 		public String DeleteExam(@PathVariable("id") int ExamId)
 		 {
-			 System.out.println("**********inside DeleteExam controller**********");	
+			  LOGGER.info("**********inside DeleteExam controller**********");	
 			 
 			 String result="";
 			 Exam e= examService.find(ExamId);
@@ -1422,7 +1661,7 @@ public class TeacherController {
 				 result+="\"message\":\"failed\"";
 				 result+="}";
 			 }
-			 System.out.println(result);
+			  LOGGER.info(result);
 			 return result;
 		 }
 	 	
@@ -1432,7 +1671,7 @@ public class TeacherController {
 		@ResponseBody
 		public String UpdateExam(@RequestBody Exam e,@PathVariable("id") int InstituteId)
 		 {
-			 System.out.println("**********inside UpdateExam controller**********");	
+			  LOGGER.info("**********inside UpdateExam controller**********");	
 			 e.setInstitute(instituteService.find(InstituteId));
 			 examService.update(e);
 			
@@ -1451,24 +1690,24 @@ public class TeacherController {
 				JSON+="\"passingMarks\":"+e.getPassingMarks()+",";
 				JSON+="\"regular\":"+e.getRegular()+"";				
 				JSON+="}";
-				System.out.println(JSON);
+				 LOGGER.info(JSON);
 
-			 return JSON;
+			 return JSON;  
 		 }
 	 	
 	 	
-		@RequestMapping(value="/GetSubjectDivCompID/{examId}", method=RequestMethod.POST)
+		@RequestMapping(value="/GetSubjectDivCompIDResult/{examId}", method=RequestMethod.POST)
 		@ResponseBody
-	 	public String GetSubjectDivCompID(@PathVariable("examId") int examId)
+	 	public String GetSubjectDivCompIDResult(@PathVariable("examId") int examId)
 		 {
-			 System.out.println("**********inside GetSubjectDivCompID controller**********");
+			  LOGGER.info("**********inside GetSubjectDivCompID controller**********");
 			 List<SubjectDivComposit> subjectDivCompList=examSubStudCompService.findByExamId(examId);
 			 
 			 String JSON="[";
 			 
 			 for(SubjectDivComposit s : subjectDivCompList)
 			 {
-			  System.out.println("\n SubDivID : "+s.getId() );	 
+			   LOGGER.info("\n SubDivID : "+s.getId() );	 
 			 }
 			 
 			 for(SubjectDivComposit s : subjectDivCompList)
@@ -1482,7 +1721,40 @@ public class TeacherController {
 			 JSON=JSON.substring(0, JSON.length() - 1);
 				JSON+="]";
 			
-				System.out.println(JSON);
+				 LOGGER.info(JSON);
+			
+			
+			 return JSON;
+		 }
+		
+	 	
+	 	
+		@RequestMapping(value="/GetSubjectDivCompID/{examId}", method=RequestMethod.POST)
+		@ResponseBody
+	 	public String GetSubjectDivCompID(@PathVariable("examId") int examId)
+		 {
+			  LOGGER.info("**********inside GetSubjectDivCompID controller**********");
+			 List<SubjectDivComposit> subjectDivCompList=examSubStudCompService.findByExamId(examId);
+			 
+			 String JSON="[";
+			 
+			 for(SubjectDivComposit s : subjectDivCompList)
+			 {
+			   LOGGER.info("\n SubDivID : "+s.getId() );	 
+			 }
+			 
+			 for(SubjectDivComposit s : subjectDivCompList)
+			 {
+				 JSON+="{";
+					JSON+="\"id\":"+s.getId();			
+					JSON+="},";
+				   
+			 }
+			 
+			 JSON=JSON.substring(0, JSON.length() - 1);
+				JSON+="]";
+			
+				 LOGGER.info(JSON);
 			
 			
 			 return JSON;
@@ -1493,12 +1765,12 @@ public class TeacherController {
 		@ResponseBody
 	 	public String GetStudentListNotInExamJSON(@PathVariable("subDivId") int subDivId,@PathVariable("divId") int divId,@PathVariable("examId") int examId)
 		 {
-			 System.out.println("**********inside GetStudentListNotInExamJSON controller**********");
+			  LOGGER.info("**********inside GetStudentListNotInExamJSON controller**********");
 			 
 			 String studentListNotExamJSON="";
-			 System.out.println("sub_divComposit id : "+subDivId);
-			 System.out.println("div id : "+divId);
-			 System.out.println("exam id : "+examId);
+			  LOGGER.info("sub_divComposit id : "+subDivId);
+			  LOGGER.info("div id : "+divId);
+			  LOGGER.info("exam id : "+examId);
 			 List<Student> studentNotInExamList=new ArrayList<Student>();
 			
 				try
@@ -1511,7 +1783,7 @@ public class TeacherController {
 				
 				  for(Student examStudent : studentOfExamList)
 				  {
-					  System.out.println("student id: "+examStudent.getId());
+					   LOGGER.info("student id: "+examStudent.getId());
 				  }
 				
 				
@@ -1550,7 +1822,7 @@ public class TeacherController {
 					e.printStackTrace();
 				}
 				
-				System.out.println(studentListNotExamJSON);
+				 LOGGER.info(studentListNotExamJSON);
 			 
 			 
 			 return studentListNotExamJSON;
@@ -1561,12 +1833,12 @@ public class TeacherController {
 		@ResponseBody
 	 	public String GetStudentListOfExamJSON(@PathVariable("subDivId1") int subDivId1,@PathVariable("divId1") int divId1,@PathVariable("examId1") int examId1)
 		 {
-			 System.out.println("**********inside GetStudentListOfExamJSON controller**********");
+			  LOGGER.info("**********inside GetStudentListOfExamJSON controller**********");
 			 
 			 String studentListOfExamJSON="";
-			 System.out.println("sub_divComposit id : "+subDivId1);
-			 System.out.println("div id : "+divId1);
-			 System.out.println("exam id : "+examId1);
+			  LOGGER.info("sub_divComposit id : "+subDivId1);
+			  LOGGER.info("div id : "+divId1);
+			  LOGGER.info("exam id : "+examId1);
 			
 				try
 				{
@@ -1576,7 +1848,7 @@ public class TeacherController {
 				
 				  for(Student examStudent : studentInExamList)
 				  {
-					  System.out.println("student id: "+examStudent.getId());
+					   LOGGER.info("student id: "+examStudent.getId());
 				  }
 				
 				
@@ -1599,7 +1871,7 @@ public class TeacherController {
 					e.printStackTrace();
 				}
 				
-				System.out.println(studentListOfExamJSON);
+				 LOGGER.info(studentListOfExamJSON);
 			 
 			 
 			 return studentListOfExamJSON;
@@ -1610,7 +1882,7 @@ public class TeacherController {
 		 @ResponseBody
 		 	public String AddStudentInExam(@PathVariable("subDivId") int subDivId,@PathVariable("examId") int examId,@PathVariable("divId") int divId,@RequestBody ArrayList<Student> studentList)
 		 {
-			 System.out.println("**********inside AddStudentInExam controller**********");
+			  LOGGER.info("**********inside AddStudentInExam controller**********");
 			 String studentListNotExamJSON="";
 			 List<Student> studentNotInExamList=new ArrayList<Student>();
 			
@@ -1662,18 +1934,18 @@ public class TeacherController {
 		 @ResponseBody
 		 	public String deleteSelectedStudentFromExam(@PathVariable("subDivId1") int subDivId1,@PathVariable("examId1") int examId1,@PathVariable("divId1") int divId1,@RequestBody ArrayList<Student> studentList)
 		 {
-			 System.out.println("**********inside deleteSelectedStudentFromExam controller**********");
-			 System.out.println("sub_divComposit id : "+subDivId1);
-			 System.out.println("div id : "+divId1);
-			 System.out.println("exam id : "+examId1);
+			  LOGGER.info("**********inside deleteSelectedStudentFromExam controller**********");
+			  LOGGER.info("sub_divComposit id : "+subDivId1);
+			  LOGGER.info("div id : "+divId1);
+			  LOGGER.info("exam id : "+examId1);
 			 String studentListJSON=gson.toJson(studentList);
-			 System.out.println(studentListJSON);
+			  LOGGER.info(studentListJSON);
 			
 			 try
 			 {
 				 for(Student examStudent : studentList)
 				  {
-					 System.out.println("student id: "+examStudent.getId());
+					  LOGGER.info("student id: "+examStudent.getId());
 					 examSubStudCompService.deletStudentFromExam(examStudent.getId(),subDivId1, examId1); 
 				  }
 				 
@@ -1691,28 +1963,28 @@ public class TeacherController {
 		 @ResponseBody
 		 	public String deleteSubjectFromDivision( @PathVariable("subId") int subId, @PathVariable("divId") int divId){
 			 
-				System.out.println("**********from deleteSubjectFromDivision controller**********");
+				 LOGGER.info("**********from deleteSubjectFromDivision controller**********");
 				
 				String result="";									
-				System.out.println("subject to be deleted is with id"+subId);		
+				 LOGGER.info("subject to be deleted is with id"+subId);		
 					try{
 						Subject s=subjectService.find(subId);
-						System.out.println("name of the subject is "+s.getName());
+						 LOGGER.info("name of the subject is "+s.getName());
 						
 						subjectDivCompositService.deleteByDivId(subId, divId);
 					
-					System.out.println("Subject is deleted with the id "+subId);
+					 LOGGER.info("Subject is deleted with the id "+subId);
 					result="{\"message\":\"Subject with id "+subId+" is deleted \",\"status\":\"success\"}";
 					}
 					catch(Exception e)
 					{
-						System.out.println(e.getMessage());
+						 LOGGER.info(e.getMessage());
 						e.printStackTrace();
-						System.out.println();
-						System.out.println("error in deletion with Subject id : "+subId);
+						
+						 LOGGER.info("error in deletion with Subject id : "+subId);
 						result="{\"message\":\"ERROR...!! subject with id "+subId+" not deleted\",\"status\":\"fail\"}";
 					}
-				System.out.println(result);
+				 LOGGER.info(result);
 			return result;
 	 	}
 	 
@@ -1721,12 +1993,12 @@ public class TeacherController {
 		 @ResponseBody
 		 	public String GetSubjectNotInDivisionInJSON(@RequestBody Division division,@ModelAttribute("teacher") Teacher teacher)
 		 {
-			 System.out.println("**********inside Get Subject Not In Division controller**********");
+			  LOGGER.info("**********inside Get Subject Not In Division controller**********");
 			
 			 Institute inst=teacherService.GetInstitute(teacher.getId());
 			 int instituteId=inst.getId();
-			 System.out.println(division);
-			 System.out.println(instituteId);
+			  LOGGER.info(division);
+			  LOGGER.info(instituteId);
 			
 			 String subjectListNotInDivJSON="";
 			 
@@ -1775,7 +2047,7 @@ public class TeacherController {
 				e.printStackTrace();
 			}
 			
-			System.out.println(subjectListNotInDivJSON);
+			 LOGGER.info(subjectListNotInDivJSON);
 			
 			 return subjectListNotInDivJSON;
 		 }
@@ -1784,7 +2056,7 @@ public class TeacherController {
 		 
 		 @RequestMapping(value = "/AddEditSubject", method = RequestMethod.GET)
 			public String AddEditSubject(Model model) {		
-				System.out.println("**********inside add and edit subject controller**********");
+				 LOGGER.info("**********inside add and edit subject controller**********");
 				/*
 				    Branch branch= new Branch();
 					Classes clsess=new Classes();
@@ -1792,27 +2064,27 @@ public class TeacherController {
 					model.addAttribute("Branch", branch);
 					model.addAttribute("Classes", clsess);
 					model.addAttribute("Division", division);
-			    	System.out.println(teacher.getId());
+			    	 LOGGER.info(teacher.getId());
 			    	
 			    	Institute inst=teacherService.GetInstitute(teacher.getId());
-					System.out.println("institute is :"+inst);
+					 LOGGER.info("institute is :"+inst);
 			    	
 			    	 List <Branch> branchlist=branchService.getallOfParticularInstitute(inst);
-					 System.out.println("we are going to print the branches of current isntitute :");
+					  LOGGER.info("we are going to print the branches of current isntitute :");
 					 for (Branch b : branchlist) {
-						    System.out.println(b);
+						     LOGGER.info(b);
 						}
 					
 					
 				 String	branchListJSON=gson.toJson(branchlist);
-				System.out.println(branchListJSON);
+				 LOGGER.info(branchListJSON);
 				model.addAttribute("branchListJSON",branchListJSON );*/
 				return "Teacher/Subject/AddEditSubject";
 			}
 		 
 		 @RequestMapping(value = "/SubjectInDivision", method = RequestMethod.GET)
 			public String ShowSubjectInDivision(Model model,@ModelAttribute("teacher") Teacher teacher) {		
-				System.out.println("**********inside Show subject of particular division controller**********");
+				 LOGGER.info("**********inside Show subject of particular division controller**********");
 				
 				    Branch branch= new Branch();
 					Classes clsess=new Classes();
@@ -1820,20 +2092,20 @@ public class TeacherController {
 					model.addAttribute("Branch", branch);
 					model.addAttribute("Classes", clsess);
 					model.addAttribute("Division", division);
-			    	System.out.println(teacher.getId());
+			    	 LOGGER.info(teacher.getId());
 			    	
 			    	Institute inst=teacherService.GetInstitute(teacher.getId());
-					System.out.println("institute is :"+inst);
+					 LOGGER.info("institute is :"+inst);
 			    	
 			    	 List <Branch> branchlist=branchService.getallOfParticularInstitute(inst);
-					 System.out.println("we are going to print the branches of current isntitute :");
+					  LOGGER.info("we are going to print the branches of current isntitute :");
 					 for (Branch b : branchlist) {
-						    System.out.println(b);
+						     LOGGER.info(b);
 						}
 					
 					
 				 String	branchListJSON=gson.toJson(branchlist);
-				System.out.println(branchListJSON);
+				 LOGGER.info(branchListJSON);
 				model.addAttribute("branchListJSON",branchListJSON );
 				return "Teacher/Subject/SubjectInDivision";
 		 		}
@@ -1843,18 +2115,18 @@ public class TeacherController {
 		 @ResponseBody
 		 	public String GetSubjectOfDivisionInJSON(@RequestBody Division division)
 		 {
-			 System.out.println("**********inside GetSubjectOfDivisionInJSON controller**********");
+			  LOGGER.info("**********inside GetSubjectOfDivisionInJSON controller**********");
 			
-			 System.out.println(division);
+			  LOGGER.info(division);
 			 String subjectListJSON="";
 			 
 			try
 			{
-				System.out.println("in try");
+				 LOGGER.info("in try");
 			List<Subject> subjectList=subjectDivCompositService.findByDivId(division.getId());	
 			
 			for (Subject s : subjectList) {
-				    System.out.println(s.getName());
+				     LOGGER.info(s.getName());
 				}
 			
 			subjectListJSON=gson.toJson(subjectList);
@@ -1875,7 +2147,7 @@ public class TeacherController {
 				e.printStackTrace();
 			}
 			
-			System.out.println(subjectListJSON);
+			 LOGGER.info(subjectListJSON);
 			
 			 return subjectListJSON;
 		 }
@@ -1884,16 +2156,16 @@ public class TeacherController {
 		 @ResponseBody
 		 	public String addSubjectToDivision( @PathVariable("subId") int subId, @PathVariable("divId") int divId, @PathVariable("instId") int instId){
 			 
-				System.out.println("**********from addSubjectToDivision controller**********");
+				 LOGGER.info("**********from addSubjectToDivision controller**********");
 												
-				System.out.println("subject to be added is with id"+subId);	
+				 LOGGER.info("subject to be added is with id"+subId);	
 				String subjectListNotInDivJSON="";
 					try{
 						Subject sub=subjectService.find(subId);
-						System.out.println("name of the subject is "+sub.getName());
+						 LOGGER.info("name of the subject is "+sub.getName());
 						
 						Division div=divisionService.find(divId);
-						System.out.println("name of the division is "+div.getName());
+						 LOGGER.info("name of the division is "+div.getName());
 						
 						SubjectDivComposit sdc=new SubjectDivComposit(div, sub);
 						subjectDivCompositService.create(sdc);
@@ -1906,13 +2178,13 @@ public class TeacherController {
 						
 						for(Subject s : subjectListOfDiv)
 						{
-						 System.out.println(s.getName());	
+						  LOGGER.info(s.getName());	
 						}
 						
-						System.out.println("\nInstitute subject");
+						 LOGGER.info("\nInstitute subject");
 						for(Subject s : allSubjectOfInstituteList)
 						{
-						 System.out.println(s.getName());	
+						  LOGGER.info(s.getName());	
 						}
 						
 						String match="";
@@ -1934,14 +2206,14 @@ public class TeacherController {
 							    }
 							}
 						
-						System.out.println("\nSubject not in division");
+						 LOGGER.info("\nSubject not in division");
 						for(Subject s : subjectNotInDivList)
 						{
-						 System.out.println(s.getName());	
+						  LOGGER.info(s.getName());	
 						}
 						
 					
-					System.out.println("Subject is added with the id "+subId);
+					 LOGGER.info("Subject is added with the id "+subId);
 					
 					subjectListNotInDivJSON=gson.toJson(subjectNotInDivList);	
 					
@@ -1949,13 +2221,13 @@ public class TeacherController {
 					}
 					catch(Exception e)
 					{
-						System.out.println(e.getMessage());
+						 LOGGER.info(e.getMessage());
 						e.printStackTrace();
-						System.out.println();
-						System.out.println("error in adding with Subject id : "+subId);
+						
+						 LOGGER.info("error in adding with Subject id : "+subId);
 					//result="{\"message\":\"ERROR...!! subject with id "+subId+" not added\",\"status\":\"fail\"}";
 					}
-				System.out.println(subjectListNotInDivJSON);
+				 LOGGER.info(subjectListNotInDivJSON);
 			return subjectListNotInDivJSON;
 }
 	 	 
@@ -1964,9 +2236,9 @@ public class TeacherController {
 		 @ResponseBody
 		 	public String GetSubjectListofInstituteInJSON(@PathVariable("instId") int instId)
 		 {
-			 System.out.println("**********inside Get Subject of particular institute controller**********");
+			  LOGGER.info("**********inside Get Subject of particular institute controller**********");
 			
-			 System.out.println(instId);
+			  LOGGER.info(instId);
 			
 			 String subjectListOfInstituteJSON="";
 			 
@@ -1993,7 +2265,7 @@ public class TeacherController {
 				e.printStackTrace();
 			}
 			
-			System.out.println(subjectListOfInstituteJSON);
+			 LOGGER.info(subjectListOfInstituteJSON);
 			
 			 return subjectListOfInstituteJSON;
 		 }
@@ -2003,34 +2275,34 @@ public class TeacherController {
 		 @ResponseBody
 		 	public String deleteSubjectFromInstitute(@PathVariable("subId") int subId,@PathVariable("instId") int instId){
 			 
-				System.out.println("**********from deleteSubjectFromInstitute controller**********");
+				 LOGGER.info("**********from deleteSubjectFromInstitute controller**********");
 				
 				String subjectListOfInstituteAfterDeletJSON="";
 				
-				System.out.println("subject to be deleted is with id"+subId);		
+				 LOGGER.info("subject to be deleted is with id"+subId);		
 					try{
 						Subject s=subjectService.find(subId);
-						System.out.println("name of the subject is "+s.getName());
+						 LOGGER.info("name of the subject is "+s.getName());
 						
 						subjectService.deleteFromInstitute(subId);
 						
 						List<Subject> allSubjectOfInstituteList=subjectService.getallOfInstitute(instId);
 						subjectListOfInstituteAfterDeletJSON=gson.toJson(allSubjectOfInstituteList);
-						System.out.println(subjectListOfInstituteAfterDeletJSON);
+						 LOGGER.info(subjectListOfInstituteAfterDeletJSON);
 						
 					
-					System.out.println("Subject is deleted with the id "+subId);
+					 LOGGER.info("Subject is deleted with the id "+subId);
 					//subjectListOfInstituteAfterDeletJSON="{\"message\":\"Subject with id "+subId+" is deleted \",\"status\":\"success\"}";
 					}
 					catch(Exception e)
 					{
-						System.out.println(e.getMessage());
+						 LOGGER.info(e.getMessage());
 						e.printStackTrace();
-						System.out.println();
-						System.out.println("error in deletion with Subject id : "+subId);
+					
+						 LOGGER.info("error in deletion with Subject id : "+subId);
 					//	subjectListOfInstituteAfterDeletJSON="{\"message\":\"ERROR...!! subject with id "+subId+" not deleted\",\"status\":\"fail\"}";
 					}
-				System.out.println(subjectListOfInstituteAfterDeletJSON);
+				 LOGGER.info(subjectListOfInstituteAfterDeletJSON);
 			return subjectListOfInstituteAfterDeletJSON;
 	 	 }
 	 	
@@ -2040,10 +2312,10 @@ public class TeacherController {
 		@ResponseBody
 		public String GetSubjectTreeStruct(@PathVariable("id") int InstituteId)
 		 {
-			 System.out.println("**********inside GetSubjectTreeStruct controller**********");	
+			  LOGGER.info("**********inside GetSubjectTreeStruct controller**********");	
 					
 			 String JSON=instituteService.GetSubjectTree(InstituteId);	
-				System.out.println(JSON);
+				 LOGGER.info(JSON);
 			 return JSON;
 		 }
 	 
@@ -2053,31 +2325,31 @@ public class TeacherController {
 		 @ResponseBody
 		 	public String addSubjectToInstitute(@PathVariable("subName") String subName,@PathVariable("subDescript") String subDescript,@PathVariable("instId") int instId){
 			 
-				System.out.println("**********from addSubjectToInstitute controller**********");
+				 LOGGER.info("**********from addSubjectToInstitute controller**********");
 				
 				String result="";	
 				
-				System.out.println("subject to be added is with name "+subName+" in institute with id "+instId);		
+				 LOGGER.info("subject to be added is with name "+subName+" in institute with id "+instId);		
 					try{
 						Institute inst=instituteService.find(instId);
-						System.out.println(inst.getName());
+						 LOGGER.info(inst.getName());
 						
 						Subject sub=new Subject(inst, subName, subDescript);
 						
 						subjectService.create(sub);
 					
-					System.out.println("Subject is added with the name "+subName);
+					 LOGGER.info("Subject is added with the name "+subName);
 					result="{\"message\":\"Subject with name "+subName+" is added \",\"status\":\"success\"}";
 					}
 					catch(Exception e)
 					{
-						System.out.println(e.getMessage());
+						 LOGGER.info(e.getMessage());
 						e.printStackTrace();
-						System.out.println();
-						System.out.println("error in add with Subject name : "+subName);
+					
+						 LOGGER.info("error in add with Subject name : "+subName);
 						result="{\"message\":\"ERROR...!! subject with name "+subName+" not added\",\"status\":\"fail\"}";
 					}
-				System.out.println(result);
+				 LOGGER.info(result);
 			return result;
 		 }
 		 
@@ -2087,7 +2359,7 @@ public class TeacherController {
 			@ResponseBody
 			public String UpdateSubject(@RequestBody Subject sub,@PathVariable("instId") int InstituteId)
 			 {
-				 System.out.println("**********inside UpdateSubject controller**********");	
+				  LOGGER.info("**********inside UpdateSubject controller**********");	
 				 sub.setInstitute(instituteService.find(InstituteId));
 				 subjectService.update(sub);
 				
@@ -2097,7 +2369,7 @@ public class TeacherController {
 					JSON+="\"name\":\""+sub.getName()+"\",";
 					JSON+="\"discription\":\""+sub.getDiscription()+"\"";			
 					JSON+="}";
-					System.out.println(JSON);
+					 LOGGER.info(JSON);
 
 				 return JSON;
 			 }
@@ -2106,7 +2378,7 @@ public class TeacherController {
 			@ResponseBody
 			public String AddSubjectToExam(@RequestBody List<ExamSubjectStudentCompositTable> examSubjectStudentSubList)
 			 {
-				 System.out.println("**********inside AddSubjectToExam controller**********");	
+				  LOGGER.info("**********inside AddSubjectToExam controller**********");	
 				
 				 String JSON="";
 				 java.util.Date dt = new java.util.Date();
@@ -2119,10 +2391,10 @@ public class TeacherController {
 				 try {
 				for(ExamSubjectStudentCompositTable examSubjectStudentSub:examSubjectStudentSubList)
 				{
-					/*System.out.println("examsubdivcomp "+examSubjectStudentSub+"exam id:"+examSubjectStudentSub.getExam().getId()+" subdiv id "+examSubjectStudentSub.getSubjectDivComposit().getId());*/
-					System.out.println(examSubjectStudentSub);
-					System.out.println(examSubjectStudentSub.getExam().getId());
-					System.out.println(examSubjectStudentSub.getSubjectDivComposit().getId());
+					/* LOGGER.info("examsubdivcomp "+examSubjectStudentSub+"exam id:"+examSubjectStudentSub.getExam().getId()+" subdiv id "+examSubjectStudentSub.getSubjectDivComposit().getId());*/
+					 LOGGER.info(examSubjectStudentSub);
+					 LOGGER.info(examSubjectStudentSub.getExam().getId());
+					 LOGGER.info(examSubjectStudentSub.getSubjectDivComposit().getId());
 					
 					examSubStudCompService.create(examSubjectStudentSub);
 				}

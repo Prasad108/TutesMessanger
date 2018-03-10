@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.app.DAO.BranchDAO;
 import com.app.DAO.StudentDAO;
 import com.app.pojo.Institute;
+import com.app.pojo.Login;
 import com.app.pojo.Student;
 import com.app.service.StudentService;
 
@@ -80,4 +81,23 @@ public class StudnetServiceImpl implements StudentService{
 		
 	}
 
+	@Override
+	public void changePassword(String newPassword, Login login) {
+		
+		StudetentDAO.changePassword(newPassword , login);
+	}
+
+	@Override
+	public Boolean checkPassword(String oldPassword, Integer id) {
+		return  StudetentDAO.checkPassword( oldPassword,  id);
+		
+	}
+
+	@Override
+	public void changeUserName(String newUserName, Login login) {
+		StudetentDAO.changeUserName(newUserName, login);
+	}
+
+	
+	
 }
