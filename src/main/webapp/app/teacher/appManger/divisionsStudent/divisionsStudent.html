@@ -1,0 +1,267 @@
+<style> 
+		  .selectedrow {	  
+		  
+		    background-color:aqua;   
+			}    
+			
+			tr:hover {
+		  background-color: none;
+			}  
+			
+			tr:hover td {
+			  color: blue;
+					}
+					
+</style>
+
+<div class="col-lg-12">
+	
+	 <div class="panel-group m-bot20" id="accordion">
+	                 <div class="panel panel-warning">
+                              <div class="panel-heading">
+                                  <h4 class="panel-title">
+                                      <a class="accordion-toggle"  data-parent="#accordion" ng-click="getBranch()">
+                                          Select Branch, Class and Division to show Students
+                                      </a>
+                                  </h4>
+                              </div>
+                              
+                              <div id="collapseOne" class="panel-collapse collapse in">
+                                  <div class="panel-body">
+                                     
+										<form name="SelectDivisionForm" class="form-validate form-horizontal " id="SelectDivisionToShowStudents" >
+											<div class="form-group ">
+											
+												<label for="fullname" class="control-label col-lg-2">Select The Branch 
+												 <span class="required">*</span>
+												</label>
+												<div class="col-lg-10">
+												
+												  <select class="form-control input-lg m-bot15 " ng-model="selectBranch" ng-options="branch.name for (x,branch) in branchList" ng-change="selectedBranch()" required="required"></select>
+												</div>
+												<label for="fullname" class="control-label col-lg-2">Select The Class 
+												 <span class="required">*</span>
+												</label>
+												
+												<div class="col-lg-10">
+												  <select class="form-control input-lg m-bot15 " ng-model="selectClass" ng-options="class.name for (x,class) in classList" ng-change="selectedClass()" required="required"></select>
+										     	</div>
+											
+						 					<label for="fullname" class="control-label col-lg-2">Select The Division 
+												 <span class="required">*</span>
+											</label>
+												
+												<div class="col-lg-10">
+												  <select class="form-control input-lg m-bot15 " ng-model="selectDivision" ng-options="division.name for (x,division) in divisionList" ng-change="selectedDivision()" required="required" ></select>
+												</div>
+									</div>
+											
+											  <div ng-show="!SelectDivisionForm.$valid" class="alert alert-block alert-danger fade in">
+														<button data-dismiss="alert" class="close close-sm"
+															type="button">
+															<i class="icon-remove"></i>
+														</button>
+														<strong>Select Branch, Classes and Division</strong>
+											  </div>
+											  
+											<div class="form-group">
+			                                          <div class="col-lg-offset-2 col-lg-10">
+			                                              <button class="btn btn-primary" ng-click="getStudent()" id="showStudentSubmitBTN" type="submit">Show Students</button>
+			                     					 </div>
+			                                </div>
+										</form>
+										</div>
+                                  </div>
+                              </div>
+                             </div>
+                             
+                             
+                             <div ng-if="NoStudentInDivision" class="alert alert-block alert-danger fade in">
+                                  <button data-dismiss="alert" class="close close-sm" type="button">
+                                      <i class="icon-remove"></i>
+                                  </button>
+                                  <strong>Selected division does not contain any student</strong> 
+                              </div>
+                              
+                                  
+                                 <section class="panel">
+                          <div class="panel-body" ng-show="ShowStudentTable">
+                              <form class="form-horizontal " method="get"  > 
+                                     <div class="form-group" >
+                                      <label class="control-label col-lg-2" for="inputSuccess">Search Student</label>
+                                      <div class="col-lg-10">
+                                          <div class="row">
+                                          <div class="col-lg-3">
+                                              <input type="text" class="form-control" placeholder="search"  ng-model="student_filter" ng-change="filterStudent();disableSuccessMessage()">
+                                          </div>
+                                          <div class="col-lg-2">
+                                               <button class="btn btn-danger" ng-click="deleteStudentFromDivision();disableSuccessMessage()" id="deleteStudentSubmitBTN" type="submit">Delete Students</button>
+                                          </div>
+                                          <div class="col-lg-2">
+                                               <button class="btn btn-primary" ng-click="showModal()" id="shiftStudentSubmitBTN" type="submit"  href="myModal">Add to Other Division</button>
+                                          </div>
+                                          </div>
+                                          <br>
+                                          
+                                          
+                                         <!-- Modal -->
+								                              <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+								                                  <div class="modal-dialog">
+								                                      <div class="modal-content">
+								                                          <div class="modal-header">
+								                                              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+								                                              <h4 class="modal-title"> Select Branch, Class and Division to show Students</h4>
+								                                          </div>
+								                                          <div class="modal-body">
+								
+								                                            
+																					<form name="SelectDivisionFormModal" class="form-validate form-horizontal " id="SelectDivisionToShowStudentsModal" >
+																						<div class="form-group ">
+																						
+																							<label for="fullname" class="control-label col-lg-2">Select The Branch 
+																							 <span class="required">*</span>
+																							</label>
+																							<div class="col-lg-10">
+																							
+																							  <select class="form-control input-lg m-bot15 " ng-model="selectBranchModal" ng-options="branch.name for (x,branch) in branchList" ng-change="selectedBranchModal()" required="required"></select>
+																							</div>
+																							<br></br>
+																							<label for="fullname" class="control-label col-lg-2">Select The Class 
+																							 <span class="required">*</span>
+																							</label>
+																							
+																							<div class="col-lg-10">
+																							  <select class="form-control input-lg m-bot15 " ng-model="selectClassModal" ng-options="class.name for (x,class) in classListModal" ng-change="selectedClassModal()" required="required"></select>
+																					     	</div>
+																					     	
+																					     	<br></br>
+																						
+																	 					<label for="fullname" class="control-label col-lg-2">Select The Division 
+																							 <span class="required">*</span>
+																						</label>
+																							
+																							<div class="col-lg-10">
+																							  <select class="form-control input-lg m-bot15 " ng-model="selectDivisionModal" ng-options="division.name for (x,division) in divisionListModal" ng-change="selectedDivisionModal()" required="required" ></select>
+																							</div>
+																							<br></br>
+																					</div>
+																						
+																						  <div ng-show="SelectErrorMessageModal" class="alert alert-block alert-danger fade in">
+																									<button data-dismiss="alert" class="close close-sm"
+																										type="button">
+																										<i class="icon-remove"></i>
+																									</button>
+																									<strong>Select Branch, Classes and Division</strong>
+																						  </div>
+																						 
+																						  
+																						<div class="form-group">
+														                                          <div class="col-lg-offset-2 col-lg-10">
+														                                              <button  ng-disabled="SelectErrorMessageModal" class="btn btn-primary" data-dismiss="modal" ng-click="AddSelectedStudentToDivision()" id="showStudentSubmitBTN" type="submit">Add Selected Students To Division</button>
+														                     					 </div>
+														                                </div>
+																					</form>
+																				
+																				
+																					
+								
+								                                          </div>
+								                                          <div class="modal-footer">
+								                                              <button data-dismiss="modal" class="btn btn-default" type="button">Close</button>
+								                                              
+								                                          </div>
+								                                      </div>
+								                                  </div>
+								                              </div>
+                            						  <!-- modal -->
+									      
+									      <br>
+									      
+									       <div class="alert alert-block alert-danger fade in col-lg-6" ng-show="selectStudentFirstMessage">
+			                                  <button data-dismiss="alert" class="close close-sm" type="button">
+			                                      <i class="icon-remove"></i>
+			                                  </button>
+			                                <strong>No Student Selected</strong>
+			                              </div>  
+									      <div class="alert alert-info fade in col-lg-6" ng-show="deleteSucessStudent">
+					                                  <button data-dismiss="alert" class="close close-sm" type="button">
+					                                      <i class="icon-remove"></i>
+					                                  </button>
+					                                  <strong>Students deleted successfully</strong> 
+					                              </div>
+					                              
+					                              
+		                                          
+		                                          
+		                                          
+							                              <div class="alert alert-info fade in" ng-show="StudentsMovedToDivsionSuccusfully">
+							                                  <button data-dismiss="alert" class="close close-sm" type="button">
+							                                      <i class="icon-remove"></i>
+							                                  </button>
+							                                  <strong>Students Successfully moved to Division</strong> 
+							                              </div>
+							                              
+							                             <!--  <div class="alert alert-block alert-danger fade in "  for="inputSuccess" ng-show="noneSelected">
+							                                  <button data-dismiss="alert" class="close close-sm" type="button">
+							                                      <i class="icon-remove"></i>
+							                                  </button>
+							                                <strong>No Student Selected</strong>
+							                              </div> -->
+		                                         
+		                                           
+                                          
+                                      </div> 
+                                        
+                                  </div>
+
+                              </form>
+                                 </div>
+                                
+                              <br>
+                             
+                               <div class="panel-body" ng-show="ShowStudentTable">
+                              <table id="example" class="table  " ng-show="ShowStudentTable"  ng-hide="!studentList.length">
+                            <tbody>
+                          
+                              <tr>
+								<th ><label ng-show="ShowSelectAll">
+                       <input type="checkbox" ng-model="IsAllChecked" ng-change="CheckUncheckAll();disableSuccessMessage()" /> Select All</label>
+                       <label ng-show="!ShowSelectAll">
+                       <input type="checkbox" ng-model="IsFilteredAllChecked" ng-change="filterCheckUncheckAll();disableSuccessMessage()" /> Select Filtered All</label>
+                       </th>
+								
+								<th><i class="icon_profile"></i> Full Name</th>                               
+                            <th><i class="icon_mail_alt"></i> Email</th>                            
+                                 <th><i class="icon_mobile"></i> Mobile</th>
+                               
+                              </tr>
+                              <tr ng-repeat="student in filteredTodos | filter : student_filter" ng-class="{selectedrow:student.Selected}"  >
+								
+								 
+									<td><input  type="checkbox" ng-model="student.Selected" ng-change="CheckUncheckHeader();filteredCheckUncheckHeader();disableSuccessMessage()" /></td>
+									<td>{{ student.fname }} {{ student.father }} {{ student.lname }}</td>
+   							 		<td>{{ student.email }}</td>
+   							 		<td>{{ student.contactno }}</td>
+   						   
+  							</tr>
+                             
+                                                    
+                           </tbody>
+</table>
+              <pagination  ng-show="ShowStudentTable" ng-hide="!studentList.length"
+      ng-model="currentPage"
+      total-items="totallenght"
+      max-size="maxSize"  
+      boundary-links="true">
+    </pagination> 
+    
+    <div class="alert alert-block alert-danger fade in" ng-show="!studentList.length">
+                                  <button data-dismiss="alert" class="close close-sm" type="button">
+                                      <i class="icon-remove"></i>
+                                  </button>
+                                  <strong>There are no student in This Division</strong> 
+                              </div>
+    </div>    
+     </section>             
+ </div>
+ 

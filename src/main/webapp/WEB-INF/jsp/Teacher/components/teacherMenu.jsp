@@ -23,7 +23,7 @@
                       </a>
                   </li> -->
                   <li>
-                      <a class="" href="scheduletree">
+                      <a class="" ui-sref="schedule">
                           <i class="icon_genius"></i>
                           <span>Schedule</span>
                       </a>
@@ -57,7 +57,7 @@
                            <li ng-show="permissions.authoriseTeacher"><a class="" ui-sref="teacherRequest" ui-sref-active="active">Teacher Request </a></li>    
                        <!--    <li ng-if="permissions.authoriseStudent"><a class="" href="#">Edit/Delete Student</a></li> -->
                            <li ng-show="permissions.authoriseStudent"><a class="" ui-sref="addStudentToDivision" ui-sref-active="active">Add Student to Division</a></li>
-                           <li ng-show="permissions.authoriseStudent"><a class="" href="StudentInDivision">Division's student</a></li>
+                           <li ng-show="permissions.authoriseStudent"><a class="" ui-sref="StudenInDivision" ui-sref-active="active">Division's student</a></li>
                          <!--  <li ng-if="permissions.authoriseTeacher"><a class="" href="#">Edit/Delete Teacher</a></li>       -->                 
                       </ul>
                   </li>
