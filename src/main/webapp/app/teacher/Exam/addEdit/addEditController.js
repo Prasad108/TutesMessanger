@@ -1,32 +1,10 @@
 (function(){
 	
-	var app = angular.module('myApp', [ 'ivh.treeview',
-		'ui.bootstrap' ]);
-
-app
-		.config(function(ivhTreeviewOptionsProvider) {
-			ivhTreeviewOptionsProvider
-					.set({
-						defaultSelectedState : false,
-						validate : true,
-						// Twisties can be images, custom html, or plain text
-						twistieCollapsedTpl : ' <span class="menu-arrow arrow_carrot-right"></span>',
-						twistieExpandedTpl : ' <span class="menu-arrow arrow_carrot-down"></span>',
-						twistieLeafTpl : ' <i class="icon_document_alt"></i>'
-					});
-		});
-
-app
-		.controller(
-				'teacherCtrl',
-				function($scope, $http, $interval, $filter,
-						ivhTreeviewMgr) {
-					$scope.teacher = JSON
-							.parse('${teacherJSON}');
-					$scope.permissions = JSON
-							.parse('${permissions}');
-					$scope.institute = JSON
-							.parse('${institute}');
+	angular.module('myApp').controller(
+				'ExamController',["$scope","$http", "$interval", "$filter","ivhTreeviewMgr","shairedDataService",function($scope, $http, $interval, $filter,ivhTreeviewMgr,shairedDataService) {
+					$scope.teacher=shairedDataService.teacher;
+		    		$scope.permissions=shairedDataService.permissions; 
+		    		$scope.institute=shairedDataService.institute;
 
 					$scope.ExamCreateSuccess = false;
 					$scope.ExamCreateError = false;
@@ -1537,7 +1515,7 @@ app
 						$scope.selectedSubject.splice(0,
 								$scope.selectedSubject.length);
 					}
-				});
+				}]);
 
 
 	

@@ -1,6 +1,19 @@
 (function() {
 	var app=angular.module("myApp",['ui.router',"ngSanitize",'ui.bootstrap','ivh.treeview']);
 	
+	app
+	.config(function(ivhTreeviewOptionsProvider) {
+		ivhTreeviewOptionsProvider
+				.set({
+					defaultSelectedState : false,
+					validate : true,
+					// Twisties can be images, custom html, or plain text
+					twistieCollapsedTpl : ' <span class="menu-arrow arrow_carrot-right"></span>',
+					twistieExpandedTpl : ' <span class="menu-arrow arrow_carrot-down"></span>',
+					twistieLeafTpl : ' <i class="icon_document_alt"></i>'
+				});
+	});
+	
 	app.config(['$stateProvider','$urlRouterProvider',function($stateProvider,$urlRouterProvider) {
 		  
 		$urlRouterProvider.otherwise('/Home');
@@ -64,10 +77,13 @@
 			
 		});
 		
+		$stateProvider.state({name : 'Exams', url : '/exams', templateUrl: '../app/teacher/Exam/addEdit/addEdit.html',  controller: 'ExamController',	});
 		
 		$stateProvider.state({name : 'addEditSubject', url : '/schedule', templateUrl: '../app/teacher/subjectManager/addEditSubject/addEditSubject.html',  controller: 'addEditSubjectController',	});
+		$stateProvider.state({name : 'result', url : '/result', template: '<ui-view></ui-view>',	});
+		$stateProvider.state({name : 'result.Exams', url : '/exams', templateUrl: '../app/teacher/result/exam/exams.html',  controller: 'ResultsExamsController',	});
 		
-				
+		
 			
 	}]);
 	

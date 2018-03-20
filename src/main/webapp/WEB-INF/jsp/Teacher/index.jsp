@@ -35,6 +35,9 @@
    		<script src="${pageContext.request.contextPath}/app/teacher/appManger/addStudentToDivision/addStudentToDivisionComponent.js"></script>
    		<script src="${pageContext.request.contextPath}/app/teacher/appManger/divisionsStudent/divisionsStudentController.js"></script>
    		<script src="${pageContext.request.contextPath}/app/teacher/schedule/scheduleController.js"></script>
+   		<script src="${pageContext.request.contextPath}/app/teacher/result/exam/ResultsExamsController.js"></script>
+   		<script src="${pageContext.request.contextPath}/app/teacher/Exam/addEdit/addEditController.js"></script>
+   		
    		
    		   		<jsp:include page="/WEB-INF/jsp/Teacher/components/angular.jsp" /> 
    		   		 	

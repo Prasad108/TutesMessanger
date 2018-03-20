@@ -1,0 +1,30 @@
+				    <div class="table-responsive">
+								                            <table class="table">
+								                              <thead>
+								                                <tr>
+								                                  <th>Exam Id</th>
+								                                  <th>Discription</th>
+								                                  <th>Max Marks</th>
+								                                  <th>Passing Marks<th>
+								                              	  <th>Exam Mode</th> 
+								                                  <th>Exam Type</th>
+								                                  <th>Repeat/Regular</th>
+
+								                                </tr>
+								                              </thead>
+								                              <tbody>
+								                              	<tr ng-repeat="exam in examList | orderBy:'id'">
+								                                  <td>{{exam.id}}</td>
+								                                  <td><a href="#"> {{exam.discription}} </a></td>
+								                                  <td>{{exam.outOf}}</td>
+								                                  <td>{{exam.passingMarks}}</td>
+								                               		<td> </td>
+								                                  <td>{{examMode[exam.examMode.id -1].modeName}}</td>
+								                                  <td>{{examType[exam.examType.id-1].typeName}}</td>
+								                                  <td>{{ExamRegularArray[exam.regular].discription}}</td>
+								                               	 	
+								                                </tr>
+								                               
+								                              </tbody>
+								                            </table>
+								                          </div>
