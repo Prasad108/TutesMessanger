@@ -1,0 +1,237 @@
+	<style type="text/css"> 
+			
+						.googleCalendar{
+									  position: relative;
+									  height: 0;
+									  width: 100%;
+									  padding-bottom: 100% ;
+									}
+									
+				.googleCalendar iframe{
+									  position: absolute;
+									  top: 0;
+									  left: 0;
+									  width: 100%;
+									  height: 100%;
+									}
+   		
+   		
+   		</style>
+   		
+
+<style type="text/css">
+
+
+   		
+
+
+
+				/*Now the CSS*/
+				* {margin: 0; padding: 0;}
+				
+				.tree ul {
+					padding-top: 20px; position: relative;
+					
+					transition: all 0.5s;
+					-webkit-transition: all 0.5s;
+					-moz-transition: all 0.5s;
+				}
+				
+				.tree li {
+					float: left; text-align: center;
+					list-style-type: none;
+					position: relative;
+					padding: 20px 5px 0 5px;
+					
+					transition: all 0.5s;
+					-webkit-transition: all 0.5s;
+					-moz-transition: all 0.5s;
+				}
+				
+				/*We will use ::before and ::after to draw the connectors*/
+				
+				.tree li::before, .tree li::after{
+					content: '';
+					position: absolute; top: 0; right: 50%;
+					border-top: 1px solid #ccc;
+					width: 50%; height: 20px;
+				}
+				.tree li::after{
+					right: auto; left: 50%;
+					border-left: 1px solid #ccc;
+				}
+				
+				/*We need to remove left-right connectors from elements without 
+				any siblings*/
+				.tree li:only-child::after, .tree li:only-child::before {
+					display: none;
+				}
+				
+				/*Remove space from the top of single children*/
+				.tree li:only-child{ padding-top: 0;}
+				
+				/*Remove left connector from first child and 
+				right connector from last child*/
+				.tree li:first-child::before, .tree li:last-child::after{
+					border: 0 none;
+				}
+				/*Adding back the vertical connector to the last nodes*/
+				.tree li:last-child::before{
+					border-right: 1px solid #ccc;
+					border-radius: 0 5px 0 0;
+					-webkit-border-radius: 0 5px 0 0;
+					-moz-border-radius: 0 5px 0 0;
+				}
+				.tree li:first-child::after{
+					border-radius: 5px 0 0 0;
+					-webkit-border-radius: 5px 0 0 0;
+					-moz-border-radius: 5px 0 0 0;
+				}
+				
+				/*Time to add downward connectors from parents*/
+				.tree ul ul::before{
+					content: '';
+					position: absolute; top: 0; left: 50%;
+					border-left: 1px solid #ccc;
+					width: 0; height: 20px;
+				}
+				
+				.tree li a{
+					border: 1px solid #ccc;
+					padding: 5px 10px;
+					text-decoration: none;
+					color: #666;
+					font-family: arial, verdana, tahoma;
+					font-size: 11px;
+					display: inline-block;
+					
+					border-radius: 5px;
+					-webkit-border-radius: 5px;
+					-moz-border-radius: 5px;
+					
+					transition: all 0.5s;
+					-webkit-transition: all 0.5s;
+					-moz-transition: all 0.5s;
+				}
+				
+				/*Time for some hover effects*/
+				/*We will apply the hover effect the the lineage of the element also*/
+				.tree li a:hover, .tree li a:hover+ul li a {
+					background: #c8e4f8; color: #000; border: 1px solid #94a0b4;
+				}
+				/*Connector styles on hover*/
+				.tree li a:hover+ul li::after, 
+				.tree li a:hover+ul li::before, 
+				.tree li a:hover+ul::before, 
+				.tree li a:hover+ul ul::before{
+					border-color:  #94a0b4;
+				}
+				
+				/*Thats all. I hope you enjoyed it.
+				Thanks :)*/
+
+ </style>
+ 
+         
+  					  <div class="alert alert-success fade in" ng-show="updateSuccess">
+                                  <button data-dismiss="alert" class="close close-sm" type="button">
+                                      <i class="icon-remove"></i>
+                                  </button>
+                                <strong> {{SaveSuccessMessage}} </strong> 
+                             
+                              </div>
+			
+			
+  					  <div class="alert alert-block alert-danger fade in" ng-show="updateError">
+                                  <button data-dismiss="alert" class="close close-sm" type="button">
+                                      <i class="icon-remove"></i>
+                                  </button>
+                                  <strong>{{ErrorMessage}}</strong> 
+                              </div>
+		
+          
+          
+          
+          	<h1> Select division to see or modify schedule </h1>
+          	<div class="tree" ng-bind-html="structureString">
+          	
+          	 
+          	 
+          					 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                  <div class="modal-dialog">
+                                      <div class="modal-content">
+                                          <div class="modal-header">
+                                              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                              <h4 class="modal-title">Schedule</h4>
+                                          </div>
+                                          <div class="modal-body">
+
+                                           <!--   <a class="btn btn-success showDivsionsSchedule" ng-click="viewSchedule()">View Schedule</a> -->
+                                              <button class="btn btn-warning editDivsionsSchedule"data-dismiss="modal"  type="submit" data-toggle="modal" ng-click="viewSchedule1()">ViewSchedule</button>
+                                             <button class="btn btn-warning editDivsionsSchedule" data-toggle="modal" type="submit"  href="#myModal2">Edit/Add Schedule</button>
+                                             
+								                                <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+								                                  <div class="modal-dialog">
+								                                      <div class="modal-content">
+								                                          <div class="modal-header">
+								                                              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+								                                              <h4 class="modal-title">Edit/Add Schedule</h4>
+								                                          </div>
+								                                          <div class="modal-body">
+								                     <!------------------------------- form starts over hear ---------------------->
+								                                           <div class="form">
+																				<form class="form-validate form-horizontal " ng-submit="updateSchedule(schedule)"id="Division_form" method="post">
+																				
+																				 <div class="form-group ">
+																				 
+										                                          <label for="fullname" class="control-label col-lg-2">Division Id </label>
+										                                          
+										                                           <div class="col-lg-10">
+										                                              <input name="divid" ng-model="schedule.id" class=" form-control" type="text" autocomplete="off" required="required" maxlength="50" readonly="readonly"  />
+										                                          </div>
+										                                          
+										                                          <label for="fullname" class="control-label col-lg-2">Calendar String </label>
+										                                          
+										                                           <div class="col-lg-10">
+										                                              <input class=" form-control" type="text" ng-model="schedule.string" autocomplete="off" required="required" maxlength="1000"  />
+										                                          </div>
+										                                          
+																				 <div class="form-group">
+										                                          <div class="col-lg-offset-2 col-lg-10">
+										                                              <button class="btn btn-primary" type="submit">Update</button>
+										                                                                                      </div>
+										                                      </div>
+										                                         
+																				 </div>
+																				</form>
+																				</div>
+								                   <!------------------------------- form ends over hear ---------------------->
+								                                          </div>
+								                                          <div class="modal-footer">
+								                                              <button data-dismiss="modal" class="btn btn-default" type="button">Close</button>
+								                                             
+								                                          </div>
+								                                      </div>
+								                                  </div>
+								                              </div>
+
+                                          </div>
+                                          <div class="modal-footer">
+                                              <button data-dismiss="modal" class="btn btn-default" type="button">Close</button>
+                                             
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+          	</div>
+          	
+          	      
+          	        <!--  <iframe ng-bind-html="calender" ng-src="{{calender}}" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+          	         <iframe>{{calender}}</iframe> -->
+          	          <div ng-bind-html="calender"></div>
+          	          <!-- <div class="tree" ng-bind-html="calender">
+          	          <div id="show_calender" ng-bind-html="calender" class="googleCalendar" style="text-align: center;" > -->
+ <!-- <iframe src="https://calendar.google.com/calendar/embed?mode=WEEK&amp;height=600&amp;wkst=1&amp;bgcolor=%23FFFFFF&amp;src=ci5fi0t0u5i8927il2ula0kbgs%40group.calendar.google.com&amp;color=%2329527A&amp;ctz=Asia%2FCalcutta" style="border:solid 1px #777" width="800" height="600" frameborder="0" scrolling="no"></iframe> -->
+
+          	          
+          

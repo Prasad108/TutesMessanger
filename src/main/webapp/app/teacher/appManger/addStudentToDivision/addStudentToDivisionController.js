@@ -1,18 +1,18 @@
 (function(){
 	angular.module("myApp").controller("addStudentToDivisionController",addStudentToDivisionController)
 	
-	addStudentToDivisionController.$inject= ['$scope', '$http', '$filter','$timeout'];
+	addStudentToDivisionController.$inject= ['$scope', '$http', '$filter','$timeout','studentList','branchList'];
 	
-	function addStudentToDivisionController($scope,$http,$filter,$timeout){
+	function addStudentToDivisionController($scope,$http,$filter,$timeout,studentList,branchList){
 		
 		 console.log("********addStudentToDivisionController***********");
-		 $scope.studentList=[];
-		 $scope.branchList=[];
+		// $scope.studentList=[];
+	//	 $scope.branchList=[];
 		 
-		 
-		// $scope.studentList=studentList;
-		// $scope.branchList=branchList;
-		 $http.get("TeacherRequestForApprovalListJSON") .then(function successCallback(response) {			 
+		 console.log(studentList);
+		 $scope.studentList=studentList;
+		 $scope.branchList=branchList;
+		/* $http.get("TeacherRequestForApprovalListJSON") .then(function successCallback(response) {			 
 			 console.log("we got response of TeacherRequestForApprovalListJSON" +response.data);
 			 $scope.studentList=response.data;       	         
         }, 
@@ -41,7 +41,7 @@
 				 
 			}, 2000);
 		 
-			 
+			 */
 			 
 			 
 		 

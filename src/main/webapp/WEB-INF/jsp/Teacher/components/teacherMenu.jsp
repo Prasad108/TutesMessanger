@@ -23,7 +23,7 @@
                       </a>
                   </li> -->
                   <li>
-                      <a class="" href="scheduletree">
+                      <a class="" ui-sref="schedule">
                           <i class="icon_genius"></i>
                           <span>Schedule</span>
                       </a>
@@ -57,23 +57,30 @@
                            <li ng-show="permissions.authoriseTeacher"><a class="" ui-sref="teacherRequest" ui-sref-active="active">Teacher Request </a></li>    
                        <!--    <li ng-if="permissions.authoriseStudent"><a class="" href="#">Edit/Delete Student</a></li> -->
                            <li ng-show="permissions.authoriseStudent"><a class="" ui-sref="addStudentToDivision" ui-sref-active="active">Add Student to Division</a></li>
-                           <li ng-show="permissions.authoriseStudent"><a class="" href="StudentInDivision">Division's student</a></li>
+                           <li ng-show="permissions.authoriseStudent"><a class="" ui-sref="StudenInDivision" ui-sref-active="active">Division's student</a></li>
                          <!--  <li ng-if="permissions.authoriseTeacher"><a class="" href="#">Edit/Delete Teacher</a></li>       -->                 
                       </ul>
                   </li>
                   
-                  <li class="sub-menu" ng-show="permissions.setExam ">
-                      <a href="javascript:;" class="">
-                          <i class="icon_desktop"></i>
-                          <span>Exam Manager</span>
-                          <span class="menu-arrow arrow_carrot-right"></span>
+                   <li>
+                      <a class="" ui-sref="Exams" ui-sref-active="active">
+                           <i class="icon_document_alt"></i>
+                          <span>Exam</span>
                       </a>
-                      <ul class="sub">
-                          <li><a class="" href="AddEditExam">Add/Edit Exam</a></li>
-                          <li><a class="" href="#">Add/Remove Subject</a></li>   
-                          <li><a class="" href="#">Add/Remove Student</a></li>                        
-                      </ul>
                   </li>
+                 
+                 
+                 
+                   <li ng-show="permissions.updateResults">
+                      <a class="" ui-sref="result.Exams" ui-sref-active="active">
+                           <i class="icon_document_alt"></i>
+                             <span>Result</span>
+                      </a>
+                  </li>
+                  
+                  
+                  
+                  
                   
                      <li class="sub-menu">
                       <a href="javascript:;" class="">
@@ -100,17 +107,7 @@
                           <li><a class="" href="teacherChangePassword">Change Password</a></li>
                       </ul>
                   </li>  
-                  <li  class="sub-menu">
-                      <a href="javascript:;" class="">
-                          <i class="icon_desktop"></i>
-                          <span>Result</span>
-                          <span class="menu-arrow arrow_carrot-right"></span>
-                      </a>
-                      <ul class="sub" >
-                          <li ng-show="permissions.updateResults"><a class="" href="studentResult">View Result's</a></li>
-                                        
-                      </ul>
-                  </li>
+                  
                     
                    <li>
                       <a class="" href="${pageContext.request.contextPath}/logout" >
