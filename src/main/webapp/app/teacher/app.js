@@ -15,6 +15,8 @@
 	});
 	
 	app.config(['$stateProvider','$urlRouterProvider',function($stateProvider,$urlRouterProvider) {
+		
+	
 		  
 		$urlRouterProvider.otherwise('/Home');
 		
@@ -27,7 +29,7 @@
 			 controller: 'addStudentToDivisionController',
 										resolve :{
 											studentList :($http) => { 
-																return $http.get("TeacherRequestForApprovalListJSON") .then(function successCallback(response) {				 
+																return $http.get("AddStudentToDivisionGetStuendNotInAnyDivision") .then(function successCallback(response) {				 
 																console.log("we got response of TeacherRequestForApprovalListJSON" +response.data);
 																return response.data;       	         
 																}, 
@@ -77,12 +79,13 @@
 			
 		});
 		
-		$stateProvider.state({name : 'Exams', url : '/exams', templateUrl: '../app/teacher/Exam/addEdit/addEdit.html',  controller: 'ExamController',	});
+		$stateProvider.state({name : 'Exams', url : '/exams', component : 'addEditExamComponent'	});
 		
 		$stateProvider.state({name : 'addEditSubject', url : '/schedule', templateUrl: '../app/teacher/subjectManager/addEditSubject/addEditSubject.html',  controller: 'addEditSubjectController',	});
 		$stateProvider.state({name : 'result', url : '/result', template: '<ui-view></ui-view>',	});
 		$stateProvider.state({name : 'result.Exams', url : '/exams', templateUrl: '../app/teacher/result/exam/exams.html',  controller: 'ResultsExamsController',	});
 		
+	
 		
 			
 	}]);
