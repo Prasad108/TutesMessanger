@@ -30,7 +30,7 @@
     <!-- <link rel="stylesheet" href="${pageContext.request.contextPath}/css/owl.carousel.css" type="text/css">
 	<link href="${pageContext.request.contextPath}/css/jquery-jvectormap-1.2.2.css" rel="stylesheet"> -->
     <!-- Custom styles -->
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/fullcalendar.css">
+	<%-- <link rel="stylesheet" href="${pageContext.request.contextPath}/css/fullcalendar.css"> --%>
 	<link href="${pageContext.request.contextPath}/css/widgets.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/css/style-responsive.css" rel="stylesheet" />
