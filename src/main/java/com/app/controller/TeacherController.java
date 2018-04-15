@@ -67,6 +67,9 @@ import com.google.gson.Gson;
 public class TeacherController {
 	
 	@Autowired
+	SnsService snsService;
+	
+	@Autowired
 	BranchService branchService;
 	
 	@Autowired
@@ -1290,6 +1293,29 @@ public class TeacherController {
 		 model.addAttribute("profileEditSuccess","Your profile updated successfully");
 		
 		 return "Teacher/showProfile";
+  }
+	 
+	 
+	 
+	 @RequestMapping(value="/updateTeacher",consumes=MediaType.APPLICATION_JSON_VALUE,method = RequestMethod.POST)
+	 @ResponseBody
+     public String updateTeacher(@ModelAttribute("teacher") Teacher teacher1,@RequestBody Teacher teacher2) 
+	 {
+		 System.out.println("**********this is updateTeacher controller suraj**********");
+		 teacher1.setFname(teacher2.getFname());
+		 teacher1.setLname(teacher2.getLname());
+		 teacher1.setEmail(teacher2.getEmail());
+		 teacher1.setContactno(teacher2.getContactno());
+		 String response="";
+		 try {
+		 teacherService.update(teacher1);
+		 response="{\"status\":\"success\",\"teacher\":\""+gson.toJson(teacher1)+"\"}";
+		 }
+		 catch(Exception e) {
+			 response="{\"status\":\"fail\"}";
+		 }
+		 
+		 return response;
   }
 	 
 	 /*@RequestMapping(value="/editTeacher",method = RequestMethod.POST)

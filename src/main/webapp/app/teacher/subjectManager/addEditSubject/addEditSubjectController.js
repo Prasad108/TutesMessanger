@@ -1,16 +1,17 @@
-
-   	      var app = angular.module('myApp');
+	
+ 
+   	      var app=angular.module("myApp");
 		
- 		  app.controller('addEditSubjectController', ['$scope', '$http', '$filter','shairedDataService', function($scope,$http,$filter,shairedDataService) {
+ 		  app.controller('addEditSubjectCtrl', ['$scope', '$http', '$filter','shairedDataService', function($scope,$http,$filter,shairedDataService) {
  			    $scope.subjectOfInstituteList=[];
 
  			   $scope.SubjectDeleteSuccess=false;
  			   $scope.SubjectDeleteError=false;
  			   $scope.SubjectUpdateSuccess=false;
  			 
-    			 $scope.teacher=shairedDataService.teacher;
-    			$scope.permissions=shairedDataService.permissions; 
-    			$scope.institute=shairedDataService.institute;
+ 			   	$scope.teacher=shairedDataService.teacher;
+	    		$scope.permissions=shairedDataService.permissions; 
+	    		$scope.institute=shairedDataService.institute;
 
     			 $scope.subjectOfInstituteList=[];
     			 $scope.filteredTodos = []
@@ -267,3 +268,5 @@
   	   	     
 
    		
+   		
+		

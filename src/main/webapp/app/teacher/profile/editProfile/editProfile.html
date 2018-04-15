@@ -1,0 +1,42 @@
+ <div class="col-lg-12">
+                      <section class="panel">
+                          <header class="panel-heading">
+                           <h2>Edit Profile</h2>
+                          </header>
+                          
+                          <div class="panel-body">
+                              <div class="form">
+                                 <form class="form-validate form-horizontal " id="edit_profile" method="post" ng-submit="updateProfile(teacher)">
+                                      <div class="form-group ">
+                                          <label for="fullname" class="control-label col-lg-2">First Name<span class="required">*</span></label>
+                                          <div class="col-lg-10">
+                                              <input class=" form-control" ng-model="teacher.fname" name="fname" type="text" autocomplete="off" required="required" maxlength="50"/>
+                                          </div>
+                                          <br><br>
+                                          <label for="fullname" class="control-label col-lg-2">Last Name<span class="required">*</span></label>
+                                          <div class="col-lg-10">
+                                              <input class=" form-control" ng-model="teacher.lname" name="lname" type="text" autocomplete="off" required="required" maxlength="50"/>
+                                          </div>
+                                           <br><br>
+                                           <label for="fullname" class="control-label col-lg-2">Contact Number <span class="required">*</span></label>
+                                          <div class="col-lg-10">
+                                              <input class=" form-control" ng-model="teacher.contactno" name="contactno" type="text" pattern="[789][0-9]{9}" title="Please enter Valid contact number" autocomplete="off" required="required" maxlength="12"/>
+                                          </div>
+                                           <br><br>
+                                          <label for="fullname" class="control-label col-lg-2">Email Id <span class="required">*</span></label>
+                                          <div class="col-lg-10">
+                                              <input class=" form-control" ng-model="teacher.email" name="email" type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" autocomplete="off" required="required" maxlength="50"/>
+                                          </div>
+                                      </div>
+                                    
+                                      <div class="form-group">
+                                          <div class="col-lg-offset-2 col-lg-10">
+                                              <button class="btn btn-primary" type="submit">Save</button>
+                                          </div>
+                                      </div>
+                                  </form>
+                              </div>
+                          </div>
+                      </section>
+                  </div>
+			

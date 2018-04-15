@@ -16,7 +16,9 @@
    		
    		
    		<script src="${pageContext.request.contextPath}/app/angular-ui-router.js"></script>
-   		<script data-require="ui-bootstrap@*" data-semver="0.12.1" src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.12.1.min.js"></script>
+   		<!-- <script data-require="ui-bootstrap@*" data-semver="0.12.1" src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.12.1.min.js"></script> -->
+   		<script src="${pageContext.request.contextPath}/app/ui-bootstrap-tpls-2.5.0.min.js"></script>
+ 		
  		<script src="${pageContext.request.contextPath}/app/teacher/app.js"></script>
  		
 		
@@ -38,7 +40,10 @@
    		<script src="${pageContext.request.contextPath}/app/teacher/result/exam/ResultsExamsController.js"></script>
    		<script src="${pageContext.request.contextPath}/app/teacher/Exam/addEdit/addEditController.js"></script>
    		<script src="${pageContext.request.contextPath}/app/teacher/Exam/addEdit/addEditComponent.js"></script>
-   		
+   		<script src="${pageContext.request.contextPath}/app/teacher/subjectManager/addEditSubject/addEditSubjectController.js"></script>
+ 		<script src="${pageContext.request.contextPath}/app/teacher/subjectManager/divisionSubjects/divisionSubjects.js"></script>
+ 		<script src="${pageContext.request.contextPath}/app/teacher/profile/viewProfile/viewProfile.js"></script>
+ 		<script src="${pageContext.request.contextPath}/app/teacher/profile/editProfile/editProfileController.js"></script>
    		   		<jsp:include page="/WEB-INF/jsp/Teacher/components/angular.jsp" /> 
    		   		 	
    			

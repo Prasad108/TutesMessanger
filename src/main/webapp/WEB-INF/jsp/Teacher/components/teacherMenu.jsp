@@ -89,8 +89,8 @@
                           <span class="menu-arrow arrow_carrot-right"></span>
                       </a>
                       <ul class="sub">
-                           <li><a class="" href="AddEditSubject">Add/Edit Subject</a></li>
-                          <li><a class="" href="SubjectInDivision">Division's Subject</a></li>
+                           <li><a class="" ui-sref="subject.addEdit" ui-sref-active="active">Add/Edit Subject</a></li>
+                          <li><a class="" ui-sref="subject.divisionSubjects" ui-sref-active="active">Division's Subject</a></li>
                                                  
                       </ul>
                   </li>
@@ -102,11 +102,17 @@
                           <span class="menu-arrow arrow_carrot-right"></span>
                       </a>
                       <ul class="sub">
-                          <li><a class="" href="teacherShowProfile">View Profile</a></li>                          
-                          <li><a class="" href="teacherEditProfile">Edit Profile</a></li>
+                          <li><a class="" ui-sref="profile.view" ui-sref-active="active">View Profile</a></li>                          
+                          <li><a class="" ui-sref="profile.edit" ui-sref-active="active">Edit Profile</a></li>
                           <li><a class="" href="teacherChangePassword">Change Password</a></li>
                       </ul>
                   </li>  
+                  <li>
+                      <a class="" href="${pageContext.request.contextPath}/logout" >
+                          <i class="icon_key_alt"></i>
+                          <span>SNS testing</span>
+                      </a>
+                  </li>   
                   
                     
                    <li>
