@@ -103,6 +103,8 @@
 		$stateProvider.state({name : 'profile', url : '/profile', template: '<ui-view></ui-view>',	});
 		$stateProvider.state({name : 'profile.view', url : '/view', templateUrl: '../app/teacher/profile/viewProfile/viewProfile.html',  controller: 'viewProfileCtrl',});
 		$stateProvider.state({name : 'profile.edit', url : '/edit', templateUrl: '../app/teacher/profile/editProfile/editProfile.html',  controller: 'editProfileCtrl',});
+		$stateProvider.state({name : 'sns', url : '/sns', templateUrl: '../app/teacher/SNS/sns.html',  controller: 'snsCtrl',});
+		$stateProvider.state({name : 'examSubjects', url : '/examSubjects', templateUrl: '../app/teacher/result/examSubjects/examSubjects.html',  controller: 'examSubjectCtrl',});
 		
 	}]);
 	

@@ -2450,6 +2450,27 @@ public class TeacherController {
 				 return JSON;
 			 }
 			 
+		 
+		 
+		 @RequestMapping(value = "/sendSMS/{x}", method = RequestMethod.GET)
+		 @ResponseBody
+		 	public String approveTeacherApprovalRequest( @PathVariable("contactNo") String contactNo,@RequestParam("sms") String text){
+			 
+				System.out.println("**********from sendSMS/{contactNo} controller**********");
+				String result="";
+				try {
+				String pubId= snsService.sendSMSMessage(text, contactNo);
+				result="{\"status\":\"success\",\"pubid\":\""+pubId+"\"}";
+				}
+				catch(Exception e) {
+					result="{\"message\":\"failed to send to sms\"}";
+					 e.printStackTrace();
+					 
+				 }
+				 System.out.println(result);
+				
+			return result;
+		 }
 	  
 		 
 }

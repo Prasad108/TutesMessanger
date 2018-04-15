@@ -108,7 +108,7 @@
                       </ul>
                   </li>  
                   <li>
-                      <a class="" href="${pageContext.request.contextPath}/logout" >
+                      <a class="" ui-sref="sns" ui-sref-active="active">
                           <i class="icon_key_alt"></i>
                           <span>SNS testing</span>
                       </a>

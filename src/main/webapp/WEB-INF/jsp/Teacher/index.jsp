@@ -44,6 +44,10 @@
  		<script src="${pageContext.request.contextPath}/app/teacher/subjectManager/divisionSubjects/divisionSubjects.js"></script>
  		<script src="${pageContext.request.contextPath}/app/teacher/profile/viewProfile/viewProfile.js"></script>
  		<script src="${pageContext.request.contextPath}/app/teacher/profile/editProfile/editProfileController.js"></script>
+ 		<script src="${pageContext.request.contextPath}/app/teacher/SNS/sns.js"></script>
+ 		<script src="${pageContext.request.contextPath}/app/teacher/result/examSubjects/examSubjects.js"></script>
+ 		
+   		   	
    		   		<jsp:include page="/WEB-INF/jsp/Teacher/components/angular.jsp" /> 
    		   		 	
    			

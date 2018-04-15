@@ -15,7 +15,8 @@
 								                              <tbody>
 								                              	<tr ng-repeat="exam in examList | orderBy:'id'">
 								                                  <td>{{exam.id}}</td>
-								                                  <td><a href="#"> {{exam.discription}} </a></td>
+								                                  <td><a ui-sref="examSubjects"> {{exam.discription}} </a></td>
+								                                  <!-- (examID : {{exam.id}}}) -->
 								                                  <td>{{exam.outOf}}</td>
 								                                  <td>{{exam.passingMarks}}</td>
 								                               		<td> </td>
