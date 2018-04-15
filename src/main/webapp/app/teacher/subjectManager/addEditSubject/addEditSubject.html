@@ -1,4 +1,4 @@
- <div class="col-lg-12"> 
+  <div class="col-lg-12"> 
                
                 <!-- -----------------------------  Start :  Add subject to Institute  ---------------------------------->  
                 <div><h2>Add</h2></div>
@@ -7,9 +7,9 @@
                           <div class="panel panel-primary">
                               <div class="panel-heading">
                                   <h4 class="panel-title">
-                                      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                      <div class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" data-target="#collapseOne">
                                           Add Subject to Institute <span class="menu-arrow arrow_carrot-down"></span>
-                                      </a>
+                                      </divs>
                                   </h4>
                               </div>
                               <div id="collapseOne" class="panel-collapse collapse">
@@ -105,8 +105,8 @@
 									<td> {{ subject.name }}</td>
    							 		<td> {{ subject.discription }}</td>
    							 		<td>
+   							 		    <a class="btn btn-primary tooltips" title="Update Subject" data-toggle="modal" data-placement="left" data-original-title="Update Subject"  ng-click="updateSubjectLoad(subject)" data-target="#updateSubjectModal"><i class="icon_plus_alt2"></i></a>
    							 		 
-   							 		    <a class="btn btn-primary tooltips" title="Update Subject" data-toggle="modal" data-placement="left" data-original-title="Update Subject"  ng-click="updateSubjectLoad(subject)" href="#updateSubjectModal"><i class="icon_plus_alt2"></i></a>
                                         <a class="btn btn-danger tooltips" title="Delete Subject" data-toggle="tooltip" data-placement="right" data-original-title="Delete Subject" ng-click="deleteSubject(subject)"><i class="icon_close_alt2"></i></a>
                                       <!-- <a class="btn btn-danger" ng-click="deleteSubject(subject)" style="margin-left: 10%"><i class="icon_close_alt2"></i></a> -->
                                         
@@ -181,4 +181,4 @@
    </div> 
   </section>
             </div>           
-        
+          

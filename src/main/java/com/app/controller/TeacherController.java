@@ -56,6 +56,7 @@ import com.app.service.StudentService;
 import com.app.service.SubjectDivCompositService;
 import com.app.service.SubjectService;
 import com.app.service.TeacherService;
+import com.app.service.impl.SnsService;
 /*import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;*/
 import com.google.gson.Gson;
@@ -65,6 +66,9 @@ import com.google.gson.Gson;
 @SessionAttributes({ "teacher", "appAdmin","institute","login","permissions","teacherJSON"  })
 @RequestMapping("/Teacher")
 public class TeacherController {
+	
+	@Autowired
+	SnsService snsService;
 	
 	@Autowired
 	BranchService branchService;
@@ -1292,6 +1296,29 @@ public class TeacherController {
 		 return "Teacher/showProfile";
   }
 	 
+	 
+	 
+	 @RequestMapping(value="/updateTeacher",consumes=MediaType.APPLICATION_JSON_VALUE,method = RequestMethod.POST)
+	 @ResponseBody
+     public String updateTeacher(@ModelAttribute("teacher") Teacher teacher1,@RequestBody Teacher teacher2) 
+	 {
+		 System.out.println("**********this is updateTeacher controller suraj**********");
+		 teacher1.setFname(teacher2.getFname());
+		 teacher1.setLname(teacher2.getLname());
+		 teacher1.setEmail(teacher2.getEmail());
+		 teacher1.setContactno(teacher2.getContactno());
+		 String response="";
+		 try {
+		 teacherService.update(teacher1);
+		 response="{\"status\":\"success\",\"teacher\":\""+gson.toJson(teacher1)+"\"}";
+		 }
+		 catch(Exception e) {
+			 response="{\"status\":\"fail\"}";
+		 }
+		 
+		 return response;
+  }
+	 
 	 /*@RequestMapping(value="/editTeacher",method = RequestMethod.POST)
 	 	public String editTeacher(Model model,@ModelAttribute("teacher") Teacher teacher1,@ModelAttribute("EditTeacher") Teacher teacher2) 
 	 {
@@ -2423,6 +2450,27 @@ public class TeacherController {
 				 return JSON;
 			 }
 			 
+		 
+		 
+		 @RequestMapping(value = "/sendSMS/{x}", method = RequestMethod.GET)
+		 @ResponseBody
+		 	public String approveTeacherApprovalRequest( @PathVariable("contactNo") String contactNo,@RequestParam("sms") String text){
+			 
+				System.out.println("**********from sendSMS/{contactNo} controller**********");
+				String result="";
+				try {
+				String pubId= snsService.sendSMSMessage(text, contactNo);
+				result="{\"status\":\"success\",\"pubid\":\""+pubId+"\"}";
+				}
+				catch(Exception e) {
+					result="{\"message\":\"failed to send to sms\"}";
+					 e.printStackTrace();
+					 
+				 }
+				 System.out.println(result);
+				
+			return result;
+		 }
 	  
 		 
 }

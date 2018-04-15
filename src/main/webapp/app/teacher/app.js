@@ -84,10 +84,28 @@
 		$stateProvider.state({name : 'addEditSubject', url : '/schedule', templateUrl: '../app/teacher/subjectManager/addEditSubject/addEditSubject.html',  controller: 'addEditSubjectController',	});
 		$stateProvider.state({name : 'result', url : '/result', template: '<ui-view></ui-view>',	});
 		$stateProvider.state({name : 'result.Exams', url : '/exams', templateUrl: '../app/teacher/result/exam/exams.html',  controller: 'ResultsExamsController',	});
+		$stateProvider.state({name : 'subject', url : '/subject', template: '<ui-view></ui-view>',	});
+		$stateProvider.state({name : 'subject.addEdit', url : '/addEdit', templateUrl: '../app/teacher/subjectManager/addEditSubject/addEditSubject.html',  controller: 'addEditSubjectCtrl',});
+		$stateProvider.state({name : 'subject.divisionSubjects', url : '/divsionSubjects', templateUrl: '../app/teacher/subjectManager/divisionSubjects/divisionSubjects.html',  controller: 'divisionSubjectsCtrl',
+			resolve :{
+				branchList :($http) => {
+									return $http.get("BranchListOfInstitute") .then(function successCallback(response) {			 
+										 console.log("we got response of BranchListOfInstitute" +response.data);
+										return response.data;       	         
+							        }, 
+							      function errorCallback(response) {              
+							        	 console.log(" failed to get the BranchListOfInstitute for teacher approval with message : "+response);      
+							        });
+							}
+						}	
+		});
 		
-	
+		$stateProvider.state({name : 'profile', url : '/profile', template: '<ui-view></ui-view>',	});
+		$stateProvider.state({name : 'profile.view', url : '/view', templateUrl: '../app/teacher/profile/viewProfile/viewProfile.html',  controller: 'viewProfileCtrl',});
+		$stateProvider.state({name : 'profile.edit', url : '/edit', templateUrl: '../app/teacher/profile/editProfile/editProfile.html',  controller: 'editProfileCtrl',});
+		$stateProvider.state({name : 'sns', url : '/sns', templateUrl: '../app/teacher/SNS/sns.html',  controller: 'snsCtrl',});
+		$stateProvider.state({name : 'examSubjects', url : '/examSubjects', templateUrl: '../app/teacher/result/examSubjects/examSubjects.html',  controller: 'examSubjectCtrl',});
 		
-			
 	}]);
 	
 }())

@@ -1,9 +1,12 @@
- app.controller("myController",function($http,$scope, $localStorage,
-		    $sessionStorage){		
-	 							console.log((sessionStorage.getItem("teacherJSON")));
-	 							//console.log( session.getAttribute("teacherJSON"));
-								$scope.teacher=JSON.parse(sessionStorage.getItem("teacherJSON") );
-						   		$scope.permissions=JSON.parse(sessionStorage.getItem("permissions")) ;
+ app.controller("editProfileCtrl",function($http,$scope,shairedDataService){		
+//	 							console.log((sessionStorage.getItem("teacherJSON")));
+//	 							//console.log( session.getAttribute("teacherJSON"));
+//								$scope.teacher=JSON.parse(sessionStorage.getItem("teacherJSON") );
+//						   		$scope.permissions=JSON.parse(sessionStorage.getItem("permissions")) ;
+						   		
+						   		$scope.teacher=shairedDataService.teacher;
+					    		$scope.permissions=shairedDataService.permissions; 
+					    		$scope.institute=shairedDataService.institute;
  				
 						   		console.log("teacher is "+$scope.teacher.fname);
 						   		//console.log("teacher id is "+$scope.teacher["id"]);  	
@@ -30,7 +33,7 @@
 				{
 					$http(
 							{
-								url : "editTeacher",
+								url : "updateTeacher",
 								contentType : 'application/json; charset=utf-8',
 								dataType : 'json',
 								method : "POST",
@@ -42,6 +45,12 @@
 							.then(function successCallback(response) {
 						    	
 						    	console.log("success while response");
+						    	if(response.data.status=="success"){
+						    		shairedDataService.teacher=response.data.teacher;
+						    		console.log(response.data.teacher);
+						    	}else{
+						    		console.log("error while updating teacher");
+						    	}
 						    
 						    	clearform();
 						   		

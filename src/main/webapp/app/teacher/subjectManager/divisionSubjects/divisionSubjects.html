@@ -1,0 +1,154 @@
+   <div class="col-lg-12">
+
+	          	<div class="panel-group m-bot20" id="accordion">
+	                 <div class="panel panel-warning">
+                              <div class="panel-heading">
+                                  <h4 class="panel-title">
+                                      <a class="accordion-toggle"  data-parent="#accordion" ng-click="getBranch()">
+                                          Select Branch, Class and Division to show Subject
+                                      </a>
+                                  </h4>
+                              </div>
+                              
+                              <div id="collapseOne" class="panel-collapse collapse in">
+                                  <div class="panel-body">
+                                     
+										<form name="SelectDivisionForm" class="form-validate form-horizontal " id="SelectDivisionToShowSubjects" >
+											<div class="form-group ">
+											
+												<label for="fullname" class="control-label col-lg-2">Select The Branch 
+												 <span class="required">*</span>
+												</label>
+												<div class="col-lg-10">
+												
+												  <select class="form-control input-lg m-bot15 " ng-model="selectBranch" ng-options="branch.name for (x,branch) in branchList" ng-change="selectedBranch()" required="required"></select>
+												</div>
+												<label for="fullname" class="control-label col-lg-2">Select The Class 
+												 <span class="required">*</span>
+												</label>
+												
+												<div class="col-lg-10">
+												  <select class="form-control input-lg m-bot15 " ng-model="selectClass" ng-options="class.name for (x,class) in classList" ng-change="selectedClass()" required="required"></select>
+										     	</div>
+											
+						 					<label for="fullname" class="control-label col-lg-2">Select The Division 
+												 <span class="required">*</span>
+											</label>
+												
+												<div class="col-lg-10">
+												  <select class="form-control input-lg m-bot15 " ng-model="selectDivision" ng-options="division.name for (x,division) in divisionList" ng-change="selectedDivision()" required="required" ></select>
+												</div>
+									</div>
+											
+											  <div ng-show="!SelectDivisionForm.$valid" class="alert alert-block alert-danger fade in">
+														<button data-dismiss="alert" class="close close-sm"
+															type="button">
+															<i class="icon-remove"></i>
+														</button>
+														<strong>Select Branch, Classes and Division</strong>
+											  </div>
+											  
+											<div class="form-group">
+			                                          <div class="col-lg-offset-2 col-lg-10">
+			                                              <button class="btn btn-primary" ng-click="getSubject()" id="showSubjectSubmitBTN" type="submit">Show Subjects</button>
+			                     					      <button class="btn btn-primary" ng-click="showSubjectNotInDivision()" id="showSubjectSubmitBTN" type="submit">Add New Subject</button>
+			                     					 </div>
+			                     					 
+			                                </div>
+										</form>
+										</div>
+                                  </div>
+                              </div>
+                             </div>  
+                             
+                             
+                             <div ng-show="NoSubjectInDivision" class="alert alert-block alert-danger fade in">
+                                  <button data-dismiss="alert" class="close close-sm" type="button">
+                                      <i class="icon-remove"></i>
+                                  </button>
+                                  <strong>Selected division does not contain any subject</strong> 
+                              </div>
+                             
+                              <div ng-show="DivisionContainAllSubject" class="alert alert-block alert-danger fade in">
+                                  <button data-dismiss="alert" class="close close-sm" type="button">
+                                      <i class="icon-remove"></i>
+                                  </button>
+                                  <strong>Selected division contain all subject</strong> 
+                              </div>
+                             
+                         <section class="panel">
+                       <div class="panel-body" ng-show="ShowSubjectTable">
+                         <table id="example" class="table  " ng-show="ShowSubjectTable"  ng-hide="!subjectList.length">
+                           <tbody>
+                             <tr>
+							   <th><i class=""></i>Subject Name</th>                               
+                               <th>Subject Description</th>                            
+                               <th><i class="icon_cogs"></i>Delete Action</th>
+                             </tr>
+                             <tr ng-repeat="subject in subjectList | orderBy : 'name'" ng-class="{selectedrow:subject.Selected}">
+									<td> {{ subject.name }}</td>
+   							 		<td> {{ subject.discription }}</td>
+   							 		<td>
+                                      <a class="btn btn-danger" ng-click="deleteSubject(subject)" style="margin-left: 10%"><i class="icon_close_alt2"></i></a>
+                                    </td>
+   							 </tr>
+                          </tbody>
+</table>
+       
+        <div class="alert alert-block alert-danger fade in" ng-show="!subjectList.length">
+                                  <button data-dismiss="alert" class="close close-sm" type="button">
+                                      <i class="icon-remove"></i>
+                                  </button>
+                                  <strong>There are no subject in This Division</strong> 
+       </div>
+   </div> 
+  </section>
+  
+                           <section class="panel">
+                       <div class="panel-body" ng-show="ShowSubjectNotInDivisionTable">
+                       
+                         <form class="form-horizontal" method="get"> 
+                              <div class="form-group" ng-show="filteredTodos.length">
+                                  <label class="control-label col-lg-2" for="inputSuccess">Search Subject</label>
+                                     <div class="col-lg-10">
+                                        <div class="row">
+                                          <div class="col-lg-3">                                 
+                                              <input type="text" class="form-control" placeholder="search"  ng-model="subject_filter" ng-change="filterSubjectNotInDivision()">
+                                          </div>
+                                        </div>
+                                      </div>
+                               </div>
+                        </form>
+                       <br></br>
+                         <table id="example" class="table  " ng-show="ShowSubjectNotInDivisionTable"  ng-hide="!filteredTodos.length">
+                           <tbody>
+                             <tr>
+							   <th><i class=""></i>Subject Name</th>                               
+                               <th>Subject Description</th>                            
+                               <th><i class="icon_cogs"></i>Add Action</th>
+                             </tr>
+                             <tr ng-repeat="subject in filteredTodos | filter : subject_filter | orderBy : 'name'" ng-class="{selectedrow:subject.Selected}">
+									<td> {{ subject.name }}</td>
+   							 		<td> {{ subject.discription }}</td>
+   							 		<td>
+                                      <a class="btn btn-primary" ng-click="addSubjectTodivision(subject)" style="margin-left: 10%"><i class="icon_plus_alt2"></i></a>
+                                    </td>
+   							 </tr>
+                          </tbody>
+                  </table>
+                  
+            
+                    <pagination ng-model="currentPage" total-items="totallenght" max-size="maxSize" boundary-links="true"
+                    ng-show="ShowSubjectNotInDivisionTable" ng-hide="!filteredTodos.length">
+				</pagination> 
+					                  
+                  <div class="alert alert-block alert-success fade in" ng-show="!subjectNotInDivisionList.length">
+                                  <button data-dismiss="alert" class="close close-sm" type="button">
+                                      <i class="icon-remove"></i>
+                                  </button>
+                                  <strong>All selected subjects are added in selected Division</strong> 
+                 </div>
+   </div> 
+  </section>             	
+ </div>
+ 
