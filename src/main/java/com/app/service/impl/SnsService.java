@@ -12,7 +12,7 @@ import com.amazonaws.services.sns.model.PublishResult;
 import com.amazonaws.services.sns.model.SetSMSAttributesRequest;
 
 @Service("snsService")
-public class AWS_SNS {
+public class SnsService {
 	
 	@SuppressWarnings("deprecation")
 	private static AmazonSNSClient snsClient = new AmazonSNSClient();
@@ -21,9 +21,16 @@ public class AWS_SNS {
 	
 	private static Map<String, MessageAttributeValue> smsAttributes =new HashMap<String, MessageAttributeValue>();
 	
-	static void build_cred() {
-		
+	static void build_cred() {		
 		snsClient.setSMSAttributes(setRequest);
+	}
+	
+	public String sendSMSMessage(String msg,String phoneNumber) {		
+		 PublishResult result = snsClient.publish(new PublishRequest()
+                .withMessage(msg)
+                .withPhoneNumber(phoneNumber)
+                .withMessageAttributes(smsAttributes));
+		return result.getMessageId();
 	}
 	
 //	public void SNS() {
@@ -42,24 +49,17 @@ public class AWS_SNS {
 //		
 //	}
 	
-	public String sendSMSMessage(String msg,String phoneNumber) {
-		
-		 PublishResult result = snsClient.publish(new PublishRequest()
-                 .withMessage(msg)
-                 .withPhoneNumber(phoneNumber)
-                 .withMessageAttributes(smsAttributes));
-		return result.getMessageId();
-	}
+	
 	
 	
      
-     public static void sendSMSMessage(AmazonSNSClient snsClient, String message, 
-     		String phoneNumber, Map<String, MessageAttributeValue> smsAttributes) {
-             PublishResult result = snsClient.publish(new PublishRequest()
-                             .withMessage(message)
-                             .withPhoneNumber(phoneNumber)
-                             .withMessageAttributes(smsAttributes));
-             System.out.println(result); // Prints the message ID.
-     }
+//     public static void sendSMSMessage(AmazonSNSClient snsClient, String message, 
+//     		String phoneNumber, Map<String, MessageAttributeValue> smsAttributes) {
+//             PublishResult result = snsClient.publish(new PublishRequest()
+//                             .withMessage(message)
+//                             .withPhoneNumber(phoneNumber)
+//                             .withMessageAttributes(smsAttributes));
+//             System.out.println(result); // Prints the message ID.
+//     }
 
 }
