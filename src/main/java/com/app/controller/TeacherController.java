@@ -2452,7 +2452,7 @@ public class TeacherController {
 			 
 		 
 		 
-		 @RequestMapping(value = "/sendSMS/{x}", method = RequestMethod.GET)
+		 @RequestMapping(value = "/sendSMS/{contactNo}", method = RequestMethod.GET)
 		 @ResponseBody
 		 	public String approveTeacherApprovalRequest( @PathVariable("contactNo") String contactNo,@RequestParam("sms") String text){
 			 

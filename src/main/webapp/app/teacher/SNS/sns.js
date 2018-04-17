@@ -6,12 +6,10 @@ var app=angular.module("myApp");
 					$scope.pubID='';
 					$scope.pubSuccess=false;
 					$scope.pubFail=false;
+					
+					
 					$scope.sendSMS = function(sms) {
-						
-
-						var data = JSON.stringify(sms);
-
-						$http(
+					$http(
 								{
 									url : "sendSMS/"+ sms.contacNumber,
 									contentType : 'application/json; charset=utf-8',
@@ -23,6 +21,7 @@ var app=angular.module("myApp");
 										function(response) {
 											// if success       	
 											console.log("succcess");
+											console.log(response);
 											if(response.data.status="success"){
 												console.log("succcess");
 												$scope.sms.contacNumber='';

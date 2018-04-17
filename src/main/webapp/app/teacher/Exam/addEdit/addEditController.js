@@ -1516,7 +1516,9 @@
 								$scope.selectedSubject.length);
 					}
 				}]);
-
+	
+	
+	
 
 	
 }())
