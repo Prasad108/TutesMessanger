@@ -1,1 +1,15 @@
 <h1>this is from exam subjects page</h1>
+{{SubjectDivCompIDList}}
+<div ng-repeat="sub in SubjectDivCompIDList" >
+														 <div class="panel panel-default">
+														      <div class="panel-heading">
+																 <h4 class="panel-title">
+																      <i style="display: none;">{{ sub.div.value }}</i>{{ sub.inst.label }}>{{ sub.branch.label }}>{{ sub.classes.label }}>{{ sub.div.label }}><strong id="subStrong">{{ sub.subject.label }}</strong>
+																	<span style="position: relative;top: -30px">
+																	  <button type="button" class="btn btn-success btn-sm pull-right" ng-click="OpenShow(sub,SubjectDivCompIDList)" style="margin-right: 10px">Exam's Students</button>
+																	  <button type="button" class="btn btn-success btn-sm pull-right" ng-click="OpenAdd(sub,SubjectDivCompIDList)" style="margin-right: 10px">Add Student</button>
+																    </span> 
+																 </h4>   
+															  </div>
+			</div>
+	</div>

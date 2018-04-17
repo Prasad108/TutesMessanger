@@ -1,3 +1,21 @@
+	<style type="text/css">
+.error {
+	border: 2px solid red;
+}
+
+#subStrong {
+	display: inline-block;
+	color: maroon;
+}
+
+input[type="checkbox"] {
+
+	width: 15px;
+	height: 15px;
+
+}
+</style>
+	
 				    <div class="table-responsive">
 								                            <table class="table">
 								                              <thead>
@@ -15,7 +33,7 @@
 								                              <tbody>
 								                              	<tr ng-repeat="exam in examList | orderBy:'id'">
 								                                  <td>{{exam.id}}</td>
-								                                  <td><a ui-sref="examSubjects"> {{exam.discription}} </a></td>
+								                                  <td><a ui-sref="examSubjects({id :exam.id})"> {{exam.discription}} </a></td>
 								                                  <!-- (examID : {{exam.id}}}) -->
 								                                  <td>{{exam.outOf}}</td>
 								                                  <td>{{exam.passingMarks}}</td>
