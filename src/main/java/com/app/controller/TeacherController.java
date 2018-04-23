@@ -1871,15 +1871,14 @@ public class TeacherController {
 		 }
 		
 		
-		@RequestMapping(value="/GetStudentListOfExamJSON/{subDivId1}/{divId1}/{examId1}", method=RequestMethod.POST)
+		@RequestMapping(value="/GetStudentListOfExamJSON/{subDivId1}/{examId1}", method=RequestMethod.POST)
 		@ResponseBody
-	 	public String GetStudentListOfExamJSON(@PathVariable("subDivId1") int subDivId1,@PathVariable("divId1") int divId1,@PathVariable("examId1") int examId1)
+	 	public String GetStudentListOfExamJSON(@PathVariable("subDivId1") int subDivId1,@PathVariable("examId1") int examId1)
 		 {
 			 System.out.println("**********inside GetStudentListOfExamJSON controller**********");
 			 
 			 String studentListOfExamJSON="";
 			 System.out.println("sub_divComposit id : "+subDivId1);
-			 System.out.println("div id : "+divId1);
 			 System.out.println("exam id : "+examId1);
 			
 				try
@@ -2471,6 +2470,21 @@ public class TeacherController {
 				
 			return result;
 		 }
+		 
+		 
+		 @RequestMapping(value = "/Exam/{ExamId}/Subject/{subdiv}", method = RequestMethod.GET)
+		 @ResponseBody
+		 	public String approveTeacherApprovalRequest( @PathVariable("ExamId") int examId,@RequestParam("subdiv") int subdiv){
+			 
+				System.out.println("**********from /Exam/{ExamId}/Subject/{subdiv} controller**********");
+				String result="";
+				
+				 System.out.println(result);
+				
+			return result;
+		 }
+		 
+		 
 	  
 		 
 }

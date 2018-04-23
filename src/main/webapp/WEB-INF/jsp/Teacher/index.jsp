@@ -46,6 +46,7 @@
  		<script src="${pageContext.request.contextPath}/app/teacher/profile/editProfile/editProfileController.js"></script>
  		<script src="${pageContext.request.contextPath}/app/teacher/SNS/sns.js"></script>
  		<script src="${pageContext.request.contextPath}/app/teacher/result/examSubjects/examSubjects.js"></script>
+ 		<script src="${pageContext.request.contextPath}/app/teacher/result/examSubjectStudents/examSubjectStudentController.js"></script>
  		
    		   	
    		   		<jsp:include page="/WEB-INF/jsp/Teacher/components/angular.jsp" /> 

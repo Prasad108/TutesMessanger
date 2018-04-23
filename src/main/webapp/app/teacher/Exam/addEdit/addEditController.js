@@ -907,8 +907,6 @@
 									url : "GetStudentListOfExamJSON/"
 											+ sub.id
 											+ "/"
-											+ sub.div.value
-											+ "/"
 											+ $scope.selectedExamForAddStudent.id,
 									contentType : 'application/json; charset=utf-8',
 									dataType : 'json',

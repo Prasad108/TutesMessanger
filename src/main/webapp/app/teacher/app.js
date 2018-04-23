@@ -104,7 +104,26 @@
 		$stateProvider.state({name : 'profile.view', url : '/view', templateUrl: '../app/teacher/profile/viewProfile/viewProfile.html',  controller: 'viewProfileCtrl',});
 		$stateProvider.state({name : 'profile.edit', url : '/edit', templateUrl: '../app/teacher/profile/editProfile/editProfile.html',  controller: 'editProfileCtrl',});
 		$stateProvider.state({name : 'sns', url : '/sns', templateUrl: '../app/teacher/SNS/sns.html',  controller: 'snsCtrl',});
-		$stateProvider.state({name : 'examSubjects', url : '/examSubjects/:id', templateUrl: '../app/teacher/result/examSubjects/examSubjects.html',  controller: 'examSubjectCtrl',});
+		$stateProvider.state({name : 'examSubjects', url : '/examSubjects/:id', templateUrl: '../app/teacher/result/examSubjects/examSubjects.html',  controller: 'examSubjectCtrl',
+			resolve :{
+				InstTreeStructureWithSubject :($http,shairedDataService) => {
+									return $http(
+											{url : "GetSubjectTreeStruct/"+ shairedDataService.institute.id,
+												method : "POST",
+											}) .then(function successCallback(response) {			 
+										 console.log("we got response of GetSubjectTreeStruct" +response.data);
+										return response.data;       	         
+							        }, 
+							      function errorCallback(response) {              
+							        	 console.log(" failed to get the GetSubjectTreeStruct with message : "+response);      
+							        });
+							}
+						}
+		});
+		
+		$stateProvider.state({name : 'examSubjectsStudents', url : '/examSubjects/:id/examSubjectsStudents/:subjectId', templateUrl: '../app/teacher/result/examSubjectStudents/examSubjectStudent.html',  controller: 'examSubjectStudentCtrl'});
+		
+		
 		
 	}]);
 	

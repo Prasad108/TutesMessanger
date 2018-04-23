@@ -8,7 +8,8 @@
 
    
 	 <script src="${pageContext.request.contextPath}/app/angular.js"></script>
-	  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-sanitize.js"></script>
+	 <script src="${pageContext.request.contextPath}/app/angular-sanitize.min.js"></script>
+
 	 
 	
 	

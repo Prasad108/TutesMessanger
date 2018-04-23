@@ -5,40 +5,17 @@
 	  app.controller('examSubjectCtrl',examSubjectCtrl)
 	  
 		   
-		examSubjectCtrl.$inject=['shairedDataService','$stateParams','$scope','$http'];
-	   function examSubjectCtrl( shairedDataService, $stateParams,$scope, $http) {	  
+		examSubjectCtrl.$inject=['shairedDataService','$stateParams','$scope','$http','InstTreeStructureWithSubject'];
+	   function examSubjectCtrl( shairedDataService, $stateParams,$scope, $http,InstTreeStructureWithSubject) {	  
 		$scope.teacher=shairedDataService.teacher;
    		$scope.permissions=shairedDataService.permissions; 
    		$scope.institute=shairedDataService.institute;
   		console.log("state param is "+$stateParams.id);
+  		$scope.examId=$stateParams.id;
   		
   		$scope.SubjectDivCompIDList={};
-  		$scope.InstTreeStructureWithSubject={};
-  		
-
-		$http(
-				{
-					url : "GetSubjectTreeStruct/"
-							+ $scope.institute.id,
-					method : "POST",
-				})
-				.then(
-						function(response) {
-							// if success       	
-							console
-									.log("WE got SubjectTreeStruct");
-							console
-									.log(response.data);
-							$scope.InstTreeStructureWithSubject = response.data;
-
-						},
-						function(data) { // optional
-							// failed
-
-							console
-									.log(" failed to get the SubjectTreeStruct");
-						});
-  		
+  		$scope.InstTreeStructureWithSubject=InstTreeStructureWithSubject;
+  				
   		function traverseTillsubDivId(o, subDivId) {
 
 			if ($scope.flag < 1) {
@@ -48,45 +25,37 @@
 								&& typeof (o[i]) == "object") {
 							if (o[i].type == "Institute") {
 								$scope.inst.label = o[i].label;
-								console
-										.log($scope.inst.label);
+								console.log($scope.inst.label);
 							}
 
 							if (o[i].type == "Branch") {
 								$scope.branch.label = o[i].label;
-								console
-										.log($scope.branch.label);
+								console.log($scope.branch.label);
 							}
 
 							if (o[i].type == "Class") {
 								$scope.classes.label = o[i].label;
-								console
-										.log($scope.classes.label);
+								console.log($scope.classes.label);
 							}
 
 							if (o[i].type == "Division") {
 								$scope.div.label = o[i].label;
 								$scope.div.value = o[i].value;
-								console
-										.log($scope.div.label);
-								console
-										.log($scope.div.value);
+								console.log($scope.div.label);
+								console.log($scope.div.value);
 							}
 
 							if (o[i].type == "Subject"
 									&& o[i].value == subDivId) {
 								$scope.subject.label = o[i].label;
-								console
-										.log($scope.subject.label);
+								console.log($scope.subject.label);
 								$scope.flag = 2;
-								console
-										.log("break **************************");
+								console.log("break **************************");
 								break;
 							}
 
 							//going one step down in the object tree!!
-							traverseTillsubDivId(
-									o[i], subDivId);
+							traverseTillsubDivId(o[i], subDivId);
 						}
 					}
 				}
@@ -101,10 +70,10 @@
 				})
 				.then(
 						function(response) { // if success       	
-							console
-									.log("WE got ids");
+							console.log("WE got ids");
 
 							$scope.SubjectDivCompIDList = response.data;
+							console.log($scope.SubjectDivCompIDList);
 							$scope.ShowSelectedSubjectTable = true;
 							$scope.subjectNotInExam = false;
 
@@ -130,8 +99,7 @@
 									$scope.SubjectDivCompIDList[j].subject = $scope.subject;
 								}
 								console.log("subject details");
-								console
-										.log($scope.SubjectDivCompIDList[j]);
+								console.log($scope.SubjectDivCompIDList[j]);
 							}
 						},
 						function(data) { // optional // if failed

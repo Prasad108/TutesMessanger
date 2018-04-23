@@ -1,0 +1,28 @@
+<h>hello from ExamSubject Student page</h>1
+<h2>Exam id - {{examId}}</h2>
+<h2>Subject id - {{subjectId}}</h2>
+
+<div class="table-responsive">
+	<table class="table">
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>First Name</th>
+				<th>Father </th>
+				<th>Sirname</th>
+				<th>Obtained Marks</th>
+				<th>Result</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="student in StudentList| orderBy:'id'">
+				<td>{{exam.id}}</td>
+				<td>{{student.fname}}</td>
+				<td>{{student.father}}</td>
+				<td>{{student.lname}}</td>
+				<td>Obtained Marks</td>
+				<td>Pass/Fail</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
