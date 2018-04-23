@@ -39,6 +39,28 @@
 								console.log("error response came");
 								console.log(response);
 							});
+	   		
+	   		
+	   		$http(
+					{
+						url : "resultStudentList",			
+						contentType : 'application/json; charset=utf-8',
+						dataType : 'json',
+						method : "POST",
+					})
+					.then(function successCallback(response) {
+								// if success   then generate student table
+
+								console.log("response came 2********");
+								console.log(response);
+								
+							
+							},
+							function errorCallback(response) {
+								// failed
+								console.log("error response came 2********");
+								console.log(response);
+							});
 
 		
 

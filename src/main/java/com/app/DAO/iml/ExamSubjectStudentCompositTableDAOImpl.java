@@ -99,4 +99,25 @@ public class ExamSubjectStudentCompositTableDAOImpl implements ExamSubjectStuden
 		 query.executeUpdate();
 	}
 
+	@Override
+	@Transactional
+	public void examSubjectStrudentResult(int ExamId, int SubdivId) {
+		// TODO Auto-generated method stub
+		
+		 Query query=currentSession().createQuery("from ExamSubjectStudentCompositTable essct LEFT JOIN Result r  on  essct.id=r.examSubjectStudentCompositTable.id where essct.exam.id= :ExamId and essct.subjectDivComposit.id = :subDivId");
+		 query.setParameter("ExamId", ExamId);
+		 query.setParameter("subDivId", SubdivId);
+		 
+        List lst = query.list();
+        
+        System.out.println("" + lst.size());
+        System.out.println("gooing to display result");
+        for (int i = 0; i < lst.size(); i++) {
+            System.out.println("first obj"+((Object[]) lst.get(i))[0]);     //account bean, actually this is in reverse order - so this is user bean
+            System.out.println("second obj"+((Object[]) lst.get(i))[1]);     //user bean         & this account bean
+        }
+       
+		
+	}
+
 }

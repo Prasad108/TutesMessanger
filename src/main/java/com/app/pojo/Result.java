@@ -73,4 +73,11 @@ public class Result implements java.io.Serializable {
 		this.remarks = remarks;
 	}
 
+	@Override
+	public String toString() {
+		return "Result [id=" + id + ", obtainedMarks=" + obtainedMarks + ", remarks=" + remarks + "]";
+	}
+	
+	
+
 }

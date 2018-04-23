@@ -70,4 +70,10 @@ public class ExamSubjectStudentCompositTableServiceImpl implements ExamSubjectSt
 		examSubStudCompDAO.deletStudentFromExam(StudId, subDivId, examId);
 	}
 
+	@Override
+	public void examSubjectStrudentResult(int ExamId, int SubdivId) {
+		// TODO Auto-generated method stub
+		examSubStudCompDAO.examSubjectStrudentResult(ExamId, SubdivId);
+	}
+
 }

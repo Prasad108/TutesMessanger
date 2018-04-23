@@ -19,4 +19,6 @@ public interface ExamSubjectStudentCompositTableService {
 	public List<Student> findByExamId(int examId,int subDivId);
 	public ExamSubjectStudentCompositTable findByExamSubDivId(int examId,int subDivId);
 	public void deletStudentFromExam(int StudId,int subDivId,int examId);
+	public void examSubjectStrudentResult (int ExamId,int SubdivId);
+	
 }

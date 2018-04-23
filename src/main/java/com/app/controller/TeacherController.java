@@ -2472,12 +2472,30 @@ public class TeacherController {
 		 }
 		 
 		 
-		 @RequestMapping(value = "/Exam/{ExamId}/Subject/{subdiv}", method = RequestMethod.GET)
+		 @RequestMapping(value = "/Exam/{ExamId}/Subject/{subdiv}", method = RequestMethod.POST)
 		 @ResponseBody
 		 	public String approveTeacherApprovalRequest( @PathVariable("ExamId") int examId,@RequestParam("subdiv") int subdiv){
-			 
+			   
 				System.out.println("**********from /Exam/{ExamId}/Subject/{subdiv} controller**********");
+				examSubStudCompService.examSubjectStrudentResult(examId,subdiv);
 				String result="";
+				
+				
+				
+				 System.out.println(result);
+				
+			return result;
+		 }
+		 
+		 @RequestMapping(value = "/resultStudentList", method = RequestMethod.POST)
+		 @ResponseBody
+		 	public String resultStudentList( ){
+			   
+				System.out.println("**********from resultStudentList controller**********");
+				examSubStudCompService.examSubjectStrudentResult(38,6);
+				String result="";
+				
+				
 				
 				 System.out.println(result);
 				
