@@ -1,6 +1,6 @@
 <h>hello from ExamSubject Student page</h>1
 <h2>Exam id - {{examId}}</h2>
-<h2>Subject id - {{subjectId}}</h2>
+<h2>Subject id - {{subjectDivId}}</h2>
 
 <div class="table-responsive">
 	<table class="table">
@@ -15,13 +15,15 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr ng-repeat="student in StudentList| orderBy:'id'">
-				<td>{{exam.id}}</td>
-				<td>{{student.fname}}</td>
-				<td>{{student.father}}</td>
-				<td>{{student.lname}}</td>
-				<td>Obtained Marks</td>
-				<td>Pass/Fail</td>
+			<tr ng-repeat="ESSR in ExamSubjectStudentResult">
+				<td>{{ESSR.exam.id}}</td>
+				<td>{{ESSR.student.fname}}</td>
+				<td>{{ESSR.student.father}}</td>
+				<td>{{ESSR.student.lname}}</td>
+				<td ng-if="!!ESSR.result.obtainedMarks">{{ESSR.result.obtainedMarks}}</td>
+				<td ng-if="!ESSR.result.obtainedMarks">N.A.</td>
+				<td ng-if="!!ESSR.result.remarks">{{ESSR.result.remarks}}</td>
+				<td ng-if="!ESSR.result.remarks">N.A</td>
 			</tr>
 		</tbody>
 	</table>

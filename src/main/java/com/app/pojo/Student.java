@@ -181,4 +181,10 @@ public class Student implements java.io.Serializable {
 		this.examSubjectStudentCompositTables = examSubjectStudentCompositTables;
 	}
 
+	@Override
+	public String toString() {
+		return "Student [id=" + id + ", fname=" + fname + ", father=" + father + ", lname=" + lname + ", contactno="
+				+ contactno + ", email=" + email + "]";
+	}
+
 }

@@ -14,6 +14,7 @@
 	   		$scope.examId=$stateParams.id;
 	   		$scope.subjectDivId=$stateParams.subjectId;
 	   		$scope.StudentList=[];	
+	   		$scope.ExamSubjectStudentResult=[];
 	   		
 	   		
 	   		$http(
@@ -43,16 +44,19 @@
 	   		
 	   		$http(
 					{
-						url : "resultStudentList",			
+						url : "ExamSubjectStudentResult",			
 						contentType : 'application/json; charset=utf-8',
 						dataType : 'json',
-						method : "POST",
+						method : "GET",
+						 params: {examId: $scope.examId,subDivId:$scope.subjectDivId}
+						
 					})
 					.then(function successCallback(response) {
 								// if success   then generate student table
 
 								console.log("response came 2********");
 								console.log(response);
+								$scope.ExamSubjectStudentResult=response.data;
 								
 							
 							},
