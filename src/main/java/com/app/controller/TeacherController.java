@@ -2470,33 +2470,15 @@ public class TeacherController {
 				
 			return result;
 		 }
+		
 		 
 		 
-		 @RequestMapping(value = "/Exam/{ExamId}/Subject/{subdiv}", method = RequestMethod.POST)
+		 @RequestMapping(value = "/ExamSubjectStudentResult", method = RequestMethod.GET)
 		 @ResponseBody
-		 	public String approveTeacherApprovalRequest( @PathVariable("ExamId") int examId,@RequestParam("subdiv") int subdiv){
-			   
-				System.out.println("**********from /Exam/{ExamId}/Subject/{subdiv} controller**********");
-				examSubStudCompService.examSubjectStrudentResult(examId,subdiv);
-				String result="";
-				
-				
-				
-				 System.out.println(result);
-				
-			return result;
-		 }
-		 
-		 @RequestMapping(value = "/resultStudentList", method = RequestMethod.POST)
-		 @ResponseBody
-		 	public String resultStudentList( ){
+		 	public String resultStudentList(@RequestParam("examId") int examId, @RequestParam("subDivId") int subDivId){
 			   
 				System.out.println("**********from resultStudentList controller**********");
-				examSubStudCompService.examSubjectStrudentResult(38,6);
-				String result="";
-				
-				
-				
+				String result=examSubStudCompService.examSubjectStudentResult(examId,subDivId);
 				 System.out.println(result);
 				
 			return result;

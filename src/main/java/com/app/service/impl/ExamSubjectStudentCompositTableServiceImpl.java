@@ -71,9 +71,9 @@ public class ExamSubjectStudentCompositTableServiceImpl implements ExamSubjectSt
 	}
 
 	@Override
-	public void examSubjectStrudentResult(int ExamId, int SubdivId) {
+	public String examSubjectStudentResult(int ExamId, int SubdivId) {
 		// TODO Auto-generated method stub
-		examSubStudCompDAO.examSubjectStrudentResult(ExamId, SubdivId);
+		return examSubStudCompDAO.examSubjectStudentResult(ExamId, SubdivId);
 	}
 
 }
