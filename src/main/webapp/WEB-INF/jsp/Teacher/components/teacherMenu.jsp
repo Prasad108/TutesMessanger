@@ -77,6 +77,12 @@
                              <span>Result</span>
                       </a>
                   </li>
+                   <li ng-show="permissions.updateResults">
+                      <a class="" ui-sref="paginationTest" ui-sref-active="active">
+                           <i class="icon_document_alt"></i>
+                             <span>paginationTest</span>
+                      </a>
+                  </li>
                   
                   
                   

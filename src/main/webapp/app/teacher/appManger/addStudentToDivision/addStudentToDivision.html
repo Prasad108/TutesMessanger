@@ -141,12 +141,10 @@
 				  							</tr>			                                                    
 				                           </tbody>
 										</table>
-										      <pagination  
-											      ng-model="currentPage"
-											      total-items="totallenght"
-											      max-size="maxSize"  
-											      boundary-links="true">
-										    </pagination> 
+								    <ul uib-pagination   ng-model="currentPage"
+									      total-items="totallenght"
+									      max-size="maxSize"  
+									      boundary-links="true"></ul>
 				</div>    
 				
 				<div class="alert alert-block alert-danger fade in" ng-show="!studentList.length">

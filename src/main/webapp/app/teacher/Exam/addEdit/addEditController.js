@@ -2,6 +2,7 @@
 	
 	angular.module('myApp').controller(
 				'ExamController',["$scope","$http", "$interval", "$filter","ivhTreeviewMgr","shairedDataService",function($scope, $http, $interval, $filter,ivhTreeviewMgr,shairedDataService) {
+				
 					$scope.teacher=shairedDataService.teacher;
 		    		$scope.permissions=shairedDataService.permissions; 
 		    		$scope.institute=shairedDataService.institute;
@@ -475,70 +476,7 @@
 
 					};
 
-					var o = [ {
-						"label" : "Vidya",
-						"value" : 50,
-						"type" : "Institute",
-						"children" : [ {
-							"label" : "Pune",
-							"value" : 15,
-							"type" : "Branch",
-							"children" : [ {
-								"label" : "10th ",
-								"value" : 18,
-								"type" : "Class",
-								"children" : [ {
-									"label" : "A",
-									"value" : 19,
-									"type" : "Division"
-								}, {
-									"label" : "B",
-									"value" : 20,
-									"type" : "Division"
-								}, {
-									"label" : "C",
-									"value" : 21,
-									"type" : "Division"
-								} ]
-							}, {
-								"label" : "11th",
-								"value" : 19,
-								"type" : "Class",
-								"children" : [ {
-									"label" : "PCM",
-									"value" : 22,
-									"type" : "Division",
-									"children" : [ {
-										"label" : "English",
-										"value" : 1,
-										"type" : "Subject",
-										"SubjectId" : 1
-									}, {
-										"label" : "Marathi",
-										"value" : 2,
-										"type" : "Subject",
-										"SubjectId" : 2
-									} ]
-								}, {
-									"label" : "PCB",
-									"value" : 23,
-									"type" : "Division",
-									"children" : [ {
-										"label" : "English",
-										"value" : 6,
-										"type" : "Subject",
-										"SubjectId" : 1
-									} ]
-								} ]
-							} ]
-						}, {
-							"label" : "Mumbai",
-							"value" : 16,
-							"type" : "Branch"
-						} ]
-					} ];
-
-					//called with every property and its value
+					
 
 					$scope.inst = {};
 					$scope.branch = {};

@@ -2017,41 +2017,7 @@ input[type="checkbox"] {
 					                              </div>
                                   		  </section>
 								                        
-										<!-- <section class="panel">
-				                          <div class="panel-body">	
-				                          
-				                          <div id="ShowTreeStrct" ng-show="ShowTreeStruct" >	
-												{{$parent.selectedSubject}}
-												
-											
-												<div  ng-controller="teacherCtrl as fancy">
-													
-													<div>Search <input type="text" ng-model="bagSearch" /></div>											
-													  <div
-													    ivh-treeview="InstTreeStructureWithSubject"
-													    ivh-treeview-filter="bagSearch"
-														ivh-treeview-validate="true"
-													    ivh-treeview-default-selected-state="false"
-													    ivh-treeview-on-cb-change="OnSelectCallback(ivhNode, ivhIsSelected, ivhTree)"
-														>
-													  </div>
-												  
-												  <button  ng-show="selectedSubject.length>0" class="btn btn-primary  btn-sm" ng-click="ShowSubjectTable()">Add Subjects</button>
-												
-											  
-											 
-											  </div>
-                                  
-                                  			</div>
-                                  			
-                                  			<div ng-show="ShowAddSubjectTable" ><h1>Add subject Table is shown</h1></div>
-                                  			
-                                  			<div  ng-show="ShowSubjectListVar">
-                                  			<h1>Student List Here</h1>
-                                  			</div>
-                                  			
-                                  			</div>
-                                  		  </section> -->
+										
                                   
                                     </div>      
                                 
@@ -2201,6 +2167,7 @@ input[type="checkbox"] {
 																	      max-size="$parent.maxSize"  
 																	      boundary-links="true">
 																	    </pagination>
+																	   
 																	
 																	</div>
 																	</div>
@@ -2210,38 +2177,10 @@ input[type="checkbox"] {
 													
 						                             
 						                             
-						                           <!--   <div ng-repeat="sub in SubjectDivCompIDList" ng-class="{selectedrow:sub.Selected}">
-								                              <p><i style="display: none;">{{ sub.div.value }}</i>{{ sub.inst.label }}>{{ sub.branch.label }}>{{ sub.classes.label }}>{{ sub.div.label }}><strong id="subStrong">{{ sub.subject.label }}</strong>
-								                               
-								                               <button class="btn btn-primary btn-sm pull-right accordion-toggle" data-toggle="collapse"  ng-href="#collapseOne{{sub.id}}" ng-click="addStudentSubmitButton(sub)" id="addStudentSubmitBTN" type="submit" style="margin-right: 10px">Add Student</button>
-								                               <button class="btn btn-primary btn-sm pull-right accordion-toggle" data-toggle="collapse"  ng-href="#collapseTwo{{sub.id}}" ng-click="expand($event)" id="showStudentSubmitBTN" type="submit" style="margin-right: 10px">Exam's Student</button> 
-								                              </p>
-								                                 <div id="collapseOne{{sub.id}}" class="panel-collapse collapse">
-				                                                   <div class="panel-body" ng-show="ShowStudentNotInExam">
-								                                            <table  class="table" ng-show="ShowStudentNotInExam">
-													                           <tbody>
-													                             <tr>
-																				   <th><i class=""></i>Student Name</th>                                                          
-													                               <th><i class=""></i>Add Action</th>
-													                             </tr>
-													                             <tr ng-repeat="student in sub.studentNotInExamList | orderBy : 'fname'" ng-class="{selectedrow:student.Selected}">
-																						<td> {{ student.fname }} {{ student.father }} {{ student.lname }}</td>
-													   						
-													   							 		<td>
-													                                      <a class="btn btn-danger" ng-click="addStudent(student,sub)" style="margin-left: 3%"><i class="icon_plus_alt2"></i></a>
-													                                    </td>
-													   							 </tr>
-													                          </tbody>
-												                          </table>
-							                                       </div>
-							         
-				                                                </div>
-				                                          
-								                              <br> 
-						                             </div> -->
+						                         
          					 				</div> 
          					 	</div>
-         			 	</div>
+         			 	</div> 	
           </section>
  </section>
  

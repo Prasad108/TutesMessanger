@@ -248,12 +248,10 @@
                                                     
                            </tbody>
 </table>
-              <pagination  ng-show="ShowStudentTable" ng-hide="!studentList.length"
-      ng-model="currentPage"
-      total-items="totallenght"
-      max-size="maxSize"  
-      boundary-links="true">
-    </pagination> 
+      
+     <ul uib-pagination  ng-show="ShowStudentTable" ng-hide="!studentList.length" total-items="totallenght" ng-model="currentPage"  max-size="maxSize"    boundary-links="true"></ul>
+    
+    
     
     <div class="alert alert-block alert-danger fade in" ng-show="!studentList.length">
                                   <button data-dismiss="alert" class="close close-sm" type="button">

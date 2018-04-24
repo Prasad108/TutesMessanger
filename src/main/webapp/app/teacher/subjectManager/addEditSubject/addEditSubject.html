@@ -168,9 +168,9 @@
                   </table>
                   
             
-                    <pagination ng-model="currentPage" total-items="totallenght" max-size="maxSize" boundary-links="true"
-                    ng-show="ShowSubjectTable" ng-hide="!filteredTodos.length">
-				</pagination> 
+                
+				<ul uib-pagination  ng-model="currentPage" total-items="totallenght" max-size="maxSize" boundary-links="true"
+                    ng-show="ShowSubjectTable" ng-hide="!filteredTodos.length"></ul>
 					                  
                   <div class="alert alert-block alert-danger fade in" ng-show="!subjectOfInstituteList.length">
                                   <button data-dismiss="alert" class="close close-sm" type="button">
