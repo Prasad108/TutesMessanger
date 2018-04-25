@@ -84,4 +84,9 @@ public class InstituteServiceImpl implements InstituteService {
 		return InstituteDAO.GetSubjectTree(InstId);
 	}
 
+	@Override
+	public String GetInstituteTree(int InstId) {
+		return InstituteDAO.GetInstituteTree(InstId);
+	}
+
 }

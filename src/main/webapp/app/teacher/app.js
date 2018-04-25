@@ -66,15 +66,27 @@
 		});
 		$stateProvider.state({name : 'schedule', url : '/schedule', templateUrl: '../app/teacher/schedule/schedule.html',  controller: 'scheduleController',
 			resolve :{
-				schedule :($http) => {
-									return $http.get("scheduletreeJSON") .then(function successCallback(response) {			 
-										 console.log("we got response of scheduletreeJSON" +response.data);
-										return response.data;       	         
-							        }, 
-							      function errorCallback(response) {              
-							        	 console.log(" failed to get the scheduletreeJSON for teacher approval with message : "+response);      
-							        });
-							}
+//				schedule :($http) => {
+//									return $http.get("scheduletreeJSON") .then(function successCallback(response) {			 
+//										 console.log("we got response of scheduletreeJSON" +response.data);
+//										return response.data;       	         
+//							        }, 
+//							      function errorCallback(response) {              
+//							        	 console.log(" failed to get the scheduletreeJSON for teacher approval with message : "+response);      
+//							        });
+//							}
+				schedule :($http,shairedDataService) => {
+					return $http(
+							{url : "GetInstituteTreeStruct/"+ shairedDataService.institute.id,
+								method : "POST",
+							}) .then(function successCallback(response) {			 
+						 console.log("we got response of GetInstituteTreeStruct" +response.data);
+						return response.data;       	         
+			        }, 
+			      function errorCallback(response) {              
+			        	 console.log(" failed to get the GetInstituteTreeStruct with message : "+response);      
+			        });
+			}
 						}
 			
 		});

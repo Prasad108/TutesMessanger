@@ -9,6 +9,7 @@
 		   			//console.log($scope.permissions);
 					
 					$scope.structureString=schedule;
+					$scope.InstituteTreeStructure=schedule;
 				    $scope.updateSuccess=false;
 				    $scope.updateError=false;
 					$scope.calender;
@@ -122,8 +123,8 @@
 			$scope.schedule.divName="";
 			
 		};
-					
-					
+		
+			
 					
 	});
 					

@@ -2485,6 +2485,17 @@ public class TeacherController {
 		 }
 		 
 		 
+		 @RequestMapping(value="/GetInstituteTreeStruct/{id}", method=RequestMethod.POST)
+			@ResponseBody
+			public String GetInstituteTreeStruct(@PathVariable("id") int InstituteId)
+			 {
+				 System.out.println("**********inside GetInstituteTreeStruct controller**********");	
+						
+				 String JSON=instituteService.GetInstituteTree(InstituteId);	
+					System.out.println(JSON);
+				 return JSON;
+			 }
+		 
 	  
 		 
 }

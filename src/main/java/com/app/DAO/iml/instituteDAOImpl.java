@@ -130,13 +130,27 @@ public class instituteDAOImpl implements InstituteDAO {
 	@Transactional
 	public String GetSubjectTree(int InstId) {
 		
-		System.out.println("institute id is :"+InstId);
-		
-
 		ProcedureCall procedure1=currentSession().createStoredProcedureCall("TreeViewInstitute");
 		
 		procedure1.registerParameter("InstID", Integer.class, ParameterMode.IN).bindValue(InstId);
 		procedure1.registerParameter("depth", Integer.class, ParameterMode.IN).bindValue(5);
+		procedure1.registerParameter("JSON", String.class, ParameterMode.OUT);
+			
+		ProcedureOutputs procedureResult=procedure1.getOutputs();
+		
+		String JSON=(String) procedureResult.getOutputParameterValue("JSON");
+		
+		return JSON;
+	}
+
+
+	@Override
+	@Transactional
+	public String GetInstituteTree(int InstId) {
+		ProcedureCall procedure1=currentSession().createStoredProcedureCall("TreeViewInstitute");
+		
+		procedure1.registerParameter("InstID", Integer.class, ParameterMode.IN).bindValue(InstId);
+		procedure1.registerParameter("depth", Integer.class, ParameterMode.IN).bindValue(4);
 		procedure1.registerParameter("JSON", String.class, ParameterMode.OUT);
 			
 		ProcedureOutputs procedureResult=procedure1.getOutputs();
