@@ -22,7 +22,24 @@
 		
 		
 		$stateProvider.state({name : 'Home', url : '/Home',	component : 'homeComponet'});		
-		$stateProvider.state({name : 'existingInstituteStructure', url : '/existingInstituteStructure', component : 'existingInstituteStructureComponent'});
+		$stateProvider.state({name : 'existingInstituteStructure', url : '/existingInstituteStructure', templateUrl : '../app/teacher/instituteStructure/existingInstituteStructure/existingInstituteStructure.html', controller : 'existingInstituteStructureController', 
+			
+			resolve :{
+				schedule :($http,shairedDataService) => {
+							return $http({
+											url : "GetInstituteTreeStruct/"+ shairedDataService.institute.id,
+											method : "POST",
+											}) .then(function successCallback(response) {			 
+														 console.log("we got response of GetInstituteTreeStruct" +response.data);
+														return response.data;       	         
+												}, 
+											      function errorCallback(response) {              
+											        	 console.log(" failed to get the GetInstituteTreeStruct with message : "+response);      
+											        });
+											}
+					}
+		
+		});
 		$stateProvider.state({name : 'studentRequest', url : '/studentRequest', component : 'studentRequestComponent'});	
 		$stateProvider.state({name : 'teacherRequest', url : '/teacherRequest', component : 'teacherRequestComponent'});	
 		$stateProvider.state({name : 'addStudentToDivision', url : '/addStudentToDivision',  templateUrl: '../app/teacher/appManger/addStudentToDivision/addStudentToDivision.html',
@@ -66,27 +83,18 @@
 		});
 		$stateProvider.state({name : 'schedule', url : '/schedule', templateUrl: '../app/teacher/schedule/schedule.html',  controller: 'scheduleController',
 			resolve :{
-//				schedule :($http) => {
-//									return $http.get("scheduletreeJSON") .then(function successCallback(response) {			 
-//										 console.log("we got response of scheduletreeJSON" +response.data);
-//										return response.data;       	         
-//							        }, 
-//							      function errorCallback(response) {              
-//							        	 console.log(" failed to get the scheduletreeJSON for teacher approval with message : "+response);      
-//							        });
-//							}
-				schedule :($http,shairedDataService) => {
-					return $http(
-							{url : "GetInstituteTreeStruct/"+ shairedDataService.institute.id,
-								method : "POST",
-							}) .then(function successCallback(response) {			 
-						 console.log("we got response of GetInstituteTreeStruct" +response.data);
-						return response.data;       	         
-			        }, 
-			      function errorCallback(response) {              
-			        	 console.log(" failed to get the GetInstituteTreeStruct with message : "+response);      
-			        });
-			}
+					schedule :($http,shairedDataService) => {
+								return $http({
+												url : "GetInstituteTreeStruct/"+ shairedDataService.institute.id,
+												method : "POST",
+												}) .then(function successCallback(response) {			 
+															 console.log("we got response of GetInstituteTreeStruct" +response.data);
+															return response.data;       	         
+													}, 
+												      function errorCallback(response) {              
+												        	 console.log(" failed to get the GetInstituteTreeStruct with message : "+response);      
+												        });
+												}
 						}
 			
 		});

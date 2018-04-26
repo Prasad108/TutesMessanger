@@ -131,29 +131,36 @@
 				Thanks :)*/
 
  </style>
+ <div class="col-lg-12">
+					<h3 class="page-header"><i class="glyphicon glyphicon-list-alt" ></i> Schedule</h3>
+					<ol class="breadcrumb">
+						<li><i class="fa fa-home"></i><a ui-sref="Home">Home</a></li>
+						<li><i class="glyphicon glyphicon-list-alt"></i>Schedule</li>						  	
+					</ol>
+				</div>
  
          
-  					  <div class="alert alert-success fade in" ng-show="updateSuccess">
-                                  <button data-dismiss="alert" class="close close-sm" type="button">
-                                      <i class="icon-remove"></i>
-                                  </button>
-                                <strong> {{SaveSuccessMessage}} </strong> 
-                             
-                              </div>
-			
-			
-  					  <div class="alert alert-block alert-danger fade in" ng-show="updateError">
-                                  <button data-dismiss="alert" class="close close-sm" type="button">
-                                      <i class="icon-remove"></i>
-                                  </button>
-                                  <strong>{{ErrorMessage}}</strong> 
-                              </div>
+  				
+		<div class="panel panel-primary">
+                          <div class="panel-heading">Select division to see or modify schedule </div>
+                          <div class="panel-content">
+                          	<div class="alert alert-block alert-danger fade in" ng-show="Error">
+			<button data-dismiss="alert" class="close close-sm" type="button">
+				<i class="icon-remove"></i>
+			</button>
+			<strong>{{ErrorMessage}}</strong>
+		</div>
+		<div class="alert alert-success fade in" ng-show="Success">
+			<button data-dismiss="alert" class="close close-sm" type="button">
+				<i class="icon-remove"></i>
+			</button>
+			<strong> {{SuccessMessage}} </strong>
 		
-          
-          {{InstituteTreeStructure}}
-          
-          	<h1> Select division to see or modify schedule </h1>
-          		<div class="tree" >
+		</div>
+                          </div>
+                        </div> 	
+                          
+                          	<div class="tree" >
           				<ul>
           				
 				          		<li  ng-repeat="inst in InstituteTreeStructure">
@@ -166,7 +173,7 @@
 				          										<a >{{class.label}}</a>
 				          										<ul>
 				          											<li ng-repeat="div in class.children">
-				          											<a class='divisionSchedule' id='{{div.id'}} ng-click="" href='#'>{{div.label}}</a>
+				          											<a class='divisionSchedule' id='{{div.id'}} ng-click="viewSchedule(div.value);viewName(div.label)" data-toggle="modal" data-target='#myModal'>{{div.label}}</a>
 				          											</li>
 				          										</ul>
 				          									</li>
@@ -177,14 +184,7 @@
 				         	 	</li>
 				    	</ul>
 				</div>
-			          
-	          	</div>
-          	
-          	
-          	<div class="tree" ng-bind-html="structureString">
-          	
-          	 
-          	 
+				
           					 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                   <div class="modal-dialog">
                                       <div class="modal-content">
@@ -196,8 +196,20 @@
 
                                            <!--   <a class="btn btn-success showDivsionsSchedule" ng-click="viewSchedule()">View Schedule</a> -->
                                               <button class="btn btn-warning editDivsionsSchedule"data-dismiss="modal"  type="submit" data-toggle="modal" ng-click="viewSchedule1()">ViewSchedule</button>
-                                             <button class="btn btn-warning editDivsionsSchedule" data-toggle="modal" type="submit"  href="#myModal2">Edit/Add Schedule</button>
+                                             <button class="btn btn-warning editDivsionsSchedule" data-toggle="modal" type="submit"  data-target="#myModal2" ng-click="openFormModal()">Edit/Add Schedule</button>
                                              
+
+                                          </div>
+                                          <div class="modal-footer">
+                                              <button data-dismiss="modal" class="btn btn-default" type="button">Close</button>
+                                             
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              
+                              
+                              
 								                                <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 								                                  <div class="modal-dialog">
 								                                      <div class="modal-content">
@@ -223,12 +235,12 @@
 										                                           <div class="col-lg-10">
 										                                              <input class=" form-control" type="text" ng-model="schedule.string" autocomplete="off" required="required" maxlength="1000"  />
 										                                          </div>
-										                                          
-																				 <div class="form-group">
+										                                          <br>
+																				 <!-- <div class="form-group"> -->
 										                                          <div class="col-lg-offset-2 col-lg-10">
 										                                              <button class="btn btn-primary" type="submit">Update</button>
-										                                                                                      </div>
-										                                      </div>
+										                                          </div>
+										                                      <!-- </div> -->
 										                                         
 																				 </div>
 																				</form>
@@ -242,24 +254,16 @@
 								                                      </div>
 								                                  </div>
 								                              </div>
+                               
+			          
+	      	 
 
-                                          </div>
-                                          <div class="modal-footer">
-                                              <button data-dismiss="modal" class="btn btn-default" type="button">Close</button>
-                                             
-                                          </div>
-                                      </div>
-                                  </div>
-                              </div>
-          	</div>
-          	
-          	      
-          	        <!--  <iframe ng-bind-html="calender" ng-src="{{calender}}" width="800" height="600" frameborder="0" scrolling="no"></iframe>
-          	         <iframe>{{calender}}</iframe> -->
           	          <div ng-bind-html="calender"></div>
-          	          <!-- <div class="tree" ng-bind-html="calender">
-          	          <div id="show_calender" ng-bind-html="calender" class="googleCalendar" style="text-align: center;" > -->
- <!-- <iframe src="https://calendar.google.com/calendar/embed?mode=WEEK&amp;height=600&amp;wkst=1&amp;bgcolor=%23FFFFFF&amp;src=ci5fi0t0u5i8927il2ula0kbgs%40group.calendar.google.com&amp;color=%2329527A&amp;ctz=Asia%2FCalcutta" style="border:solid 1px #777" width="800" height="600" frameborder="0" scrolling="no"></iframe> -->
-
+                          
+                          
+           
+          		
           	          
-          
+          	          
+		
+

@@ -26,7 +26,6 @@
    		<script src="${pageContext.request.contextPath}/app/teacher/home/homeController.js"></script>
    		<script src="${pageContext.request.contextPath}/app/teacher/home/homeCompoent.js"></script>
    		<script src="${pageContext.request.contextPath}/app/teacher/instituteStructure/existingInstituteStructure/existingInstituteStructureController.js"></script>
-   		<script src="${pageContext.request.contextPath}/app/teacher/instituteStructure/existingInstituteStructure/existingInstituteStructureComponent.js"></script>
    		<script src="${pageContext.request.contextPath}/app/teacher/appManger/studentRequest/studentRequestController.js"></script>
    		<script src="${pageContext.request.contextPath}/app/teacher/appManger/studentRequest/studentRequestComponent.js"></script>
    		

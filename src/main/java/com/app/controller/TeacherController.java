@@ -633,20 +633,7 @@ public class TeacherController {
 	        return "Teacher/ModifyInstitueStructure";
 	    }
 	 
-	   /* suraj method*/
-	 @RequestMapping(value="/getInstituteStructure",method=RequestMethod.POST)
-	 @ResponseBody
-	 public String getInstituteStructure(@ModelAttribute("teacher") Teacher teacher,@ModelAttribute("institute") Institute institute)
-	 {
-		 System.out.println("**********this is getInstitueStructure controller**********");	
-		 System.out.println(teacher);
-		 String str=teacherService.InstituteStucture(teacher);
-		 System.out.println(str);
-		 Gson gson=new Gson();
-		 String response=gson.toJson(str);
-		 return response;
-		 
-	 }
+	  
 	 
 	 @RequestMapping(value="/ViewInstitueStructure",method = RequestMethod.GET)  
 	    public String  ViewInstitueStructure(Model model,@ModelAttribute("teacher") Teacher teacher,@ModelAttribute("institute") Institute institute) {  
@@ -692,103 +679,38 @@ public class TeacherController {
 		 return "Teacher/changePassword";
 	 }
  
-	 @RequestMapping(value="/scheduletree",method = RequestMethod.GET)  
-	    public String  scheduletree(Model model,@ModelAttribute("teacher") Teacher teacher,@ModelAttribute("institute") Institute institute) {  
-	    	
-	    	System.out.println("**********this is scheduletree controller**********");
-	    	String str=teacherService.InstituteStuctureForSchedule(teacher);
-	    
-			Schedule schedule= new Schedule();
+	 
+	 
+	 
+	 @RequestMapping(value = "/GetCalender/{divId}", method = RequestMethod.POST)
+	 @ResponseBody
+	   	public String GetCalender(@PathVariable("divId") int id,@ModelAttribute("teacher") Teacher teacher ){
+		
+			System.out.println("**********from GetCalender/{divId} controller and division id is :"+id +"**********");		
+			Division d=divisionService.find(id);
+			System.out.println("division is "+d);
+			
+			String result="";
+			try {
+				Schedule schedule= scheduleService.fordivision(id);
+				System.out.println(schedule);
+				result="{\"schedule\":\" "+schedule.getString()+" \",\"status\":\"success\"}";
 					
-			 model.addAttribute("structure", str);
-			 model.addAttribute("Schedule", schedule);
-			 
-			
-	        return "Teacher/InstStructForSchedule";
-	    }
-	 
-	 @RequestMapping(value="/scheduletreeJSON",method = RequestMethod.GET) 
-	 @ResponseBody
-	    public String  scheduletreeJSON(Model model,@ModelAttribute("teacher") Teacher teacher,@ModelAttribute("institute") Institute institute) {  
-	    	
-	    	System.out.println("**********this is scheduletreeJSON controller**********");
-	    	String schedule=teacherService.InstituteStuctureForSchedule(teacher);
-
-	        return gson.toJson(schedule);
-	    }
-	 
-	 
-	 @RequestMapping(value = "/GetCalender", method = RequestMethod.POST)
-	 @ResponseBody
-	   	public String GetCalender(@RequestBody int id,@ModelAttribute("teacher") Teacher teacher ){
-		// int id=1;
-		  // System.out.println(teacher.getInstitute().getId());
-			System.out.println("**********from GetCalender controller and division id is :"+id +"**********"+teacher.getInstitute().getId());		
-			Division d=divisionService.find(id);
-			System.out.println("division is "+d);
-			Schedule schedule= scheduleService.fordivision(id);
-			
-			System.out.println(schedule);
-			String result="";
-			try {
-				result=schedule.getString();
-				
-				
 			}catch(Exception e)
 			{
-				result="<div class='alert alert-block alert-danger fade in'>";
-				result+="<button data-dismiss='alert' class='close close-sm' type='button'>";
-				result+="<i class='icon-remove'></i>";
-				result+="</button>";
-				result+="<strong>No Calender Saved !</strong> Please save calender for division.";
-				result+="</div> ";
+				result="{\"status\":\"fail\"}";
 			}		
-				
 			System.out.println(result);
-			Gson gson=new Gson();
-			String response=gson.toJson(result);
-			System.out.println(response);
-			
-		return response;
-	 }
-
-	/* @RequestMapping(value = "/GetCalender/{id}", method = RequestMethod.GET)
-	 @ResponseBody
-	   	public String GetCalender( @PathVariable("id") int id,@ModelAttribute("teacher") Teacher teacher ){
-		 
-		   System.out.println(teacher.getInstitute().getId());
-			System.out.println("**********from GetCalender controller and division id is :"+id +"**********"+teacher.getInstitute().getId());		
-			Division d=divisionService.find(id);
-			System.out.println("division is "+d);
-			Schedule schedule= scheduleService.fordivision(id);
-			
-			System.out.println(schedule);
-			String result="";
-			try {
-				result=schedule.getString();
-				
-				
-			}catch(Exception e)
-			{
-				result="<div class='alert alert-block alert-danger fade in'>";
-				result+="<button data-dismiss='alert' class='close close-sm' type='button'>";
-				result+="<i class='icon-remove'></i>";
-				result+="</button>";
-				result+="<strong>No Calender Saved !</strong> Please save calender for division.";
-				result+="</div> ";
-			}		
-				
-			System.out.println(result);
-			
-			
 		return result;
 	 }
-*/
+
+	
 	 
 	 @RequestMapping(value="updateDivisionScheduleMethod",method=RequestMethod.POST)
-	 public ResponseEntity updateDivisionScheduleMethod(Model model,@RequestBody Schedule schedule,@ModelAttribute("teacher") Teacher teacher)
+	 @ResponseBody
+	 public String  updateDivisionScheduleMethod(Model model,@RequestBody Schedule schedule,@ModelAttribute("teacher") Teacher teacher)
 	 {
-		 ResponseEntity output;
+		 String output;
 		 System.out.println("**********this is updateDivisionScheduleMethod controller**********");
 	    	
 	    	System.out.println(schedule);
@@ -811,7 +733,7 @@ public class TeacherController {
 	    		scheduleService.update(s1);
 	    		System.out.println("------------------------schedule is updated------------------------- ");
 	    		//model.addAttribute("SuccessMessage", "Schedule Updated for the division");
-	    		output=new ResponseEntity(HttpStatus.OK);
+	    		output="{\"action\":\"Schedule is updated for the division \",\"status\":\"success\"}";
 	    	
 	    	}catch(Exception e)
 	    	{
@@ -831,106 +753,23 @@ public class TeacherController {
 	    			
 	    			System.out.println("------------------------schedule is saved------------------------- ");
 	    			// model.addAttribute("SuccessMessage", "Schedule created for the  division");
-	    			output=new ResponseEntity(HttpStatus.OK);
+	    			output="{\"action\":\"Failed to created/update Schedule for the division \",\"status\":\"fail\"}";
 	    			
 	    		}catch(Exception e1)
 	    		{
 	    			
 	    		// model.addAttribute("ErrorMessage", "error in saving Schedule for the division");
 	    		 System.out.println("------------------------error in schedule creation------------------------- ");
-	    		 output=new ResponseEntity(HttpStatus.FAILED_DEPENDENCY);
+	    		 
+	    		 output="{\"action\":\"Schedule is created for the division \",\"status\":\"success\"}";
 	    		}
 	    		
 	    	}
-	    	
-			Schedule schedule2= new Schedule();
-			String str=teacherService.InstituteStuctureForSchedule(teacher);
-					
-			 model.addAttribute("structure", str);
-			 model.addAttribute("Schedule", schedule2);
 			 return output;
 	    
 	 }
-	 @RequestMapping(value="/updateDivisionSchedule",method = RequestMethod.POST)  
-	    public String  updateDivisionSchedule(Model model,@RequestBody Schedule schedule,@ModelAttribute("teacher") Teacher teacher) {  
-	    	
-	    	System.out.println("**********this is updateDivisionSchedule controller**********");
-	    	
-	    	/*System.out.println(schedule);
-	    	// if the schedule already exist update it 
-	    	try { 
-	    		
-	    		
-	    		// get the id of the existing schedule 
-	    		Schedule s1=scheduleService.fordivision(schedule.getDivision().getId());
-	    		s1.setString(schedule.getString());
-	    		
-	    		System.out.println("we are updating the record :"+s1);
-	    		// update the variable for the calender string 
-	    		scheduleService.update(s1);
-	    		System.out.println("------------------------schedule is updated------------------------- ");
-	    		model.addAttribute("SuccessMessage", "Schedule Updated for the division");
-	    	
-	    	}catch(Exception e)
-	    	{
-	    		
-	    		System.out.println("shcedule do not exist for this division creating new ");
-	    		try {
-	    			
-	    			System.out.println("finding the division of the schedule with the id :"+schedule.getDivision().getId());
-	    			
-	    			Division d=divisionService.find(schedule.getDivision().getId());
-	    			
-	    			System.out.println("------devision is :"+d);
-	    			schedule.setDivision(d);
-	    			System.out.println("we are going to create the new shcedule");
-	    			System.out.println("we aer about to save the :"+schedule );
-	    			scheduleService.create(schedule);
-	    			
-	    			System.out.println("------------------------schedule is saved------------------------- ");
-	    			 model.addAttribute("SuccessMessage", "Schedule created for the  division");
-	    			
-	    		}catch(Exception e1)
-	    		{
-	    			
-	    		 model.addAttribute("ErrorMessage", "error in saving Schedule for the division");
-	    		 System.out.println("------------------------error in schedule creation------------------------- ");
-	    		}
-	    	}
-	    	
-			Schedule schedule2= new Schedule();
-			String str=teacherService.InstituteStuctureForSchedule(teacher);
-					
-			 model.addAttribute("structure", str);
-			 model.addAttribute("Schedule", schedule2);
-	    */
-			
-	        return "Teacher/InstStructForSchedule";
-	    }
+	 
 
-	 @RequestMapping(value="/updateDivisionScheduleService",method = RequestMethod.POST)  
-	    public String  updateDivisionScheduleService(@RequestBody Schedule schedule, HttpServletRequest request,@ModelAttribute("teacher") Teacher teacher) {  
-	    	
-	    	System.out.println("**********this is updateDivisionScheduleService controller**********");
-	    	
-	    	String result="";
-	    	
-	    	try {
-	    		
-	    	scheduleService.update(schedule);
-	    	System.out.println("shcedule updated successfully");
-	    	result="shcedule updated successfully";
-	    	
-	    	
-	    	}catch(Exception e)
-	    	{
-	    		System.out.println("error in chedule update");
-	    		result="error in updating shcedule";
-	    		  		
-	    	}
-	    				
-	        return result;
-	    }
 
 	 @RequestMapping(value = "/TeacherHome", method = RequestMethod.GET)
 		public String TeacherHome(@ModelAttribute("teacher") Teacher teacher) {		
