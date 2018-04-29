@@ -48,33 +48,7 @@
 					$scope.selectedstudentList = [];
 					//this.inst=[{"label":"Vidya", "value":50,"type":"Institute","children": [{"label":"Pune", "value":15,"type":"Branch","children":[{"label":"10th ", "value":18,"type":"Class","children":[{"label":"A", "value":19,"type":"Division"},{"label":"B", "value":20,"type":"Division"},{"label":"C", "value":21,"type":"Division"}]},{"label":"11th", "value":19,"type":"Class","children":[{"label":"PCM", "value":22,"type":"Division","children":[{"label":"English", "value":1,"type":"Subject","SubjectId":1},{"label":"Marathi", "value":2,"type":"Subject","SubjectId":2}]},{"label":"PCB", "value":23,"type":"Division","children":[{"label":"English", "value":3,"type":"Subject","SubjectId":1}]}]}]},{"label":"Mumbai", "value":16,"type":"Branch"}]}];
 
-					/* var o = [{"label":"Vidya", "value":50,"type":"Institute","children": [{"label":"Pune", "value":15,"type":"Branch","children":[{"label":"10th ", "value":18,"type":"Class","children":[{"label":"A", "value":19,"type":"Division"},{"label":"B", "value":20,"type":"Division"},{"label":"C", "value":21,"type":"Division"}]},{"label":"11th", "value":19,"type":"Class","children":[{"label":"PCM", "value":22,"type":"Division","children":[{"label":"English", "value":1,"type":"Subject","SubjectId":1},{"label":"Marathi", "value":2,"type":"Subject","SubjectId":2}]},{"label":"PCB", "value":23,"type":"Division","children":[{"label":"English", "value":3,"type":"Subject","SubjectId":1}]}]}]},{"label":"Mumbai", "value":16,"type":"Branch"}]}];
-
-						//called with every property and its value
-						function process(key,value) {
-						    console.log(key + " : "+value);
-						}
-						
-						function traverse(o,func) {
-						    for (var i in o) {
-						    	
-						        func.apply(this,[i,o[i]]);
-						        
-						        if (o[i] !== null && typeof(o[i])=="object") {
-						        	/* if(o[i].type=="Subject" )
-						        		{
-						        		$scope.selectedSubject.push(o[i]);
-						        		} 
-						            //going one step down in the object tree!!
-						            traverse(o[i],func);
-						        }
-						    }
-						} 
-
-						//that's all... no magic, no bloated framework
-						traverse(o,process);
-						
-					 */
+					
 					//------------------------------Tree Traverlsal and Add the selected Items in respective array ----------------------------------------------------- 		   				
 					$scope.TreeTraversalForSelectedItems = function(
 							o) {
@@ -142,27 +116,20 @@
 						$scope.SubjectDivCompIDList = [];
 
 						// call tree traversal function to get the selected itmes in arrays
-						$scope
-								.TreeTraversalForSelectedItems(tree);
+						$scope.TreeTraversalForSelectedItems(tree);
 
-						console
-								.log("Total Institute Selected are  "
+						console.log("Total Institute Selected are  "
 										+ $scope.selectedInstitute.length);
-						console
-								.log("Total Branch Selected are  "
+						console.log("Total Branch Selected are  "
 										+ $scope.selectedBranch.length);
-						console
-								.log("Total Class Selected are  "
+						console.log("Total Class Selected are  "
 										+ $scope.selectedClass.length);
-						console
-								.log("Total Division Selected are  "
+						console.log("Total Division Selected are  "
 										+ $scope.selectedDivision.length);
-						console
-								.log("Total Subjects Selected are  "
+						console.log("Total Subjects Selected are  "
 										+ $scope.selectedSubject.length);
 						console.log($scope.selectedSubject);
-						console
-								.log("*************************************************************************");
+						console.log("*************************************************************************");
 
 					}
 
@@ -176,8 +143,7 @@
 							.then(
 									function(response) {
 										// if success       	
-										console
-												.log("WE got exams of this institute ");
+										console.log("WE got exams of this institute ");
 										$scope.examList = response.data;
 
 										/* for( i=$scope.examList.length-1; i>=0; i--) {
@@ -187,8 +153,7 @@
 									function(data) { // optional
 										// failed
 
-										console
-												.log(" failed to get the exam of institute");
+										console.log(" failed to get the exam of institute");
 									});
 
 					//------------------------------Get the Exam Modes -----------------------------------------------------------------------
@@ -199,19 +164,12 @@
 							.then(
 									function(response) {
 										// if success       	
-										console
-												.log("WE got examsModes");
+										console.log("WE got examsModes");
 										$scope.examMode = response.data;
-
-										/* for( i=$scope.examMode.length-1; i>=0; i--) {
-										        console.log($scope.examMode[i].id + $scope.examMode[i].modeName);    	
-											}       */
 									},
 									function(data) { // optional
 										// failed
-
-										console
-												.log(" failed to get the examMode");
+										console.log(" failed to get the examMode");
 									});
 
 					//------------------------------Get the Exam Types -----------------------------------------------------------------------
@@ -222,19 +180,13 @@
 							.then(
 									function(response) {
 										// if success       	
-										console
-												.log("WE got examType");
+										console.log("WE got examType");
 										$scope.examType = response.data;
-
-										/* for( i=$scope.examType.length-1; i>=0; i--) {
-										        console.log($scope.examType[i].id + $scope.examType[i].typeName);    	
-											}    */
 									},
 									function(data) { // optional
 										// failed
 
-										console
-												.log(" failed to get the examType");
+										console.log(" failed to get the examType");
 									});
 
 					//------------------------------Get Subject Tree Struct -----------------------------------------------------------------------	         
@@ -249,18 +201,14 @@
 							.then(
 									function(response) {
 										// if success       	
-										console
-												.log("WE got SubjectTreeStruct");
-										console
-												.log(response.data);
+										console.log("WE got SubjectTreeStruct");
+										console.log(response.data);
 										$scope.InstTreeStructureWithSubject = response.data;
-
 									},
 									function(data) { // optional
 										// failed
 
-										console
-												.log(" failed to get the SubjectTreeStruct");
+										console.log(" failed to get the SubjectTreeStruct");
 									});
 
 					//------------------------------Create Exam Function-----------------------------------------------------------------------	   		
@@ -295,8 +243,7 @@
 								.then(
 										function(response) {
 											// if success       	
-											console
-													.log("succcess  var data=JSON.stringify($scope.selectedstudentList);");
+											console.log("succcess  var data=JSON.stringify($scope.selectedstudentList);");
 
 											$scope.examList
 													.push(response.data); //add created exam to exam list

@@ -19,10 +19,12 @@
    		<!-- <script data-require="ui-bootstrap@*" data-semver="0.12.1" src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.12.1.min.js"></script> -->
    		<script src="${pageContext.request.contextPath}/app/ui-bootstrap-tpls-2.5.0.min.js"></script>
  		
+ 		
  		<script src="${pageContext.request.contextPath}/app/teacher/app.js"></script>
  		
 		
 		<script src="${pageContext.request.contextPath}/app/commanService/shairedDataService.js"></script>
+		<script src="${pageContext.request.contextPath}/app/commanService/forResolveService.js"></script>			
    		<script src="${pageContext.request.contextPath}/app/teacher/home/homeController.js"></script>
    		<script src="${pageContext.request.contextPath}/app/teacher/home/homeCompoent.js"></script>
    		<script src="${pageContext.request.contextPath}/app/teacher/instituteStructure/existingInstituteStructure/existingInstituteStructureController.js"></script>
