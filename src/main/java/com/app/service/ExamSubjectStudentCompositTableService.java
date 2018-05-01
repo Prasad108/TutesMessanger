@@ -20,5 +20,7 @@ public interface ExamSubjectStudentCompositTableService {
 	public ExamSubjectStudentCompositTable findByExamSubDivId(int examId,int subDivId);
 	public void deletStudentFromExam(int StudId,int subDivId,int examId);
 	public String examSubjectStudentResult (int ExamId,int SubdivId);
+	public void deletSubjectFromExam (int ExamId,int SubdivId);
+
 	
 }

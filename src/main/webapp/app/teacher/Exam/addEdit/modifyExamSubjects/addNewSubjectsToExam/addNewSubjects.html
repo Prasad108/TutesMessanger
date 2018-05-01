@@ -1,0 +1,97 @@
+<section class="panel"  ng-show="ShowTreeStructAddNewSubjetcs || ShowAddSubjectTable || AddSubjectMessages">
+			<div class="panel-heading">
+                  <h2><strong>Add New Subjects to Exam</strong></h2>
+           </div>
+       <div class="panel-body">	
+       
+     	<div id="ShowTreeStrct" ng-show="ShowTreeStructAddNewSubjetcs" >													
+				<div>Search <input type="text" ng-model="addSubSearch" /></div>											
+				  	<div
+					    ivh-treeview="InstTreeStructureWithSubjectNotInExam"
+					    ivh-treeview-filter="addSubSearch"
+						ivh-treeview-validate="true"
+					    ivh-treeview-default-selected-state="false"
+					    ivh-treeview-on-cb-change="OnSelectCallback(ivhNode, ivhIsSelected, ivhTree)"
+						>
+				  	</div>
+				  	
+				<div class="alert alert-warning fade in" ng-show="!selectedSubject.length">
+				
+					<button data-dismiss="alert" class="close close-sm" type="button"><i class="icon-remove"></i></button>
+					<strong>Select Subjects!</strong> To add new Subjects to it.		
+				</div>
+				
+				<button  ng-show="selectedSubject.length>0" class="btn btn-primary  btn-sm" ng-click="ShowSubjectTable();datepickerActivate()">Add Subjects</button>
+
+         </div>
+                    
+        <div ng-show="ShowAddSubjectTable || AddSubjectMessages">      
+        		<div ng-show="AddSubjectMessages">      
+                    <div class="alert alert-info fade in" ng-show="SubjectAddedSuccess">
+                     <button data-dismiss="alert" class="close close-sm" type="button"><i class="icon-remove"></i></button>
+                     <strong>Subjects Successfully added to Exam</strong> 
+                 	</div>    
+                 	
+                 	 <div class="alert alert-block alert-danger fade in "  for="inputSuccess" ng-show="SubjectAddedfailed">
+                               <button data-dismiss="alert" class="close close-sm" type="button"><i class="icon-remove"></i></button>
+                            	 <strong>Failed to add Subjects  to Exam</strong>
+                    </div>	
+                </div>		
+         <div class="table-responsive" ng-show="ShowAddSubjectTable" ng-mouseover="datepickerActivate()">
+                  <button type="button" class="btn btn-info" ng-click="BackToShowTreeAddNewSubjects()"> < Add Remove subjects from Exam</button>
+                         			
+                   <form class="form-inline" role="form" name="AddSubjectToExamForm">
+                         			
+	                			<table class="table">
+	                				<tr>
+	                					<th>Selected Subject</th>
+	                					<th>Out Of Marks</th>
+	                					<th>Passing Marks</th>
+	                					<th>Duration in Min</th>
+	                					<th>Date</th>
+	                				</tr>
+	                					<tr ng-repeat="subject in selectedSubject" >
+	                							<td><ts-subject-info subid="subject."></ts-subject-info>
+	                							{{subject.label}}
+	                							</td>
+	                							<td> 
+													      <div class="form-group ">
+									                                   <input type="number" ng-model="subject.OutOF" ng-change="subject.KeepSameOutOF && KeepSameOutOFFunction()" class="form-control" id="exampleInputEmail2" placeholder="Out Of Marks" required="required">
+									                                 	<div ng-if="$index==0" ng-show="selectedSubject.length>1"><input ng-model="subject.KeepSameOutOF" ng-change="subject.KeepSameOutOF && KeepSameOutOFFunction()"  class="checkbox-inline" type="checkbox" id="inlineCheckbox1" value="option1"><!-- //--KSA  Keep same for ALL-->
+									                                 		 Keep same for all
+									                                 	</div>                      
+									                               </div>
+									            </td>
+									             <td>
+									                              <div class="form-group">
+									                                  <input type="number" ng-model="subject.PassingMarks" ng-change="subject.KeepSamePassingMarks && KeepSamePassingMarksFunction()" class="form-control" ng-class="{error : subject.PassingMarks>subject.OutOF }"  attrs="{data-tip= ' Passing are greater than Out Of Marks ': subject.PassingMarks>subject.OutOF }" id="exampleInputPassword2" placeholder="Passing Marks" required="required">
+									                                  <div ng-if="$index==0" ng-show="selectedSubject.length>1"><input ng-model="subject.KeepSamePassingMarks" ng-change="subject.KeepSamePassingMarks && KeepSamePassingMarksFunction()"  class="checkbox-inline" type="checkbox" id="inlineCheckbox1" value="option1">
+									                                		 Keep same for all
+									                                	</div>
+									                              </div>
+									               </td>
+									                <td>
+									                              <div class="form-group">
+									                                  <input type="number" ng-model="subject.DurationInMinutes" ng-change="subject.KeepSameDurationInMinutes && KeepSameDurationInMinutesFunction()" class="form-control" id="exampleInputPassword2" placeholder="Duration in Minutes" required="required">
+									                                  <div ng-if="$index==0" ng-show="selectedSubject.length>1"><input ng-model="subject.KeepSameDurationInMinutes" ng-change="subject.KeepSameDurationInMinutes && KeepSameDurationInMinutesFunction()" class="checkbox-inline" type="checkbox" id="inlineCheckbox1" value="option1">
+									                                		 Keep same for all
+									                                	</div>
+									                              </div>
+												 </td>
+												  <td>
+									                              <div class="form-group">
+									                                  <input type="text" ng-model="subject.ExamDate"  ng-change="subject.KeepSameExamDate && KeepSameExamDateFucntion()" class="form-control datepicker" id="datepicker-topleft-forreal" placeholder="Date" required="required" >
+									                                  <div ng-if="$index==0" ng-show="selectedSubject.length>1"><input ng-model="subject.KeepSameExamDate" ng-change="subject.KeepSameExamDate && KeepSameExamDateFucntion()"  class="checkbox-inline" type="checkbox" id="inlineCheckbox1" value="option1">
+									                                		 Keep same for all 
+									                                	</div>
+									                              </div>
+												 </td>
+	                						</tr>
+	                				
+	                				</table>
+                         			<button type="submit" id="submitBtnAddSub" class="btn btn-primary" ng-click="AddSubjectToExamForm.$valid && ValidateOutOFandPassing() &&  AddSubjectToExam()">Save Subjects</button>
+                         	</form>
+                     </div> 
+                  </div>               	                 
+              </div>
+</section>

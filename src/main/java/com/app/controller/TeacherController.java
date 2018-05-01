@@ -2335,6 +2335,61 @@ public class TeacherController {
 				 return JSON;
 			 }
 		 
+		 @RequestMapping(value="/TreeStructureSujectsNotInExam/{InstId}/{ExamId}", method=RequestMethod.POST)
+			@ResponseBody
+			public String TreeStructureSujectsNotInExam(@PathVariable("InstId") int InstId,@PathVariable("ExamId") int ExamId)
+			 {
+				 System.out.println("**********inside TreeStructureSujectsNotInExam/{InstId}/{ExamId} controller**********");	
+						
+				 String JSON=instituteService.TreeStructureSujectsNotInExam(InstId,ExamId);	
+					System.out.println(JSON);
+				 return JSON;
+			 }
+		 
+		 
+		 @RequestMapping(value="/TreeStructureSujectsOfExam/{InstId}/{ExamId}", method=RequestMethod.POST)
+			@ResponseBody
+			public String TreeStructureSujectsOfExam(@PathVariable("InstId") int InstId,@PathVariable("ExamId") int ExamId)
+			 {
+				 System.out.println("**********inside TreeStructureSujectsOfExam/{InstId}/{ExamId} controller**********");	
+						
+				 String JSON=instituteService.TreeStructureSujectsOFExam(InstId,ExamId);	
+					System.out.println(JSON);
+				 return JSON;
+			 }
+		 
+		 
+		 @RequestMapping(value="/DeleteSubjectsFromExam/{ExamId}", method=RequestMethod.POST)
+			@ResponseBody
+			public String DeleteSubjectsFromExam(@RequestBody List<Integer> subdivIds,@PathVariable("ExamId") int ExamId)
+			 {
+				 System.out.println("**********inside DeleteSubjectsFromExam/{ExamId} controller**********");	
+				 Integer count=0;
+				 StringBuffer sb=new StringBuffer();  
+				 sb.append("\"FailedToDelet\":[");
+				 for(Integer subDivId:subdivIds) {
+					 try {
+						 examSubStudCompService.deletSubjectFromExam(ExamId, subDivId);
+						 count++;
+					 }
+					 catch(Exception e)
+					 {
+						 sb.append(subDivId+",");
+					 }
+				 }
+				 sb.append("]");
+				 
+				if(sb.lastIndexOf(",")!=-1)
+				{
+					sb.deleteCharAt(sb.lastIndexOf(","));
+				};
+				
+				 String JSON="{\"status\":\"success\",\"SuccessCount\":"+count+","+sb.toString()+"}";	
+				 System.out.println(JSON);
+				 return JSON;
+			 }
+		
+		 
 	  
 		 
 }

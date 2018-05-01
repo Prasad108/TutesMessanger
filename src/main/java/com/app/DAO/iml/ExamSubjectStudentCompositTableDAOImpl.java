@@ -97,7 +97,7 @@ public class ExamSubjectStudentCompositTableDAOImpl implements ExamSubjectStuden
 		 Query query=currentSession().createQuery("delete from ExamSubjectStudentCompositTable sdc where sdc.exam.id = :examId and sdc.subjectDivComposit.id = :subDivId and sdc.student.id =:StudId");
 		 query.setParameter("examId",examId);
 		 query.setParameter("subDivId",subDivId);
-		 query.setParameter("StudId",StudId);
+		
 		 query.executeUpdate();
 	}
 
@@ -128,6 +128,16 @@ public class ExamSubjectStudentCompositTableDAOImpl implements ExamSubjectStuden
         
         sb.append("]");
        return sb.toString();
+		
+	}
+
+	@Override
+	@Transactional
+	public void deletSubjectFromExam(int ExamId, int SubdivId) {
+		 Query query=currentSession().createQuery("delete from ExamSubjectStudentCompositTable sdc where sdc.exam.id = :examId and sdc.subjectDivComposit.id = :subDivId");
+		 query.setParameter("examId",ExamId);
+		 query.setParameter("subDivId",SubdivId);
+		 query.executeUpdate();
 		
 	}
 

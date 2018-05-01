@@ -76,4 +76,9 @@ public class ExamSubjectStudentCompositTableServiceImpl implements ExamSubjectSt
 		return examSubStudCompDAO.examSubjectStudentResult(ExamId, SubdivId);
 	}
 
+	@Override
+	public void deletSubjectFromExam(int ExamId, int SubdivId) {
+		 examSubStudCompDAO.deletSubjectFromExam(ExamId, SubdivId);
+	}
+
 }

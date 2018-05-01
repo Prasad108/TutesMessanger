@@ -48,6 +48,14 @@
  		<script src="${pageContext.request.contextPath}/app/teacher/SNS/sns.js"></script>
  		<script src="${pageContext.request.contextPath}/app/teacher/result/examSubjects/examSubjects.js"></script>
  		<script src="${pageContext.request.contextPath}/app/teacher/result/examSubjectStudents/examSubjectStudentController.js"></script>
+ 		<script src="${pageContext.request.contextPath}/app/teacher/Exam/addEdit/ExistingExams/ExistingExamsComponent.js"></script>
+ 		<script src="${pageContext.request.contextPath}/app/teacher/Exam/addEdit/createExam/createExamDirective.js"></script>
+ 		<script src="${pageContext.request.contextPath}/app/teacher/Exam/addEdit/modifyExamSubjects/modifyExamSubjectsDirective.js"></script>
+ 		<script src="${pageContext.request.contextPath}/app/teacher/Exam/addEdit/addRemoveStudent/addRemoveStudentDirective.js"></script>
+ 		<script src="${pageContext.request.contextPath}/app/teacher/Exam/addEdit/modifyExamSubjects/addNewSubjectsToExam/addNewSubjects.js"></script>
+ 		<script src="${pageContext.request.contextPath}/app/teacher/Exam/addEdit/modifyExamSubjects/deleteSubjectsFromExam/deleteSubjects.js"></script>
+ 		
+ 		
  		<script src="${pageContext.request.contextPath}/app/teacher/paginationTest/pagination.js"></script>
    			
    		   		<jsp:include page="/WEB-INF/jsp/Teacher/components/angular.jsp" /> 

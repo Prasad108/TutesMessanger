@@ -1,10 +1,10 @@
 CREATE DATABASE  IF NOT EXISTS `tutesmessanger` /*!40100 DEFAULT CHARACTER SET latin1 */;
 USE `tutesmessanger`;
--- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.17, for macos10.12 (x86_64)
 --
 -- Host: localhost    Database: tutesmessanger
 -- ------------------------------------------------------
--- Server version	5.7.21-log
+-- Server version	5.7.21
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -127,7 +127,7 @@ CREATE TABLE `exam` (
   CONSTRAINT `exam_mode foreign key` FOREIGN KEY (`exam_mode_id`) REFERENCES `exam_mode` (`id`),
   CONSTRAINT `exam_type foreign key` FOREIGN KEY (`exam_type_id`) REFERENCES `exam_type` (`id`),
   CONSTRAINT `institute_foreign_key` FOREIGN KEY (`insitute_id`) REFERENCES `institute` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=122 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=125 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -136,7 +136,7 @@ CREATE TABLE `exam` (
 
 LOCK TABLES `exam` WRITE;
 /*!40000 ALTER TABLE `exam` DISABLE KEYS */;
-INSERT INTO `exam` VALUES (38,'Unit Test 2017',100,40,1,1,3,50),(119,'Final 2018',200,50,0,2,2,50),(120,'Final 2017',200,80,0,3,2,50),(121,'demoedit',50,25,0,1,1,50);
+INSERT INTO `exam` VALUES (38,'Unit Test 2018',100,40,1,1,3,50),(119,'Final 2018',200,50,0,2,2,50),(120,'Final 2017',200,80,0,3,2,50);
 /*!40000 ALTER TABLE `exam` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -191,7 +191,7 @@ CREATE TABLE `exam_subject_student_composit_table` (
   CONSTRAINT `exam` FOREIGN KEY (`exam_id`) REFERENCES `exam` (`id`),
   CONSTRAINT `student foreign key` FOREIGN KEY (`student_id`) REFERENCES `student` (`id`),
   CONSTRAINT `subject_div_id foreign key` FOREIGN KEY (`subject_div_id`) REFERENCES `subject_div_composit` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=87 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -200,7 +200,6 @@ CREATE TABLE `exam_subject_student_composit_table` (
 
 LOCK TABLES `exam_subject_student_composit_table` WRITE;
 /*!40000 ALTER TABLE `exam_subject_student_composit_table` DISABLE KEYS */;
-INSERT INTO `exam_subject_student_composit_table` VALUES (1,NULL,38,30,6,50,20,NULL),(44,20,38,NULL,6,NULL,NULL,NULL),(45,NULL,121,60,6,50,25,'2018-02-03'),(46,NULL,121,60,7,50,25,'2018-02-03');
 /*!40000 ALTER TABLE `exam_subject_student_composit_table` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -526,7 +525,7 @@ CREATE TABLE `result` (
   KEY `FK6x12uwgitmtjgm503wyiofkxf` (`exam_subject_student_id`),
   CONSTRAINT `FK6x12uwgitmtjgm503wyiofkxf` FOREIGN KEY (`exam_subject_student_id`) REFERENCES `exam_subject_student_composit_table` (`id`),
   CONSTRAINT `exam_subject_student foreign key` FOREIGN KEY (`exam_subject_student_id`) REFERENCES `exam_subject_student_composit_table` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -578,7 +577,7 @@ CREATE TABLE `schedule` (
   UNIQUE KEY `UKdwsnwm45935druiyn7l2rb9qx` (`division`),
   CONSTRAINT `FKsn3hd79992f4c761tx84ms4v7` FOREIGN KEY (`division`) REFERENCES `division` (`id`),
   CONSTRAINT `division foreign kry` FOREIGN KEY (`division`) REFERENCES `division` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -587,7 +586,7 @@ CREATE TABLE `schedule` (
 
 LOCK TABLES `schedule` WRITE;
 /*!40000 ALTER TABLE `schedule` DISABLE KEYS */;
-INSERT INTO `schedule` VALUES (1,22,'<iframe src=\'https://calendar.google.com/calendar/embed?showPrint=0&amp;showCalendars=0&amp;showTz=0&amp;height=600&amp;wkst=2&amp;bgcolor=%236666cc&amp;src=ci5fi0t0u5i8927il2ula0kbgs%40group.calendar.google.com&amp;color=%2329527A&amp;ctz=Asia%2FCalcutta\' style=\"border:solid 1px #777\" width=\"800\" height=\"600\" frameborder=\"0\" scrolling=\"no\"></iframe>'),(2,19,'<iframe src=\'https://calendar.google.com/calendar/embed?mode=WEEK&amp;height=600&amp;wkst=2&amp;bgcolor=%23FFFFFF&amp;src=ci5fi0t0u5i8927il2ula0kbgs%40group.calendar.google.com&amp;color=%2329527A&amp;ctz=Asia%2FCalcutta\' style=\"border:solid 1px #777\" width=\"800\" height=\"600\" frameborder=\"0\" scrolling=\"no\"></iframe>'),(3,20,'<iframe src=\'https://calendar.google.com/calendar/embed?showPrint=0&amp;showCalendars=0&amp;showTz=0&amp;mode=AGENDA&amp;height=600&amp;wkst=2&amp;bgcolor=%23ff99ff&amp;src=ci5fi0t0u5i8927il2ula0kbgs%40group.calendar.google.com&amp;color=%2329527A&amp;ctz=Asia%2FCalcutta\' style=\"border:solid 1px #777\" width=\"800\" height=\"600\" frameborder=\"0\" scrolling=\"no\"></iframe>');
+INSERT INTO `schedule` VALUES (1,22,'<iframe src=\'https://calendar.google.com/calendar/embed?height=600&amp;wkst=2&amp;bgcolor=%23FFFFFF&amp;src=ci5fi0t0u5i8927il2ula0kbgs%40group.calendar.google.com&amp;color=%2329527A&amp;ctz=Asia%2FCalcutta\' style=\'border-width:0\' width=\'800\' height=\'600\' frameborder=\'0\' scrolling=\'no\'></iframe>'),(2,19,'<iframe src=\'https://calendar.google.com/calendar/embed?showCalendars=0&amp;mode=WEEK&amp;height=600&amp;wkst=1&amp;bgcolor=%23FFFFFF&amp;src=ci5fi0t0u5i8927il2ula0kbgs%40group.calendar.google.com&amp;color=%2329527A&amp;ctz=Asia%2FCalcutta\' style=\'border-width:0\' width=\'800\' height=\'600\' frameborder=\'0\' scrolling=\'no\'></iframe>'),(3,20,'<iframe src=\'https://calendar.google.com/calendar/embed?showCalendars=0&amp;mode=WEEK&amp;height=600&amp;wkst=1&amp;bgcolor=%23FFFFFF&amp;src=ci5fi0t0u5i8927il2ula0kbgs%40group.calendar.google.com&amp;color=%2329527A&amp;ctz=Asia%2FCalcutta\' style=\'border-width:0\' width=\'800\' height=\'600\' frameborder=\'0\' scrolling=\'no\'></iframe>'),(4,23,'<iframe src=\'https://calendar.google.com/calendar/embed?mode=AGENDA&amp;height=600&amp;wkst=1&amp;bgcolor=%23FFFFFF&amp;src=ci5fi0t0u5i8927il2ula0kbgs%40group.calendar.google.com&amp;color=%2329527A&amp;ctz=Asia%2FCalcutta\' style=\'border-width:0\' width=\'800\' height=\'600\' frameborder=\'0\' scrolling=\'no\'></iframe>');
 /*!40000 ALTER TABLE `schedule` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -631,7 +630,7 @@ CREATE TABLE `student` (
 
 LOCK TABLES `student` WRITE;
 /*!40000 ALTER TABLE `student` DISABLE KEYS */;
-INSERT INTO `student` VALUES (20,103,'sdfas','dfsdf','asdf',29,'9856321470','sadf@sadfas.co',50,NULL),(21,104,'Prasad','Ashok','dukale',30,'9385620399','pdukale9@gmail.com',50,19),(23,111,'chintu ','Pintu','Zintu',32,'9658743210','abcd@gmail.com',50,19),(24,112,'Dipak ','Vishnu','Sutar',33,'9657841230','dipak@gmail.com',50,19),(25,113,'Nayan','Bajirao','Patil',34,'7845456932','nayan@gmail.com',50,19),(26,114,'Arpit','Mahadev','sharma',35,'9658742310','arpit@gmail.com',50,19),(27,115,'abcva','sdfasf','fasdfasdf',36,'9587461230','sdfasdf@dfas.com',50,19),(28,116,'vsxvsd','sdgfsadf','gfsda',37,'9857461233','ssdf@asdfas.com',50,19),(29,117,'sdfdsfsd','SFsdfsd','fsdsd',38,'9658741230','sdfsdsd@sdfsd.com',50,19),(30,118,'fsdaf','sfasd','fasdf',39,'8974561230','fasdf@asdfasd.co',50,19),(31,119,'sfsdf','sdfasd','sdf',40,'9658741230','sfsadfasd@asdf.co',50,19),(32,120,'sdfasdf','sdfasd','fsdafasdf',41,'9658741230','sdfasdf@sdfsd.co',50,19),(33,121,'Rahul','Prabhakar','Sadaphal',42,'9658741230','rahul@gmail.com',50,19),(34,122,'Govind','Gopal','Agrawal',43,'8974563210','govind@gmail.com',50,19),(36,124,'kiran','Piraji','Sawale',45,'8974561230','kiran@gmail.com',50,19);
+INSERT INTO `student` VALUES (20,103,'sdfas','dfsdf','asdf',29,'9856321470','sadf@sadfas.co',50,NULL),(21,104,'Prasad','Ashok','dukale',30,'9385620399','pdukale9@gmail.com',50,21),(23,111,'chintu ','Pintu','Zintu',32,'9658743210','abcd@gmail.com',50,19),(24,112,'Dipak ','Vishnu','Sutar',33,'9657841230','dipak@gmail.com',50,19),(25,113,'Nayan','Bajirao','Patil',34,'7845456932','nayan@gmail.com',50,19),(26,114,'Arpit','Mahadev','sharma',35,'9658742310','arpit@gmail.com',50,19),(27,115,'abcva','sdfasf','fasdfasdf',36,'9587461230','sdfasdf@dfas.com',50,19),(28,116,'vsxvsd','sdgfsadf','gfsda',37,'9857461233','ssdf@asdfas.com',50,19),(29,117,'sdfdsfsd','SFsdfsd','fsdsd',38,'9658741230','sdfsdsd@sdfsd.com',50,19),(30,118,'fsdaf','sfasd','fasdf',39,'8974561230','fasdf@asdfasd.co',50,19),(31,119,'sfsdf','sdfasd','sdf',40,'9658741230','sfsadfasd@asdf.co',50,19),(32,120,'sdfasdf','sdfasd','fsdafasdf',41,'9658741230','sdfasdf@sdfsd.co',50,19),(33,121,'Rahul','Prabhakar','Sadaphal',42,'9658741230','rahul@gmail.com',50,19),(34,122,'Govind','Gopal','Agrawal',43,'8974563210','govind@gmail.com',50,19),(36,124,'kiran','Piraji','Sawale',45,'8974561230','kiran@gmail.com',50,19);
 /*!40000 ALTER TABLE `student` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -669,7 +668,7 @@ CREATE TABLE `subject` (
   KEY `FK31tn17ut80e8s1jkyxdyfhp9x` (`institute_id`),
   CONSTRAINT `FK31tn17ut80e8s1jkyxdyfhp9x` FOREIGN KEY (`institute_id`) REFERENCES `institute` (`id`),
   CONSTRAINT `institute_id_foreign_key` FOREIGN KEY (`institute_id`) REFERENCES `institute` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -678,7 +677,7 @@ CREATE TABLE `subject` (
 
 LOCK TABLES `subject` WRITE;
 /*!40000 ALTER TABLE `subject` DISABLE KEYS */;
-INSERT INTO `subject` VALUES (1,'English','10th English sub',50),(2,'Marathi','10th Marathi',50),(3,'Biology','11th Biology',50),(4,'Chemistry','11th Chemistry',50),(5,'Maths','11th Maths',50),(6,'Maths','12th Maths',NULL),(7,'bjh','bjh',50);
+INSERT INTO `subject` VALUES (1,'English','10th English sub',50),(2,'Marathi','10th Marathi',50),(3,'Biology','11th Biology1',50),(4,'Chemistry','11th Chemistry',50),(5,'Maths','11th Maths',50),(6,'Maths','12th Maths',NULL),(7,'bjh','bjh',NULL),(8,'10th Maths','10th Maths',NULL),(9,'Biology','11th biology',50);
 /*!40000 ALTER TABLE `subject` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -701,7 +700,7 @@ CREATE TABLE `subject_div_composit` (
   CONSTRAINT `FKhm4bowjb4if0a6hqhhlrocwfi` FOREIGN KEY (`Div_id`) REFERENCES `division` (`id`),
   CONSTRAINT `div foreign key` FOREIGN KEY (`Div_id`) REFERENCES `division` (`id`),
   CONSTRAINT `sub foreign key` FOREIGN KEY (`subject_id`) REFERENCES `subject` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -710,7 +709,7 @@ CREATE TABLE `subject_div_composit` (
 
 LOCK TABLES `subject_div_composit` WRITE;
 /*!40000 ALTER TABLE `subject_div_composit` DISABLE KEYS */;
-INSERT INTO `subject_div_composit` VALUES (6,19,1),(7,19,2),(4,19,3),(5,19,4),(10,19,5),(1,22,1),(2,22,2),(3,23,1),(8,23,3),(9,23,4);
+INSERT INTO `subject_div_composit` VALUES (6,19,1),(7,19,2),(4,19,3),(5,19,4),(10,19,5),(12,19,7),(1,22,1),(2,22,2),(3,23,1),(8,23,3),(9,23,4);
 /*!40000 ALTER TABLE `subject_div_composit` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -810,9 +809,9 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `TreeViewBranch`(IN Branch_Id INT,IN depth INT,out JSON2 LONGTEXT)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `TreeViewBranch`(IN Branch_Id INT,IN spMode int,IN param INT,out JSON2 LONGTEXT)
 BEGIN
     
 	DECLARE ClassId INT;
@@ -849,7 +848,7 @@ BEGIN
 				
 				SET JSON2=CONCAT(JSON2,'{\"label\":\"',ClassName,'\", \"value\":',ClassId,',\"type\":\"Class\"');
 				
-				CALL TreeViewClass(ClassId,depth,@strVar);
+				CALL TreeViewClass(ClassId,spMode,param,@strVar);
 				
 				
 				
@@ -892,9 +891,9 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `TreeViewClass`(IN Class_Id INT,IN depth INT,OUT JSON3 LONGTEXT)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `TreeViewClass`(IN Class_Id INT,IN spMode int,IN param INT,out JSON3 LONGTEXT)
 BEGIN
     
 	DECLARE DivId INT;
@@ -927,11 +926,11 @@ BEGIN
 				
 				SET JSON3=CONCAT(JSON3,'{\"label\":\"',DivName,'\", \"value\":',DivId,',\"type\":\"Division\"');
 				
-                IF depth>4 THEN
+                IF spMode <> 2 THEN
                 
-					CALL TreeViewDivSubject(DivId,@strVar);
+					CALL TreeViewDivSubject(DivId,spMode,param,@strVar);
                     
-					IF (LENGTH(@strVar) > 0 AND depth > 4 ) THEN
+					IF (LENGTH(@strVar) > 0 AND spMode <> 2) THEN
 											
 						SET JSON3=CONCAT(JSON3,',\"children\":', @strVar );
 										
@@ -971,9 +970,9 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `TreeViewDivSubject`(IN Divisions_Id INT,OUT JSON4 LONGTEXT )
+CREATE DEFINER=`root`@`localhost` PROCEDURE `TreeViewDivSubject`(IN Divisions_Id INT,IN spMode int,IN param INT,out JSON4 LONGTEXT )
 BEGIN
     
 	DECLARE DivSubId INT;
@@ -985,6 +984,11 @@ BEGIN
 	DECLARE strVar VARCHAR(1000);	
     
 	DECLARE SubDivCursor CURSOR FOR SELECT sd.`id`, s.`id`,s.`name` FROM `subject_div_composit` sd, `division` d,`subject` s WHERE d.`id`=sd.`Div_id` AND sd.`subject_id`=s.`id` AND `Div_id`=Divisions_Id;
+    
+	DECLARE SubDivCursorForSubNotInExam CURSOR  FOR select distinct(sd.id) as subdiv, s.id as subjectId,s.name subjectName from exam_subject_student_composit_table essct,subject_div_composit sd, subject s ,division d where essct.subject_div_id=sd.id and s.id=sd.subject_id and sd.Div_id=d.id and d.id=Divisions_Id and  sd.id not in (select essct.subject_div_id from exam_subject_student_composit_table essct where essct.exam_id=param);
+	
+    DECLARE SubDivCursorForExamSub CURSOR  FOR select distinct(sd.id) as subdiv, s.id as subjectId,s.name subjectName from exam_subject_student_composit_table essct,subject_div_composit sd, subject s ,division d where essct.subject_div_id=sd.id and s.id=sd.subject_id and sd.Div_id=d.id and d.id=Divisions_Id and  sd.id  in (select essct.subject_div_id from exam_subject_student_composit_table essct where essct.exam_id=param);
+
 	DECLARE CONTINUE HANDLER FOR NOT FOUND SET done=1;
 	
 	
@@ -993,13 +997,28 @@ BEGIN
 		
       
 	OPEN SubDivCursor;
-	
+    
+    OPEN SubDivCursorForSubNotInExam;
+    
+	OPEN SubDivCursorForExamSub;
+    
 	SET SubCount=0;
+    
+    
         
 		loop4: LOOP
         
-        
+        if spMode =1 then
 			FETCH SubDivCursor INTO DivSubId,SubId,SubName;
+		end if;
+        
+         if spMode =3 then
+			FETCH SubDivCursorForSubNotInExam INTO DivSubId,SubId,SubName;
+		end if;
+        
+        if spMode =4 then
+			FETCH SubDivCursorForExamSub INTO DivSubId,SubId,SubName;
+		end if;
         
 				IF done = 1 THEN 				
 					LEAVE loop4; 
@@ -1042,10 +1061,27 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `TreeViewInstitute`(IN Insts_Id INT,IN depth INT,out JSON LONGTEXT)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `TreeViewInstitute`(IN Insts_Id INT, IN spMode int, IN param INT, out JSON LONGTEXT)
 BEGIN
+    
+    /*
+    
+1.   1st parameter in the stored procedure is the InstituteId
+2.		2nd parameter is the mode. * refer modes section		
+3.		3rd parameter is the additional info needed for mode. *refere modes section
+4.		4th parameter is the output string
+
+
+stored Procedure Menue
+Mode		Discription
+1.				Tree Structure till all subjects of institute
+2.				Tree Structure till Divisions of Institute
+3.				Tree stucture with subjects not in Exam (pass the param as exam Id)
+4.				Tree Structure with Subjects of Exam (pass the param as exam Id)
+
+*/
     
 	declare BranchId INT;
 	DECLARE BranchIstituteId INT;
@@ -1085,7 +1121,7 @@ BEGIN
 				
 				SET JSON=CONCAT(JSON,'{\"label\":\"',BranchName,'\", \"value\":',BranchId,',\"type\":\"Branch\"');
 				
-				CALL TreeViewBranch(BranchId,depth,@strVar);
+				CALL TreeViewBranch(BranchId,spMode,param,@strVar);
 					
 				
 				if LENGTH(@strVar) > 0 then
@@ -1137,4 +1173,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-03-29 19:06:11
+-- Dump completed on 2018-05-01 11:48:03

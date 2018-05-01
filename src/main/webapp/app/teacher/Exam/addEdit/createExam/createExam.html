@@ -1,0 +1,85 @@
+	<div class="row">
+         <div class="col-lg-12">
+             <section class="panel">
+                 <header class="panel-heading">
+                    Add Exam
+                 </header>
+                 <div class="panel-body">
+                 
+          								 <div class="alert alert-info fade in" ng-show="ExamCreateSuccess">
+                          <button data-dismiss="alert" class="close close-sm" type="button">
+                              <i class="icon-remove"></i>
+                          </button>
+                          <strong>Exam Added Successfully</strong> 
+                      </div>
+                      
+                       <div class="alert alert-block alert-danger fade in "  for="inputSuccess" ng-show="ExamCreateError">
+                          <button data-dismiss="alert" class="close close-sm" type="button">
+                              <i class="icon-remove"></i>
+                          </button>
+                        <strong>Error in saving Exam</strong>
+                      </div>
+                      
+<!-- ------------------------------------Form Start------------------------------------------------------ -->                             
+                     <form class="form-horizontal " name="ExamForm" method="get">
+                         <div class="form-group">
+                             <label class="col-sm-2 control-label">Discription <span class="required">*</span></label>
+                             <div class="col-sm-10">
+                                 <input ng-model="discription" type="text" class="form-control" required="required">
+                             </div>
+                         </div>
+                          <div class="form-group">
+                             <label class="col-sm-2 control-label">Out Of<span class="required">*</span></label>
+                             <div class="col-sm-10">
+                                 <input ng-model="outOf" type="number" class="form-control" required="required">
+                             </div>
+                         </div>
+                          <div class="form-group">
+                             <label class="col-sm-2 control-label">Passing Marks<span class="required">*</span></label>
+                             <div class="col-sm-10">
+                                 <input ng-model="passingMarks"  ng-class="{error : passingMarks>outOf }" type="number" class="form-control" required="required">
+                             </div>
+                         </div>
+                         <div class="form-group">
+                           <div class="form-group">
+                              <label class="col-sm-2 control-label">Examination Type<span class="required">*</span></label>
+                              <div class="col-sm-10">
+                                  <select class="form-control m-bot15"  ng-model="selectedExamType" ng-options="examType.typeName for (x,examType) in examType" ng-change="selectedBranch()" required="required" required="required" required> </select>
+                              </div>
+                          </div>
+                         </div>
+                         
+                         <div class="form-group">
+                           <div class="form-group">
+                              <label class="col-sm-2 control-label">Examination Mode<span class="required">*</span></label>
+                              <div class="col-sm-10">
+                                  <select class="form-control m-bot15"  ng-model="selectedExamMode" ng-options="examMode.modeName for (x,examMode) in examMode" ng-change="selectedBranch()" required="required" required="required" required> </select>
+                              </div>
+                          </div>
+                         </div>
+                         <div class="form-group">
+                           <div class="form-group">
+                              <label class="col-sm-2 control-label">Regular/ Repeat<span class="required">*</span></label>
+                              <div class="col-sm-10">
+                                  
+                                    <select ng-model="selectedRegular" class="form-control m-bot15" ng-options="ExamRegularArray.discription for (x,ExamRegularArray) in ExamRegularArray"  required="required" required> </select>
+                              </div>
+                          </div>
+                         </div>
+                         
+                          
+                           <div class="form-group">
+                             <div class="col-lg-offset-2 col-lg-10">
+                                 <button type="submit" class="btn btn-primary" ng-click="ExamForm.$valid && CreateExam()" ng-disabled="passingMarks>outOf">Create Exam</button>
+                             </div>
+                         </div>
+                  
+                     </form>
+                     
+<!-- ------------------------------------Form End------------------------------------------------------ -->
+                 </div>
+             </section>
+             
+         </div>
+	</div>
+             					 
