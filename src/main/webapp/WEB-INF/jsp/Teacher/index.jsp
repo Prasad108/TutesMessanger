@@ -19,14 +19,15 @@
    		<!-- <script data-require="ui-bootstrap@*" data-semver="0.12.1" src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.12.1.min.js"></script> -->
    		<script src="${pageContext.request.contextPath}/app/ui-bootstrap-tpls-2.5.0.min.js"></script>
  		
+ 		
  		<script src="${pageContext.request.contextPath}/app/teacher/app.js"></script>
  		
 		
 		<script src="${pageContext.request.contextPath}/app/commanService/shairedDataService.js"></script>
+		<script src="${pageContext.request.contextPath}/app/commanService/forResolveService.js"></script>			
    		<script src="${pageContext.request.contextPath}/app/teacher/home/homeController.js"></script>
    		<script src="${pageContext.request.contextPath}/app/teacher/home/homeCompoent.js"></script>
    		<script src="${pageContext.request.contextPath}/app/teacher/instituteStructure/existingInstituteStructure/existingInstituteStructureController.js"></script>
-   		<script src="${pageContext.request.contextPath}/app/teacher/instituteStructure/existingInstituteStructure/existingInstituteStructureComponent.js"></script>
    		<script src="${pageContext.request.contextPath}/app/teacher/appManger/studentRequest/studentRequestController.js"></script>
    		<script src="${pageContext.request.contextPath}/app/teacher/appManger/studentRequest/studentRequestComponent.js"></script>
    		
@@ -46,8 +47,17 @@
  		<script src="${pageContext.request.contextPath}/app/teacher/profile/editProfile/editProfileController.js"></script>
  		<script src="${pageContext.request.contextPath}/app/teacher/SNS/sns.js"></script>
  		<script src="${pageContext.request.contextPath}/app/teacher/result/examSubjects/examSubjects.js"></script>
+ 		<script src="${pageContext.request.contextPath}/app/teacher/result/examSubjectStudents/examSubjectStudentController.js"></script>
+ 		<script src="${pageContext.request.contextPath}/app/teacher/Exam/addEdit/ExistingExams/ExistingExamsComponent.js"></script>
+ 		<script src="${pageContext.request.contextPath}/app/teacher/Exam/addEdit/createExam/createExamDirective.js"></script>
+ 		<script src="${pageContext.request.contextPath}/app/teacher/Exam/addEdit/modifyExamSubjects/modifyExamSubjectsDirective.js"></script>
+ 		<script src="${pageContext.request.contextPath}/app/teacher/Exam/addEdit/addRemoveStudent/addRemoveStudentDirective.js"></script>
+ 		<script src="${pageContext.request.contextPath}/app/teacher/Exam/addEdit/modifyExamSubjects/addNewSubjectsToExam/addNewSubjects.js"></script>
+ 		<script src="${pageContext.request.contextPath}/app/teacher/Exam/addEdit/modifyExamSubjects/deleteSubjectsFromExam/deleteSubjects.js"></script>
  		
-   		   	
+ 		
+ 		<script src="${pageContext.request.contextPath}/app/teacher/paginationTest/pagination.js"></script>
+   			
    		   		<jsp:include page="/WEB-INF/jsp/Teacher/components/angular.jsp" /> 
    		   		 	
    			
@@ -69,7 +79,7 @@
  <section id="main-content">
           <section class="wrapper">
           <div class="row" >
-	          <h1>this is from index page </h1>
+	        <!--   <h1>this is from index page </h1> -->
 	          <ui-view></ui-view>
           </div>
           </section>

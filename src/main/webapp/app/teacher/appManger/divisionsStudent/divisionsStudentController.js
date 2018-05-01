@@ -1,7 +1,7 @@
  (function(){
  
  	angular.module('myApp').controller('divisionsStudentController', ['$scope', '$http', '$filter','branchList', function($scope,$http,$filter,branchList) {
-   			
+   		
    			$scope.branchList=branchList;
    			//$scope.teacher=JSON.parse('${teacherJSON}');
    			//$scope.permissions=JSON.parse('${permissions}');

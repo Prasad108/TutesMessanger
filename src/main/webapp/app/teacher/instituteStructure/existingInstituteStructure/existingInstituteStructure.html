@@ -110,8 +110,36 @@
  
  
  
- <h1> This is Existing Institute 
- page </h1>
-          	<div class="tree" ng-bind-html="structure">
+<div class="col-lg-12">
+					<h3 class="page-header"><i class="icon_document_alt"></i> Institute Structure</h3>
+					<ol class="breadcrumb">
+						<li><i class="fa fa-home"></i><a ui-sref="Home">Home</a></li>
+						<li><i class="icon_document_alt"></i>Institute Structure</li>						  	
+					</ol>
+</div>
+          	<div class="tree" >
+          				<ul>
+          				
+				          		<li  ng-repeat="inst in InstituteTreeStructure">
+				          			<a >{{inst.label}}</a>
+				          				<ul>
+				          						<li ng-repeat="branch in inst.children">
+				          								<a >{{branch.label}}</a>
+				          								<ul>
+				          									<li ng-repeat="class in branch.children">
+				          										<a >{{class.label}}</a>
+				          										<ul>
+				          											<li ng-repeat="div in class.children">
+				          											<a >{{div.label}}</a>
+				          											</li>
+				          										</ul>
+				          									</li>
+				          								</ul>		
+				          						</li>
+				          				</ul>
+				          			
+				         	 	</li>
+				    	</ul>
+				</div>
           	
-          	</div>
+          	
