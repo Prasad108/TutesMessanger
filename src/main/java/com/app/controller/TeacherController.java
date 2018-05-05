@@ -1139,7 +1139,7 @@ public class TeacherController {
 	 
 	 @RequestMapping(value="/updateTeacher",consumes=MediaType.APPLICATION_JSON_VALUE,method = RequestMethod.POST)
 	 @ResponseBody
-     public String updateTeacher(@ModelAttribute("teacher") Teacher teacher1,@RequestBody Teacher teacher2) 
+     public String updateTeacher(@ModelAttribute("teacher") Teacher teacher1,@RequestBody Teacher teacher2,Model model) 
 	 {
 		 System.out.println("**********this is updateTeacher controller suraj**********");
 		 teacher1.setFname(teacher2.getFname());
@@ -1149,12 +1149,15 @@ public class TeacherController {
 		 String response="";
 		 try {
 		 teacherService.update(teacher1);
-		 response="{\"status\":\"success\",\"teacher\":\""+gson.toJson(teacher1)+"\"}";
+		 response="{\"status\":\"success\",\"teacher\":"+gson.toJson(teacher1)+"}";
+		 model.addAttribute("teacher", teacher1);
+		 model.addAttribute("teacherJSON", gson.toJson(teacher1));
+		 
 		 }
 		 catch(Exception e) {
 			 response="{\"status\":\"fail\"}";
 		 }
-		 
+		 System.out.println(response);
 		 return response;
   }
 	 

@@ -16,6 +16,22 @@
                           </header>
                           
                           <div class="panel-body">
+                          
+                          
+                          <div class="alert alert-info fade in" ng-show="updateSuccess">
+			                     <button data-dismiss="alert" class="close close-sm" type="button"><i class="icon-remove"></i></button>
+			                     <strong>Success</strong> User infromation is updated
+			                     
+			                 	</div>    
+			                 	
+			                 	<div class="alert alert-block alert-danger fade in "  for="inputSuccess" ng-show="deleteSuccess">
+			                               <button data-dismiss="alert" class="close close-sm" type="button"><i class="icon-remove"></i></button>
+			                            	 <strong>Error</strong> in updating user information
+			                            	
+			                    </div>
+                          
+                          
+                          
                               <div class="form">
                                  <form class="form-validate form-horizontal " id="edit_profile" method="post" ng-submit="updateProfile(teacher)">
                                       <div class="form-group ">
