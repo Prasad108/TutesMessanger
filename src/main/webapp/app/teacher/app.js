@@ -63,8 +63,9 @@
 		$stateProvider.state({name : 'examSubjectsStudents', url : '/examSubjects/:id/examSubjectsStudents/:subjectId', templateUrl: '../app/teacher/result/examSubjectStudents/examSubjectStudent.html',  controller: 'examSubjectStudentCtrl'});
 		$stateProvider.state({name : 'paginationTest', url : '/paginationTest', templateUrl: '../app/teacher/paginationTest/pagination.html',  controller: 'paginationCtrl'});
 		
+		$stateProvider.state({name : 'ChangeUserNamePassowrd', url : '/ChangeUserNamePassowrd', templateUrl: '../app/teacher/profile/changePassword/changePassword.html',  controller: 'editUsernamePassword'});
 		
-		
+		$stateProvider.state({name : 'ModifyInstituteStructure', url : '/ModifyInstituteStructure', templateUrl: '../app/teacher/instituteStructure/ModifyInstituteStructure/ModifyInstituteStructure.html',  controller: 'modifyInstStructCtrl'});
 	}]);
 	
 }())
