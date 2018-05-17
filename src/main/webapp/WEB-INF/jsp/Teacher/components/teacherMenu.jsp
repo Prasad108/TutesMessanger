@@ -42,7 +42,7 @@
                       </a>
                       <ul class="sub">
                           <li><a class="" ui-sref="existingInstituteStructure" >View Structure</a></li>
-                          <li ng-show="permissions.alterInstituteStructure"><a class="" href="ModifyInstitueStructure">Modify Structure</a></li>                        
+                          <li ng-show="permissions.alterInstituteStructure"><a class="" ui-sref="ModifyInstituteStructure">Modify Structure</a></li>                        
                       </ul>
                   </li>
                   
