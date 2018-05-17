@@ -54,7 +54,8 @@
  		<script src="${pageContext.request.contextPath}/app/teacher/Exam/addEdit/addRemoveStudent/addRemoveStudentDirective.js"></script>
  		<script src="${pageContext.request.contextPath}/app/teacher/Exam/addEdit/modifyExamSubjects/addNewSubjectsToExam/addNewSubjects.js"></script>
  		<script src="${pageContext.request.contextPath}/app/teacher/Exam/addEdit/modifyExamSubjects/deleteSubjectsFromExam/deleteSubjects.js"></script>
- 		
+ 		<script src="${pageContext.request.contextPath}/app/teacher/profile/ChangeUsernamePassword/ChangeUsernamePassword.js"></script>
+ 		<script src="${pageContext.request.contextPath}/app/teacher/profile/ChangePassword/ChangePassword.js"></script>
  		
  		<script src="${pageContext.request.contextPath}/app/teacher/paginationTest/pagination.js"></script>
    			

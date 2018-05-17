@@ -110,7 +110,8 @@
                       <ul class="sub">
                           <li><a class="" ui-sref="profile.view" ui-sref-active="active">View Profile</a></li>                          
                           <li><a class="" ui-sref="profile.edit" ui-sref-active="active">Edit Profile</a></li>
-                          <li><a class="" href="teacherChangePassword">Change Password</a></li>
+                          <li><a class="" ui-sref="ChangeUsernamePassword" ui-sref-active="active">Change Username</a></li>
+                          <li><a class="" ui-sref="ChangePassword" ui-sref-active="active">Change Password</a></li>
                       </ul>
                   </li>  
                   <li>

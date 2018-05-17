@@ -65,6 +65,11 @@
 		
 		
 		
+		$stateProvider.state({name : 'ChangeUsernamePassword', url : '/ChangeUsernamePassword', templateUrl: '../app/teacher/profile/ChangeUsernamePassword/ChangeUsernamePassword.html',  controller: 'ChangeUsernamePasswordCtrl'});
+		
+		$stateProvider.state({name : 'ChangePassword', url : '/ChangePassword', templateUrl: '../app/teacher/profile/ChangePassword/ChangePassword.html',  controller: 'ChangePasswordCtrl'});
+		
+		
 	}]);
 	
 }())
