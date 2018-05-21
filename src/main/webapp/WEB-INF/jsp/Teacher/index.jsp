@@ -56,9 +56,8 @@
  		<script src="${pageContext.request.contextPath}/app/teacher/Exam/addEdit/modifyExamSubjects/deleteSubjectsFromExam/deleteSubjects.js"></script>
  		<script src="${pageContext.request.contextPath}/app/teacher/profile/ChangeUsernamePassword/ChangeUsernamePassword.js"></script>
  		<script src="${pageContext.request.contextPath}/app/teacher/profile/ChangePassword/ChangePassword.js"></script>
- 		<script src="${pageContext.request.contextPath}/app/teacher/profile/changePassword/changePasswordCtrl.js"></script>
  		<script src="${pageContext.request.contextPath}/app/teacher/instituteStructure/ModifyInstituteStructure/ModifyInstituteStructure.js"></script>
- 		
+ 		<script src="${pageContext.request.contextPath}/app/teacher/instituteStructure/ModifyInstituteStructure/Branch/Add/addBranch.js"></script>
  		
  		
  		<script src="${pageContext.request.contextPath}/app/teacher/paginationTest/pagination.js"></script>
