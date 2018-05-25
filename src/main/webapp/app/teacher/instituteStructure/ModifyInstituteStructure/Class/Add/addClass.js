@@ -1,28 +1,34 @@
  (function(){
-	var app=angular.module('myApp').controller("addBranchCtrl",addBranchCtrl);
-	addBranchCtrl.$inject=['$scope','$http','shairedDataService','branchList'];
-	function addBranchCtrl($scope,$http,shairedDataService,branchList){
-		console.log("this is addBranchCtrl ");
+	var app=angular.module('myApp').controller("addClassCtrl",addClassCtrl);
+	addClassCtrl.$inject=['$scope','$http','shairedDataService','branchList'];
+	function addClassCtrl($scope,$http,shairedDataService,branchList){
+		console.log("this is addClassCtrl ");
 		
 		$scope.teacher=shairedDataService.teacher;
 		$scope.permissions=shairedDataService.permissions; 
 		$scope.institute=shairedDataService.institute;
-		$scope.branchList=branchList;
+		$scope.branchList=branchList;	
 		
 		$scope.successMessage=false;
 		$scope.errorMessage=false;
-		$scope.branchExistMessage=false;
+		$scope.classExistMessage=false;
 		
-		$scope.addNewBranch=function(){ //on click of add branch button 
+		$scope.selectedBranch=function(){
+			$scope.newClassName='';
+		}
+		
+		$scope.addNewClass=function(){ //on click of add class button 
 				
-	   		console.log($scope.newBranchName); 
+	   		console.log($scope.newClassName); 
+	   		var data=JSON.stringify($scope.selectBranch);
 	   				
-	   	//*********to add new branch in institute******
+	   	//*********to add new class in branch******
 	   			 $http({            
-	   	            url: "AddNewBranch/"+$scope.newBranchName,
+	   	            url: "AddNewClass/"+$scope.newClassName,
 	   	         	contentType : 'application/json; charset=utf-8',
 	   	    	 	 dataType : 'json',
-	   	            method: "POST" 
+	   	             method: "POST",
+	   	             data : data
 	   	               
 	   	        })
 	   	        .then(function successCallback(response) {
@@ -30,35 +36,34 @@
 	   	                
 	   	                console.log("response came"); 
 	   	             if(response.data.status=="success"){
-	   	            	 console.log("Branch Added Successfully");
+	   	            	 console.log("Class Added Successfully");
 	   	            	 $scope.successMessage=true;
 	   	            	 $scope.errorMessage=false;
-	   	                 $scope.branchExistMessage=false;
+	   	                 $scope.classExistMessage=false;
 	   	             }
-	   	             else if(response.data.status=="branchExist"){
-	   	      		     $scope.branchExistMessage=true; 
+	   	             else if(response.data.status=="classExist"){
+	   	      		     $scope.classExistMessage=true; 
 	   	      		     $scope.successMessage=false;
    	            	     $scope.errorMessage=false;
-   	            	     console.log("Branch Not Added Successfully, branch exist"); 
+   	            	     console.log("Class Not Added Successfully, class exist"); 
 	   	             }
 	   	             else
 	   	             {
-	   	                $scope.branchExistMessage=false;
+	   	                $scope.classExistMessage=false;
 	   	            	$scope.errorMessage=true;
 	   	            	$scope.successMessage=false;
-	   	            	console.log("Branch Not Added Successfully"); 
+	   	            	console.log("Class Not Added Successfully"); 
 	   	             }
 	   	                  
 	   	        }, 
 	   	    		 function errorCallback(response) {
 	   	                // failed
-	   	                 $scope.branchExistMessage=false;
+	   	                 $scope.classExistMessage=false;
 	   	        	     $scope.errorMessage=true;
 	   	        	     $scope.successMessage=false;
 	   	                 console.log("error response came");    	
 	   	                    
 	   	        });
 			};
-		
 	}
 }())

@@ -1,8 +1,8 @@
  (function(){
-	var app=angular.module('myApp').controller("addBranchCtrl",addBranchCtrl);
-	addBranchCtrl.$inject=['$scope','$http','shairedDataService','branchList'];
-	function addBranchCtrl($scope,$http,shairedDataService,branchList){
-		console.log("this is addBranchCtrl ");
+	var app=angular.module('myApp').controller("renameBranchCtrl",renameBranchCtrl);
+	renameBranchCtrl.$inject=['$scope','$state','$timeout','$http','shairedDataService','branchList'];
+	function renameBranchCtrl($scope,$state,$timeout,$http,shairedDataService,branchList){
+		console.log("this is renameBranchCtrl ");
 		
 		$scope.teacher=shairedDataService.teacher;
 		$scope.permissions=shairedDataService.permissions; 
@@ -11,48 +11,43 @@
 		
 		$scope.successMessage=false;
 		$scope.errorMessage=false;
-		$scope.branchExistMessage=false;
 		
-		$scope.addNewBranch=function(){ //on click of add branch button 
-				
+		$scope.renameBranch=function(){ //on click of rename branch button 
+			
 	   		console.log($scope.newBranchName); 
+	        var data=JSON.stringify($scope.selectBranch);
 	   				
-	   	//*********to add new branch in institute******
+	   	//*********to rename selected branch******
 	   			 $http({            
-	   	            url: "AddNewBranch/"+$scope.newBranchName,
+	   	            url: "RenameBranch/"+$scope.newBranchName,
 	   	         	contentType : 'application/json; charset=utf-8',
-	   	    	 	 dataType : 'json',
-	   	            method: "POST" 
-	   	               
+	   	    	 	dataType : 'json',
+	   	            method : "POST",
+	   	            data : data       
 	   	        })
 	   	        .then(function successCallback(response) {
 	   	                // if success   then generate classlist dropdown
 	   	                
 	   	                console.log("response came"); 
 	   	             if(response.data.status=="success"){
-	   	            	 console.log("Branch Added Successfully");
+	   	            	 console.log("Branch renamed Successfully");
 	   	            	 $scope.successMessage=true;
 	   	            	 $scope.errorMessage=false;
-	   	                 $scope.branchExistMessage=false;
-	   	             }
-	   	             else if(response.data.status=="branchExist"){
-	   	      		     $scope.branchExistMessage=true; 
-	   	      		     $scope.successMessage=false;
-   	            	     $scope.errorMessage=false;
-   	            	     console.log("Branch Not Added Successfully, branch exist"); 
+	   	            	 
+	   	            	 $timeout(function(){
+	   	            		 $state.reload();
+	   	                 }, 10000);
 	   	             }
 	   	             else
 	   	             {
-	   	                $scope.branchExistMessage=false;
 	   	            	$scope.errorMessage=true;
 	   	            	$scope.successMessage=false;
-	   	            	console.log("Branch Not Added Successfully"); 
+	   	            	 console.log("Branch Not renamed Successfully"); 
 	   	             }
 	   	                  
 	   	        }, 
 	   	    		 function errorCallback(response) {
 	   	                // failed
-	   	                 $scope.branchExistMessage=false;
 	   	        	     $scope.errorMessage=true;
 	   	        	     $scope.successMessage=false;
 	   	                 console.log("error response came");    	

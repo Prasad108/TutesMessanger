@@ -70,9 +70,17 @@
 								branchList :function(resolveService){return resolveService.branchList();	}
 							}		
 		});
-		$stateProvider.state({name : 'AddBranch', url : '/AddBranch' , templateUrl: '../app/teacher/instituteStructure/ModifyInstituteStructure/Branch/Add/AddBranch.html',  controller: 'addBranchCtrl', resolve :{branchList :function(resolveService){return resolveService.branchList();}}});
+		$stateProvider.state({name : 'AddBranch', url : '/AddBranch' , templateUrl: '../app/teacher/instituteStructure/ModifyInstituteStructure/Branch/Add/addBranch.html',  controller: 'addBranchCtrl', resolve :{branchList :function(resolveService){return resolveService.branchList();}}});
+		$stateProvider.state({name : 'RenameBranch', url : '/RenameBranch' , templateUrl: '../app/teacher/instituteStructure/ModifyInstituteStructure/Branch/Rename/renameBranch.html',  controller: 'renameBranchCtrl', resolve :{branchList :function(resolveService){return resolveService.branchList();}}});
+		$stateProvider.state({name : 'DeleteBranch', url : '/DeleteBranch' , templateUrl: '../app/teacher/instituteStructure/ModifyInstituteStructure/Branch/Delete/deleteBranch.html',  controller: 'deleteBranchCtrl', resolve :{branchList :function(resolveService){return resolveService.branchList();}}});
 		
-		   
+		$stateProvider.state({name : 'AddClass', url : '/AddClass' , templateUrl: '../app/teacher/instituteStructure/ModifyInstituteStructure/Class/Add/addClass.html',  controller: 'addClassCtrl', resolve :{branchList :function(resolveService){return resolveService.branchList();}}});
+		$stateProvider.state({name : 'RenameClass', url : '/RenameClass' , templateUrl: '../app/teacher/instituteStructure/ModifyInstituteStructure/Class/Rename/renameClass.html',  controller: 'renameClassCtrl', resolve :{branchList :function(resolveService){return resolveService.branchList();}}});
+		$stateProvider.state({name : 'DeleteClass', url : '/DeleteClass' , templateUrl: '../app/teacher/instituteStructure/ModifyInstituteStructure/Class/Delete/deleteClass.html',  controller: 'deleteClassCtrl', resolve :{branchList :function(resolveService){return resolveService.branchList();}}});
+	
+		$stateProvider.state({name : 'AddDivision', url : '/AddDivision' , templateUrl: '../app/teacher/instituteStructure/ModifyInstituteStructure/Division/Add/addDivision.html',  controller: 'addDivisionCtrl', resolve :{branchList :function(resolveService){return resolveService.branchList();}}});
+		$stateProvider.state({name : 'RenameDivision', url : '/RenameDivision' , templateUrl: '../app/teacher/instituteStructure/ModifyInstituteStructure/Division/Rename/renameDivision.html',  controller: 'renameDivisionCtrl', resolve :{branchList :function(resolveService){return resolveService.branchList();}}});
+		$stateProvider.state({name : 'DeleteDivision', url : '/DeleteDivision' , templateUrl: '../app/teacher/instituteStructure/ModifyInstituteStructure/Division/Delete/deleteDivision.html',  controller: 'deleteDivisionCtrl', resolve :{branchList :function(resolveService){return resolveService.branchList();}}});
 		
 		$stateProvider.state({name : 'ChangeUsernamePassword', url : '/ChangeUsernamePassword', templateUrl: '../app/teacher/profile/ChangeUsernamePassword/ChangeUsernamePassword.html',  controller: 'ChangeUsernamePasswordCtrl'});		
 		$stateProvider.state({name : 'ChangePassword', url : '/ChangePassword', templateUrl: '../app/teacher/profile/ChangePassword/ChangePassword.html',  controller: 'ChangePasswordCtrl'});
