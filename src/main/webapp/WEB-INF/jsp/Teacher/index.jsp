@@ -54,6 +54,18 @@
  		<script src="${pageContext.request.contextPath}/app/teacher/Exam/addEdit/addRemoveStudent/addRemoveStudentDirective.js"></script>
  		<script src="${pageContext.request.contextPath}/app/teacher/Exam/addEdit/modifyExamSubjects/addNewSubjectsToExam/addNewSubjects.js"></script>
  		<script src="${pageContext.request.contextPath}/app/teacher/Exam/addEdit/modifyExamSubjects/deleteSubjectsFromExam/deleteSubjects.js"></script>
+ 		<script src="${pageContext.request.contextPath}/app/teacher/profile/ChangeUsernamePassword/ChangeUsernamePassword.js"></script>
+ 		<script src="${pageContext.request.contextPath}/app/teacher/profile/ChangePassword/ChangePassword.js"></script>
+ 		<script src="${pageContext.request.contextPath}/app/teacher/instituteStructure/ModifyInstituteStructure/ModifyInstituteStructure.js"></script>
+ 		<script src="${pageContext.request.contextPath}/app/teacher/instituteStructure/ModifyInstituteStructure/Branch/Add/addBranch.js"></script>
+ 		<script src="${pageContext.request.contextPath}/app/teacher/instituteStructure/ModifyInstituteStructure/Branch/Rename/renameBranch.js"></script>
+ 		<script src="${pageContext.request.contextPath}/app/teacher/instituteStructure/ModifyInstituteStructure/Branch/Delete/deleteBranch.js"></script>
+ 		<script src="${pageContext.request.contextPath}/app/teacher/instituteStructure/ModifyInstituteStructure/Class/Add/addClass.js"></script>
+ 		<script src="${pageContext.request.contextPath}/app/teacher/instituteStructure/ModifyInstituteStructure/Class/Rename/renameClass.js"></script>
+ 		<script src="${pageContext.request.contextPath}/app/teacher/instituteStructure/ModifyInstituteStructure/Class/Delete/deleteClass.js"></script>
+ 		<script src="${pageContext.request.contextPath}/app/teacher/instituteStructure/ModifyInstituteStructure/Division/Add/addDivision.js"></script>
+ 		<script src="${pageContext.request.contextPath}/app/teacher/instituteStructure/ModifyInstituteStructure/Division/Rename/renameDivision.js"></script>
+ 		<script src="${pageContext.request.contextPath}/app/teacher/instituteStructure/ModifyInstituteStructure/Division/Delete/deleteDivision.js"></script>
  		
  		
  		<script src="${pageContext.request.contextPath}/app/teacher/paginationTest/pagination.js"></script>

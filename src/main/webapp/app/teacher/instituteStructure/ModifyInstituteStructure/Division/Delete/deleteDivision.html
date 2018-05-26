@@ -1,0 +1,47 @@
+<div class="col-lg-12">
+	<h3 class="page-header">
+		<i class="fa fa-trash-o"></i>Delete Division
+	</h3>
+	<ol class="breadcrumb">
+		<li><i class="fa fa-home"></i><a ui-sref="Home">Home</a></li>
+		<li><i class="fa fa-university"></i><a ui-sref="ModifyInstituteStructure">Modify Institute Structure</a></li>
+		<li><i class="fa fa-trash-o"></i>Delete Division</li>		
+	</ol>
+</div> 
+
+
+<section class="panel" style="WIDTH: 1000px">
+  <div class="panel-body">
+	 <div class="form">
+		<form class="form-validate form-horizontal " id="register_form" method="post" action="DeleteDivision">
+		      <div class="form-group ">
+		        <label for="bname" class="control-label col-lg-2">Select Branch<span class="required">*</span></label>
+		         <div class="col-lg-10">
+		           <select class="form-control col-lg-2" ng-model="selectBranch" ng-options="branch.name for (x,branch) in branchList" ng-change="selectedBranch();" style="WIDTH: 200px;height: 35px" required="required"></select>
+		         </div>             <!-- input-lg m-bot10 -->
+		      </div>
+		      
+		      <div class="form-group ">
+		        <label for="bname" class="control-label col-lg-2">Select Class<span class="required">*</span></label>
+		         <div class="col-lg-10">
+		           <select class="form-control col-lg-2" ng-model="selectClass" ng-options="class.name for (x,class) in classList" ng-change="selectedClass();" style="WIDTH: 200px;height: 35px" required="required"></select>
+		         </div>             <!-- input-lg m-bot10 -->
+		      </div>
+			
+			   <div class="form-group ">
+		        <label for="bname" class="control-label col-lg-2">Select Division<span class="required">*</span></label>
+		         <div class="col-lg-10">
+		           <select class="form-control col-lg-2" ng-model="selectDivision" ng-options="division.name for (x,division) in divisionList" style="WIDTH: 200px;height: 35px" required="required"></select>
+		         </div>             <!-- input-lg m-bot10 -->
+		      </div>	        
+				                                     
+			  <div class="form-group">
+					<div class="col-lg-offset-2 col-lg-10">
+					  <a class="btn btn-primary" ui-sref="DeleteExistingDivision" ui-sref-active="active">Delete Division</a>
+					        <!--  <button class="btn btn-primary" type="submit">Add Branch</button> -->
+					</div>
+			  </div>
+	   </form>
+	</div>
+  </div>
+</section>

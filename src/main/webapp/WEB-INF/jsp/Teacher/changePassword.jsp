@@ -140,8 +140,7 @@
 									maxlength="30" />
 							</div>
 							<br>
-							<button class="btn btn-info btn-lg btn-block" type="submit">Change
-								Username</button>
+							<button class="btn btn-info btn-lg btn-block" type="submit">Change Username</button>
 
 
 						</form:form>
@@ -199,7 +198,7 @@
 
 
 
-						<button class="btn btn-info btn-lg btn-block" id="submitChangePassword" type="submit">Change
+						<button class="btn btn-info btn-lg btn-block" id="submitChangePassword" type="submit">Update
 							Password</button>
 
 

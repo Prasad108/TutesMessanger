@@ -53,7 +53,7 @@
 									                                          <div class="col-lg-3">
 									                                            
 									                                              <input type="text"  placeholder="Search Student"  ng-model="sub.student_filter" ng-change="filterStudent(sub);disableSuccessMessage()">
-									                                               <button class="btn btn-primary" ng-click="addStudentToExam(sub);disableSuccessMessage()" id="addStudentSubmitBTN" type="submit" style="margin-left: 150px">Add To Exam</button>
+									                                               <button class="btn btn-primary" ng-click="addStudentToExam(sub);disableSuccessMessage()" id="addStudentSubmitBTN" type="submit">Add To Exam</button>
 									                                          </div>
 									                                          
 																	     </div>
@@ -110,10 +110,10 @@
 																	
 																	<div ng-show="studentInExamList.length">
 																	     <div class="row">
-									                                          <div class="col-lg-3">
+									                                          <div class="col-lg-3 ">
 									                                            
 									                                              <input type="text"  placeholder="Search Student"  ng-model="sub.student_filter1" ng-change="filterStudent1(sub);disableSuccessMessage()">
-									                                              <button class="btn btn-primary" ng-click="deleteStudentFromExam(sub);disableSuccessMessage()" id="deleteStudentSubmitBTN" type="submit" style="margin-left: 150px">Remove From Exam</button>
+									                                              <button class="btn btn-primary" ng-click="deleteStudentFromExam(sub);disableSuccessMessage()" id="deleteStudentSubmitBTN" type="submit" >Remove</button>
 									                                          </div>
 									                                         
 																	     </div>
