@@ -1,19 +1,62 @@
 \<div class="col-lg-12">
 	<h3 class="page-header">
-		<i class="fa fa-user-md"></i> Add New Division 
+		<i class="fa fa-plus"></i> Add New Division 
 	</h3>
 	<ol class="breadcrumb">
 		<li><i class="fa fa-home"></i><a ui-sref="Home">Home</a></li>
 		<li><i class="fa fa-university"></i><a ui-sref="ModifyInstituteStructure">Modify Institute Structure</a></li>
-		<li><i class="icon_profile"></i>Add New Division</li>		
+		<li><i class="fa fa-plus"></i>Add New Division</li>		
 	</ol>
 </div> 
 
 
 <section class="panel" style="WIDTH: 1000px">
+
+ <div class="alert alert-info fade in" ng-show="successMessage">
+	 <button data-dismiss="alert" class="close close-sm" type="button">
+		 <i class="icon-remove"></i>
+     </button>
+	<strong>Division Successfully Added in Class</strong> 
+ </div>
+ 
+ <div class="alert alert-block alert-danger fade in" ng-show="errorMessage">
+	 <button data-dismiss="alert" class="close close-sm" type="button">
+		 <i class="icon-remove"></i>
+     </button>
+	<strong>Division Not Successfully Added in Class</strong> 
+ </div>
+ 
+  <div class="alert alert-block alert-danger fade in" ng-show="divisionExistMessage">
+	 <button data-dismiss="alert" class="close close-sm" type="button">
+		 <i class="icon-remove"></i>
+     </button>
+	<strong>Division Not Added in Class,There is Division exist with this name in particular Class</strong> 
+ </div>
+ 
+ <div class="alert alert-block alert-danger fade in" ng-show="selectBranchMessage">
+	 <button data-dismiss="alert" class="close close-sm" type="button">
+		 <i class="icon-remove"></i>
+     </button>
+	<strong>Select branch from dropdown list</strong> 
+ </div>
+ 
+ <div class="alert alert-block alert-danger fade in" ng-show="selectClassMessage">
+	 <button data-dismiss="alert" class="close close-sm" type="button">
+		 <i class="icon-remove"></i>
+     </button>
+	<strong>Select class from dropdown list</strong> 
+ </div>
+ 
+ <div class="alert alert-block alert-danger fade in" ng-show="divisionShouldNotBlankMessage">
+	 <button data-dismiss="alert" class="close close-sm" type="button">
+		 <i class="icon-remove"></i>
+     </button>
+	<strong>New Division Name should not be blank</strong> 
+ </div>
+
   <div class="panel-body">
 	 <div class="form">
-		<form class="form-validate form-horizontal " id="register_form" method="post" action="AddNewDivision">
+		<form class="form-validate form-horizontal " id="register_form" method="post">
 		      <div class="form-group ">
 		        <label for="bname" class="control-label col-lg-2">Select Branch<span class="required">*</span></label>
 		         <div class="col-lg-10">
@@ -31,13 +74,13 @@
 			  <div class="form-group ">
 					<label for="cname" class="control-label col-lg-2">New Division Name <span class="required">*</span></label>
 					      <div class="col-lg-10">
-					             <input class="form-control col-lg-2" id="Division" name="division" maxlength="50"  style="WIDTH: 200px" type="text" required="required" />
+					             <input class="form-control col-lg-2" id="Division" name="division" ng-model="newDivisionName" ng-click="clearMessage()" maxlength="50"  style="WIDTH: 200px" type="text" required="required" />
 					       </div>
 			  </div>
 					                                     
 			  <div class="form-group">
 					<div class="col-lg-offset-2 col-lg-10">
-					  <a class="btn btn-primary" ui-sref="AddNewDivision" ui-sref-active="active">Add Division</a>
+					  <a class="btn btn-primary" ng-click="addNewDivision()">Add Division</a>
 					        <!--  <button class="btn btn-primary" type="submit">Add Branch</button> -->
 					</div>
 			  </div>
