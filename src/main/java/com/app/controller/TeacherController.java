@@ -1035,30 +1035,39 @@ public class TeacherController {
 		return response;
 	}
 
-	
 	@RequestMapping(value = "/changeTPassword", consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
 	@ResponseBody
 	public String changeTPassword(@ModelAttribute("teacher") Teacher teacher,
 			@RequestBody HashMap<String, String> requestData) {
 		System.out.println("**********inside changeTPassword controller**********");
+		String response = "";
 		String CurrentPassword = requestData.get("CurrentPassword");
 		String NewPassword = requestData.get("NewPassword");
 		String RePassword = requestData.get("RePassword");
+		if (NewPassword.equals(RePassword)) {
+			String existPassword = teacher.getLogin().getPassword();
+			System.out.println(CurrentPassword);
+			System.out.println(NewPassword);
+			System.out.println(RePassword);
+			System.out.println(existPassword);
 
-		String existPassword = teacher.getLogin().getPassword();
+			if (existPassword.equals(CurrentPassword)) {
+				System.out.println("chla if");
+				teacherService.changePassword(NewPassword, teacher.getLogin());
+				return response = "{\"status\":\"Success\"}";
+			} else {
+				System.out.println("chla else ");
+				
+				 response = "{\"status\":\"failed\",\"cause\":\"not_valid_current_Password\"}";
+				 System.out.println(response);
+				 return response;
 
-	/*	System.out.println("from form " + currentPassword + " from teacherobject" + existPassword);
-		System.out.println("new username " + newPassword);
-		if (existPassword.equals(currentPassword)) {
-			teacherService.changePassword(newPassword, teacher.getLogin());
-			model.addAttribute("passwordChangeSuccess", "password successfully updated");
-			teacher.getLogin().setPassword(newPassword);
-			model.addAttribute("teacher", teacher);
+			}
 		} else {
-			model.addAttribute("wrongPassword", "You have entered wrong current Password");
-		}*/
+			return response = "{\"status\":\"failed\",\"cause\":\"Please_enter_the_same_password\"}";
+		}
 
-		return "Teacher/changePassword";
+		// return response = "{\"status\":\"failed\"}";
 
 	}
 	/*
@@ -1115,32 +1124,30 @@ public class TeacherController {
 	 * System.out.println(response); return response; }
 	 */
 
-	
-/*
-	@RequestMapping(value = "/changeTPassword", method = RequestMethod.POST)
-	public String changeTPassword(@ModelAttribute("teacher") Teacher teacher, HttpServletRequest request, Model model) {
-		System.out.println("**********inside changeTPassword controller**********");
-		String currentPassword = request.getParameter("currentPassword");
-		String newPassword = request.getParameter("newPassword");
+	/*
+	 * @RequestMapping(value = "/changeTPassword", method = RequestMethod.POST)
+	 * public String changeTPassword(@ModelAttribute("teacher") Teacher teacher,
+	 * HttpServletRequest request, Model model) {
+	 * System.out.println("**********inside changeTPassword controller**********");
+	 * String currentPassword = request.getParameter("currentPassword"); String
+	 * newPassword = request.getParameter("newPassword");
+	 * 
+	 * String existPassword = teacher.getLogin().getPassword();
+	 * 
+	 * System.out.println("from form " + currentPassword + " from teacherobject" +
+	 * existPassword); System.out.println("new username " + newPassword); if
+	 * (existPassword.equals(currentPassword)) {
+	 * teacherService.changePassword(newPassword, teacher.getLogin());
+	 * model.addAttribute("passwordChangeSuccess", "password successfully updated");
+	 * teacher.getLogin().setPassword(newPassword); model.addAttribute("teacher",
+	 * teacher); } else { model.addAttribute("wrongPassword",
+	 * "You have entered wrong current Password"); }
+	 * 
+	 * return "Teacher/changePassword";
+	 * 
+	 * }
+	 */
 
-		String existPassword = teacher.getLogin().getPassword();
-
-		System.out.println("from form " + currentPassword + " from teacherobject" + existPassword);
-		System.out.println("new username " + newPassword);
-		if (existPassword.equals(currentPassword)) {
-			teacherService.changePassword(newPassword, teacher.getLogin());
-			model.addAttribute("passwordChangeSuccess", "password successfully updated");
-			teacher.getLogin().setPassword(newPassword);
-			model.addAttribute("teacher", teacher);
-		} else {
-			model.addAttribute("wrongPassword", "You have entered wrong current Password");
-		}
-
-		return "Teacher/changePassword";
-
-	}
-*/
-	
 	@RequestMapping("/teacherShowProfile")
 	public String teacherShowProfile(Model model) {
 		System.out.println("**********this is teacherShowProfile controller**********");
