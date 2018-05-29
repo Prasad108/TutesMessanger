@@ -36,7 +36,7 @@
                   </li> -->
                    <li class="sub-menu">
                       <a href="javascript:;" class="">
-                          <i class="icon_desktop"></i>
+                          <i class="fa fa-university"></i>
                           <span>Inst. Structure</span>
                           <span class="menu-arrow arrow_carrot-right"></span>
                       </a>

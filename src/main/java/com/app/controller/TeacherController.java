@@ -60,7 +60,11 @@ import com.app.service.impl.SnsService;
 /*import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;*/
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 /*import com.sun.istack.internal.logging.Logger;*/
+import com.google.gson.JsonParser;
+
 
 @Controller
 @SessionAttributes({ "teacher", "appAdmin", "institute", "login", "permissions", "teacherJSON" })
@@ -175,7 +179,7 @@ public class TeacherController {
 		return "Teacher/ModifyInstitueStructure";
 	}
 
-	@RequestMapping(value = "/AddNewBranch", method = RequestMethod.POST)
+	/*@RequestMapping(value = "/AddNewBranch", method = RequestMethod.POST)
 	public String AddNewBranch(Model model, @ModelAttribute("Branch") Branch branch1,
 			@ModelAttribute("teacher") Teacher teacher) {
 
@@ -205,9 +209,295 @@ public class TeacherController {
 		model.addAttribute("BranchesOfInst", branchlist);
 
 		return "Teacher/ModifyInstitueStructure";
+	}*/
+	
+	
+	@RequestMapping(value = "/AddNewBranch/{branchName}", method = RequestMethod.POST)
+	@ResponseBody
+	public String AddNewBranch(@PathVariable("branchName") String branchName,@ModelAttribute("teacher") Teacher teacher) {
+		System.out.println("**********inside AddNewBranch controller**********");
+		String output="";
+		int flag =0;
+		try
+		{
+		 Institute inst = teacherService.GetInstitute(teacher.getId());
+		
+		 List<Branch> branchlist = branchService.getallOfParticularInstitute(inst);
+		 for (Branch b : branchlist) {
+		 if(b.getName().equalsIgnoreCase(branchName))
+		 {
+			 flag =2;
+			 break;
+		 }
+	     }
+		 if(flag == 2)
+		 {
+		  output = "{\"action\":\"Failed to add new branch \",\"status\":\"branchExist\"}"; 
+		 }
+		 else{
+		 Branch branch=new Branch();
+		 branch.setName(branchName);
+		 branch.setInstitute(inst);
+				
+	     branchService.create(branch);
+	     output = "{\"action\":\"New Branch is added sucessfully \",\"status\":\"success\"}";
+		  }
+		 return output;
+		 }
+		catch(Exception e)
+		{
+			output = "{\"action\":\"Failed to add new branch \",\"status\":\"fail\"}";
+			return output;
+		}
+	}
+	
+	@RequestMapping(value = "/RenameBranch/{branchName}", method = RequestMethod.POST)
+	@ResponseBody
+	public String RenameBranch(@PathVariable("branchName") String branchName,@ModelAttribute("teacher") Teacher teacher,@RequestBody Branch branch) {
+		System.out.println("**********inside RenameBranch controller**********");
+		String output;
+		int flag =0;
+		try{
+			
+		Institute inst = teacherService.GetInstitute(teacher.getId());	
+		
+		 List<Branch> branchlist = branchService.getallOfParticularInstitute(inst);
+		 for (Branch b : branchlist) {
+		 if(b.getName().equalsIgnoreCase(branchName))
+		 {
+			 flag =2;
+			 break;
+		 }
+	     }
+		 if(flag == 2)
+		 {
+		  output = "{\"action\":\"Failed to rename branch \",\"status\":\"branchExist\"}"; 
+		 }
+		 else{
+			  branch.setName(branchName);
+			  branch.setInstitute(inst);
+				
+			  branchService.update(branch);
+			  output = "{\"action\":\"Selected Branch is renamed sucessfully \",\"status\":\"success\"}";
+		  }
+		 return output;
+		
+		}
+		catch(Exception e)
+		{
+			output = "{\"action\":\"Failed to rename selected branch \",\"status\":\"fail\"}";
+			return output;
+		}
+	}
+	
+	@RequestMapping(value = "/DeleteBranch", method = RequestMethod.POST)
+	@ResponseBody
+	public String DeleteBranch(@ModelAttribute("teacher") Teacher teacher,@RequestBody Branch branch) {
+		System.out.println("**********inside DeleteBranch controller**********");
+		String output;
+		try{
+		branchService.delet(branch.getId());
+		output = "{\"action\":\"Selected Branch is deleted sucessfully \",\"status\":\"success\"}";
+		return output;
+		}
+		catch(Exception e)
+		{
+			output = "{\"action\":\"Failed to delete selected branch \",\"status\":\"fail\"}";
+			return output;
+		}
+	}
+	
+	@RequestMapping(value = "/AddNewClass/{className}", method = RequestMethod.POST)
+	@ResponseBody
+	public String AddNewClass(@PathVariable("className") String className,@ModelAttribute("teacher") Teacher teacher,@RequestBody Branch branch) {
+		System.out.println("**********inside AddNewClass controller**********");
+		String output="";
+		int flag =0;
+		try
+		{
+		 Institute inst = teacherService.GetInstitute(teacher.getId());
+		
+		 List<Classes> classlist = classesService.getallOfParticularBranch(branch);
+		 
+		 for (Classes c : classlist) {
+		 if(c.getName().equalsIgnoreCase(className))
+		 {
+			 flag =2;
+			 break;
+		 }
+	     }
+		 if(flag == 2)
+		 {
+		  output = "{\"action\":\"Failed to add new class \",\"status\":\"classExist\"}"; 
+		 }
+		 else{
+		 Classes classes=new Classes();	 
+		 
+		 classes.setName(className);
+		 classes.setBranch(branch);
+		 classesService.create(classes);		
+	     
+	     output = "{\"action\":\"New Class is added sucessfully \",\"status\":\"success\"}";
+		  }
+		 return output;
+		 }
+		catch(Exception e)
+		{
+			output = "{\"action\":\"Failed to add new class \",\"status\":\"fail\"}";
+			return output;
+		}
+	}
+	
+	@RequestMapping(value = "/RenameClass/{className}/{branchId}", method = RequestMethod.POST)
+	@ResponseBody
+	public String RenameClass(@PathVariable("className") String className,@PathVariable("branchId") int branchId,@ModelAttribute("teacher") Teacher teacher,@RequestBody Classes classes) {
+		System.out.println("**********inside RenameClass controller**********");
+		String output;
+		int flag =0;
+		
+		try{
+		Branch branch=branchService.find(branchId);		
+		List<Classes> classlist = classesService.getallOfParticularBranch(branch);
+		
+		for (Classes c : classlist) {
+			 if(c.getName().equals(className))
+			 {
+				 flag =2;
+				 break;
+			 }
+		     }
+			 if(flag == 2)
+			 {
+			  output = "{\"action\":\"Failed to rename class \",\"status\":\"classExist\"}"; 
+			 }
+			 else {
+		          classes.setName(className);
+		          classes.setBranch(branch);
+		          classesService.update(classes);
+		          output = "{\"action\":\"Selected Class is renamed sucessfully \",\"status\":\"success\"}";
+			 }
+		return output;
+		}
+		catch(Exception e)
+		{
+			output = "{\"action\":\"Failed to rename selected class \",\"status\":\"fail\"}";
+			return output;
+		}
+	}
+	
+	@RequestMapping(value = "/DeleteClass", method = RequestMethod.POST)
+	@ResponseBody
+	public String DeleteClass(@ModelAttribute("teacher") Teacher teacher,@RequestBody Classes classes) {
+		System.out.println("**********inside DeleteClass controller**********");
+		String output;
+		try{
+		classesService.delet(classes.getId());	
+		output = "{\"action\":\"Selected Class is deleted sucessfully \",\"status\":\"success\"}";
+		return output;
+		}
+		catch(Exception e)
+		{
+			output = "{\"action\":\"Failed to delete selected class \",\"status\":\"fail\"}";
+			return output;
+		}
+	}
+	
+	@RequestMapping(value = "/AddNewDivision/{divisionName}", method = RequestMethod.POST)
+	@ResponseBody
+	public String AddNewDivision(@PathVariable("divisionName") String divisionName,@ModelAttribute("teacher") Teacher teacher,@RequestBody Classes classes) {
+		System.out.println("**********inside AddNewDivision controller**********");
+		String output="";
+		int flag =0;
+		try
+		{
+		 Institute inst = teacherService.GetInstitute(teacher.getId());
+		
+		 List<Division> divisionlist =divisionService.getallOfParticularClass(classes);   
+		 
+		 for (Division d : divisionlist) {
+		 if(d.getName().equalsIgnoreCase(divisionName))
+		 {
+			 flag =2;
+			 break;
+		 }
+	     }
+		 if(flag == 2)
+		 {
+		  output = "{\"action\":\"Failed to add new division \",\"status\":\"divisionExist\"}"; 
+		 }
+		 else{	 
+		 Division division=new Division(); 
+		 division.setName(divisionName);
+		 division.setClasses(classes);
+		 divisionService.create(division);		
+	     
+	     output = "{\"action\":\"New Division is added sucessfully \",\"status\":\"success\"}";
+		  }
+		 return output;
+		 }
+		catch(Exception e)
+		{
+			output = "{\"action\":\"Failed to add new division \",\"status\":\"fail\"}";
+			return output;
+		}
 	}
 
-	@RequestMapping(value = "/DeleteBranch", method = RequestMethod.POST)
+	@RequestMapping(value = "/RenameDivision/{divisionName}/{classId}", method = RequestMethod.POST)
+	@ResponseBody
+	public String RenameDivision(@PathVariable("divisionName") String divisionName,@PathVariable("classId") int classId,@ModelAttribute("teacher") Teacher teacher,@RequestBody Division division) {
+		System.out.println("**********inside RenameDivision controller**********");
+		String output;
+		int flag =0;
+		
+		try{
+			Classes classes=classesService.find(classId);
+		
+		List<Division> divisionlist =divisionService.getallOfParticularClass(classes);	
+		for (Division d : divisionlist) {
+			 if(d.getName().equalsIgnoreCase(divisionName))
+			 {
+				 flag =2;
+				 break;
+			 }
+		     }
+			 if(flag == 2)
+			 {
+			  output = "{\"action\":\"Failed to rename division \",\"status\":\"divisionExist\"}"; 
+			 }
+			 else {
+		          division.setName(divisionName);
+		          division.setClasses(classes);
+		          divisionService.update(division);
+		     
+		          output = "{\"action\":\"Selected Division is renamed sucessfully \",\"status\":\"success\"}";
+			 }
+		return output;
+		}
+		catch(Exception e)
+		{
+			output = "{\"action\":\"Failed to rename selected division \",\"status\":\"fail\"}";
+			return output;
+		}
+	}
+	
+	@RequestMapping(value = "/DeleteDivision", method = RequestMethod.POST)
+	@ResponseBody
+	public String DeleteDivision(@ModelAttribute("teacher") Teacher teacher,@RequestBody Division division) {
+		System.out.println("**********inside DeleteDivision controller**********");
+		String output;
+		try{
+		divisionService.delet(division.getId());
+		output = "{\"action\":\"Selected Division is deleted sucessfully \",\"status\":\"success\"}";
+		return output;
+		}
+		catch(Exception e)
+		{
+			output = "{\"action\":\"Failed to delete selected division \",\"status\":\"fail\"}";
+			return output;
+		}
+	}
+	
+	/*@RequestMapping(value = "/DeleteBranch", method = RequestMethod.POST)
 	public String DeleteBranch(Model model, @ModelAttribute("teacher") Teacher teacher,
 			@ModelAttribute("Classes") Classes clas) {
 
@@ -246,9 +536,9 @@ public class TeacherController {
 		model.addAttribute("BranchesOfInst", branchlist);
 
 		return "Teacher/ModifyInstitueStructure";
-	}
+	}*/
 
-	@RequestMapping(value = "/modalRenameBranch", method = RequestMethod.POST)
+/*	@RequestMapping(value = "/modalRenameBranch", method = RequestMethod.POST)
 	public String modalRenameBranch(Model model, @ModelAttribute("teacher") Teacher teacher,
 			@ModelAttribute("Classes") Classes clas) {
 
@@ -287,9 +577,9 @@ public class TeacherController {
 		model.addAttribute("BranchesOfInst", branchlist);
 
 		return "Teacher/ModifyInstitueStructure";
-	}
+	}*/
 
-	@RequestMapping(value = "/AddNewClass", method = RequestMethod.POST)
+	/*@RequestMapping(value = "/AddNewClass", method = RequestMethod.POST)
 	public String AddNewClass(Model model, @ModelAttribute("Classes") Classes clas,
 			@ModelAttribute("teacher") Teacher teacher) {
 
@@ -329,9 +619,9 @@ public class TeacherController {
 			model.addAttribute("BranchesOfInst", branchlist);
 		}
 		return "Teacher/ModifyInstitueStructure";
-	}
+	}*/
 
-	@RequestMapping(value = "/DeleteClassFromBranch", method = RequestMethod.POST)
+	/*@RequestMapping(value = "/DeleteClassFromBranch", method = RequestMethod.POST)
 	public String DeleteClassFromBranch(Model model, @ModelAttribute("teacher") Teacher teacher,
 			@ModelAttribute("Division") Division div) {
 
@@ -413,7 +703,7 @@ public class TeacherController {
 		model.addAttribute("BranchesOfInst", branchlist);
 
 		return "Teacher/ModifyInstitueStructure";
-	}
+	}*/
 
 	@RequestMapping(value = "/GetClassesList/{id}", method = RequestMethod.GET)
 	@ResponseBody
@@ -460,7 +750,7 @@ public class TeacherController {
 		return JSON;
 	}
 
-	@RequestMapping(value = "/AddNewDivision", method = RequestMethod.POST)
+/*	@RequestMapping(value = "/AddNewDivision", method = RequestMethod.POST)
 	public String AddNewDivision(Model model, @ModelAttribute("Division") Division div,
 			@ModelAttribute("teacher") Teacher teacher) {
 
@@ -608,7 +898,7 @@ public class TeacherController {
 		model.addAttribute("BranchesOfInst", branchlist);
 
 		return "Teacher/ModifyInstitueStructure";
-	}
+	}*/
 
 	@RequestMapping(value = "/ViewInstitueStructure", method = RequestMethod.GET)
 	public String ViewInstitueStructure(Model model, @ModelAttribute("teacher") Teacher teacher,
@@ -713,7 +1003,7 @@ public class TeacherController {
 
 				Division d = divisionService.find(schedule.getId());
 
-				System.out.println("------devision is :" + d);
+				System.out.println("------division is :" + d);
 				schedule.setDivision(d);
 				System.out.println("we are going to create the new shcedule");
 				System.out.println("we aer about to save the :" + schedule);

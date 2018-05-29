@@ -1,0 +1,55 @@
+<div class="col-lg-12">
+	<h3 class="page-header">
+		<i class="fa fa-trash-o"></i>Delete Branch
+	</h3>
+	<ol class="breadcrumb">
+		<li><i class="fa fa-home"></i><a ui-sref="Home">Home</a></li>
+		<li><i class="fa fa-university"></i><a ui-sref="ModifyInstituteStructure">Modify Institute Structure</a></li>
+		<li><i class="fa fa-trash-o"></i>Delete Branch</li>		
+	</ol>
+</div> 
+
+
+<section class="panel" style="WIDTH: 1000px">
+
+<div class="alert alert-info fade in" ng-show="successMessage">
+	 <button data-dismiss="alert" class="close close-sm" type="button">
+		 <i class="icon-remove"></i>
+     </button>
+	<strong>Branch Successfully Deleted from Institute</strong> 
+ </div>
+ 
+ <div class="alert alert-block alert-danger fade in" ng-show="errorMessage">
+	 <button data-dismiss="alert" class="close close-sm" type="button">
+		 <i class="icon-remove"></i>
+     </button>
+	<strong>Branch Not Successfully Deleted from Institute, please delete classes of this Branch</strong> 
+ </div>
+ 
+ <div class="alert alert-block alert-danger fade in" ng-show="selectBranchMessage">
+	 <button data-dismiss="alert" class="close close-sm" type="button">
+		 <i class="icon-remove"></i>
+     </button>
+	<strong>Select Branch from dropdown list</strong> 
+ </div>
+
+  <div class="panel-body">
+	 <div class="form">
+		<form class="form-validate form-horizontal " id="register_form" method="post">
+		      <div class="form-group ">
+		        <label for="bname" class="control-label col-lg-2">Select Branch<span class="required">*</span></label>
+		         <div class="col-lg-10">
+		           <select class="form-control col-lg-2" ng-model="selectBranch" ng-options="branch.name for (x,branch) in branchList" ng-click="selectedBranch()" style="WIDTH: 200px;height: 35px" required="required"></select>
+		         </div>             <!-- input-lg m-bot10 -->
+		      </div>
+				                                     
+			  <div class="form-group">
+					<div class="col-lg-offset-2 col-lg-10">
+					  <a class="btn btn-primary" ng-click="deleteBranch()">Delete Branch</a>
+					        <!--  <button class="btn btn-primary" type="submit">Add Branch</button> -->
+					</div>
+			  </div>
+	   </form>
+	</div>
+  </div>
+</section>
