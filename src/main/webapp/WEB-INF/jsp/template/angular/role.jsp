@@ -50,6 +50,8 @@
 var app = angular.module('myApp', []);
 
 app.controller('roleCtrl', function($scope, $http) {
+	
+	$scope.array=[{id:1, name:"Kunal"},{id:2,name:"Prasad"}];
    
    // get all the roles from server as soon as page loads
     $http.get("getRoles").then(function (response) {
@@ -175,6 +177,7 @@ app.controller('roleCtrl', function($scope, $http) {
           <div class="row">
 
 <div >
+{{array}}
 <form ng-submit="save()">
 Role name: <input type="text" ng-model="rolename"  required>
 <br>

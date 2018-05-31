@@ -24,7 +24,7 @@
                   </li> -->
                   <li>
                       <a class="" ui-sref="schedule">
-                          <i class="icon_genius"></i>
+                         <i class="fa fa-calendar" aria-hidden="true"></i>
                           <span>Schedule</span>
                       </a>
                   </li>
@@ -48,7 +48,7 @@
                   
                    <li  class="sub-menu">
                       <a href="javascript:;" class="">
-                          <i class="icon_desktop"></i>
+                         <i class="fa fa-user-circle-o" aria-hidden="true"></i>
                           <span>App Manager</span>
                           <span class="menu-arrow arrow_carrot-right"></span>
                       </a>
@@ -64,7 +64,7 @@
                   
                    <li>
                       <a class="" ui-sref="Exams" ui-sref-active="active">
-                           <i class="icon_document_alt"></i>
+                           <i class="fa fa-quora" aria-hidden="true"></i>
                           <span>Exam</span>
                       </a>
                   </li>
@@ -73,7 +73,7 @@
                  
                    <li ng-show="permissions.updateResults">
                       <a class="" ui-sref="result.Exams" ui-sref-active="active">
-                           <i class="icon_document_alt"></i>
+                          <i class="fa fa-line-chart" aria-hidden="true"></i>
                              <span>Result</span>
                       </a>
                   </li>
@@ -90,7 +90,7 @@
                   
                      <li class="sub-menu">
                       <a href="javascript:;" class="">
-                          <i class="icon_desktop"></i>
+                          <i class="fa fa-book" aria-hidden="true"></i>
                           <span>Subject Manager</span>
                           <span class="menu-arrow arrow_carrot-right"></span>
                       </a>
@@ -103,14 +103,14 @@
 
                   <li class="sub-menu">
                       <a href="javascript:;" class="">
-                          <i class="icon_document_alt"></i>
+                          <i class="fa fa-user-circle" aria-hidden="true"></i>
                           <span>Profile</span>
                           <span class="menu-arrow arrow_carrot-right"></span>
                       </a>
                       <ul class="sub">
                           <li><a class="" ui-sref="profile.view" ui-sref-active="active">View Profile</a></li>                          
                           <li><a class="" ui-sref="profile.edit" ui-sref-active="active">Edit Profile</a></li>
-                          <li><a class="" ui-sref="ChangeUsernamePassword" ui-sref-active="active">Change Username</a></li>
+                          <li><a class="" ui-sref="ChangeUsername" ui-sref-active="active">Change Username</a></li>
                           <li><a class="" ui-sref="ChangePassword" ui-sref-active="active">Change Password</a></li>
                       </ul>
                   </li>  
