@@ -38,7 +38,7 @@
                      </div>
                      
 
-			<form name="ChangeusernameForm" method="POST">
+			<form name="ChangeusernameForm" method="POST" ng-submit="changeUsername()">
 				<div class="form-group">
 					<label class="col-sm-2 control-label">CurrentUsername</label> <input ng-model="CurrentUserName"
 						type="text" class="form-control"  required>
@@ -47,8 +47,7 @@
 					<label class="col-sm-2 control-label">NewUserName</label> <input ng-model="NewUserName"
 						type="text" class="form-control" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}" title="Username contains 1 lowercase,uppercase,special character and digit." required/>
 				</div>
-				<button type="submit" class="btn btn-success"
-					ng-click="ChangeusernameForm.$valid && changeUsername()">Submit</button>
+				<button type="submit" class="btn btn-success">Submit</button>
 			</form>
 			
 	</div>
