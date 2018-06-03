@@ -115,6 +115,13 @@
                       </ul>
                   </li>  
                   <li>
+                      <a class="" ui-sref="sms" ui-sref-active="active">
+                          <i class="far fa-envelope"></i>
+                          <span>SMS</span>
+                      </a>
+                  </li> 
+                  
+                  <li>
                       <a class="" ui-sref="sns" ui-sref-active="active">
                           <i class="far fa-envelope"></i>
                           <span>SNS testing</span>

@@ -85,6 +85,9 @@
 		$stateProvider.state({name : 'ChangeUsername', url : '/ChangeUsername', templateUrl: '../app/teacher/profile/ChangeUsername/ChangeUsername.html',  controller: 'ChangeUsernamePasswordCtrl'});		
 		$stateProvider.state({name : 'ChangePassword', url : '/ChangePassword', templateUrl: '../app/teacher/profile/ChangePassword/ChangePassword.html',  controller: 'ChangePasswordCtrl'});
 		
+		$stateProvider.state({name : 'sms', url : '/sms', templateUrl: '../app/teacher/SMS/sms.html',  controller: 'smsCtrl'});
+		$stateProvider.state({name : 'selectExam', url : '/selectExam', templateUrl: '../app/teacher/SMS/Select Exam/selectExam.html',  controller: 'selectExamCtrl',});
+	
 		
 	}]);
 	
