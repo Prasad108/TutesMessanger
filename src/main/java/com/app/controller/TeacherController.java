@@ -771,7 +771,7 @@ public class TeacherController {
 	@RequestMapping(value = "/changeTUsername", consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
 	@ResponseBody
 	public String changeTUsername(@ModelAttribute("teacher") Teacher teacher,
-			@RequestBody HashMap<String, String> requestData) {
+			@RequestBody HashMap<String, String> requestData,Model model) {
 		System.out.println("**********inside changeTUsername controller**********");
 		String response = "";
 		String currentUsername = requestData.get("currentUsername");
@@ -785,9 +785,9 @@ public class TeacherController {
 				System.out.println("success name changed");
 				response = "{\"status\":\"success\",\"teacher\":" + gson.toJson(teacher) + "}";
 				System.out.println("work fine");
-				// model.addAttribute("userNameChangeSuccess","username successfully updated");
+				
 				teacher.getLogin().setUsername(NewUserName);
-				// model.addAttribute("teacher",teacher);
+				 model.addAttribute("teacher",teacher);
 				System.out.println(response.toString());
 				return response = "{\"status\":\"Success\"}";
 			} else {
@@ -806,13 +806,13 @@ public class TeacherController {
 	@RequestMapping(value = "/changeTPassword", consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
 	@ResponseBody
 	public String changeTPassword(@ModelAttribute("teacher") Teacher teacher,
-			@RequestBody HashMap<String, String> requestData) {
+			@RequestBody HashMap<String, String> requestData,Model model) {
 		System.out.println("**********inside changeTPassword controller**********");
 		String response = "";
 		String CurrentPassword = requestData.get("CurrentPassword");
 		String NewPassword = requestData.get("NewPassword");
 		String RePassword = requestData.get("RePassword");
-		if (NewPassword.equals(RePassword)) {
+		
 			String existPassword = teacher.getLogin().getPassword();
 			System.out.println(CurrentPassword);
 			System.out.println(NewPassword);
@@ -820,21 +820,20 @@ public class TeacherController {
 			System.out.println(existPassword);
 
 			if (existPassword.equals(CurrentPassword)) {
-				System.out.println("chla if");
+				System.out.println("existPassword equals CurrentPassword");
 				teacherService.changePassword(NewPassword, teacher.getLogin());
+				teacher.getLogin().setPassword(NewPassword);
+				 model.addAttribute("teacher",teacher);
 				return response = "{\"status\":\"Success\"}";
 			} else {
-				System.out.println("chla else ");
+				System.out.println("existPassword not equals CurrentPassword");
 				
 				 response = "{\"status\":\"failed\",\"cause\":\"not_valid_current_Password\"}";
 				 System.out.println(response);
 				 return response;
 
 			}
-		} else {
-			return response = "{\"status\":\"failed\",\"cause\":\"Please_enter_the_same_password\"}";
-		}
-
+		
 		// return response = "{\"status\":\"failed\"}";
 
 	}
@@ -1697,7 +1696,7 @@ public class TeacherController {
 
 	@RequestMapping(value = "/sendSMS/{contactNo}", method = RequestMethod.GET)
 	@ResponseBody
-	public String approveTeacherApprovalRequest(@PathVariable("contactNo") String contactNo,
+	public String sendSMS(@PathVariable("contactNo") String contactNo,
 			@RequestParam("sms") String text) {
 
 		System.out.println("**********from sendSMS/{contactNo} controller**********");

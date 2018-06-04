@@ -25,9 +25,14 @@ var app=angular.module("myApp");
 							$scope.UpdatedPassword = false;
 							$scope.NotUpdatedPassword = false;
 							return console.log("exit b/c of Password");
-						}
-
-
+						}else if( !(angular.equals($scope.NewPassword, $scope.RePassword) === true)){
+						console.log("New Password not Matching with the Re-entered Password");
+							$scope.message="New Password not Matching with the Re-entered Password";
+							$scope.SameAsPrevious = true;
+							$scope.UpdatedPassword = false;
+							$scope.NotUpdatedPassword = false;
+							return console.log("exit b/c of New Password not Matching with the Re-entered Password");
+						}else{
 	    					$http(
 	    							{
 	    								url : "changeTPassword",
@@ -72,9 +77,7 @@ var app=angular.module("myApp");
 										}
 										
 									}
-	    								
-	    					
-	    						   		
-	    						   });
+	    					});
+						}
 	    		}
  		 }]);

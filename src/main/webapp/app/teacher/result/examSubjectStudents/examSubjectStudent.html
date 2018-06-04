@@ -8,14 +8,18 @@
 						<li><i class="fas fa-users"></i>Student</li>								  	
 					</ol>
 				</div>
-				<div class="col-lg-12">
+				<div class="col-lg-12" id="container1">
                       <section class="panel">
-                          <header class="panel-heading">
-                             Select Subject of the Exam <i class="fas fa-edit pull-right fa-10x"></i>
+                          <header class="panel-heading" id="editIcon">   
+                             Select Subject of the Exam
+                              <a class="btn btn-success pull-right" ng-click="editResult()"  ng-show="editIcon" ><i class="fas fa-edit"></i></a>
+                             <button type="submit" class="btn btn-primary pull-right" ng-show="saveButton" ng-click="save()">Save</button>
+                              
                           </header>
                           <div class="panel-body">
                           
 <div class="table-responsive">
+ <form class="form-inline" role="form" name="EditResutlForm">
 	<table class="table">
 		<thead>
 			<tr>
@@ -33,14 +37,36 @@
 				<td>{{ESSR.student.fname}}</td>
 				<td>{{ESSR.student.father}}</td>
 				<td>{{ESSR.student.lname}}</td>
-				<td ng-if="!!ESSR.result.obtainedMarks">{{ESSR.result.obtainedMarks}}</td>
-				<td ng-if="!ESSR.result.obtainedMarks">N.A.</td>
-				<td ng-if="!!ESSR.result.remarks">{{ESSR.result.remarks}}</td>
-				<td ng-if="!ESSR.result.remarks">N.A</td>
+				
+				
+				
+				<td ng-show="!!ESSR.result.obtainedMarks && editIcon" >{{ESSR.result.obtainedMarks}}</td>
+				<td ng-show="!ESSR.result.obtainedMarks && editIcon">N.A.</td>
+				<td ng-show="!editIcon">
+					<div class="form-group" >
+	                    <input type="number" name="{{ESSR.examSubjectStudentCompositTable.id}}" ng-model="newObject[ESSR.student.fname]" title="ObtainedMarkes"  class="form-control" style="width:60px;">		
+	                  	</div>
+	                </div>
+                </td>
+				
+				
+				<td ng-show="!!ESSR.result.remarks && editIcon">{{ESSR.result.remarks}}</td>
+				<td ng-show="!ESSR.result.remarks && editIcon">N.A</td>
+				<td ng-show="!editIcon">
+					<div class="form-group" >
+	                    <input type="text" id="{{ESSR.examSubjectStudentCompositTable.id}}" name="{{ESSR.student.id}}" ng-model="newObject[ESSR.student.lname]" title="Result" value="{{ESSR.examSubjectStudentCompositTable.id}}" class="form-control" >
+	                  		
+	                  	</div>
+	                </div>
+                </td>
+				
+				
 			</tr>
 		</tbody>
 	</table>
+</form>
 </div>
 </div>
 </section>
 </div>
+
