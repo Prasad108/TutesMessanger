@@ -12,8 +12,23 @@
 		$scope.successMessage=false;
 		$scope.errorMessage=false;
 		$scope.classExistMessage=false;
+		$scope.selectBranchMessage=false;
+		$scope.classShouldNotBlankMessage=false;
+		
+		$scope.clearMessage=function(){
+			$scope.successMessage=false;
+			$scope.errorMessage=false;
+			$scope.classExistMessage=false;
+			$scope.selectBranchMessage=false;
+			$scope.classShouldNotBlankMessage=false;
+		   	};
 		
 		$scope.selectedBranch=function(){
+			$scope.successMessage=false;
+			$scope.errorMessage=false;
+			$scope.classExistMessage=false;
+			$scope.selectBranchMessage=false;
+			$scope.classShouldNotBlankMessage=false;
 			$scope.newClassName='';
 		}
 		
@@ -21,8 +36,26 @@
 				
 	   		console.log($scope.newClassName); 
 	   		var data=JSON.stringify($scope.selectBranch);
-	   				
-	   	//*********to add new class in branch******
+	   		
+	   		if($scope.selectBranch === undefined || $scope.selectBranch === '' || $scope.selectBranch === null)
+	   		{
+	   			$scope.selectBranchMessage=true;
+	   			$scope.successMessage=false;
+	   			$scope.errorMessage=false;
+	   			$scope.classExistMessage=false;
+	   			$scope.classShouldNotBlankMessage=false;
+	   		}
+	   		else if($scope.newClassName == '' || $scope.newClassName === null || $scope.newClassName === undefined)
+	   		{
+	   			$scope.classShouldNotBlankMessage=true;
+	   			$scope.selectBranchMessage=false;
+	   			$scope.successMessage=false;
+	   			$scope.errorMessage=false;
+	   			$scope.classExistMessage=false;
+	   		}
+	   		else
+	   		{
+	         	//*********to add new class in branch******
 	   			 $http({            
 	   	            url: "AddNewClass/"+$scope.newClassName,
 	   	         	contentType : 'application/json; charset=utf-8',
@@ -32,7 +65,7 @@
 	   	               
 	   	        })
 	   	        .then(function successCallback(response) {
-	   	                // if success   then generate classlist dropdown
+	   	                // if success   
 	   	                
 	   	                console.log("response came"); 
 	   	             if(response.data.status=="success"){
@@ -40,11 +73,17 @@
 	   	            	 $scope.successMessage=true;
 	   	            	 $scope.errorMessage=false;
 	   	                 $scope.classExistMessage=false;
+	   	                 $scope.selectBranchMessage=false;
+	   				     $scope.classShouldNotBlankMessage=false;
+	   	                 
+	   	                 $scope.newClassName='';
 	   	             }
 	   	             else if(response.data.status=="classExist"){
 	   	      		     $scope.classExistMessage=true; 
 	   	      		     $scope.successMessage=false;
    	            	     $scope.errorMessage=false;
+   	            	     $scope.selectBranchMessage=false;
+   	   			         $scope.classShouldNotBlankMessage=false;
    	            	     console.log("Class Not Added Successfully, class exist"); 
 	   	             }
 	   	             else
@@ -52,6 +91,8 @@
 	   	                $scope.classExistMessage=false;
 	   	            	$scope.errorMessage=true;
 	   	            	$scope.successMessage=false;
+	   	            	$scope.selectBranchMessage=false;
+	   	 			    $scope.classShouldNotBlankMessage=false;
 	   	            	console.log("Class Not Added Successfully"); 
 	   	             }
 	   	                  
@@ -61,9 +102,11 @@
 	   	                 $scope.classExistMessage=false;
 	   	        	     $scope.errorMessage=true;
 	   	        	     $scope.successMessage=false;
-	   	                 console.log("error response came");    	
-	   	                    
-	   	        });
-			};
+	   	        	     $scope.selectBranchMessage=false;
+	   				     $scope.classShouldNotBlankMessage=false;
+	   	        	     console.log("error response came");    	
+	   	     });
+	   	  }
+	   };
 	}
 }())

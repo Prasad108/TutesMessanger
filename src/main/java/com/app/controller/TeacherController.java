@@ -149,67 +149,9 @@ public class TeacherController {
 		return response;
 	}
 
-	@RequestMapping(value = "/ModifyInstitueStructure", method = RequestMethod.GET)
-	public String ModifyInstitueStructure(Model model, @ModelAttribute("teacher") Teacher teacher) {
+	
 
-		System.out.println("**********this is ModifyInstitueStructure controller**********");
-
-		/*
-		 * Logger.getLogger(TeacherController.class.getName(),TeacherController.class).
-		 * log(Level.INFO,
-		 * "**********this is ModifyInstitueStructure controller**********");
-		 */
-		Branch branch = new Branch();
-		Classes clsess = new Classes();
-		Division division = new Division();
-		model.addAttribute("Branch", branch);
-		model.addAttribute("Classes", clsess);
-		model.addAttribute("Division", division);
-		Institute inst = teacherService.GetInstitute(teacher.getId());
-		System.out.println("institute is :" + inst);
-
-		List<Branch> branchlist = branchService.getallOfParticularInstitute(inst);
-		System.out.println("we are going to print the branches of current institute :");
-		for (Branch b : branchlist) {
-			System.out.println(b);
-		}
-
-		model.addAttribute("BranchesOfInst", branchlist);
-
-		return "Teacher/ModifyInstitueStructure";
-	}
-
-	/*@RequestMapping(value = "/AddNewBranch", method = RequestMethod.POST)
-	public String AddNewBranch(Model model, @ModelAttribute("Branch") Branch branch1,
-			@ModelAttribute("teacher") Teacher teacher) {
-
-		System.out.println("**********this is AddNewBranch controller**********");
-		branch1.setInstitute(teacher.getInstitute());
-
-		branchService.create(branch1);
-		System.out.println("new Branch is saved ");
-		model.addAttribute("SuccessMessage", "New branch is Saved with the name " + branch1.getName());
-
-		Branch branch = new Branch();
-		Classes clsess = new Classes();
-		Division division = new Division();
-		model.addAttribute("Branch", branch);
-		model.addAttribute("Classes", clsess);
-		model.addAttribute("Division", division);
-
-		Institute inst = teacherService.GetInstitute(teacher.getId());
-		System.out.println("institute is :" + inst);
-
-		List<Branch> branchlist = branchService.getallOfParticularInstitute(inst);
-		System.out.println("we are going to print the branches of current isntitute :");
-		for (Branch b : branchlist) {
-			System.out.println(b);
-		}
-
-		model.addAttribute("BranchesOfInst", branchlist);
-
-		return "Teacher/ModifyInstitueStructure";
-	}*/
+	
 	
 	
 	@RequestMapping(value = "/AddNewBranch/{branchName}", method = RequestMethod.POST)
@@ -256,15 +198,32 @@ public class TeacherController {
 	public String RenameBranch(@PathVariable("branchName") String branchName,@ModelAttribute("teacher") Teacher teacher,@RequestBody Branch branch) {
 		System.out.println("**********inside RenameBranch controller**********");
 		String output;
+		int flag =0;
 		try{
 			
 		Institute inst = teacherService.GetInstitute(teacher.getId());	
-		branch.setName(branchName);
-	    branch.setInstitute(inst);
 		
-		branchService.update(branch);
-		output = "{\"action\":\"Selected Branch is renamed sucessfully \",\"status\":\"success\"}";
-		return output;
+		 List<Branch> branchlist = branchService.getallOfParticularInstitute(inst);
+		 for (Branch b : branchlist) {
+		 if(b.getName().equalsIgnoreCase(branchName))
+		 {
+			 flag =2;
+			 break;
+		 }
+	     }
+		 if(flag == 2)
+		 {
+		  output = "{\"action\":\"Failed to rename branch \",\"status\":\"branchExist\"}"; 
+		 }
+		 else{
+			  branch.setName(branchName);
+			  branch.setInstitute(inst);
+				
+			  branchService.update(branch);
+			  output = "{\"action\":\"Selected Branch is renamed sucessfully \",\"status\":\"success\"}";
+		  }
+		 return output;
+		
 		}
 		catch(Exception e)
 		{
@@ -336,13 +295,29 @@ public class TeacherController {
 	public String RenameClass(@PathVariable("className") String className,@PathVariable("branchId") int branchId,@ModelAttribute("teacher") Teacher teacher,@RequestBody Classes classes) {
 		System.out.println("**********inside RenameClass controller**********");
 		String output;
+		int flag =0;
 		
 		try{
 		Branch branch=branchService.find(branchId);		
-		classes.setName(className);
-		classes.setBranch(branch);
-		classesService.update(classes);
-		output = "{\"action\":\"Selected Class is renamed sucessfully \",\"status\":\"success\"}";
+		List<Classes> classlist = classesService.getallOfParticularBranch(branch);
+		
+		for (Classes c : classlist) {
+			 if(c.getName().equals(className))
+			 {
+				 flag =2;
+				 break;
+			 }
+		     }
+			 if(flag == 2)
+			 {
+			  output = "{\"action\":\"Failed to rename class \",\"status\":\"classExist\"}"; 
+			 }
+			 else {
+		          classes.setName(className);
+		          classes.setBranch(branch);
+		          classesService.update(classes);
+		          output = "{\"action\":\"Selected Class is renamed sucessfully \",\"status\":\"success\"}";
+			 }
 		return output;
 		}
 		catch(Exception e)
@@ -368,214 +343,103 @@ public class TeacherController {
 			return output;
 		}
 	}
-
-	/*@RequestMapping(value = "/DeleteBranch", method = RequestMethod.POST)
-	public String DeleteBranch(Model model, @ModelAttribute("teacher") Teacher teacher,
-			@ModelAttribute("Classes") Classes clas) {
-
-		System.out.println("**********this is Delete Branch controller**********");
-		Branch branch1 = clas.getBranch();
-		System.out.println("teacher id is " + teacher);
-		System.out.println("branch name is " + branch1.getName() + " and its id is " + branch1.getId());
-
-		try {
-			branchService.delet(branch1.getId());
-			System.out.println("Branch is deleted ");
-			model.addAttribute("SuccessMessage", "Branch is deleted successfully");
-		} catch (Exception e) {
-			e.printStackTrace();
-			model.addAttribute("ErrorMessage",
-					"This branch can not be deleted as it contains classes, first delete classes");
+	
+	@RequestMapping(value = "/AddNewDivision/{divisionName}", method = RequestMethod.POST)
+	@ResponseBody
+	public String AddNewDivision(@PathVariable("divisionName") String divisionName,@ModelAttribute("teacher") Teacher teacher,@RequestBody Classes classes) {
+		System.out.println("**********inside AddNewDivision controller**********");
+		String output="";
+		int flag =0;
+		try
+		{
+		 Institute inst = teacherService.GetInstitute(teacher.getId());
+		
+		 List<Division> divisionlist =divisionService.getallOfParticularClass(classes);   
+		 
+		 for (Division d : divisionlist) {
+		 if(d.getName().equalsIgnoreCase(divisionName))
+		 {
+			 flag =2;
+			 break;
+		 }
+	     }
+		 if(flag == 2)
+		 {
+		  output = "{\"action\":\"Failed to add new division \",\"status\":\"divisionExist\"}"; 
+		 }
+		 else{	 
+		 Division division=new Division(); 
+		 division.setName(divisionName);
+		 division.setClasses(classes);
+		 divisionService.create(division);		
+	     
+	     output = "{\"action\":\"New Division is added sucessfully \",\"status\":\"success\"}";
+		  }
+		 return output;
+		 }
+		catch(Exception e)
+		{
+			output = "{\"action\":\"Failed to add new division \",\"status\":\"fail\"}";
+			return output;
 		}
-
-		Branch branch = new Branch();
-		Classes clsess = new Classes();
-		Division division = new Division();
-		model.addAttribute("Branch", branch);
-		model.addAttribute("Classes", clsess);
-		model.addAttribute("Division", division);
-		System.out.println(teacher.getId());
-
-		Institute inst = teacherService.GetInstitute(teacher.getId());
-		System.out.println("institute is :" + inst);
-
-		List<Branch> branchlist = branchService.getallOfParticularInstitute(inst);
-		System.out.println("we are going to print the branches of current isntitute :");
-		for (Branch b : branchlist) {
-			System.out.println(b);
-		}
-
-		model.addAttribute("BranchesOfInst", branchlist);
-
-		return "Teacher/ModifyInstitueStructure";
-	}*/
-
-/*	@RequestMapping(value = "/modalRenameBranch", method = RequestMethod.POST)
-	public String modalRenameBranch(Model model, @ModelAttribute("teacher") Teacher teacher,
-			@ModelAttribute("Classes") Classes clas) {
-
-		System.out.println("**********this is Rename Branch controller**********");
-		Branch branch1 = clas.getBranch();
-		System.out.println("teacher id is " + teacher);
-		System.out.println("branch name is " + branch1.getName() + " and its id is " + branch1.getId());
-		branch1.setInstitute(teacher.getInstitute());
-
-		try {
-			branchService.update(branch1);
-			System.out.println("Branch is renamed");
-			model.addAttribute("SuccessMessage", "Branch is renamed successfully");
-		} catch (Exception e) {
-			e.printStackTrace();
-			model.addAttribute("ErrorMessage", "This branch can not be renamed");
-		}
-
-		Branch branch = new Branch();
-		Classes clsess = new Classes();
-		Division division = new Division();
-		model.addAttribute("Branch", branch);
-		model.addAttribute("Classes", clsess);
-		model.addAttribute("Division", division);
-		System.out.println(teacher.getId());
-
-		Institute inst = teacherService.GetInstitute(teacher.getId());
-		System.out.println("institute is :" + inst);
-
-		List<Branch> branchlist = branchService.getallOfParticularInstitute(inst);
-		System.out.println("we are going to print the branches of current isntitute :");
-		for (Branch b : branchlist) {
-			System.out.println(b);
-		}
-
-		model.addAttribute("BranchesOfInst", branchlist);
-
-		return "Teacher/ModifyInstitueStructure";
-	}*/
-
-	/*@RequestMapping(value = "/AddNewClass", method = RequestMethod.POST)
-	public String AddNewClass(Model model, @ModelAttribute("Classes") Classes clas,
-			@ModelAttribute("teacher") Teacher teacher) {
-
-		System.out.println("**********this is AddNewClass controller**********");
-
-		Branch branch = branchService.find(clas.getBranch().getId());
-		Classes c = new Classes(branch, clas.getName());
-		try {
-			classesService.create(c);
-			System.out.println("new Classes is saved ");
-			model.addAttribute("SuccessMessage", "New Class is Saved with the name " + clas.getName());
-
-		} catch (Exception e) {
-			// mostly error will be that their is duplicate entry in record
-			model.addAttribute("ErrorMessage",
-					"Duplicate entry Name of the Class or other attribute already exist try again with unique values");
-			System.out.println("duplicate key unique key voilation");
-			e.printStackTrace();
-
-		} finally {
-
-			Branch branch1 = new Branch();
-			Classes clsess = new Classes();
-			Division division = new Division();
-			model.addAttribute("Branch", branch1);
-			model.addAttribute("Classes", clsess);
-			model.addAttribute("Division", division);
-			Institute inst = teacherService.GetInstitute(teacher.getId());
-			System.out.println("institute is :" + inst);
-
-			List<Branch> branchlist = branchService.getallOfParticularInstitute(inst);
-			System.out.println("we are going to print the branches of current isntitute :");
-			for (Branch b : branchlist) {
-				System.out.println(b);
-			}
-
-			model.addAttribute("BranchesOfInst", branchlist);
-		}
-		return "Teacher/ModifyInstitueStructure";
-	}*/
-
-	@RequestMapping(value = "/DeleteClassFromBranch", method = RequestMethod.POST)
-	public String DeleteClassFromBranch(Model model, @ModelAttribute("teacher") Teacher teacher,
-			@ModelAttribute("Division") Division div) {
-
-		System.out.println("**********this is Delete Class controller**********");
-		Branch branch1 = div.getClasses().getBranch();
-		Classes classes = div.getClasses();
-		System.out.println("teacher id is " + teacher);
-		System.out.println("class name is " + classes.getName() + " and its id is " + classes.getId());
-
-		try {
-			classesService.delet(classes.getId());
-			System.out.println("Class is deleted ");
-			model.addAttribute("SuccessMessage", "Class is deleted successfully");
-		} catch (Exception e) {
-			e.printStackTrace();
-			model.addAttribute("ErrorMessage",
-					"This class can not be deleted as it contains division, first delete divisions");
-		}
-
-		Branch branch = new Branch();
-		Classes clsess = new Classes();
-		Division division = new Division();
-		model.addAttribute("Branch", branch);
-		model.addAttribute("Classes", clsess);
-		model.addAttribute("Division", division);
-		System.out.println(teacher.getId());
-
-		Institute inst = teacherService.GetInstitute(teacher.getId());
-		System.out.println("institute is :" + inst);
-
-		List<Branch> branchlist = branchService.getallOfParticularInstitute(inst);
-		System.out.println("we are going to print the branches of current isntitute :");
-		for (Branch b : branchlist) {
-			System.out.println(b);
-		}
-
-		model.addAttribute("BranchesOfInst", branchlist);
-
-		return "Teacher/ModifyInstitueStructure";
 	}
 
-	@RequestMapping(value = "/modalRenameClass", method = RequestMethod.POST)
-	public String modalRenameClass(Model model, @ModelAttribute("teacher") Teacher teacher,
-			@ModelAttribute("Division") Division div) {
-
-		System.out.println("**********this is Rename Class controller**********");
-		Branch branch1 = div.getClasses().getBranch();
-		Classes classes = div.getClasses();
-		System.out.println("teacher id is " + teacher);
-		System.out.println("class name is " + classes.getName() + " and its id is " + classes.getId());
-		branch1.setInstitute(teacher.getInstitute());
-		classes.setBranch(branch1);
-		try {
-			classesService.update(classes);
-			System.out.println("Class is renamed");
-			model.addAttribute("SuccessMessage", "Class is renamed successfully");
-		} catch (Exception e) {
-			e.printStackTrace();
-			model.addAttribute("ErrorMessage", "This class can not be renamed");
+	@RequestMapping(value = "/RenameDivision/{divisionName}/{classId}", method = RequestMethod.POST)
+	@ResponseBody
+	public String RenameDivision(@PathVariable("divisionName") String divisionName,@PathVariable("classId") int classId,@ModelAttribute("teacher") Teacher teacher,@RequestBody Division division) {
+		System.out.println("**********inside RenameDivision controller**********");
+		String output;
+		int flag =0;
+		
+		try{
+			Classes classes=classesService.find(classId);
+		
+		List<Division> divisionlist =divisionService.getallOfParticularClass(classes);	
+		for (Division d : divisionlist) {
+			 if(d.getName().equalsIgnoreCase(divisionName))
+			 {
+				 flag =2;
+				 break;
+			 }
+		     }
+			 if(flag == 2)
+			 {
+			  output = "{\"action\":\"Failed to rename division \",\"status\":\"divisionExist\"}"; 
+			 }
+			 else {
+		          division.setName(divisionName);
+		          division.setClasses(classes);
+		          divisionService.update(division);
+		     
+		          output = "{\"action\":\"Selected Division is renamed sucessfully \",\"status\":\"success\"}";
+			 }
+		return output;
 		}
-
-		Branch branch = new Branch();
-		Classes clsess = new Classes();
-		Division division = new Division();
-		model.addAttribute("Branch", branch);
-		model.addAttribute("Classes", clsess);
-		model.addAttribute("Division", division);
-		System.out.println(teacher.getId());
-
-		Institute inst = teacherService.GetInstitute(teacher.getId());
-		System.out.println("institute is :" + inst);
-
-		List<Branch> branchlist = branchService.getallOfParticularInstitute(inst);
-		System.out.println("we are going to print the branches of current isntitute :");
-		for (Branch b : branchlist) {
-			System.out.println(b);
+		catch(Exception e)
+		{
+			output = "{\"action\":\"Failed to rename selected division \",\"status\":\"fail\"}";
+			return output;
 		}
-
-		model.addAttribute("BranchesOfInst", branchlist);
-
-		return "Teacher/ModifyInstitueStructure";
 	}
+	
+	@RequestMapping(value = "/DeleteDivision", method = RequestMethod.POST)
+	@ResponseBody
+	public String DeleteDivision(@ModelAttribute("teacher") Teacher teacher,@RequestBody Division division) {
+		System.out.println("**********inside DeleteDivision controller**********");
+		String output;
+		try{
+		divisionService.delet(division.getId());
+		output = "{\"action\":\"Selected Division is deleted sucessfully \",\"status\":\"success\"}";
+		return output;
+		}
+		catch(Exception e)
+		{
+			output = "{\"action\":\"Failed to delete selected division \",\"status\":\"fail\"}";
+			return output;
+		}
+	}
+	
+	
 
 	@RequestMapping(value = "/GetClassesList/{id}", method = RequestMethod.GET)
 	@ResponseBody
@@ -622,200 +486,9 @@ public class TeacherController {
 		return JSON;
 	}
 
-	@RequestMapping(value = "/AddNewDivision", method = RequestMethod.POST)
-	public String AddNewDivision(Model model, @ModelAttribute("Division") Division div,
-			@ModelAttribute("teacher") Teacher teacher) {
 
-		System.out.println("**********this is AddNewDivision controller**********");
 
-		Classes clas2 = classesService.find(div.getClasses().getId());
-		Division newDiv = new Division(clas2, div.getName());
-
-		try {
-			divisionService.create(newDiv);
-			System.out.println("new Division is saved ");
-			model.addAttribute("SuccessMessage", "New Division is Saved with the name " + newDiv.getName());
-
-		} catch (Exception e) {
-			// mostly error will be that their is duplicate entry in record
-			model.addAttribute("ErrorMessage",
-					"Duplicate entry Name of the Class or other attribute already exist try again with unique values");
-			System.out.println("duplicate key unique key voilation");
-			e.printStackTrace();
-
-		} finally {
-			Branch branch1 = new Branch();
-			Classes clsess = new Classes();
-			Division division = new Division();
-			model.addAttribute("Branch", branch1);
-			model.addAttribute("Classes", clsess);
-			model.addAttribute("Division", division);
-			Institute inst = teacherService.GetInstitute(teacher.getId());
-			System.out.println("institute is :" + inst);
-
-			List<Branch> branchlist = branchService.getallOfParticularInstitute(inst);
-			System.out.println("we are going to print the branches of current isntitute :");
-			for (Branch b : branchlist) {
-				System.out.println(b);
-			}
-			model.addAttribute("BranchesOfInst", branchlist);
-		}
-		return "Teacher/ModifyInstitueStructure";
-	}
-
-	@RequestMapping(value = "/DeleteDivisionFromClass", method = RequestMethod.POST)
-	public String DeleteDivisionFromClass(Model model, @ModelAttribute("teacher") Teacher teacher,
-			HttpServletRequest req) {
-
-		System.out.println("**********this is Delete Division controller**********");
-		String divID = req.getParameter("disabledSelectForDivisionForDelete");
-		int id = Integer.valueOf(divID);
-		String classID = req.getParameter("disabledSelectForClassesForDeleteDivision");
-		System.out.println("div id is " + id);
-		System.out.println("class id is " + classID);
-
-		System.out.println("teacher id is " + teacher);
-
-		try {
-			divisionService.delet(id);
-			System.out.println("Division is deleted ");
-			model.addAttribute("SuccessMessage", "Division is deleted successfully");
-		} catch (Exception e) {
-			e.printStackTrace();
-			model.addAttribute("ErrorMessage", "This Division can not be deleted");
-		}
-
-		Branch branch = new Branch();
-		Classes clsess = new Classes();
-		Division division = new Division();
-		model.addAttribute("Branch", branch);
-		model.addAttribute("Classes", clsess);
-		model.addAttribute("Division", division);
-		System.out.println(teacher.getId());
-
-		Institute inst = teacherService.GetInstitute(teacher.getId());
-		System.out.println("institute is :" + inst);
-
-		List<Branch> branchlist = branchService.getallOfParticularInstitute(inst);
-		System.out.println("we are going to print the branches of current isntitute :");
-		for (Branch b : branchlist) {
-			System.out.println(b);
-		}
-		model.addAttribute("BranchesOfInst", branchlist);
-		return "Teacher/ModifyInstitueStructure";
-	}
-
-	@RequestMapping(value = "/modalRenameDivision", method = RequestMethod.POST)
-	public String modalRenameDivision(Model model, @ModelAttribute("teacher") Teacher teacher, HttpServletRequest req) {
-
-		System.out.println("**********this is Rename Division controller**********");
-		String id = req.getParameter("selectedDivisionIdToRename");
-
-		Integer intObject = new Integer(id);
-		int DivId = intObject.intValue();
-		String DivName = req.getParameter("selectedDivisionForRename");
-		System.out.println("Div is " + DivName + " and its id is " + DivId);
-
-		String id1 = req.getParameter("selectedClassIdToRenameDivision");
-		Integer intObject1 = new Integer(id1);
-		int ClassId = intObject1.intValue();
-		String ClassName = req.getParameter("selectedClassForRenameDivision");
-
-		String id2 = req.getParameter("selectedBranchIdrenameDivision");
-		Integer intObject2 = new Integer(id2);
-		int BranchId = intObject2.intValue();
-		String BranchName = req.getParameter("selectedBranchForRenameDivision");
-
-		Branch branch = new Branch();
-		Classes classes = new Classes();
-		Division div = new Division();
-
-		branch.setId(BranchId);
-		branch.setName(BranchName);
-
-		classes.setBranch(branch);
-		classes.setId(ClassId);
-		classes.setName(ClassName);
-
-		div.setClasses(classes);
-		div.setId(DivId);
-		div.setName(DivName);
-
-		try {
-			divisionService.update(div);
-			System.out.println("Division is renamed");
-			model.addAttribute("SuccessMessage", "Division is renamed successfully");
-		} catch (Exception e) {
-			e.printStackTrace();
-			model.addAttribute("ErrorMessage", "This Division can not be renamed");
-		}
-
-		Branch branch1 = new Branch();
-		Classes clsess = new Classes();
-		Division division = new Division();
-		model.addAttribute("Branch", branch1);
-		model.addAttribute("Classes", clsess);
-		model.addAttribute("Division", division);
-		System.out.println(teacher.getId());
-
-		Institute inst = teacherService.GetInstitute(teacher.getId());
-		System.out.println("institute is :" + inst);
-
-		List<Branch> branchlist = branchService.getallOfParticularInstitute(inst);
-		System.out.println("we are going to print the branches of current isntitute :");
-		for (Branch b : branchlist) {
-			System.out.println(b);
-		}
-
-		model.addAttribute("BranchesOfInst", branchlist);
-
-		return "Teacher/ModifyInstitueStructure";
-	}
-
-	@RequestMapping(value = "/ViewInstitueStructure", method = RequestMethod.GET)
-	public String ViewInstitueStructure(Model model, @ModelAttribute("teacher") Teacher teacher,
-			@ModelAttribute("institute") Institute institute) {
-
-		System.out.println("**********this is ViewInstitueStructure controller**********");
-		/*
-		 * System.out.println(teacher); String
-		 * str=teacherService.InstituteStucture(teacher);
-		 * 
-		 * System.out.println(str); model.addAttribute("structure", str);
-		 */
-
-		return "Teacher/ExistingInstituteStructure";
-	}
-
-	@RequestMapping("/teacherChangePassword")
-	public String changePasswordShow(Model map) {
-		System.out.println("**********this is teacherChangePassword controller**********");
-
-		String oldPassword = "a", newPassword = "a";
-		map.addAttribute("oldPassword", oldPassword);
-		map.addAttribute("newPassword", newPassword);
-		return "Teacher/changePassword";
-	}
-
-	@RequestMapping(value = "/teacherChangePassword", method = RequestMethod.POST)
-	public String changePassword(Model map, @RequestParam("oldPassword") String oldPassword,
-			@RequestParam("newPassword") String newPassword, @ModelAttribute("teacher") Teacher teacher) {
-		System.out.println("**********this is teacherChangePassword controller**********");
-		System.out.println(teacher.toString());
-		Login login = teacherService.getLoginIdByEmail(teacher.getEmail());
-		System.out.println(login.getId());
-		teacher.setLogin(login);
-		System.out.println(teacher.getLogin().getId());
-		System.out.println(oldPassword + "taking password");
-		System.out.println(newPassword + "taking password");
-
-		Boolean flag = teacherService.checkPassword(oldPassword, login.getId());
-
-		if (flag)
-			teacherService.changePassword(newPassword, login);
-
-		return "Teacher/changePassword";
-	}
+	
 
 	@RequestMapping(value = "/GetCalender/{divId}", method = RequestMethod.POST)
 	@ResponseBody
@@ -899,25 +572,8 @@ public class TeacherController {
 
 	}
 
-	@RequestMapping(value = "/TeacherHome", method = RequestMethod.GET)
-	public String TeacherHome(@ModelAttribute("teacher") Teacher teacher) {
-		System.out.println("**********inside Teacher Home Page controller**********");
-
-		return "Teacher/home";
-
-	}
-
-	@RequestMapping(value = "/TeacherRequestForApproval", method = RequestMethod.GET)
-	public String TeacherRequestForApproval(Model model, @ModelAttribute("teacher") Teacher teacher) {
-		System.out.println("**********inside TeacherRequestForApproval controller**********");
-		System.out.println("teachers insitute id is :" + teacher.getInstitute().getId());
-		List<Teacher> teacherList = instituteService
-				.getallPendingTeacherForApproval(instituteService.find(teacher.getInstitute().getId()));
-		String teacherListJSON = gson.toJson(teacherList);
-		model.addAttribute("TeacherListJSON", teacherListJSON);
-		return "Teacher/TeacherRequestForApproval";
-
-	}
+	
+	
 
 	@RequestMapping(value = "/TeacherRequestForApprovalListJSON", method = RequestMethod.GET)
 	@ResponseBody
@@ -996,29 +652,7 @@ public class TeacherController {
 		return result;
 	}
 
-	@RequestMapping(value = "/home", method = RequestMethod.GET)
-	public String taecherhome() {
-
-		System.out.println("*************this is /Teacher/home controller*********************");
-
-		return "Teacher/home";
-	}
-
-	@RequestMapping(value = "/StudentRequestManager", method = RequestMethod.GET)
-	public String StudentRequestManager(Model model, @ModelAttribute("teacher") Teacher teacher) {
-		System.out.println("**********inside StudentRequestManager controller**********");
-		System.out.println("teachers insitute id is :" + teacher.getInstitute().getId());
-		List<Student> studnetList = instituteService
-				.getallPendingStudentForApproval(instituteService.find(teacher.getInstitute().getId()));
-		for (Student s : studnetList) {
-			System.out.println(s.getFname());
-		}
-
-		String studentListJSON = gson.toJson(studnetList);
-		model.addAttribute("StudentListJSON", studentListJSON);
-		return "Teacher/StudentRequestManager";
-
-	}
+	
 
 	@RequestMapping(value = "/StudentRequestManagerList", method = RequestMethod.GET)
 	@ResponseBody
@@ -1091,35 +725,7 @@ public class TeacherController {
 		return result;
 	}
 
-	@RequestMapping(value = "/AddStudentToDivision", method = RequestMethod.GET)
-	public String AddStudentToDivision(Model model, @ModelAttribute("teacher") Teacher teacher) {
-		System.out.println("**********inside AddStudentToDivision controller**********");
-		System.out.println("teachers insitute id is :" + teacher.getInstitute().getId());
-
-		List<Student> studnetList = instituteService
-				.getallStudentWhoAreNotInAnyDivision(instituteService.find(teacher.getInstitute().getId()));
-		for (Student s : studnetList) {
-			System.out.println(s.getFname());
-		}
-
-		String studentListJSON = gson.toJson(studnetList);
-		model.addAttribute("StudentListJSON", studentListJSON);
-
-		Institute inst = teacherService.GetInstitute(teacher.getId());
-		System.out.println("institute is :" + inst);
-
-		List<Branch> branchlist = branchService.getallOfParticularInstitute(inst);
-		System.out.println("we are going to print the branches of current isntitute :");
-		for (Branch b : branchlist) {
-			System.out.println(b);
-		}
-
-		String branchListJSON = gson.toJson(branchlist);
-		System.out.println(branchListJSON);
-		model.addAttribute("branchListJSON", branchListJSON);
-		return "Teacher/AddStudentToDivision";
-
-	}
+	
 
 	@RequestMapping(value = "/AddStudentToDivisionGetStuendNotInAnyDivision", method = RequestMethod.GET)
 	@ResponseBody
@@ -1165,7 +771,7 @@ public class TeacherController {
 	@RequestMapping(value = "/changeTUsername", consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
 	@ResponseBody
 	public String changeTUsername(@ModelAttribute("teacher") Teacher teacher,
-			@RequestBody HashMap<String, String> requestData) {
+			@RequestBody HashMap<String, String> requestData,Model model) {
 		System.out.println("**********inside changeTUsername controller**********");
 		String response = "";
 		String currentUsername = requestData.get("currentUsername");
@@ -1179,9 +785,9 @@ public class TeacherController {
 				System.out.println("success name changed");
 				response = "{\"status\":\"success\",\"teacher\":" + gson.toJson(teacher) + "}";
 				System.out.println("work fine");
-				// model.addAttribute("userNameChangeSuccess","username successfully updated");
+				
 				teacher.getLogin().setUsername(NewUserName);
-				// model.addAttribute("teacher",teacher);
+				 model.addAttribute("teacher",teacher);
 				System.out.println(response.toString());
 				return response = "{\"status\":\"Success\"}";
 			} else {
@@ -1197,141 +803,42 @@ public class TeacherController {
 		return response;
 	}
 
-	
 	@RequestMapping(value = "/changeTPassword", consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
 	@ResponseBody
 	public String changeTPassword(@ModelAttribute("teacher") Teacher teacher,
-			@RequestBody HashMap<String, String> requestData) {
+			@RequestBody HashMap<String, String> requestData,Model model) {
 		System.out.println("**********inside changeTPassword controller**********");
+		String response = "";
 		String CurrentPassword = requestData.get("CurrentPassword");
 		String NewPassword = requestData.get("NewPassword");
 		String RePassword = requestData.get("RePassword");
+		
+			String existPassword = teacher.getLogin().getPassword();
+			System.out.println(CurrentPassword);
+			System.out.println(NewPassword);
+			System.out.println(RePassword);
+			System.out.println(existPassword);
 
-		String existPassword = teacher.getLogin().getPassword();
+			if (existPassword.equals(CurrentPassword)) {
+				System.out.println("existPassword equals CurrentPassword");
+				teacherService.changePassword(NewPassword, teacher.getLogin());
+				teacher.getLogin().setPassword(NewPassword);
+				 model.addAttribute("teacher",teacher);
+				return response = "{\"status\":\"Success\"}";
+			} else {
+				System.out.println("existPassword not equals CurrentPassword");
+				
+				 response = "{\"status\":\"failed\",\"cause\":\"not_valid_current_Password\"}";
+				 System.out.println(response);
+				 return response;
 
-	/*	System.out.println("from form " + currentPassword + " from teacherobject" + existPassword);
-		System.out.println("new username " + newPassword);
-		if (existPassword.equals(currentPassword)) {
-			teacherService.changePassword(newPassword, teacher.getLogin());
-			model.addAttribute("passwordChangeSuccess", "password successfully updated");
-			teacher.getLogin().setPassword(newPassword);
-			model.addAttribute("teacher", teacher);
-		} else {
-			model.addAttribute("wrongPassword", "You have entered wrong current Password");
-		}*/
-
-		return "Teacher/changePassword";
+			}
+		
+		// return response = "{\"status\":\"failed\"}";
 
 	}
-	/*
-	 * @RequestMapping(value =
-	 * "/changeTUsername",consumes=MediaType.APPLICATION_JSON_VALUE,method =
-	 * RequestMethod.POST)
-	 * 
-	 * @ResponseBody public String changeTUsername(@ModelAttribute("teacher")
-	 * Teacher teacher,HttpServletRequest request,Model model) {
-	 * System.out.println("**********inside changeTUsername controller**********");
-	 * String response = ""; String
-	 * currentUserName=request.getParameter("currentUsername"); String
-	 * newUserName=request.getParameter("newUsername"); String
-	 * existName=teacher.getLogin().getUsername();
-	 * 
-	 * System.out.println("from form "+currentUserName
-	 * +" from teacherobject"+existName);
-	 * System.out.println("new username "+newUserName); try {
-	 * if(existName.equals(currentUserName) ) {
-	 * teacherService.changeUserName(newUserName,teacher.getLogin()); response =
-	 * "{\"status\":\"success\",\"teacher\":"+gson.toJson(teacher)+"}";
-	 * System.out.println("work fine");
-	 * //model.addAttribute("userNameChangeSuccess","username successfully updated"
-	 * ); teacher.getLogin().setUsername(newUserName);
-	 * model.addAttribute("teacher",teacher);
-	 * System.out.println(response.toString()); } else { response =
-	 * "{\"status\":\"failed\"}";
-	 * 
-	 * } }catch(Exception e) { System.out.println(e.getStackTrace()); response =
-	 * "{\"status\":\"failed\"}";
-	 * 
-	 * } System.out.println("works Fine:"+response); return response;
-	 * 
-	 * }
-	 */
-
-	/*
-	 * @RequestMapping(value="/updateTeacher",consumes=MediaType.
-	 * APPLICATION_JSON_VALUE,method = RequestMethod.POST)
-	 * 
-	 * @ResponseBody public String updateTeacher(@ModelAttribute("teacher") Teacher
-	 * teacher1,@RequestBody Teacher teacher2,Model model) { System.out.
-	 * println("**********this is updateTeacher controller suraj**********");
-	 * teacher1.setFname(teacher2.getFname());
-	 * teacher1.setLname(teacher2.getLname());
-	 * teacher1.setEmail(teacher2.getEmail());
-	 * teacher1.setContactno(teacher2.getContactno()); String response=""; try {
-	 * teacherService.update(teacher1);
-	 * response="{\"status\":\"success\",\"teacher\":"+gson.toJson(teacher1)+"}";
-	 * model.addAttribute("teacher", teacher1); model.addAttribute("teacherJSON",
-	 * gson.toJson(teacher1));
-	 * 
-	 * } catch(Exception e) { response="{\"status\":\"fail\"}"; }
-	 * System.out.println(response); return response; }
-	 */
-
 	
-/*
-	@RequestMapping(value = "/changeTPassword", method = RequestMethod.POST)
-	public String changeTPassword(@ModelAttribute("teacher") Teacher teacher, HttpServletRequest request, Model model) {
-		System.out.println("**********inside changeTPassword controller**********");
-		String currentPassword = request.getParameter("currentPassword");
-		String newPassword = request.getParameter("newPassword");
 
-		String existPassword = teacher.getLogin().getPassword();
-
-		System.out.println("from form " + currentPassword + " from teacherobject" + existPassword);
-		System.out.println("new username " + newPassword);
-		if (existPassword.equals(currentPassword)) {
-			teacherService.changePassword(newPassword, teacher.getLogin());
-			model.addAttribute("passwordChangeSuccess", "password successfully updated");
-			teacher.getLogin().setPassword(newPassword);
-			model.addAttribute("teacher", teacher);
-		} else {
-			model.addAttribute("wrongPassword", "You have entered wrong current Password");
-		}
-
-		return "Teacher/changePassword";
-
-	}
-*/
-	
-	@RequestMapping("/teacherShowProfile")
-	public String teacherShowProfile(Model model) {
-		System.out.println("**********this is teacherShowProfile controller**********");
-		return "Teacher/showProfile";
-	}
-
-	@RequestMapping(value = "/teacherEditProfile")
-	public String teacherEditProfile(Model model) {
-		System.out.println("**********this is teacherEditProfile controller**********");
-		model.addAttribute("EditTeacher", new Teacher());
-		return "Teacher/editProfile";
-	}
-
-	@RequestMapping(value = "/editTeacher", consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
-	public String editTeacher(Model model, @ModelAttribute("teacher") Teacher teacher1, @RequestBody Teacher teacher2) {
-		System.out.println("**********this is editTeacher controller suraj**********");
-		teacher1.setFname(teacher2.getFname());
-		teacher1.setLname(teacher2.getLname());
-		teacher1.setEmail(teacher2.getEmail());
-		teacher1.setContactno(teacher2.getContactno());
-
-		teacherService.update(teacher1);
-		model.addAttribute("teacher", teacher1);
-		model.addAttribute("teacherJSON", gson.toJson(teacher1));
-
-		model.addAttribute("profileEditSuccess", "Your profile updated successfully");
-
-		return "Teacher/showProfile";
-	}
 
 	@RequestMapping(value = "/updateTeacher", consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
 	@ResponseBody
@@ -1356,98 +863,8 @@ public class TeacherController {
 		return response;
 	}
 
-	/*
-	 * @RequestMapping(value="/editTeacher",method = RequestMethod.POST) public
-	 * String editTeacher(Model model,@ModelAttribute("teacher") Teacher
-	 * teacher1,@ModelAttribute("EditTeacher") Teacher teacher2) {
-	 * System.out.println("**********this is editTeacher controller**********");
-	 * teacher1.setFname(teacher2.getFname());
-	 * teacher1.setLname(teacher2.getLname());
-	 * teacher1.setEmail(teacher2.getEmail());
-	 * teacher1.setContactno(teacher2.getContactno());
-	 * 
-	 * teacherService.update(teacher1); model.addAttribute("teacher",teacher1);
-	 * model.addAttribute("teacherJSON",gson.toJson(teacher1));
-	 * 
-	 * model.addAttribute("profileEditSuccess","Your profile updated successfully");
-	 * 
-	 * return "Teacher/showProfile"; }
-	 */
-
-	@RequestMapping(value = "/StudentInDivision", method = RequestMethod.GET)
-	public String ShowStudentInDivision(Model model, @ModelAttribute("teacher") Teacher teacher) {
-		System.out.println("**********inside Show student of particular division controller**********");
-
-		Branch branch = new Branch();
-		Classes clsess = new Classes();
-		Division division = new Division();
-		model.addAttribute("Branch", branch);
-		model.addAttribute("Classes", clsess);
-		model.addAttribute("Division", division);
-		System.out.println(teacher.getId());
-
-		Institute inst = teacherService.GetInstitute(teacher.getId());
-		System.out.println("institute is :" + inst);
-
-		List<Branch> branchlist = branchService.getallOfParticularInstitute(inst);
-		System.out.println("we are going to print the branches of current isntitute :");
-		for (Branch b : branchlist) {
-			System.out.println(b);
-		}
-
-		String branchListJSON = gson.toJson(branchlist);
-		System.out.println(branchListJSON);
-		model.addAttribute("branchListJSON", branchListJSON);
-		return "Teacher/StudentInDivision";
-	}
-
-	@RequestMapping(value = "/showStudentOfDivision", method = RequestMethod.POST)
-	public String displayStudentOfDivision(Model model, @ModelAttribute("teacher") Teacher teacher,
-			HttpServletRequest req) {
-		System.out.println("**********inside displayStudentOfDivision controller**********");
-		String id = req.getParameter("disabledSelectForDivisionForShowStudent");
-		String DivName = req.getParameter("");
-		int DivID = Integer.parseInt(id);
-		System.out.println(DivID);
-
-		try {
-			System.out.println("in try");
-			List<Student> studentList = StudentService.findByDivId(DivID);
-			for (Student s : studentList) {
-				System.out.println(s.getFname() + " " + s.getLname());
-			}
-
-			String studentListJSON = gson.toJson(studentList);
-			model.addAttribute("StudentListJSON", studentListJSON);
-			if (studentList.isEmpty()) {
-				model.addAttribute("ErrorMessage", "Selected division does not contain any student");
-			} else {
-				model.addAttribute("SuccessMessage", "Selected division have following students");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		Branch branch = new Branch();
-		Classes clsess = new Classes();
-		Division division = new Division();
-		model.addAttribute("Branch", branch);
-		model.addAttribute("Classes", clsess);
-		model.addAttribute("Division", division);
-		System.out.println(teacher.getId());
-
-		Institute inst = teacherService.GetInstitute(teacher.getId());
-		System.out.println("institute is :" + inst);
-
-		List<Branch> branchlist = branchService.getallOfParticularInstitute(inst);
-		System.out.println("we are going to print the branches of current isntitute :");
-		for (Branch b : branchlist) {
-			System.out.println(b);
-		}
-		model.addAttribute("BranchesOfInst", branchlist);
-
-		return "Teacher/StudentInDivision";
-	}
+	
+	
 
 	@RequestMapping(value = "/GetStudentOfDivision/{id}", method = RequestMethod.GET)
 	@ResponseBody
@@ -1482,19 +899,7 @@ public class TeacherController {
 		return studentListJSON;
 	}
 
-	/*
-	 * @RequestMapping(value="/deleteStudentFromDivision", method=RequestMethod.GET)
-	 * 
-	 * public String deleteStudentFromDivision(Model
-	 * model,@ModelAttribute("teacher") Teacher teacher,HttpServletRequest req) {
-	 * System.out.
-	 * println("**********inside deleteStudentFromDivision controller**********");
-	 * String [] name=req.getParameterValues("selectedstudent"); for(int
-	 * i=0;i<name.length;i++){ System.out.println("selected student "+name); }
-	 * 
-	 * 
-	 * return "Teacher/StudentInDivision"; }
-	 */
+	
 
 	@RequestMapping(value = "/GetClassesListInJSON/{id}", method = RequestMethod.GET)
 	@ResponseBody
@@ -1595,17 +1000,7 @@ public class TeacherController {
 		return gson.toJson(division);
 	}
 
-	@RequestMapping("/AddEditExam")
-	public String AddEditExam(Model model) {
-		System.out.println("**********this is AddEditExam controller**********");
-		return "Teacher/Exam/AddEditExam";
-	}
-
-	@RequestMapping("/studentResult")
-	public String studentResult(Model model) {
-		System.out.println("**********this is ExamList in Result controller**********");
-		return "Teacher/Result/ExamList";
-	}
+	
 
 	@RequestMapping(value = "/GetExamsOFInstitute/{id}", method = RequestMethod.POST)
 	@ResponseBody
@@ -2032,57 +1427,9 @@ public class TeacherController {
 		return subjectListNotInDivJSON;
 	}
 
-	@RequestMapping(value = "/AddEditSubject", method = RequestMethod.GET)
-	public String AddEditSubject(Model model) {
-		System.out.println("**********inside add and edit subject controller**********");
-		/*
-		 * Branch branch= new Branch(); Classes clsess=new Classes(); Division division
-		 * =new Division(); model.addAttribute("Branch", branch);
-		 * model.addAttribute("Classes", clsess); model.addAttribute("Division",
-		 * division); System.out.println(teacher.getId());
-		 * 
-		 * Institute inst=teacherService.GetInstitute(teacher.getId());
-		 * System.out.println("institute is :"+inst);
-		 * 
-		 * List <Branch> branchlist=branchService.getallOfParticularInstitute(inst);
-		 * System.out.
-		 * println("we are going to print the branches of current isntitute :"); for
-		 * (Branch b : branchlist) { System.out.println(b); }
-		 * 
-		 * 
-		 * String branchListJSON=gson.toJson(branchlist);
-		 * System.out.println(branchListJSON);
-		 * model.addAttribute("branchListJSON",branchListJSON );
-		 */
-		return "Teacher/Subject/AddEditSubject";
-	}
+	
 
-	@RequestMapping(value = "/SubjectInDivision", method = RequestMethod.GET)
-	public String ShowSubjectInDivision(Model model, @ModelAttribute("teacher") Teacher teacher) {
-		System.out.println("**********inside Show subject of particular division controller**********");
-
-		Branch branch = new Branch();
-		Classes clsess = new Classes();
-		Division division = new Division();
-		model.addAttribute("Branch", branch);
-		model.addAttribute("Classes", clsess);
-		model.addAttribute("Division", division);
-		System.out.println(teacher.getId());
-
-		Institute inst = teacherService.GetInstitute(teacher.getId());
-		System.out.println("institute is :" + inst);
-
-		List<Branch> branchlist = branchService.getallOfParticularInstitute(inst);
-		System.out.println("we are going to print the branches of current isntitute :");
-		for (Branch b : branchlist) {
-			System.out.println(b);
-		}
-
-		String branchListJSON = gson.toJson(branchlist);
-		System.out.println(branchListJSON);
-		model.addAttribute("branchListJSON", branchListJSON);
-		return "Teacher/Subject/SubjectInDivision";
-	}
+	
 
 	@RequestMapping(value = "/GetSubjectOfDivisionInJSON", method = RequestMethod.POST)
 	@ResponseBody
@@ -2349,7 +1696,7 @@ public class TeacherController {
 
 	@RequestMapping(value = "/sendSMS/{contactNo}", method = RequestMethod.GET)
 	@ResponseBody
-	public String approveTeacherApprovalRequest(@PathVariable("contactNo") String contactNo,
+	public String sendSMS(@PathVariable("contactNo") String contactNo,
 			@RequestParam("sms") String text) {
 
 		System.out.println("**********from sendSMS/{contactNo} controller**********");

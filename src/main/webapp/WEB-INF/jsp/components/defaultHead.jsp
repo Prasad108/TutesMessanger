@@ -21,7 +21,7 @@
     <!--external css-->
     <!-- font icon -->
     <link href="${pageContext.request.contextPath}/css/elegant-icons-style.css" rel="stylesheet" />
-    <link href="${pageContext.request.contextPath}/css/font-awesome.min.css" rel="stylesheet" />    
+    <link href="${pageContext.request.contextPath}/css/fontawesome-all.min.css" rel="stylesheet" />    
     <!-- full calendar css-->
   <!--   <link href="${pageContext.request.contextPath}/assets/fullcalendar/fullcalendar/bootstrap-fullcalendar.css" rel="stylesheet" />
 	<link href="${pageContext.request.contextPath}/assets/fullcalendar/fullcalendar/fullcalendar.css" rel="stylesheet" /> -->

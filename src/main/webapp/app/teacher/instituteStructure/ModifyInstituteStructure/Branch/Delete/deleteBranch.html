@@ -25,6 +25,13 @@
      </button>
 	<strong>Branch Not Successfully Deleted from Institute, please delete classes of this Branch</strong> 
  </div>
+ 
+ <div class="alert alert-block alert-danger fade in" ng-show="selectBranchMessage">
+	 <button data-dismiss="alert" class="close close-sm" type="button">
+		 <i class="icon-remove"></i>
+     </button>
+	<strong>Select Branch from dropdown list</strong> 
+ </div>
 
   <div class="panel-body">
 	 <div class="form">
@@ -32,7 +39,7 @@
 		      <div class="form-group ">
 		        <label for="bname" class="control-label col-lg-2">Select Branch<span class="required">*</span></label>
 		         <div class="col-lg-10">
-		           <select class="form-control col-lg-2" ng-model="selectBranch" ng-options="branch.name for (x,branch) in branchList" ng-change="selectedBranch()" style="WIDTH: 200px;height: 35px" required="required"></select>
+		           <select class="form-control col-lg-2" ng-model="selectBranch" ng-options="branch.name for (x,branch) in branchList" ng-click="selectedBranch()" style="WIDTH: 200px;height: 35px" required="required"></select>
 		         </div>             <!-- input-lg m-bot10 -->
 		      </div>
 				                                     

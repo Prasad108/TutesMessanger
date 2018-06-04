@@ -40,6 +40,7 @@
 	<mvc:resources mapping="/js/**" location="/js/" cache-period="31556926" />
 	<mvc:resources mapping="/img/**" location="/img/" cache-period="31556926" />
 	<mvc:resources mapping="/assets/**" location="/assets/" cache-period="31556926" />
+	<mvc:resources mapping="/webfonts/**" location="/webfonts/" cache-period="31556926" />
 	<mvc:resources mapping="/app/**" location="/app/"  />
 
 

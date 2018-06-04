@@ -11,9 +11,45 @@
 
 
 <section class="panel" style="WIDTH: 1000px">
+
+<div class="alert alert-info fade in" ng-show="successMessage">
+	 <button data-dismiss="alert" class="close close-sm" type="button">
+		 <i class="icon-remove"></i>
+     </button>
+	<strong>Division Successfully Deleted from Class</strong> 
+ </div>
+ 
+ <div class="alert alert-block alert-danger fade in" ng-show="errorMessage">
+	 <button data-dismiss="alert" class="close close-sm" type="button">
+		 <i class="icon-remove"></i>
+     </button>
+	<strong>Division Not Successfully Deleted from Class, please delete student of this division</strong> 
+ </div>
+ 
+ <div class="alert alert-block alert-danger fade in" ng-show="selectBranchMessage">
+	 <button data-dismiss="alert" class="close close-sm" type="button">
+		 <i class="icon-remove"></i>
+     </button>
+	<strong>Select branch from dropdown list</strong> 
+ </div>
+ 
+ <div class="alert alert-block alert-danger fade in" ng-show="selectClassMessage">
+	 <button data-dismiss="alert" class="close close-sm" type="button">
+		 <i class="icon-remove"></i>
+     </button>
+	<strong>Select class from dropdown list</strong> 
+ </div>
+
+<div class="alert alert-block alert-danger fade in" ng-show="selectDivisionMessage">
+	 <button data-dismiss="alert" class="close close-sm" type="button">
+		 <i class="icon-remove"></i>
+     </button>
+	<strong>Select division from dropdown list</strong> 
+ </div>
+
   <div class="panel-body">
 	 <div class="form">
-		<form class="form-validate form-horizontal " id="register_form" method="post" action="DeleteDivision">
+		<form class="form-validate form-horizontal " id="register_form" method="post">
 		      <div class="form-group ">
 		        <label for="bname" class="control-label col-lg-2">Select Branch<span class="required">*</span></label>
 		         <div class="col-lg-10">
@@ -31,13 +67,13 @@
 			   <div class="form-group ">
 		        <label for="bname" class="control-label col-lg-2">Select Division<span class="required">*</span></label>
 		         <div class="col-lg-10">
-		           <select class="form-control col-lg-2" ng-model="selectDivision" ng-options="division.name for (x,division) in divisionList" style="WIDTH: 200px;height: 35px" required="required"></select>
+		           <select class="form-control col-lg-2" ng-model="selectDivision" ng-options="division.name for (x,division) in divisionList" ng-change="selectedDivision();" style="WIDTH: 200px;height: 35px" required="required"></select>
 		         </div>             <!-- input-lg m-bot10 -->
 		      </div>	        
 				                                     
 			  <div class="form-group">
 					<div class="col-lg-offset-2 col-lg-10">
-					  <a class="btn btn-primary" ui-sref="DeleteExistingDivision" ui-sref-active="active">Delete Division</a>
+					  <a class="btn btn-primary" ng-click="deleteDivision()">Delete Division</a>
 					        <!--  <button class="btn btn-primary" type="submit">Add Branch</button> -->
 					</div>
 			  </div>

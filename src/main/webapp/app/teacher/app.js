@@ -63,7 +63,7 @@
 		$stateProvider.state({name : 'examSubjectsStudents', url : '/examSubjects/:id/examSubjectsStudents/:subjectId', templateUrl: '../app/teacher/result/examSubjectStudents/examSubjectStudent.html',  controller: 'examSubjectStudentCtrl'});
 		$stateProvider.state({name : 'paginationTest', url : '/paginationTest', templateUrl: '../app/teacher/paginationTest/pagination.html',  controller: 'paginationCtrl'});
 		
-		$stateProvider.state({name : 'ChangeUserNamePassowrd', url : '/ChangeUserNamePassowrd', templateUrl: '../app/teacher/profile/changePassword/changePassword.html',  controller: 'editUsernamePassword'});
+		//$stateProvider.state({name : 'ChangeUserNamePassowrd', url : '/ChangeUserNamePassowrd', templateUrl: '../app/teacher/profile/changePassword/changePassword.html',  controller: 'editUsernamePassword'});
 		
 		$stateProvider.state({name : 'ModifyInstituteStructure', url : '/ModifyInstituteStructure', templateUrl: '../app/teacher/instituteStructure/ModifyInstituteStructure/ModifyInstituteStructure.html',  controller: 'modifyInstStructCtrl',
 							resolve :{
@@ -82,9 +82,13 @@
 		$stateProvider.state({name : 'RenameDivision', url : '/RenameDivision' , templateUrl: '../app/teacher/instituteStructure/ModifyInstituteStructure/Division/Rename/renameDivision.html',  controller: 'renameDivisionCtrl', resolve :{branchList :function(resolveService){return resolveService.branchList();}}});
 		$stateProvider.state({name : 'DeleteDivision', url : '/DeleteDivision' , templateUrl: '../app/teacher/instituteStructure/ModifyInstituteStructure/Division/Delete/deleteDivision.html',  controller: 'deleteDivisionCtrl', resolve :{branchList :function(resolveService){return resolveService.branchList();}}});
 		
-		$stateProvider.state({name : 'ChangeUsernamePassword', url : '/ChangeUsernamePassword', templateUrl: '../app/teacher/profile/ChangeUsernamePassword/ChangeUsernamePassword.html',  controller: 'ChangeUsernamePasswordCtrl'});		
-		$stateProvider.state({name : 'ChangePassword', url : '/ChangePassword', templateUrl: '../app/teacher/profile/ChangePassword/ChangePassword.html',  controller: 'ChangePasswordCtrl'});
+		$stateProvider.state({name : 'ChangeUsername', url : '/ChangeUsername', templateUrl: '../app/teacher/profile/ChangeUsername/ChangeUsername.html',  controller: 'ChangeUsernamePasswordCtrl'});		
+		$stateProvider.state({name : 'ChangePassword', url : '/ChangePassword', templateUrl: '../app/teacher/profile/ChangePassword/ChangeTPassword.html',  controller: 'ChangePasswordCtrl'});
 		
+		
+		$stateProvider.state({name : 'sms', url : '/sms', templateUrl: '../app/teacher/SMS/sms.html',  controller: 'smsCtrl'});
+		$stateProvider.state({name : 'selectExam', url : '/selectExam', templateUrl: '../app/teacher/SMS/Select Exam/selectExam.html',  controller: 'selectExamCtrl',});
+	
 		
 	}]);
 	

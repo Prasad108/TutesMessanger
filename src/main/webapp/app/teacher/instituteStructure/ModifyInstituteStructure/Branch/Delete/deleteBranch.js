@@ -12,12 +12,26 @@
 		$scope.successMessage=false;
 		$scope.errorMessage=false;
 		
+		$scope.selectedBranch=function(){
+			$scope.successMessage=false;
+			$scope.errorMessage=false;	
+			$scope.selectBranchMessage=false;
+		};
+		
 		$scope.deleteBranch=function(){ //on click of delete branch button 
 				
 	   		console.log($scope.selectBranch); 
 	   		var data = JSON.stringify($scope.selectBranch);
 	   				
-	   	//*********to delete branch from institute******
+	   		if($scope.selectBranch === undefined || $scope.selectBranch === '' || $scope.selectBranch === null)
+	   		{
+	   			$scope.selectBranchMessage=true;
+	   			$scope.successMessage=false;
+	   			$scope.errorMessage=false;
+	   		}
+	   		else
+	   	    {
+	   	     //*********to delete branch from institute******
 	   			 $http({            
 	   	            url: "DeleteBranch",
 	   	         	contentType : 'application/json; charset=utf-8',
@@ -27,13 +41,14 @@
 	   	               
 	   	        })
 	   	        .then(function successCallback(response) {
-	   	                // if success   then generate classlist dropdown
+	   	                // if success
 	   	                
 	   	                console.log("response came"); 
 	   	             if(response.data.status=="success"){
 	   	            	 console.log("Branch deleted Successfully");
 	   	            	 $scope.successMessage=true;
 	   	            	 $scope.errorMessage=false;
+	   	            	 $scope.selectBranchMessage=false;
 	   	            	 
 	   	            	for (var i = 0; i < $scope.branchList.length; i++) {
 	   	            		if($scope.branchList[i].id ==  $scope.selectBranch.id){
@@ -41,22 +56,16 @@
 	   	            			break;
 	   	            		}
 		                }
+		                $scope.selectBranch={};
 		                
-	   	            	 
-	   	            	 $scope.selectBranch={};
-	   	            	 
-	   	              
-	   	            	 
-	   	            	/* $timeout(function(){
-	   	            		 $state.reload();
-	   	                 }, 10000);*/
-	   	            	
+		                $scope.selectBranch=undefined;
 	   	             }
 	   	             else
 	   	             {
 	   	            	$scope.errorMessage=true;
 	   	            	$scope.successMessage=false;
-	   	            	 console.log("Branch Not deleted Successfully"); 
+	   	            	$scope.selectBranchMessage=false;
+	   	            	console.log("Branch Not deleted Successfully"); 
 	   	             }
 	   	                  
 	   	        }, 
@@ -64,9 +73,11 @@
 	   	                // failed
 	   	        	     $scope.errorMessage=true;
 	   	        	     $scope.successMessage=false;
+	   	        	     $scope.selectBranchMessage=false;
 	   	                 console.log("error response came");    	
 	   	                    
 	   	        });
+	   	    }
 			};
 		
 	}
