@@ -17,22 +17,18 @@ public class ParentServiceImpl implements ParentService {
 	@Autowired
 	ParentDAO parentDAO;
 	
-	
 	@Override
 	public void create(Parent parent) {
 		parentDAO.create(parent);
-
 	}
 
 	@Override
 	public void update(Parent parent) {
 		parentDAO.update(parent);
-
 	}
 
 	@Override
 	public Parent edit(int id) {
-		
 		return parentDAO.edit(id);
 	}
 
@@ -43,15 +39,18 @@ public class ParentServiceImpl implements ParentService {
 
 	@Override
 	public Parent find(int id) {
-		
 		return parentDAO.find(id);
 	}
 
 	@Override
 	public List<Parent> getall() {
-		
 		return parentDAO.getall();
 				
+	}
+
+	@Override
+	public Parent findByStudentId(int studId) {
+		return parentDAO.findByStudentId(studId);
 	}
 
 }

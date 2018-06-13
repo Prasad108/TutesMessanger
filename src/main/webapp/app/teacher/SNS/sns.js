@@ -18,39 +18,38 @@ var app=angular.module("myApp");
 									params: {sms: sms.text}
 								})
 								.then(
-										function(response) {
+										function successCallback(response) {
 											// if success       	
-											console.log("succcess");
+											//console.log("succcess");
 											console.log(response);
-											if(response.data.status="success"){
+											if(response.data.status=="success"){
 												console.log("succcess");
 												$scope.sms.contacNumber='';
 												$scope.sms.text='';
 												$scope.pubID=response.data.pubid;
 												$scope.pubSuccess=true;
 												$scope.pubFail=false;
-											}else{
+											}else if(response.data.status=="fail"){
 												console.log(" failed to send the sms");
 												$scope.sms.contacNumber='';
 												$scope.sms.text='';
-												$scope.pubID=data.message;
+												$scope.pubID=response.data.message;
 												$scope.pubSuccess=false;
 												$scope.pubFail=true;
 												
 											}
 											
 										},
-										function(data) { // optional
+										function errorCallback(response) { // optional
 											// failed		                 
 											console.log(" failed to send the sms");
 											$scope.sms.contacNumber='';
 											$scope.sms.text='';
-											$scope.pubID=data.message;
+											$scope.pubID=response.data.message;
 											$scope.pubSuccess=false;
 											$scope.pubFail=true;
 										});
 
 					};	
 					
-				}
-			);
+				});

@@ -1,0 +1,50 @@
+<div class="col-lg-12">
+	<h3 class="page-header">
+		 <i class="fab fa-etsy"></i>Select Exam
+	</h3>
+	<ol class="breadcrumb">
+		<li><i class="fa fa-home"></i><a ui-sref="Home">Home</a></li>
+		<li><i class="far fa-envelope"></i><a ui-sref="sms">SMS</a></li>
+		<li><i class="fab fa-etsy"></i>Select Exam</li>
+	</ol>
+</div>
+
+ <section class="panel">
+                          <header class="panel-heading">
+                             Select Exam
+                          </header>
+                          <div class="panel-body">
+	
+				    			<div class="table-responsive">
+								                            <table class="table">
+								                              <thead>
+								                                <tr>
+								                                  <th>Exam Id</th>
+								                                  <th>Discription</th>
+								                                  <th>Max Marks</th>
+								                                  <th>Passing Marks<th>
+								                              	  <th>Exam Mode</th> 
+								                                  <th>Exam Type</th>
+								                                  <th>Repeat/Regular</th>
+
+								                                </tr>
+								                              </thead>
+								                              <tbody>
+								                              	<tr ng-repeat="exam in examList | orderBy:'id'">
+								                                  <td>{{exam.id}}</td>
+								                                  <td><a ui-sref="smsExamSubjects({id :exam.id})"> {{exam.discription}} </a></td>
+								                                  <!-- (examID : {{exam.id}}}) -->
+								                                  <td>{{exam.outOf}}</td>
+								                                  <td>{{exam.passingMarks}}</td>
+								                               		<td> </td>
+								                                  <td>{{examMode[exam.examMode.id -1].modeName}}</td>
+								                                  <td>{{examType[exam.examType.id-1].typeName}}</td>
+								                                  <td>{{ExamRegularArray[exam.regular].discription}}</td>
+								                               	 	
+								                                </tr>
+								                               
+								                              </tbody>
+								                            </table>
+								                          </div>
+								                       </div>
+								                       </section>

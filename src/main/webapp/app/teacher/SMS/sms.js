@@ -1,5 +1,5 @@
 var app=angular.module("myApp");
-				app.controller("smsCtrl",function($scope,$http){
+				app.controller("smsCtrl",function($scope,$http,$state){
 			
 					$scope.disable=true;
 					$scope.disableButton=function(){
@@ -9,7 +9,8 @@ var app=angular.module("myApp");
 					};
 					
 					$scope.goToNext=function(){
-						//$state.go('results');
+						//console.log("inside goToNext function");
+						$state.go('selectExam');
 					}
 					
 					
