@@ -1,0 +1,71 @@
+<div class="col-lg-12">
+	<h3 class="page-header">
+		 <i class="fas fa-users"></i>Select Student
+	</h3>
+	<ol class="breadcrumb">
+		<li><i class="fa fa-home"></i><a ui-sref="Home">Home</a></li>
+		<li><i class="far fa-envelope"></i><a ui-sref="sms">SMS</a></li>
+		<li><i class="fab fa-etsy"></i><a ui-sref="selectExam">Select Exam</a></li>
+		<li><i class="fa fa-book"></i>Select Subject</li>
+		<li><i class="fas fa-users"></i>Select Student</li>
+		
+	</ol>
+</div>
+
+<div class="col-lg-12" id="container1">
+     <section class="panel">
+         <header class="panel-heading">   
+             Select Student/Parent to send SMS    
+          </header>
+          <div class="panel-body">
+              <div class="table-responsive">
+                 <form class="form-inline" role="form" name="EditResutlForm">
+	               <table class="table">
+		             <thead>
+			         <tr>
+				       <th>Send to Student</th>
+				       <th>Send to Parent</th>
+			           <th>First Name</th>
+				       <th>Surname</th>
+				       <th>Obtained Marks</th>
+				       <th>Out Of Marks</th>
+				       <th>Result</th>
+			        </tr>
+		           </thead>
+		           <tbody>
+			       <tr ng-repeat="ESSR in ExamSubjectStudentResult">
+				      <td><input type="checkbox" ng-model="ESSR.studentSelected"/></td>
+				      <td><input type="checkbox" ng-model="ESSR.parentSelected"/></td>
+				      <td>{{ESSR.student.fname}}</td>
+				      <td>{{ESSR.student.lname}}</td>
+				      <td>{{ESSR.result.obtainedMarks}}</td>
+				      <td>{{ESSR.examSubjectStudentCompositTable.outOfMarks}}</td>
+				      <td>{{ESSR.result.remarks}}</td>	
+			      </tr>
+		          </tbody>
+	            </table>
+	            
+	             <div class="form-group">
+                        <div class="col-lg-10">
+                             <button type="submit" class="btn btn-success" ng-click="sendSMS()">Send SMS</button>
+                        </div>
+                </div>
+               </form>
+            </div>
+        </div>
+        
+        <div class="alert alert-success fade in" ng-show="successMessage">
+           <button data-dismiss="alert" class="close close-sm" type="button">
+               <i class="icon-remove"></i>
+           </button>
+           <strong>Success!</strong> messages get send successfully
+       </div>  
+                              
+       <div class="alert alert-block alert-danger fade in" ng-show="errorMessage">
+           <button data-dismiss="alert" class="close close-sm" type="button">
+               <i class="icon-remove"></i>
+           </button>
+           <strong>Fail!</strong> messages not get send successfully
+      </div>  
+     </section>
+</div>

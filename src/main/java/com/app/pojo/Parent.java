@@ -112,4 +112,10 @@ public class Parent implements java.io.Serializable {
 		this.students_1 = students_1;
 	}
 
+	
+	@Override
+	public String toString() {
+		return "Parent [id=" + id + ", fname=" + fname + ", lname="
+				+ lname + ", contactno=" + contactno + ", email=" + email + "]";
+	}
 }

@@ -85,5 +85,10 @@ public class SubjectDivComposit implements java.io.Serializable {
 			Set<ExamSubjectStudentCompositTable> examSubjectStudentCompositTables) {
 		this.examSubjectStudentCompositTables = examSubjectStudentCompositTables;
 	}
+	
+	@Override
+	public String toString() {
+		return "subjectDivComposit [id=" + id +"]";
+	}
 
 }
