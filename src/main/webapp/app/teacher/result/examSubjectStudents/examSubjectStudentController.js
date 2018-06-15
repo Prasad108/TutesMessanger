@@ -23,7 +23,8 @@
 	   			$scope.saveButton=!$scope.saveButton;
 		   		$scope.editIcon=!$scope.editIcon;
 	   		}
-	   		
+	   		$scope.DataToSend=[];
+
 	   		
 	   		
 	   		$http(
@@ -58,13 +59,12 @@
 	   		
 	   		$scope.save=function(){
 	   			$log.debug("inside the Save Function ");
-	   			var DataToSend={};
 	   			
 	   			
 	   			
 	   			function checkAndAdd(id) {
 	   			  var id = arr.length + 1;
-	   			  var found = DataToSend.some(function (el) {
+	   			  var found = $scope.DataToSend.some(function (el) {
 	   			    return el.id === id;
 	   			  });
 	   			  if (!found) { arr.push({ id: id, username: name }); }
@@ -78,22 +78,23 @@
 	   				  if(!value.$pristine){
 	   					  
 	   					 //console.log( value)
+	   					var found=false;
 	   					 
 	   					  if(value.$$attr.title=="ObtainedMarkes"){
 	   						 
-	   						  var id=value.$name
+	   						   //$scope.id=value.$name
 	   						  
 	   						  $log.debug("Obtained marks  ESSR.examSubjectStudentCompositTable.id: is : "+ value.$name +"  VALUE is "+value.$viewValue);
 	   						
-	   						  var found = DataToSend.some(function (el) {
-	   			   			    return el.id === id;
+	   						   found = $scope.DataToSend.some(function (el) {
+	   			   			    return el.id === value.$name;
 	   			   			  });
 	   			   			  if (!found) { 
-	   			   				  DataToSend.push({ ExamSubjectStudentCompositTable: id, remarks : value.$viewValue }); 
+	   			   				  $scope.DataToSend.push({ id: value.$name, ObtainedMarkes : value.$viewValue }); 
 	   			   			  }else{
-				   			   			for (var i=0; i < DataToSend.length; i++) {
-				   			   	        if ( DataToSend[i].id === id) {
-				   			   	        	DataToSend[i].remarks=value.$viewValue ;
+				   			   			for (var i=0; i < $scope.DataToSend.length; i++) {
+				   			   	        if ( $scope.DataToSend[i].id === value.$name) {
+				   			   	      $scope.DataToSend[i].ObtainedMarkes=value.$viewValue ;
 				   			   	        }
 				   			   	    }
 	   			   			  }
@@ -102,6 +103,18 @@
 	   						  
 	   						$log.debug("Result ESSR.examSubjectStudentCompositTable.id: is : "+ value.$$attr.value +"  VALUE is "+value.$viewValue);
 	   						
+	   						 found = $scope.DataToSend.some(function (el) {
+	   			   			    return el.id === value.$$attr.value;
+	   			   			  });
+	   			   			  if (!found) { 
+	   			   				  $scope.DataToSend.push({ id: value.$$attr.value, remarks : value.$viewValue }); 
+	   			   			  }else{
+				   			   			for (var i=0; i < $scope.DataToSend.length; i++) {
+				   			   	        if ( $scope.DataToSend[i].id === value.$$attr.value) {
+				   			   	      $scope.DataToSend[i].remarks=value.$viewValue ;
+				   			   	        }
+				   			   	    }
+	   			   			  }
 	   					  }
 	   						  
 	   					//$log.debug(""+value.$$attr.title+" : Name is : "+ value.$name +"  VALUE is "+value.$viewValue);
@@ -109,11 +122,43 @@
 	   					  }
 	   				 //console.log(key, value)
 	   				// console.log(key, value.$pristine)
+	   				 $log.info($scope.DataToSend);
+	   				  if ($scope.DataToSend.length > 0) {
+	   					 
+	   					  var jsonData=JSON.parse($scope.DataToSend)
+	   					  $log.info(jsonData);
+	   					  
+	   					$http(
+	   							{
+	   								url : "UpdateResult",			
+	   								contentType : 'application/json; charset=utf-8',
+	   								dataType : 'json',
+	   								method : "POST",
+	   								data : jsonData
+	   								
+	   							})
+	   							.then(function successCallback(response) {
+	   										// if success   then generate student table
+
+	   										console.log("response came 2********");
+	   										console.log(response);
+	   										$scope.ExamSubjectStudentResult=response.data;
+	   										
+	   									
+	   									},
+	   									function errorCallback(response) {
+	   										// failed
+	   										console.log("error response came 2********");
+	   										console.log(response);
+	   									});
+	   					  
+	   					  }
 	   			  }
 	   			 
 	   			});
 	   			
 	   			$scope.toggleSave_and_Edit_button();
+	   			$log.info($scope.DataToSend);
 	   		}
 
 		

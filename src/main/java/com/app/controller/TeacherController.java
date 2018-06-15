@@ -1,18 +1,14 @@
 package com.app.controller;
 
+import java.awt.print.Book;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.logging.Level;
+import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
-import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -34,7 +30,6 @@ import com.app.pojo.ExamType;
 import com.app.pojo.Institute;
 import com.app.pojo.Login;
 import com.app.pojo.Permissions;
-import com.app.pojo.Role;
 import com.app.pojo.Schedule;
 import com.app.pojo.Student;
 import com.app.pojo.Subject;
@@ -60,10 +55,6 @@ import com.app.service.impl.SnsService;
 /*import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;*/
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-/*import com.sun.istack.internal.logging.Logger;*/
-import com.google.gson.JsonParser;
 
 
 @Controller
@@ -1781,6 +1772,28 @@ public class TeacherController {
 		String JSON = "{\"status\":\"success\",\"SuccessCount\":" + count + "," + sb.toString() + "}";
 		System.out.println(JSON);
 		return JSON;
+	}
+	 
+	
+	@RequestMapping(value = "/UpdateResult", method = RequestMethod.POST)
+	@ResponseBody
+	public String UpdateResult(@RequestBody HashMap<String, HashMap<String, String>> requestData) {
+		System.out.println("**********inside UpdateResult controller**********");
+		
+		HashMap<String, String> customerInfo = requestData.get("StudentList");
+		
+		
+		for(Map.Entry<String, String> entry: customerInfo.entrySet()){    
+			String key=entry.getKey();  
+			String b=entry.getValue();  
+	        System.out.println(key+" Details: " +key +" : "+b);  
+		}
+	    //TODO now do whatever you want to do.
+		
+		String JSON ="";
+		System.out.println(JSON);
+		return JSON;
+		
 	}
 
 }
