@@ -67,12 +67,14 @@
 		<script src="${pageContext.request.contextPath}/app/teacher/profile/ChangeUsername/ChangeUsername.js"></script>
  		<script src="${pageContext.request.contextPath}/app/teacher/profile/ChangePassword/ChangePassword.js"></script>
  		<script src="${pageContext.request.contextPath}/app/teacher/SMS/sms.js"></script>
- 		<script src="${pageContext.request.contextPath}/app/teacher/SMS/Select Exam/selectExam.js"></script> 		
- 
+ 		<script src="${pageContext.request.contextPath}/app/teacher/SMS/SelectExam/selectExam.js"></script> 		
+        <script src="${pageContext.request.contextPath}/app/teacher/SMS/SelectExam/selectSubject/smsExamSubjects.js"></script>
+        <script src="${pageContext.request.contextPath}/app/teacher/SMS/SelectExam/selectSubject/selectStudent/selectStudent.js"></script>
+
  		<script src="${pageContext.request.contextPath}/app/teacher/paginationTest/pagination.js"></script>
    			
    		   		<jsp:include page="/WEB-INF/jsp/Teacher/components/angular.jsp" /> 
-   		   		 	
+   		   			
    			
 		
    	</head>

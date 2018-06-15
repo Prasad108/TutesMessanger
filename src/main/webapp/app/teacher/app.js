@@ -87,8 +87,14 @@
 		
 		
 		$stateProvider.state({name : 'sms', url : '/sms', templateUrl: '../app/teacher/SMS/sms.html',  controller: 'smsCtrl'});
-		$stateProvider.state({name : 'selectExam', url : '/selectExam', templateUrl: '../app/teacher/SMS/Select Exam/selectExam.html',  controller: 'selectExamCtrl',});
-	
+		$stateProvider.state({name : 'selectExam', url : '/selectExam', templateUrl: '../app/teacher/SMS/SelectExam/selectExam.html',  controller: 'selectExamCtrl'});
+		$stateProvider.state({name : 'smsExamSubjects', url : '/smsExamSubjects/:id', templateUrl: '../app/teacher/SMS/SelectExam/selectSubject/smsExamSubjects.html',  controller: 'smsExamSubjectCtrl',
+			resolve :{
+			        	InstTreeStructureWithSubject :function(resolveService){  return resolveService.InstTreeStructureWithSubject();	}
+					}	
+		});
+		$stateProvider.state({name : 'smsSubjectsStudents', url : '/smsExamSubjects/:id/smsSubjectsStudents/:subjectId', templateUrl: '../app/teacher/SMS/SelectExam/selectSubject/selectStudent/selectStudent.html',  controller: 'smsSubjectStudentCtrl'});
+		
 		
 	}]);
 	

@@ -1,6 +1,5 @@
 package com.app.controller;
 
-import java.awt.print.Book;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -29,6 +28,7 @@ import com.app.pojo.ExamSubjectStudentCompositTable;
 import com.app.pojo.ExamType;
 import com.app.pojo.Institute;
 import com.app.pojo.Login;
+import com.app.pojo.Parent;
 import com.app.pojo.Permissions;
 import com.app.pojo.Schedule;
 import com.app.pojo.Student;
@@ -46,7 +46,9 @@ import com.app.service.InstituteService;
 import com.app.service.LoginService;
 import com.app.service.ParentService;
 import com.app.service.PermissionsService;
+import com.app.service.ResultService;
 import com.app.service.ScheduleService;
+import com.app.service.StringUtil;
 import com.app.service.StudentService;
 import com.app.service.SubjectDivCompositService;
 import com.app.service.SubjectService;
@@ -55,6 +57,9 @@ import com.app.service.impl.SnsService;
 /*import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;*/
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 
 @Controller
@@ -62,6 +67,9 @@ import com.google.gson.Gson;
 @RequestMapping("/Teacher")
 public class TeacherController {
 
+
+	StringUtil stringUtil=new StringUtil();
+	
 	@Autowired
 	SnsService snsService;
 
@@ -112,6 +120,9 @@ public class TeacherController {
 
 	@Autowired
 	ExamSubjectStudentCompositTableService examSubStudCompService;
+	
+	@Autowired
+	ResultService resultService;
 
 	Gson gson = new Gson();
 
@@ -1696,12 +1707,117 @@ public class TeacherController {
 			String pubId = snsService.sendSMSMessage(text, contactNo);
 			result = "{\"status\":\"success\",\"pubid\":\"" + pubId + "\"}";
 		} catch (Exception e) {
-			result = "{\"message\":\"failed to send to sms\"}";
+			result = "{\"status\":\"fail\",\"message\":\"failed to send sms\"}";
+			
 			e.printStackTrace();
 
 		}
 		System.out.println(result);
 
+		return result;
+	}
+	
+	@RequestMapping(value = "/sendSMSSubjectResult", method = RequestMethod.POST)
+	@ResponseBody
+	public String sendSMSSubjectResult(
+			@RequestBody String text) {
+
+		System.out.println("**********from sendSMSSubjectResult controller**********");
+		String result = "";
+		
+		System.out.println(text);
+		
+		JsonElement element = gson.fromJson(text, JsonElement.class);
+		
+		JsonArray  jarray =  element.getAsJsonArray();
+	
+		for(Object o : jarray){
+			 JsonObject jsonLineItem = (JsonObject) o;
+	
+			 String studentName=null;
+			 String obtainedMarks=null;
+			 String outOfMarks=null;
+			 String remarks=null;
+			 String examName=null;
+			 String subjectName=null;
+			 String contactNo=null;
+		     String	message=null;
+			 
+			if(jsonLineItem.get("studentSelected") != null){
+			 JsonObject student =(JsonObject) jsonLineItem.get("student");
+			 JsonObject studentResult =(JsonObject) jsonLineItem.get("result");
+			 JsonObject exam=(JsonObject) jsonLineItem.get("exam");
+			 JsonObject examSubjectStudentComp=(JsonObject) jsonLineItem.get("examSubjectStudentCompositTable");
+			 JsonObject SubDivComp=(JsonObject) jsonLineItem.get("SubDivComp");
+			 
+			  studentName=stringUtil.removeFirstLastChar(student.get("fname").toString());
+			  obtainedMarks=studentResult.get("obtainedMarks").toString();
+			  outOfMarks=examSubjectStudentComp.get("outOfMarks").toString();
+			  remarks=stringUtil.removeFirstLastChar(studentResult.get("remarks").toString());
+			  examName=stringUtil.removeFirstLastChar(exam.get("discription").toString());
+			  String subDivId=SubDivComp.get("id").toString();
+			  subjectName=subjectDivCompositService.findSubjectName(Integer.parseInt(subDivId));
+			
+			  contactNo="+91"+stringUtil.removeFirstLastChar(student.get("contactno").toString());
+			  message="Hi "+studentName+", You got "+obtainedMarks+" out of "+outOfMarks+" marks in "+subjectName+" subject for "+examName+". Remark : you "+remarks+".";
+			 
+			  try {
+					String pubId = snsService.sendSMSMessage(message, contactNo);
+					result = "{\"status\":\"success\",\"pubid\":\"" + pubId + "\"}";
+				  } catch (Exception e) {
+					result = "{\"status\":\"fail\",\"message\":\"failed to send sms\"}";
+					e.printStackTrace();
+                  }
+			  
+			  System.out.println(message);
+			  System.out.println(contactNo);
+		}
+			
+		if(jsonLineItem.get("parentSelected") != null){
+			 JsonObject student =(JsonObject) jsonLineItem.get("student");
+			 JsonObject studentResult =(JsonObject) jsonLineItem.get("result");
+			 JsonObject exam=(JsonObject) jsonLineItem.get("exam");
+			 JsonObject examSubjectStudentComp=(JsonObject) jsonLineItem.get("examSubjectStudentCompositTable");
+			 JsonObject SubDivComp=(JsonObject) jsonLineItem.get("SubDivComp");
+			 
+			 String studId=student.get("id").toString();
+			 Parent p=parentService.findByStudentId(Integer.parseInt(studId));
+			
+			 studentName=stringUtil.removeFirstLastChar(student.get("fname").toString());
+			 obtainedMarks=studentResult.get("obtainedMarks").toString();
+			 outOfMarks=examSubjectStudentComp.get("outOfMarks").toString();
+			 remarks=stringUtil.removeFirstLastChar(studentResult.get("remarks").toString());
+			 examName=stringUtil.removeFirstLastChar(exam.get("discription").toString());
+			 String subDivId=SubDivComp.get("id").toString();
+			 subjectName=subjectDivCompositService.findSubjectName(Integer.parseInt(subDivId));
+			 
+			  contactNo="+91"+p.getContactno();
+			  message="Hi "+p.getFname()+" "+p.getLname()+",Your child "+studentName+" got "+obtainedMarks+" out of "+outOfMarks+" marks in "+subjectName+" subject for "+examName+". Remark : He is "+remarks+".";
+		
+			  try {
+					String pubId = snsService.sendSMSMessage(message, contactNo);
+					result = "{\"status\":\"success\",\"pubid\":\"" + pubId + "\"}";
+				  } catch (Exception e) {
+					result = "{\"status\":\"fail\",\"message\":\"failed to send sms\"}";
+					e.printStackTrace();
+                  }
+			  
+			  System.out.println(message);
+			  System.out.println(contactNo);
+			
+				 //parentSelected=jsonLineItem.get("parentSelected").toString();
+			
+			}
+		/*	 System.out.println(studentSelected);
+			 System.out.println(parentSelected);
+			 
+			 JsonElement examSubjectStudentCompositTable =jsonLineItem.get("examSubjectStudentCompositTable");
+			 JsonElement Result =jsonLineItem.get("result");
+			 JsonElement student =jsonLineItem.get("student");
+			 System.out.println(examSubjectStudentCompositTable.toString());
+			 System.out.println(Result.toString());
+			 System.out.println(student.toString());*/
+		}
 		return result;
 	}
 
@@ -1711,6 +1827,17 @@ public class TeacherController {
 
 		System.out.println("**********from resultStudentList controller**********");
 		String result = examSubStudCompService.examSubjectStudentResult(examId, subDivId);
+		System.out.println(result);
+
+		return result;
+	}
+	
+	@RequestMapping(value = "/smsSubjectStudentResult", method = RequestMethod.GET)
+	@ResponseBody
+	public String smsSubjectStudentResult(@RequestParam("examId") int examId, @RequestParam("subDivId") int subDivId) {
+
+		System.out.println("**********from smsSubjectStudentResult controller**********");
+		String result = resultService.smsSubjectStudentResult(examId, subDivId);
 		System.out.println(result);
 
 		return result;

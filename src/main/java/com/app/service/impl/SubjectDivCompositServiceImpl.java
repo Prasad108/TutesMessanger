@@ -60,4 +60,9 @@ public class SubjectDivCompositServiceImpl implements SubjectDivCompositService{
 		
 	}
 
+	@Override
+	public String findSubjectName(int subDivCompId) {
+		return subDivCompDAO.findSubjectName(subDivCompId);
+	}
+
 }

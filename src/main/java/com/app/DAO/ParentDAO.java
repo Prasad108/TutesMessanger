@@ -13,6 +13,6 @@ public interface ParentDAO {
 	public void delet(Parent parent );
 	public Parent find(int id);
 	public List<Parent> getall();
-
+	public Parent findByStudentId(int studId);
 
 }

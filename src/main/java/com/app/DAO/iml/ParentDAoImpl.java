@@ -2,6 +2,7 @@ package com.app.DAO.iml;
 
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,6 +61,17 @@ public class ParentDAoImpl implements ParentDAO {
 	@Transactional
 	public List<Parent> getall() {
 		return currentSession().createCriteria(Parent.class).list();
+	}
+
+
+	@Override
+	@Transactional
+	public Parent findByStudentId(int studId) {
+		Parent p=null;
+		Query query=currentSession().createQuery("select p from Parent p where p.id =(select s.parent.id from Student s where s.id = :studId)");
+		query.setParameter("studId", studId);
+		p=(Parent) query.uniqueResult();
+		return p;
 	}
 
 }

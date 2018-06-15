@@ -138,6 +138,11 @@ public class Exam implements java.io.Serializable {
 			Set<ExamSubjectStudentCompositTable> examSubjectStudentCompositTables) {
 		this.examSubjectStudentCompositTables = examSubjectStudentCompositTables;
 	}
+	
+	@Override
+	public String toString() {
+		return "Exam [id=" + id + ", discription=" + discription +"]";
+	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "exam")
 	public Set<ExamSubjectStudentCompositTable> getExamSubjectStudentCompositTables_1() {
