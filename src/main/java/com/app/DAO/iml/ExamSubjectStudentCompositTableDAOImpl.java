@@ -112,16 +112,16 @@ public class ExamSubjectStudentCompositTableDAOImpl implements ExamSubjectStuden
 		 
         List lst = query.list();
         sb.append("[");
-        System.out.println("" + lst.size());
-        System.out.println("gooing to display result");
+       // System.out.println("" + lst.size());
+        //System.out.println("gooing to display result");
         for (int i = 0; i < lst.size(); i++) {
         	 sb.append("{");
         	 sb.append("\"examSubjectStudentCompositTable\":"+gson.toJson(((Object[]) lst.get(i))[0]));
         	 sb.append(",\"result\":"+gson.toJson(((Object[]) lst.get(i))[1]));
         	 sb.append(",\"student\":"+gson.toJson(((Object[]) lst.get(i))[2]));
-            System.out.println("first obj"+((Object[]) lst.get(i))[0]);     //account bean, actually this is in reverse order - so this is user bean
-            System.out.println("second obj"+((Object[]) lst.get(i))[1]); 
-            System.out.println("third obj"+((Object[]) lst.get(i))[2]); //user bean         & this account bean
+            //System.out.println("first obj"+((Object[]) lst.get(i))[0]);     //account bean, actually this is in reverse order - so this is user bean
+           // System.out.println("second obj"+((Object[]) lst.get(i))[1]); 
+           // System.out.println("third obj"+((Object[]) lst.get(i))[2]); //user bean         & this account bean
             sb.append("},");
         }
         sb.setLength(sb.length() - 1);

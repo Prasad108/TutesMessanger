@@ -25,7 +25,7 @@
 			<tr>
 				<th>#</th>
 				<th>First Name</th>
-				<th>Father </th>
+				<!-- <th>Father </th> -->
 				<th>Surname</th>
 				<th>Obtained Marks</th>
 				<th>Result</th>
@@ -35,7 +35,7 @@
 			<tr ng-repeat="ESSR in ExamSubjectStudentResult">
 				<td>{{ESSR.exam.id}}</td>
 				<td>{{ESSR.student.fname}}</td>
-				<td>{{ESSR.student.father}}</td>
+				<!-- <td>{{ESSR.student.father}}</td> -->
 				<td>{{ESSR.student.lname}}</td>
 				
 				
@@ -44,7 +44,7 @@
 				<td ng-show="!ESSR.result.obtainedMarks && editIcon">N.A.</td>
 				<td ng-show="!editIcon">
 					<div class="form-group" >
-	                    <input type="number" name="{{ESSR.examSubjectStudentCompositTable.id}}" ng-model="newObject[ESSR.student.fname]" title="ObtainedMarkes"  class="form-control" style="width:60px;">		
+	                    <input type="number" name="{{ESSR.examSubjectStudentCompositTable.id}}" ng-model="model1[ESSR.student.id]" title="ObtainedMarkes"  class="form-control" style="width:60px;" value="{{ESSR.result.obtainedMarks}}">		
 	                  	</div>
 	                </div>
                 </td>
@@ -54,7 +54,7 @@
 				<td ng-show="!ESSR.result.remarks && editIcon">N.A</td>
 				<td ng-show="!editIcon">
 					<div class="form-group" >
-	                    <input type="text" id="{{ESSR.examSubjectStudentCompositTable.id}}" name="{{ESSR.student.id}}" ng-model="newObject[ESSR.student.lname]" title="Result" value="{{ESSR.examSubjectStudentCompositTable.id}}" class="form-control" >
+	                    <input type="text" id="{{ESSR.examSubjectStudentCompositTable.id}}" name="{{ESSR.student.id}}" ng-model="ESSR.result.remarks" title="Result"  class="form-control" value="{{ESSR.result.remarks}}" >
 	                  		
 	                  	</div>
 	                </div>

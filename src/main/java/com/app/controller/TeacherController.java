@@ -1904,18 +1904,12 @@ public class TeacherController {
 	
 	@RequestMapping(value = "/UpdateResult", method = RequestMethod.POST)
 	@ResponseBody
-	public String UpdateResult(@RequestBody HashMap<String, HashMap<String, String>> requestData) {
+	public String UpdateResult(@RequestBody List<HashMap<String, String>> StudResultList) {
 		System.out.println("**********inside UpdateResult controller**********");
 		
-		HashMap<String, String> customerInfo = requestData.get("StudentList");
+		resultService.updateResult(StudResultList);
 		
-		
-		for(Map.Entry<String, String> entry: customerInfo.entrySet()){    
-			String key=entry.getKey();  
-			String b=entry.getValue();  
-	        System.out.println(key+" Details: " +key +" : "+b);  
-		}
-	    //TODO now do whatever you want to do.
+
 		
 		String JSON ="";
 		System.out.println(JSON);
