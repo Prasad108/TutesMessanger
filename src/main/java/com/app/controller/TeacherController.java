@@ -3,16 +3,11 @@ package com.app.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.logging.Level;
+import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
-import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -35,7 +30,6 @@ import com.app.pojo.Institute;
 import com.app.pojo.Login;
 import com.app.pojo.Parent;
 import com.app.pojo.Permissions;
-import com.app.pojo.Role;
 import com.app.pojo.Schedule;
 import com.app.pojo.Student;
 import com.app.pojo.Subject;
@@ -66,9 +60,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
-/*import com.sun.istack.internal.logging.Logger;*/
-import com.google.gson.JsonParser;
 
 
 @Controller
@@ -1908,6 +1899,22 @@ public class TeacherController {
 		String JSON = "{\"status\":\"success\",\"SuccessCount\":" + count + "," + sb.toString() + "}";
 		System.out.println(JSON);
 		return JSON;
+	}
+	 
+	
+	@RequestMapping(value = "/UpdateResult", method = RequestMethod.POST)
+	@ResponseBody
+	public String UpdateResult(@RequestBody List<HashMap<String, String>> StudResultList) {
+		System.out.println("**********inside UpdateResult controller**********");
+		
+		resultService.updateResult(StudResultList);
+		
+
+		
+		String JSON ="";
+		System.out.println(JSON);
+		return JSON;
+		
 	}
 
 }
