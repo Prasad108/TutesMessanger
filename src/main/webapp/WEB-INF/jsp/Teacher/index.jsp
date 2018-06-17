@@ -15,11 +15,6 @@
    		<script type="text/javascript" src="${pageContext.request.contextPath}/js/pikaday.js"></script>
    		
    		
-   		<script src="${pageContext.request.contextPath}/app/angular-ui-router.js"></script>
-   		<!-- <script data-require="ui-bootstrap@*" data-semver="0.12.1" src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.12.1.min.js"></script> -->
-   		<script src="${pageContext.request.contextPath}/app/ui-bootstrap-tpls-2.5.0.min.js"></script>
- 		
- 		
  		<script src="${pageContext.request.contextPath}/app/teacher/app.js"></script>
  		
 		

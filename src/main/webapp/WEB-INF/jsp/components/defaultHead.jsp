@@ -7,8 +7,8 @@
     <link rel="shortcut icon" href="${pageContext.request.contextPath}/img/favicon.png">
 
    
-	 <script src="${pageContext.request.contextPath}/app/angular.js"></script>
-	 <script src="${pageContext.request.contextPath}/app/angular-sanitize.min.js"></script>
+	 <script src="${pageContext.request.contextPath}/js/angular/angular.js"></script>	 
+	 <script src="${pageContext.request.contextPath}/js/angular/angular-sanitize.min.js"></script>
 
 	 
 	
@@ -41,5 +41,12 @@
 	 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/pikaday.css">
 	
 	
+	
+	
+	<script src="${pageContext.request.contextPath}/js/angular/angular-ui-router.js"></script>
+	<!-- <script data-require="ui-bootstrap@*" data-semver="0.12.1" src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.12.1.min.js"></script> -->
+	<script src="${pageContext.request.contextPath}/js/angular/ui-bootstrap-tpls-2.5.0.min.js"></script>
+
+ 		
 
 	
