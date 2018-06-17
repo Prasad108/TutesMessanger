@@ -1,3 +1,9 @@
+ <style type="text/css">
+.error {
+	border: 2px solid red;
+}
+</style>
+
 <div class="col-lg-12">
 					<h3 class="page-header"><i class="fas fa-users"></i> Students for Eaxm's Subjects</h3>
 					<ol class="breadcrumb">
@@ -13,13 +19,14 @@
                           <header class="panel-heading" id="editIcon">   
                              Select Subject of the Exam
                               <a class="btn btn-success pull-right" ng-click="editResult()"  ng-show="editIcon" ><i class="fas fa-edit"></i></a>
-                             <button type="submit" class="btn btn-primary pull-right" ng-show="saveButton" ng-click="save()">Save</button>
-                              
+                             <button type="submit" value="Submit"  class="btn btn-primary pull-right" ng-show="saveButton" ng-click="EditResutlForm.$valid && save()">Save</button>
+                             <span ng-show="!EditResutlForm.$valid"><br/ > Obtained marks are greater than Out of Marks</span>
+                                
                           </header>
                           <div class="panel-body">
-                          
+                      
 <div class="table-responsive">
- <form class="form-inline" role="form" name="EditResutlForm">
+ <form class="form-inline" role="form" name="EditResutlForm" ng-submit="save()">
 	<table class="table">
 		<thead>
 			<tr>
@@ -28,7 +35,7 @@
 				<!-- <th>Father </th> -->
 				<th>Surname</th>
 				<th>Obtained Marks</th>
-				<th>Result</th>
+				<th>Result /{{OutOf}}(Out Of)</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -44,7 +51,10 @@
 				<td ng-show="!ESSR.result.obtainedMarks && editIcon">N.A.</td>
 				<td ng-show="!editIcon">
 					<div class="form-group" >
-	                    <input type="number" name="{{ESSR.examSubjectStudentCompositTable.id}}" ng-model="model1[ESSR.student.id]" title="ObtainedMarkes"  class="form-control" style="width:60px;" value="{{ESSR.result.obtainedMarks}}">		
+	                    <input type="number" name="{{ESSR.examSubjectStudentCompositTable.id}}" ng-model="model1[ESSR.student.id]" title="ObtainedMarkes"  class="form-control"  ng-class="{error : model1[ESSR.student.id]>OutOf}" style="width:60px;" value="{{ESSR.result.obtainedMarks}}" 
+	                          ensure-expression="model1[ESSR.student.id]>OutOf" strong-secret>
+	                    
+	                    	
 	                  	</div>
 	                </div>
                 </td>
