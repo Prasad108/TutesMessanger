@@ -42,7 +42,7 @@
 									console.log("response came 2********");
 									console.log(response);
 									$scope.ExamSubjectStudentResult=response.data;
-									
+									$scope.OutOf=$scope.ExamSubjectStudentResult[0].examSubjectStudentCompositTable.outOfMarks;
 								
 								},
 								function errorCallback(response) {
@@ -157,8 +157,89 @@
 	   			//$log.info($scope.DataToSend);
 	   		}
 
+//	   		$scope.validateInput=function(marks,issctId){
+//	   			if(marks>$scope.OutOf){
+//	   				angular.forEach($scope.EditResutlForm, function(value, key) {
+//	   				 if(key[0] == '$') return;
+//		   			  else{
+//		   				 if(value.$viewValue==marks){
+//		   					$log.info(key);
+//		   					$log.info(value);
+//		   					value.$valid=false;
+//		   					value.$invalid=true;
+//		   					$log.info(value);
+//		   					$scope.EditResutlForm.$valid=false;
+//		   				  }
+//	   					
+//		   			  }
+//	   				});
+//	   			}else{
+//	   				angular.forEach($scope.EditResutlForm, function(value, key) {
+//		   				 if(key[0] == '$') return;
+//			   			  else{
+//			   				 if(value.$viewValue==marks){
+//			   					$log.info(key);
+//			   					$log.info(value);
+//			   					value.$valid=true;
+//			   					value.$invalid=false;
+//			   					$log.info(value);
+//			   				  }
+//		   					
+//			   			  }
+//		   				});
+//	   				
+//	   			}
+//	   				
+//	   			
+//	   		}
+	   
 		
 
 		   
 	   };
+	   
+	   
+	   app.directive('strongSecret', function() {
+		    return {
+
+		      // limit usage to argument only
+		      restrict: 'A',
+
+		      // require NgModelController, i.e. require a controller of ngModel directive
+		      require: 'ngModel',
+
+		      // create linking function and pass in our NgModelController as a 4th argument
+		      link: function(scope, element, attr, ctrl) {
+		    	  
+		    	  
+		    	  function customValidator(ngModelValue) {
+		    	        
+		    	        // check if contains uppercase
+		    	        // if it does contain uppercase, set our custom `uppercaseValidator` to valid/true
+		    	        // otherwise set it to non-valid/false
+//		    	        if (/[A-Z]/.test(ngModelValue)) {
+//		    	            ctrl.$setValidity('uppercaseValidator', true);
+//		    	        } else {
+//		    	            ctrl.$setValidity('uppercaseValidator', false);
+//		    	        }
+		    		
+		    	        if (ngModelValue>scope.OutOf){
+		    	        	ctrl.$setValidity('ValidIpNumber', false);
+		    	        }else{
+		    	        	ctrl.$setValidity('ValidIpNumber', true);
+		    	        }
+		    	        	
+		    	        // we need to return our ngModelValue, to be displayed to the user(value of the input)
+		    	        return ngModelValue;
+		    	    }
+
+		    	    // we need to add our customValidator function to an array of other(build-in or custom) functions
+		    	    // I have not notice any performance issues, but it would be worth investigating how much
+		    	    // effect does this have on the performance of the app
+		    	    ctrl.$parsers.push(customValidator);
+		            
+		      }
+		    };
+		});
+	   
 }())

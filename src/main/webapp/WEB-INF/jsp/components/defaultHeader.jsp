@@ -6,7 +6,7 @@
             </div>
 
             <!--logo start-->
-            <a href="#" class="logo">Tutes <span class="lite">Messanger</span></a>
+            <a href="#" class="logo">Tutes <span class="lite">Messenger</span></a>
             <!--logo end-->                
       </header>      
       <!--header end-->
