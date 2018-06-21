@@ -32,7 +32,7 @@ CREATE TABLE `branch` (
   KEY `FKnxfgigw3bfa77sdopkoiybuy6` (`instituteid`),
   CONSTRAINT `FKnxfgigw3bfa77sdopkoiybuy6` FOREIGN KEY (`instituteid`) REFERENCES `institute` (`id`),
   CONSTRAINT `branch_ibfk_1` FOREIGN KEY (`instituteid`) REFERENCES `institute` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,7 +41,7 @@ CREATE TABLE `branch` (
 
 LOCK TABLES `branch` WRITE;
 /*!40000 ALTER TABLE `branch` DISABLE KEYS */;
-INSERT INTO `branch` VALUES (15,50,'Pune'),(16,50,'Mumbai'),(17,61,'Nagpur');
+INSERT INTO `branch` VALUES (15,50,'Pune'),(17,61,'Nagpur'),(19,50,'Bombay'),(33,50,'Goa');
 /*!40000 ALTER TABLE `branch` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -60,7 +60,7 @@ CREATE TABLE `classes` (
   KEY `FK8txt3facl8ithk4d24werxdj0` (`branchid`),
   CONSTRAINT `FK8txt3facl8ithk4d24werxdj0` FOREIGN KEY (`branchid`) REFERENCES `branch` (`id`),
   CONSTRAINT `branch constraint` FOREIGN KEY (`branchid`) REFERENCES `branch` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -69,7 +69,7 @@ CREATE TABLE `classes` (
 
 LOCK TABLES `classes` WRITE;
 /*!40000 ALTER TABLE `classes` DISABLE KEYS */;
-INSERT INTO `classes` VALUES (18,15,'10TH'),(19,15,'11th'),(20,17,'12th');
+INSERT INTO `classes` VALUES (18,15,'10th'),(19,15,'11th'),(20,17,'12th'),(24,19,'10th'),(25,15,'12th'),(28,33,'10th');
 /*!40000 ALTER TABLE `classes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -88,7 +88,7 @@ CREATE TABLE `division` (
   KEY `FK25iyw80l6c7ieoxnxa0c07f4g` (`classid`),
   CONSTRAINT `FK25iyw80l6c7ieoxnxa0c07f4g` FOREIGN KEY (`classid`) REFERENCES `classes` (`id`),
   CONSTRAINT `class constraint` FOREIGN KEY (`classid`) REFERENCES `classes` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -97,7 +97,7 @@ CREATE TABLE `division` (
 
 LOCK TABLES `division` WRITE;
 /*!40000 ALTER TABLE `division` DISABLE KEYS */;
-INSERT INTO `division` VALUES (19,18,'A'),(20,18,'B'),(21,18,'C'),(22,19,'PCM'),(23,19,'PCB'),(24,20,'PCMB');
+INSERT INTO `division` VALUES (19,18,'A'),(20,18,'B'),(21,18,'C'),(22,19,'PCM'),(23,19,'PCB'),(24,20,'PCMB'),(29,24,'A'),(30,24,'B'),(31,19,'A'),(32,19,'B'),(35,28,'abcd');
 /*!40000 ALTER TABLE `division` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -127,7 +127,7 @@ CREATE TABLE `exam` (
   CONSTRAINT `exam_mode foreign key` FOREIGN KEY (`exam_mode_id`) REFERENCES `exam_mode` (`id`),
   CONSTRAINT `exam_type foreign key` FOREIGN KEY (`exam_type_id`) REFERENCES `exam_type` (`id`),
   CONSTRAINT `institute_foreign_key` FOREIGN KEY (`insitute_id`) REFERENCES `institute` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=125 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=121 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -191,7 +191,7 @@ CREATE TABLE `exam_subject_student_composit_table` (
   CONSTRAINT `exam` FOREIGN KEY (`exam_id`) REFERENCES `exam` (`id`),
   CONSTRAINT `student foreign key` FOREIGN KEY (`student_id`) REFERENCES `student` (`id`),
   CONSTRAINT `subject_div_id foreign key` FOREIGN KEY (`subject_div_id`) REFERENCES `subject_div_composit` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=87 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=141 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -200,6 +200,7 @@ CREATE TABLE `exam_subject_student_composit_table` (
 
 LOCK TABLES `exam_subject_student_composit_table` WRITE;
 /*!40000 ALTER TABLE `exam_subject_student_composit_table` DISABLE KEYS */;
+INSERT INTO `exam_subject_student_composit_table` VALUES (125,NULL,38,20,6,20,20,'2018-05-30'),(126,26,38,20,6,20,20,'2018-05-30'),(127,NULL,38,60,1,50,20,'2018-05-30'),(128,23,38,20,6,20,20,'2018-05-30'),(129,24,38,20,6,20,20,'2018-05-30'),(130,25,38,20,6,20,20,'2018-05-30'),(131,27,38,20,6,20,20,'2018-05-30'),(132,28,38,20,6,20,20,'2018-05-30'),(133,29,38,20,6,20,20,'2018-05-30'),(134,30,38,20,6,20,20,'2018-05-30'),(135,31,38,20,6,20,20,'2018-05-30'),(136,32,38,20,6,20,20,'2018-05-30'),(137,33,38,20,6,20,20,'2018-05-30'),(138,34,38,20,6,20,20,'2018-05-30'),(139,36,38,20,6,20,20,'2018-05-30'),(140,21,38,20,6,20,20,'2018-05-30');
 /*!40000 ALTER TABLE `exam_subject_student_composit_table` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -443,7 +444,7 @@ CREATE TABLE `parent` (
 
 LOCK TABLES `parent` WRITE;
 /*!40000 ALTER TABLE `parent` DISABLE KEYS */;
-INSERT INTO `parent` VALUES (29,'dfsdf','asdf','9856321470','sadf@sadfas.co'),(30,'Ashok','dukale','9385620399','pdukale9@gmail.com'),(32,'Pintu','Zintu','9658743210','abcd@gmail.com'),(33,'Vishnu','Sutar','9657841230','dipak@gmail.com'),(34,'Bajirao','Patil','7845456938','nayan@gmail.com'),(35,'Mahadev','sharma','9658742310','arpit@gmail.com'),(36,'sdfasf','fasdfasdf','9587461230','sdfasdf@dfas.com'),(37,'sdgfsadf','gfsda','9857461233','ssdf@asdfas.com'),(38,'SFsdfsd','fsdsd','9658741230','sdfsdsd@sdfsd.com'),(39,'sfasd','fasdf','8974561230','fasdf@asdfasd.co'),(40,'sdfasd','sdf','9658741230','sfsadfasd@asdf.co'),(41,'sdfasd','fsdafasdf','9658741230','sdfasdf@sdfsd.co'),(42,'Prabhakar','Sadaphal','9658741230','rahul@gmail.com'),(43,'Gopal','Agrawal','8974563210','govind@gmail.com'),(45,'Piraji','Sawale','8974561230','kiran@gmail.com');
+INSERT INTO `parent` VALUES (29,'dfsdf','asdf','9856321470','sadf@sadfas.co'),(30,'Ashok','Dukale','9168516735','pdukale9@gmail.com'),(32,'Pintu','Zintu','9658743210','abcd@gmail.com'),(33,'Babasaheb','Nalawade','8605617199','dipak@gmail.com'),(34,'Bajirao','Patil','9657939975','nayan@gmail.com'),(35,'Mahadev','sharma','9658742310','arpit@gmail.com'),(36,'sdfasf','fasdfasdf','9587461230','sdfasdf@dfas.com'),(37,'sdgfsadf','gfsda','9857461233','ssdf@asdfas.com'),(38,'SFsdfsd','fsdsd','9658741230','sdfsdsd@sdfsd.com'),(39,'sfasd','fasdf','8974561230','fasdf@asdfasd.co'),(40,'sdfasd','sdf','9658741230','sfsadfasd@asdf.co'),(41,'sdfasd','fsdafasdf','9658741230','sdfasdf@sdfsd.co'),(42,'Prabhakar','Sadaphal','9658741230','rahul@gmail.com'),(43,'Gopal','Agrawal','8974563210','govind@gmail.com'),(45,'Piraji','Sawale','8974561230','kiran@gmail.com');
 /*!40000 ALTER TABLE `parent` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -522,10 +523,11 @@ CREATE TABLE `result` (
   `remarks` varchar(300) DEFAULT NULL,
   `exam_subject_student_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `exam_subject_student_id` (`exam_subject_student_id`),
   KEY `FK6x12uwgitmtjgm503wyiofkxf` (`exam_subject_student_id`),
   CONSTRAINT `FK6x12uwgitmtjgm503wyiofkxf` FOREIGN KEY (`exam_subject_student_id`) REFERENCES `exam_subject_student_composit_table` (`id`),
   CONSTRAINT `exam_subject_student foreign key` FOREIGN KEY (`exam_subject_student_id`) REFERENCES `exam_subject_student_composit_table` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -534,6 +536,7 @@ CREATE TABLE `result` (
 
 LOCK TABLES `result` WRITE;
 /*!40000 ALTER TABLE `result` DISABLE KEYS */;
+INSERT INTO `result` VALUES (1,18,'Pass with distinction',129),(2,2,'Fail',126),(3,4,'Fail',128),(4,20,'3',130),(5,NULL,'ss',131),(6,19,'Pass with Distinction',140);
 /*!40000 ALTER TABLE `result` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -630,7 +633,7 @@ CREATE TABLE `student` (
 
 LOCK TABLES `student` WRITE;
 /*!40000 ALTER TABLE `student` DISABLE KEYS */;
-INSERT INTO `student` VALUES (20,103,'sdfas','dfsdf','asdf',29,'9856321470','sadf@sadfas.co',50,NULL),(21,104,'Prasad','Ashok','dukale',30,'9385620399','pdukale9@gmail.com',50,21),(23,111,'chintu ','Pintu','Zintu',32,'9658743210','abcd@gmail.com',50,19),(24,112,'Dipak ','Vishnu','Sutar',33,'9657841230','dipak@gmail.com',50,19),(25,113,'Nayan','Bajirao','Patil',34,'7845456932','nayan@gmail.com',50,19),(26,114,'Arpit','Mahadev','sharma',35,'9658742310','arpit@gmail.com',50,19),(27,115,'abcva','sdfasf','fasdfasdf',36,'9587461230','sdfasdf@dfas.com',50,19),(28,116,'vsxvsd','sdgfsadf','gfsda',37,'9857461233','ssdf@asdfas.com',50,19),(29,117,'sdfdsfsd','SFsdfsd','fsdsd',38,'9658741230','sdfsdsd@sdfsd.com',50,19),(30,118,'fsdaf','sfasd','fasdf',39,'8974561230','fasdf@asdfasd.co',50,19),(31,119,'sfsdf','sdfasd','sdf',40,'9658741230','sfsadfasd@asdf.co',50,19),(32,120,'sdfasdf','sdfasd','fsdafasdf',41,'9658741230','sdfasdf@sdfsd.co',50,19),(33,121,'Rahul','Prabhakar','Sadaphal',42,'9658741230','rahul@gmail.com',50,19),(34,122,'Govind','Gopal','Agrawal',43,'8974563210','govind@gmail.com',50,19),(36,124,'kiran','Piraji','Sawale',45,'8974561230','kiran@gmail.com',50,19);
+INSERT INTO `student` VALUES (20,103,'sdfas','dfsdf','asdf',29,'9856321470','sadf@sadfas.co',50,NULL),(21,104,'Prasad','Ashok','Dukale',30,'9657939975','pdukale9@gmail.com',50,19),(23,111,'Rahul','Sawle','Sawle',32,'9658743210','abcd@gmail.com',50,19),(24,112,'Anil','Babasaheb','Nalawade',33,'8605617199','dipak@gmail.com',50,19),(25,113,'Nayan','Bajirao','Patil',34,'7845456932','nayan@gmail.com',50,19),(26,114,'Arpit','Mahadev','sharma',35,'9658742310','arpit@gmail.com',50,19),(27,115,'abcva','sdfasf','fasdfasdf',36,'9587461230','sdfasdf@dfas.com',50,19),(28,116,'vsxvsd','sdgfsadf','gfsda',37,'9857461233','ssdf@asdfas.com',50,19),(29,117,'sdfdsfsd','SFsdfsd','fsdsd',38,'9658741230','sdfsdsd@sdfsd.com',50,19),(30,118,'fsdaf','sfasd','fasdf',39,'8974561230','fasdf@asdfasd.co',50,19),(31,119,'sfsdf','sdfasd','sdf',40,'9658741230','sfsadfasd@asdf.co',50,19),(32,120,'sdfasdf','sdfasd','fsdafasdf',41,'9658741230','sdfasdf@sdfsd.co',50,19),(33,121,'Rahul','Prabhakar','Sadaphal',42,'9658741230','rahul@gmail.com',50,19),(34,122,'Govind','Gopal','Agrawal',43,'8974563210','govind@gmail.com',50,19),(36,124,'kiran','Piraji','Sawale',45,'8974561230','kiran@gmail.com',50,19);
 /*!40000 ALTER TABLE `student` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -677,7 +680,7 @@ CREATE TABLE `subject` (
 
 LOCK TABLES `subject` WRITE;
 /*!40000 ALTER TABLE `subject` DISABLE KEYS */;
-INSERT INTO `subject` VALUES (1,'English','10th English sub',50),(2,'Marathi','10th Marathi',50),(3,'Biology','11th Biology1',50),(4,'Chemistry','11th Chemistry',50),(5,'Maths','11th Maths',50),(6,'Maths','12th Maths',NULL),(7,'bjh','bjh',NULL),(8,'10th Maths','10th Maths',NULL),(9,'Biology','11th biology',50);
+INSERT INTO `subject` VALUES (1,'English','10th English sub',50),(2,'Marathi','10th Marathi',50),(3,'Biology','11th Biology1',50),(4,'Chemistry','11th Chemistry',50),(5,'Maths','11th Maths',50),(6,'Maths','12th Maths',50),(7,'bjh','bjh',50),(8,'10th Maths','10th Maths',50),(9,'Biology','11th biology',50);
 /*!40000 ALTER TABLE `subject` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -985,9 +988,10 @@ BEGIN
     
 	DECLARE SubDivCursor CURSOR FOR SELECT sd.`id`, s.`id`,s.`name` FROM `subject_div_composit` sd, `division` d,`subject` s WHERE d.`id`=sd.`Div_id` AND sd.`subject_id`=s.`id` AND `Div_id`=Divisions_Id;
     
-	DECLARE SubDivCursorForSubNotInExam CURSOR  FOR select distinct(sd.id) as subdiv, s.id as subjectId,s.name subjectName from exam_subject_student_composit_table essct,subject_div_composit sd, subject s ,division d where essct.subject_div_id=sd.id and s.id=sd.subject_id and sd.Div_id=d.id and d.id=Divisions_Id and  sd.id not in (select essct.subject_div_id from exam_subject_student_composit_table essct where essct.exam_id=param);
+	DECLARE SubDivCursorForSubNotInExam CURSOR  FOR  select distinct(sd.id) as subdiv, s.id as subjectId,s.name subjectName from subject s ,division d, subject_div_composit sd left join  exam_subject_student_composit_table essct on  essct.subject_div_id=sd.id where  s.id=sd.subject_id and sd.Div_id=d.id and d.id=Divisions_Id and  sd.id not in (select distinct(essct.subject_div_id) from exam_subject_student_composit_table essct where essct.exam_id=param);
+
 	
-    DECLARE SubDivCursorForExamSub CURSOR  FOR select distinct(sd.id) as subdiv, s.id as subjectId,s.name subjectName from exam_subject_student_composit_table essct,subject_div_composit sd, subject s ,division d where essct.subject_div_id=sd.id and s.id=sd.subject_id and sd.Div_id=d.id and d.id=Divisions_Id and  sd.id  in (select essct.subject_div_id from exam_subject_student_composit_table essct where essct.exam_id=param);
+    DECLARE SubDivCursorForExamSub CURSOR  FOR select distinct(sd.id) as subdiv, s.id as subjectId,s.name subjectName from subject s ,division d, subject_div_composit sd left join  exam_subject_student_composit_table essct on  essct.subject_div_id=sd.id where  s.id=sd.subject_id and sd.Div_id=d.id and d.id=Divisions_Id and  sd.id  in (select distinct(essct.subject_div_id) from exam_subject_student_composit_table essct where essct.exam_id=param);
 
 	DECLARE CONTINUE HANDLER FOR NOT FOUND SET done=1;
 	
@@ -1173,4 +1177,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-05-01 11:48:03
+-- Dump completed on 2018-06-21 20:59:04

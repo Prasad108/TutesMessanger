@@ -14,7 +14,7 @@
    		<script src="<c:url value="/js/ivh_treeViewscript.js" />"></script>
    		<script type="text/javascript" src="${pageContext.request.contextPath}/js/pikaday.js"></script>
    		
-   		
+   		  <script type="text/javascript" src="https://cdn.rawgit.com/Attrash-Islam/bower-angular-spinner/master/dist/angular-spinner.min.js"></script>
  		<script src="${pageContext.request.contextPath}/app/teacher/app.js"></script>
  		
 		

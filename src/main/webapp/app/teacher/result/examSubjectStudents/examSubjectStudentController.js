@@ -5,7 +5,7 @@
 	  app.controller('examSubjectStudentCtrl',examSubjectStudentCtrl)
 	  
 		   
-		examSubjectStudentCtrl.$inject=['shairedDataService','$stateParams','$scope','$http','$log','$window'];
+		examSubjectStudentCtrl.$inject=['shairedDataService','$stateParams','$scope','$http','$log','$window',];
 	   function examSubjectStudentCtrl( shairedDataService, $stateParams,$scope, $http,$log,$window) {
 		   
 		   $scope.teacher=shairedDataService.teacher;

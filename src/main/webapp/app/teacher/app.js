@@ -1,5 +1,5 @@
 (function() {
-	var app=angular.module("myApp",['ui.router',"ngSanitize",'ui.bootstrap','ivh.treeview']);
+	var app=angular.module("myApp",['ui.router',"ngSanitize",'ui.bootstrap','ivh.treeview','angularSpinner']);
 	
 	app
 	.config(function(ivhTreeviewOptionsProvider) {
