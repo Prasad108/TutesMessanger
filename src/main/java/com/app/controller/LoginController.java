@@ -74,10 +74,6 @@ public class LoginController {
 
 		//logger.info("*************** this is from redirectToHome controller **************");
 		logger.info("*************** this is from redirectToHome controller **************");
-		logger.debug("*************** this is from redirectToHome controller **************");
-		logger.error("*************** this is from redirectToHome controller **************");
-		logger.warn("*************** this is from redirectToHome controller **************");
-		//logger.info("login credentials are " + login.toString());
 		String output = "hello";
 		
 
