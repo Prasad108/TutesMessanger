@@ -5,14 +5,14 @@
               <!-- sidebar menu start-->
               <ul class="sidebar-menu">                
                   <li class="active">
-                      <a class="" href="Home">
+                      <a class="toggle-IfSmallScreen" href="Home">
                           <i class="icon_house_alt"></i>
                           <span>Home</span>
                       </a>
                   </li>
                 
                   <li>
-                      <a class="" href="Schedule">
+                      <a class="toggle-IfSmallScreen" href="Schedule">
                           <i class="icon_genius"></i>
                           <span>Schedule</span>
                       </a>
@@ -25,9 +25,9 @@
                           <span class="menu-arrow arrow_carrot-right"></span>
                       </a>
                       <ul class="sub">
-                          <li><a class="" href="studentShowProfile">View Profile</a></li>                          
-                          <li><a class="" href="studentEditProfile">Edit Profile</a></li>
-                           <li><a class="" href="studentChangePassword">Change Password</a></li> 
+                          <li><a class="toggle-IfSmallScreen" href="studentShowProfile">View Profile</a></li>                          
+                          <li><a class="toggle-IfSmallScreen" href="studentEditProfile">Edit Profile</a></li>
+                           <li><a class="toggle-IfSmallScreen" href="studentChangePassword">Change Password</a></li> 
                           <!-- <li><a class="" href="studentChangePass">Change Password</a></li> -->
                       </ul>
                   </li>  
