@@ -2,6 +2,7 @@ package com.app.controller;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -25,16 +26,17 @@ public class LearnAngular {
 	@Autowired
 	RoleService roleService;
 	
-
+	private static final Logger LOGGER = Logger.getLogger(LearnAngular.class);
+	
 	@RequestMapping(value="/angular",method = RequestMethod.GET)  
 	 public String angular(){
-		 System.out.println("**********inside angular controller**********");
+		 LOGGER.info("**********inside angular controller**********");
 	    return "template/angular";  	
 	    }
 	
 	@RequestMapping(value="/angular/hhtp1",method = RequestMethod.GET)  
 	 public String angularhhtp1(){
-		 System.out.println("**********inside angularhhtp1 controller**********");
+		 LOGGER.info("**********inside angularhhtp1 controller**********");
 	    return "template/angular/hhtp1";  	
 	    }
 		
@@ -42,7 +44,7 @@ public class LearnAngular {
 	
 	@RequestMapping(value="/angular/role",method = RequestMethod.GET)  
 	 public String angularrole(Model model){
-		 System.out.println("**********inside angularrole controller**********");
+		 LOGGER.info("**********inside angularrole controller**********");
 		 			 
 		 List<Role> roleList=roleService.getall();		
 		 Gson gson = new Gson();				
@@ -55,35 +57,35 @@ public class LearnAngular {
 
 	@RequestMapping(value="/angular/getRoles",method = RequestMethod.GET)  
 	 @ResponseBody public String angularGetRoles(){
-		 System.out.println("**********inside angular/role/GetRoles controller**********");
+		 LOGGER.info("**********inside angular/role/GetRoles controller**********");
 		 List<Role> roleList=roleService.getall();			
 		 Gson gson = new Gson();				
 		 String JSON_RolesList= gson.toJson(roleList);	
-		 System.out.println(JSON_RolesList);
+		 LOGGER.info(JSON_RolesList);
 	    return JSON_RolesList;  	
 	    }
 		
 	@Secured("permitAll")
 	@RequestMapping(value="/angular/saveRole",method = RequestMethod.POST)  
 	 @ResponseBody public String saveRole(@RequestBody Role role){
-		 System.out.println("**********inside angular/role/saveRole controller**********");
-		 System.out.println(role);
+		 LOGGER.info("**********inside angular/role/saveRole controller**********");
+		 LOGGER.info(role);
 		 String result="";
 		 try {
 		 roleService.create(role);
 		 result="object is saved";
-		 System.out.println("object is saved");
+		 LOGGER.info("object is saved");
 		 }catch(Exception e) {
 			 result="object is not saved";	
-			 System.out.println("error in object saving");
+			 LOGGER.info("error in object saving");
 		 }	
 		 
 		 Role r=roleService.findByName(role.getName());
-		 System.out.println("saved role is "+r);
+		 LOGGER.info("saved role is "+r);
 		 
 		 Gson gson = new Gson();
 		 result=gson.toJson(r);
-		 System.out.println("saved object in json "+result);
+		 LOGGER.info("saved object in json "+result);
 	    return result;  	
 	    }
 	
@@ -92,32 +94,32 @@ public class LearnAngular {
 	 @ResponseBody
 	  public String deleteRole( @PathVariable("id") int id ){
 		 
-			System.out.println("**********from /angular/deleteRole/{id} controller**********");
+			LOGGER.info("**********from /angular/deleteRole/{id} controller**********");
 			
 			String result="";
 			
 			
 				
-			System.out.println("object to be deleted is with id"+id);
+			LOGGER.info("object to be deleted is with id"+id);
 			if(id>5)
 			{
 				roleService.delet(id);
-				System.out.println("Role is deleted with the id "+id);
+				LOGGER.info("Role is deleted with the id "+id);
 				result="{\"message\":\"Role with id "+id+" is deleted \"}";
 			}else {
 				result="{\"message\":\"Role is important ie.cannot be deleted\"}";
-				System.out.println(" This is imp role -cannot be deleted or some other error");
+				LOGGER.info(" This is imp role -cannot be deleted or some other error");
 			}
 			
-			System.out.println(result);
+			LOGGER.info(result);
 		return result;
 }
 	 
 	@Secured("permitAll")
 	 @RequestMapping(value="/angular/UpdateRole",method = RequestMethod.POST)  
 	 @ResponseBody public String updatRole(@RequestBody Role role){
-		 System.out.println("**********inside angular/role/updatRole controller**********");
-		 System.out.println(role);
+		 LOGGER.info("**********inside angular/role/updatRole controller**********");
+		 LOGGER.info(role);
 		 String result="";
 		 try {
 			 
@@ -125,18 +127,18 @@ public class LearnAngular {
 			 {
 				 roleService.update(role);
 				 result="{\"message\":\"Role :"+role+"is updated \"}";
-				 System.out.println("Role is updated");
+				 LOGGER.info("Role is updated");
 			 }else {
 				 result="{\"message\":\"Role :"+role+"is cannot be updated as it is important to APP \"}";
-				 System.out.println("cannot update srole imp role ");
+				 LOGGER.info("cannot update srole imp role ");
 			 }
 		
 		 }catch(Exception e) {
 			 result="{\"message\":\"Role is important ie.cannot be updated\"}";
-			 System.out.println("error in object saving");
+			 LOGGER.info("error in object saving");
 		 }	
 		 
-		System.out.println(result);
+		LOGGER.info(result);
 	    return result;  	
 	    }
 

@@ -76,7 +76,7 @@ public class SubjectDAOImpl implements com.app.DAO.SubjectDAO{
 		Query query = currentSession().createQuery("UPDATE Subject s SET s.institute.id=NULL where s.id= :SubId");
 		query.setParameter("SubId",subId);
 		int result=query.executeUpdate();
-		System.out.println(result+" This is query result");
+		//System.out.println(result+" This is query result");
 		
 	}
 

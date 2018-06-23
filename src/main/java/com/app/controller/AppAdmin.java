@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Set;
 
 import com.google.gson.Gson;
+
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -59,12 +61,12 @@ public class AppAdmin {
 	AppAdminService appAdminService; 
 	
 	
-	
+	private static final Logger LOGGER = Logger.getLogger(AppAdmin.class);
 	
 	 @RequestMapping(value="/",method = RequestMethod.GET)  
 	    public    String  appAdminDashboard() {  
 	    	
-	    	System.out.println("*************this is /appAdmin/dashboard controller*********************");	    		    				
+	    	LOGGER.info("*************this is /appAdmin/dashboard controller*********************");	    		    				
 	        return "appAdmin/index";
 	    }
 	
@@ -78,7 +80,7 @@ public class AppAdmin {
 	    @ResponseBody
 	    public ResponseEntity SaveInstituteAdmin(@RequestBody com.app.pojo.composit.InstituteNameAdminName instadmin,Model model) {  
 	    	 
-	    	System.out.println("**********this is SaveInstituteAdmin controller**********");
+	    	LOGGER.info("**********this is SaveInstituteAdmin controller**********");
 	    	ResponseEntity output; 
 	    	Institute inst=new Institute();
 	    	inst.setAddress(instadmin.getInstAddress());
@@ -102,7 +104,7 @@ public class AppAdmin {
 			{
 				// mostly error will be that their is duplicate entry in record 
 				
-		    	System.out.println("duplicate key unique key voilation");
+		    	LOGGER.info("duplicate key unique key voilation");
 		    	//e.printStackTrace();
 		    	output=new ResponseEntity(HttpStatus.FAILED_DEPENDENCY);
 			}   	
@@ -121,7 +123,7 @@ public class AppAdmin {
 		
 			Institute inst= new Institute();
 		
-	    	System.out.println("**********this is from AppAdmin/GetAllInstitute controller**********");
+	    	LOGGER.info("**********this is from AppAdmin/GetAllInstitute controller**********");
 		
 			String response=gson.toJson(Institutelist);
 		
@@ -136,12 +138,12 @@ public class AppAdmin {
 	    public String  updateInstitute(@RequestBody Institute inst,Model model) {  			
 	    	
 	    
-				System.out.println("**********this is from updateInstitute controller**********");	
+				LOGGER.info("**********this is from updateInstitute controller**********");	
 				Institute inst1=instituteService.find(inst.getId());
 				inst.setEnable(inst1.getEnable());
 				inst.setSubscritionEnable(inst1.getSubscritionEnable());
 				instituteService.update(inst);
-				System.out.println("institute is updated");
+				LOGGER.info("institute is updated");
 				
 				ArrayList<Institute> Institutelist= new ArrayList<Institute>();
 				Institutelist.addAll(instituteService.getall());

@@ -180,7 +180,7 @@
 		      // create linking function and pass in our NgModelController as a 4th argument
 		      link: function(scope, element, attr, ctrl) {
 		    	  
-		    	  scope.isLoading = $http.pendingRequests.length > 0;
+		    	  //scope.isLoading = $http.pendingRequests.length > 0;
 		    	  
 		    	  function customValidator(ngModelValue) {
 		    	        

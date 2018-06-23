@@ -6,6 +6,7 @@ package com.app.controller;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -55,10 +56,12 @@ public class SignUpController {
 	@Autowired
 	ParentService parentService;
 	
+	private static final Logger LOGGER = Logger.getLogger(SignUpController.class);
+	
 	@RequestMapping(value="/SignUp",method = RequestMethod.GET)  
     public String  SignUp(Model model ) {  
     	
-    	System.out.println("**********this is SignUp controller**********");
+    	LOGGER.info("**********this is SignUp controller**********");
     	
         return "signup/Choice";	
     }
@@ -68,13 +71,13 @@ public class SignUpController {
     @RequestMapping(value="/RegisterTeacher",method = RequestMethod.GET)  
     public String  RegisterTeacher(Model model) {  
     	
-    	System.out.println("**********this is Register Teacher controller**********");     
+    	LOGGER.info("**********this is Register Teacher controller**********");     
     	Teacher t= new Teacher();
     	model.addAttribute("Teacher", t);    	
     	List<Institute> teacherlist =	instituteService.getall();
     	model.addAttribute("teacherlist",teacherlist);
     //	model.put("inf", teacherlist);
-    	System.out.println("institutes"+teacherlist.toString());
+    	LOGGER.info("institutes"+teacherlist.toString());
 
 		
         return "signup/addTeacher";  
@@ -86,7 +89,7 @@ public class SignUpController {
     	
     	
     	
-    	System.out.println("**********this is save Teacher controller**********"); 
+    	LOGGER.info("**********this is save Teacher controller**********"); 
     	    	
     	Role r= RoleService.findByName("ROLE_TEACHER"); // got the role of institute admin 		   
     	
@@ -112,7 +115,7 @@ public class SignUpController {
     @RequestMapping(value="/RegisterStudent",method = RequestMethod.GET)  
     public String  RegisterStudent(Model model) {  
     	
-    	System.out.println("**********this is RegisterStudent controller**********");  
+    	LOGGER.info("**********this is RegisterStudent controller**********");  
     	Student s= new Student();
     	model.addAttribute("Student", s); 
     	List<Institute> institutelist =	instituteService.getall();
@@ -125,13 +128,13 @@ public class SignUpController {
     @RequestMapping(value="/SaveStudent",method = RequestMethod.POST)  
     public String  SaveStudent(Model model,@ModelAttribute("Student") Student student) {  
     	
-    	System.out.println("**********this is SaveStudent controller**********");  
+    	LOGGER.info("**********this is SaveStudent controller**********");  
     	
     	String result="";
     	try
 		{
     	
-    	System.out.println("student is "+student);
+    	LOGGER.info("student is "+student);
     	
     	Role r= RoleService.findByName("ROLE_STUDENT"); // got the role of institute admin 	
     	
@@ -154,7 +157,7 @@ public class SignUpController {
     			student.setParent(p);  	
     	StudentService.create(student);
     	
-    	System.out.println("student created");
+    	LOGGER.info("student created");
     	
     	model.addAttribute("SuccessMessage","Student Saved succesffully. Please wait till Institute sanctions your account");
     	
@@ -164,9 +167,9 @@ public class SignUpController {
 		}
 		catch(Exception e)
 		{
-			System.out.println(e.getMessage());
-			System.out.println(e);
-			System.out.println("error in saving student ");
+			LOGGER.info(e.getMessage());
+			LOGGER.info(e);
+			LOGGER.info("error in saving student ");
 			model.addAttribute("ErrorMessage","Error in Saaving Student...!!!");
 			result="signup/SaveStudentResult";
 		}
