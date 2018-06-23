@@ -2,6 +2,7 @@ package com.app.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -35,11 +36,12 @@ public class StudentController {
 	
 	@Autowired
 	StudentService studentService;
+	private static final Logger LOGGER = Logger.getLogger(StudentController.class);
 	 
 	 @RequestMapping(value="/Home",method = RequestMethod.GET)  
 	    public String  ViewInstitueStructure(Model model,@ModelAttribute("student") Student student) {  
 	    	
-		 System.out.println("**********this is from Student Home Controller controller**********");	    	
+		 LOGGER.info("**********this is from Student Home Controller controller**********");	    	
 		
 		 		 
 	        return "Student/Home";
@@ -48,77 +50,77 @@ public class StudentController {
 	 @ResponseBody
 	 public String getSchedule(@ModelAttribute("student") Student student)
 	 {
-		 System.out.println("**********this is from Student getSchedule Controller controller**********");	    
+		 LOGGER.info("**********this is from Student getSchedule Controller controller**********");	    
  		 String output="";
 			try {
 				
 				Integer i=student.getDivision().getId();
-				System.out.println("Division id is "+i);
+				LOGGER.info("Division id is "+i);
 				
 				try {
 					Schedule schedule = scheduleService.fordivision(i);
 					if (!schedule.getString().isEmpty()) {
 						
-						System.out.println("schedule Found");
+						LOGGER.info("schedule Found");
 						output=schedule.getString();
 						output="{\"schedule\":\""+schedule.getString()+"\",\"status\":\"success\"}";
 					} else {
 						output="{\"message\":\"For Your Division Schedule is not uploaded\",\"status\":\"error\"}";
 						
-						System.out.println("schedule not found for divisino");
+						LOGGER.info("schedule not found for divisino");
 					}
 				}
 				catch(Exception e3)
 				{
 					output="{\"message\":\"For Your Division Schedule is not uploaded\",\"status\":\"error\"}";
-					System.out.println("schedule not found for divisino");
-					System.out.println("cathced the exception  3");
+					LOGGER.info("schedule not found for divisino");
+					LOGGER.info("cathced the exception  3");
 				}
 				
 			}
 			catch(Exception e2) {
-				System.out.println("cathced the exception  e23");
+				LOGGER.info("cathced the exception  e23");
 				output="{\"message\":\"Student do not have any division\",\"status\":\"error\"}";
 				
 				
 				
 			}
-			System.out.println(output);
+			LOGGER.info(output);
 	        return output;
 	 }
 	 
 	 @RequestMapping(value="/Schedule",method = RequestMethod.GET)  
 	    public String  Schedule(Model model,@ModelAttribute("student") Student student) {  
 	    	
-		 System.out.println("**********this is from Student Schedule Controller controller**********");	    
+		 LOGGER.info("**********this is from Student Schedule Controller controller**********");	    
 		 		 
 			/*try {
 				
 				Integer i=student.getDivision().getId();
-				System.out.println("Division id is "+i);
+				LOGGER.info("Division id is "+i);
 			
 				
 				try {
 					Schedule schedule = scheduleService.fordivision(i);
 					if (!schedule.getString().isEmpty()) {
 						model.addAttribute("schedule", schedule.getString());
-						System.out.println("schedule added to model");
+						LOGGER.info("schedule added to model");
 		
 					} else {
 						model.addAttribute("scheduleNotFound", "For Your Division Schedule is not uploaded");
-						System.out.println("schedule not found for divisino");
+						LOGGER.info("schedule not found for divisino");
 					}
 				}
 				catch(Exception e3)
 				{
 					model.addAttribute("scheduleNotFound", "For Your Division Schedule is not uploaded");
-					System.out.println("schedule not found for divisino");
-					System.out.println("cathced the exception  3");
+					LOGGER.info("schedule not found for divisino");
+					LOGGER.info("cathced the exception  3");
 				}
 				
 			}
 			catch(Exception e2) {
-				System.out.println("cathced the exception  e23");
+				LOGGER.info("cathced the exception  e23");
 				
 				model.addAttribute("scheduleErrorNoDivisionAssigned", "Student do not have any division");
 				
@@ -132,14 +134,14 @@ public class StudentController {
 	 	@RequestMapping(value="/studentShowProfile")
 	 	public String studentShowProfile(Model model)
 	 	{
-	 		 System.out.println("**********this is StudentShowProfile controller**********");	    	
+	 		 LOGGER.info("**********this is StudentShowProfile controller**********");	    	
 			 return "Student/showProfile"; 
 	 	}
 	 	
 	 	@RequestMapping(value="/studentEditProfile")
 	 	public String studentEditProfile(Model model) 
 	    {
-		 System.out.println("**********this is studentEditProfile controller**********");	 
+		 LOGGER.info("**********this is studentEditProfile controller**********");	 
 		 model.addAttribute("EditStudent", new Student());
 		 return "Student/editProfile";
         }
@@ -148,7 +150,7 @@ public class StudentController {
 	 	@RequestMapping(value="/editStudent",method = RequestMethod.POST)
 	 	public String editTeacher(Model model,@ModelAttribute("student") Student student1,@ModelAttribute("EditTeacher") Student student2) 
 	 {
-		 System.out.println("**********this is editStudent controller**********");
+		 LOGGER.info("**********this is editStudent controller**********");
 		 student1.setFname(student2.getFname());
 		 student1.setLname(student2.getLname());
 		 student1.setEmail(student2.getEmail());
@@ -167,7 +169,7 @@ public class StudentController {
 	 	@RequestMapping("/studentChangePassword")
 	 	public String changePasswordShow(Model map) 
 	    {
-		 System.out.println("**********this is studentChangePassword controller**********");	    	
+		 LOGGER.info("**********this is studentChangePassword controller**********");	    	
 		 
 		 String oldPassword = "a", newPassword = "a";
 		 map.addAttribute("oldPassword",oldPassword);
@@ -179,14 +181,14 @@ public class StudentController {
 	 	@RequestMapping(value = "/changeSPassword", method = RequestMethod.POST)
 		public String changeSPassword(@ModelAttribute("student") Student student,HttpServletRequest request,Model model) 
 	 	{		
-			System.out.println("**********inside changeStudentPassword controller**********");
+			LOGGER.info("**********inside changeStudentPassword controller**********");
 			String currentPassword=request.getParameter("currentPassword");
 			String newPassword=request.getParameter("newPassword");
 			
 			String existPassword=student.getLogin().getPassword();
 			
-			System.out.println("from form "+currentPassword +" from studentobject"+existPassword);
-			System.out.println("new username "+newPassword);
+			LOGGER.info("from form "+currentPassword +" from studentobject"+existPassword);
+			LOGGER.info("new username "+newPassword);
 			if(existPassword.equals(currentPassword) )
 			{
 				studentService.changePassword(newPassword,student.getLogin());	
@@ -206,13 +208,13 @@ public class StudentController {
 	 	
 	 	@RequestMapping(value = "/changeSUsername", method = RequestMethod.POST)
 		public String changeTUsername(@ModelAttribute("student") Student student,HttpServletRequest request,Model model) {		
-			System.out.println("**********inside changeStudentUsername controller**********");
+			LOGGER.info("**********inside changeStudentUsername controller**********");
 			String currentUserName=request.getParameter("currentUsername");
 			String newUserName=request.getParameter("newUsername");
 			String existName=student.getLogin().getUsername();
 			
-			System.out.println("from form "+currentUserName +" from studentobject"+existName);
-			System.out.println("new username "+newUserName);
+			LOGGER.info("from form "+currentUserName +" from studentobject"+existName);
+			LOGGER.info("new username "+newUserName);
 			if(existName.equals(currentUserName) )
 			{
 				studentService.changeUserName(newUserName,student.getLogin());	

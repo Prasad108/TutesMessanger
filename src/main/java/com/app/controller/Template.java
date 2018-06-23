@@ -1,6 +1,8 @@
 package com.app.controller;
 
 import javax.servlet.http.HttpSession;
+
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,82 +18,84 @@ public class Template {
 
 	@Autowired
 	RoleService roleService;
+	
+	private static final Logger LOGGER = Logger.getLogger(Template.class);
 
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public String templateIndex() {
-		System.out.println("***************inside index controller***************");
+		LOGGER.info("***************inside index controller***************");
 		return "template/index";
 	}
 
 	@RequestMapping(value = "/404", method = RequestMethod.GET)
 	public String errorPage() {
-		System.out.println("***************inside 404 controller***************");
+		LOGGER.info("***************inside 404 controller***************");
 		return "template/404";
 	}
 
 	@RequestMapping(value = "/basic_table", method = RequestMethod.GET)
 	public String basic_table() {
-		System.out.println("***************inside basic_table controller***************");
+		LOGGER.info("***************inside basic_table controller***************");
 		return "template/basic_table";
 	}
 
 	@RequestMapping(value = "/buttons", method = RequestMethod.GET)
 	public String buttons() {
-		System.out.println("***************inside buttons controller***************");
+		LOGGER.info("***************inside buttons controller***************");
 		return "template/basic_table";
 	}
 
 	@RequestMapping(value = "/chart-chartjs", method = RequestMethod.GET)
 	public String chartchartjs() {
-		System.out.println("***************inside chart-chartjs controller***************");
+		LOGGER.info("***************inside chart-chartjs controller***************");
 		return "template/chart-chartjs";
 	}
 
 	@RequestMapping(value = "/form_component", method = RequestMethod.GET)
 	public String form_component() {
-		System.out.println("***************inside form_component controller***************");
+		LOGGER.info("***************inside form_component controller***************");
 		return "template/form_component";
 	}
 
 	@RequestMapping(value = "/form_validation", method = RequestMethod.GET)
 	public String form_validation() {
-		System.out.println("***************inside form_validation controller***************");
+		LOGGER.info("***************inside form_validation controller***************");
 		return "template/form_validation";
 	}
 
 	@RequestMapping(value = "/general", method = RequestMethod.GET)
 	public String general() {
-		System.out.println("***************inside general controller***************");
+		LOGGER.info("***************inside general controller***************");
 		return "template/general";
 	}
 
 	@RequestMapping(value = "/grids", method = RequestMethod.GET)
 	public String grids() {
-		System.out.println("***************inside grids controller***************");
+		LOGGER.info("***************inside grids controller***************");
 		return "template/grids";
 	}
 
 	/*
 	 * @RequestMapping(value="/login",method = RequestMethod.GET) public String
-	 * login(){ System.out.println("inside login controller"); return
+	 * login(){ LOGGER.info("inside login controller"); return
 	 * "template/login"; }
 	 */
 
 	@RequestMapping(value = "/profile", method = RequestMethod.GET)
 	public String profile() {
-		System.out.println("***************inside profile controller***************");
+		LOGGER.info("***************inside profile controller***************");
 		return "template/profile";
 	}
 
 	@RequestMapping(value = "/blank", method = RequestMethod.GET)
 	public String blank() {
-		System.out.println("***************inside widgets controller***************");
+		LOGGER.info("***************inside widgets controller***************");
 		return "template/blank";
 	}
 
 	@RequestMapping(value = "/widgets", method = RequestMethod.GET)
 	public String widgets() {
-		System.out.println("***************inside widgets controller***************");
+		LOGGER.info("***************inside widgets controller***************");
 		return "template/widgets";
 	}
 
@@ -99,15 +103,15 @@ public class Template {
 	public String login(@RequestParam(value = "error", required = false) String error,
 			@RequestParam(value = "logout", required = false) String logout, Login l, HttpSession session, Model model,
 			RedirectAttributes redirectAttributes) {
-		System.out.println("*************** This is login controller **********************");
+		LOGGER.info("*************** This is login controller **********************");
 
 		model.addAttribute("Login", l);
 		if (error != null) {
-			System.out.println("Invalid username and password!");
+			LOGGER.info("Invalid username and password!");
 			model.addAttribute("error", "Invalid username and password!");
 		}
 		if (logout != null) {
-			System.out.println("You've been logged out successfully.!!");
+			LOGGER.info("You've been logged out successfully.!!");
 			model.addAttribute("msg", "You've been logged out successfully.");
 		}
 
@@ -120,9 +124,9 @@ public class Template {
 	@RequestMapping(value = "/logout", method = { RequestMethod.GET, RequestMethod.POST })
 	public String logout(@RequestParam(value = "error", required = false) String error,
 			@RequestParam(value = "logout", required = false) String logout, HttpSession session, Model model) {
-		System.out.println("*************** This is logout controller **********************");
+		LOGGER.info("*************** This is logout controller **********************");
 
-		System.out.println("You've been logged out successfully.!!!");
+		LOGGER.info("You've been logged out successfully.!!!");
 		model.addAttribute("msg", "You've been logged out successfully.");
 		model.asMap().clear();
 		session.invalidate();

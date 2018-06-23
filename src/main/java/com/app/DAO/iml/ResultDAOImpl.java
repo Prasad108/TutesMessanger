@@ -85,11 +85,11 @@ public class ResultDAOImpl implements ResultDAO{
        	 sb.append(",\"student\":"+gson.toJson(((Object[]) lst.get(i))[2]));
        	 sb.append(",\"SubDivComp\":"+gson.toJson(((Object[]) lst.get(i))[3]));
        	 sb.append(",\"exam\":"+gson.toJson(((Object[]) lst.get(i))[4]));
-           System.out.println("first obj"+((Object[]) lst.get(i))[0]);     //account bean, actually this is in reverse order - so this is user bean
+        /*   System.out.println("first obj"+((Object[]) lst.get(i))[0]);     //account bean, actually this is in reverse order - so this is user bean
            System.out.println("second obj"+((Object[]) lst.get(i))[1]); 
            System.out.println("third obj"+((Object[]) lst.get(i))[2]); //user bean         & this account bean
            System.out.println("fourth obj"+((Object[]) lst.get(i))[3]);
-           System.out.println("fifth obj"+((Object[]) lst.get(i))[4]);
+           System.out.println("fifth obj"+((Object[]) lst.get(i))[4]);*/
            sb.append("},");
        }
        sb.setLength(sb.length() - 1);
@@ -123,9 +123,9 @@ public class ResultDAOImpl implements ResultDAO{
 			
 			remarks=studResult.get("remarks");
 			
-			System.out.println(obtainedMarkes);						
+		/*	System.out.println(obtainedMarkes);						
 			System.out.println(studResult.get("ObtainedMarkes"));
-			System.out.println(remarks);
+			System.out.println(remarks); */
 			
 			if (resultExist(id)) {
 				Result r=findByESSCT(id);
