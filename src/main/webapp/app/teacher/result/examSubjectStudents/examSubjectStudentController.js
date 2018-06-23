@@ -5,7 +5,7 @@
 	  app.controller('examSubjectStudentCtrl',examSubjectStudentCtrl)
 	  
 		   
-		examSubjectStudentCtrl.$inject=['shairedDataService','$stateParams','$scope','$http','$log','$window'];
+		examSubjectStudentCtrl.$inject=['shairedDataService','$stateParams','$scope','$http','$log','$window',];
 	   function examSubjectStudentCtrl( shairedDataService, $stateParams,$scope, $http,$log,$window) {
 		   
 		   $scope.teacher=shairedDataService.teacher;
@@ -18,6 +18,7 @@
 	   		
 	   		$scope.saveButton=false;
 	   		$scope.editIcon=true;
+	   		$scope.loading = 0;
 	   		
 	   		$scope.toggleSave_and_Edit_button=function(){
 	   			$scope.saveButton=!$scope.saveButton;
@@ -26,7 +27,7 @@
 	   		$scope.DataToSend=[];
 
 	   		$scope.GetESSR=function(){
-	   		
+	   			$scope.loading++;
 		   		$http(
 						{
 							url : "ExamSubjectStudentResult",			
@@ -49,7 +50,10 @@
 									// failed
 									console.log("error response came 2********");
 									console.log(response);
-								});
+								}).finally(function() {
+								    // called no matter success or failure
+								    $scope.loading--;
+								  });
 	   		}
 	   		$scope.GetESSR();
 	   		
@@ -123,7 +127,7 @@
    					 // $log.info($scope.DataToSend);
    					  var jsonData=JSON.parse(JSON.stringify($scope.DataToSend));
    					  $log.info(jsonData);
-   					  
+   					$scope.loading++;
    					$http(
    							{
    								url : "UpdateResult",			
@@ -148,7 +152,10 @@
    										// failed
    										console.log("error response came 2********");
    										console.log(response);
-   									});
+   									}).finally(function() {
+   									    // called no matter success or failure
+   									    $scope.loading--;
+   									  });
    					  
    					  }
    			  
@@ -157,45 +164,7 @@
 	   			//$log.info($scope.DataToSend);
 	   		}
 
-//	   		$scope.validateInput=function(marks,issctId){
-//	   			if(marks>$scope.OutOf){
-//	   				angular.forEach($scope.EditResutlForm, function(value, key) {
-//	   				 if(key[0] == '$') return;
-//		   			  else{
-//		   				 if(value.$viewValue==marks){
-//		   					$log.info(key);
-//		   					$log.info(value);
-//		   					value.$valid=false;
-//		   					value.$invalid=true;
-//		   					$log.info(value);
-//		   					$scope.EditResutlForm.$valid=false;
-//		   				  }
-//	   					
-//		   			  }
-//	   				});
-//	   			}else{
-//	   				angular.forEach($scope.EditResutlForm, function(value, key) {
-//		   				 if(key[0] == '$') return;
-//			   			  else{
-//			   				 if(value.$viewValue==marks){
-//			   					$log.info(key);
-//			   					$log.info(value);
-//			   					value.$valid=true;
-//			   					value.$invalid=false;
-//			   					$log.info(value);
-//			   				  }
-//		   					
-//			   			  }
-//		   				});
-//	   				
-//	   			}
-//	   				
-//	   			
-//	   		}
 	   
-		
-
-		   
 	   };
 	   
 	   
@@ -211,6 +180,7 @@
 		      // create linking function and pass in our NgModelController as a 4th argument
 		      link: function(scope, element, attr, ctrl) {
 		    	  
+		    	  scope.isLoading = $http.pendingRequests.length > 0;
 		    	  
 		    	  function customValidator(ngModelValue) {
 		    	        
@@ -241,5 +211,8 @@
 		      }
 		    };
 		});
+	   
+	   
+	 
 	   
 }())

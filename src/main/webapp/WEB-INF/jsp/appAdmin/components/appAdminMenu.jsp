@@ -15,8 +15,8 @@
                         <%--   <li><a class="" href="${pageContext.request.contextPath}/AppAdmin/ExistingInstitutes">Existing Institutes</a></li>
                           <li><a class="" href="${pageContext.request.contextPath}/AppAdmin/AddNewInstitute">ADD Institute</a></li>
                            --%>
-                          <li><a class=""  ui-sref="existingInstitutes" ui-sref-active="active"  >Existing Institutes</a></li>
-                          <li><a class="" ui-sref="addNewInstitute" ui-sref-active="active">ADD Institute</a></li>
+                          <li><a class="toggle-IfSmallScreen"  ui-sref="existingInstitutes" ui-sref-active="active"  >Existing Institutes</a></li>
+                          <li><a class="toggle-IfSmallScreen" ui-sref="addNewInstitute" ui-sref-active="active">ADD Institute</a></li>
                           
                       </ul>
                   </li>

@@ -5,7 +5,7 @@
               <!-- sidebar menu start-->
               <ul class="sidebar-menu">                
                   <li class="active">
-                      <a class="" ui-sref="Home">
+                      <a class="toggle-IfSmallScreen" ui-sref="Home">
                           <i class="icon_house_alt"></i>
                           <span>Home{{4+4}}</span>
                       </a>
@@ -23,7 +23,7 @@
                       </a>
                   </li> -->
                   <li>
-                      <a class="" ui-sref="schedule">
+                      <a class="toggle-IfSmallScreen" ui-sref="schedule">
                          <i class="far fa-calendar-alt"></i>
                           <span>Schedule</span>
                       </a>
@@ -41,8 +41,8 @@
                           <span class="menu-arrow arrow_carrot-right"></span>
                       </a>
                       <ul class="sub">
-                          <li><a class="" ui-sref="existingInstituteStructure" >View Structure</a></li>
-                          <li ng-show="permissions.alterInstituteStructure"><a class="" ui-sref="ModifyInstituteStructure">Modify Structure</a></li>                        
+                          <li><a class="toggle-IfSmallScreen" ui-sref="existingInstituteStructure" >View Structure</a></li>
+                          <li ng-show="permissions.alterInstituteStructure"><a class="toggle-IfSmallScreen" ui-sref="ModifyInstituteStructure">Modify Structure</a></li>                        
                       </ul>
                   </li>
                   
@@ -53,17 +53,17 @@
                           <span class="menu-arrow arrow_carrot-right"></span>
                       </a>
                       <ul class="sub" >
-                          <li ng-show="permissions.authoriseStudent"><a class="" ui-sref="studentRequest" ui-sref-active="active">Student Requests</a></li>
-                           <li ng-show="permissions.authoriseTeacher"><a class="" ui-sref="teacherRequest" ui-sref-active="active">Teacher Request </a></li>    
+                          <li ng-show="permissions.authoriseStudent"><a class="toggle-IfSmallScreen" ui-sref="studentRequest" ui-sref-active="active">Student Requests</a></li>
+                           <li ng-show="permissions.authoriseTeacher"><a class="toggle-IfSmallScreen" ui-sref="teacherRequest" ui-sref-active="active">Teacher Request </a></li>    
                        <!--    <li ng-if="permissions.authoriseStudent"><a class="" href="#">Edit/Delete Student</a></li> -->
-                           <li ng-show="permissions.authoriseStudent"><a class="" ui-sref="addStudentToDivision" ui-sref-active="active">Add Student to Division</a></li>
-                           <li ng-show="permissions.authoriseStudent"><a class="" ui-sref="StudenInDivision" ui-sref-active="active">Division's student</a></li>
+                           <li ng-show="permissions.authoriseStudent"><a class="toggle-IfSmallScreen" ui-sref="addStudentToDivision" ui-sref-active="active">Add Student to Division</a></li>
+                           <li ng-show="permissions.authoriseStudent"><a class="toggle-IfSmallScreen" ui-sref="StudenInDivision" ui-sref-active="active">Division's student</a></li>
                          <!--  <li ng-if="permissions.authoriseTeacher"><a class="" href="#">Edit/Delete Teacher</a></li>       -->                 
                       </ul>
                   </li>
                   
                    <li>
-                      <a class="" ui-sref="Exams" ui-sref-active="active">
+                      <a class="toggle-IfSmallScreen" ui-sref="Exams" ui-sref-active="active">
                            <i class="fab fa-etsy"></i>
                           <span>Exam</span>
                       </a>
@@ -72,13 +72,13 @@
                  
                  
                    <li ng-show="permissions.updateResults">
-                      <a class="" ui-sref="result.Exams" ui-sref-active="active">
+                      <a class="toggle-IfSmallScreen" ui-sref="result.Exams" ui-sref-active="active">
                          <i class="fas fa-graduation-cap"></i>
                              <span>Result</span>
                       </a>
                   </li>
                    <li ng-show="permissions.updateResults">
-                      <a class="" ui-sref="paginationTest" ui-sref-active="active">
+                      <a class="toggle-IfSmallScreen" ui-sref="paginationTest" ui-sref-active="active">
                            <i class="icon_document_alt"></i>
                              <span>paginationTest</span>
                       </a>
@@ -95,8 +95,8 @@
                           <span class="menu-arrow arrow_carrot-right"></span>
                       </a>
                       <ul class="sub">
-                           <li><a class="" ui-sref="subject.addEdit" ui-sref-active="active">Add/Edit Subject</a></li>
-                          <li><a class="" ui-sref="subject.divisionSubjects" ui-sref-active="active">Division's Subject</a></li>
+                           <li><a class="toggle-IfSmallScreen" ui-sref="subject.addEdit" ui-sref-active="active">Add/Edit Subject</a></li>
+                          <li><a class="toggle-IfSmallScreen" ui-sref="subject.divisionSubjects" ui-sref-active="active">Division's Subject</a></li>
                                                  
                       </ul>
                   </li>
@@ -108,21 +108,21 @@
                           <span class="menu-arrow arrow_carrot-right"></span>
                       </a>
                       <ul class="sub">
-                          <li><a class="" ui-sref="profile.view" ui-sref-active="active">View Profile</a></li>                          
+                          <li><a class="toggle-IfSmallScreen" ui-sref="profile.view" ui-sref-active="active">View Profile</a></li>                          
                           <!-- <li><a class="" ui-sref="profile.edit" ui-sref-active="active">Edit Profile</a></li> -->
-                          <li><a class="" ui-sref="ChangeUsername" ui-sref-active="active">Change Username</a></li>
-                          <li><a class="" ui-sref="ChangePassword" ui-sref-active="active">Change Password</a></li>
+                          <li><a class="toggle-IfSmallScreen" ui-sref="ChangeUsername" ui-sref-active="active">Change Username</a></li>
+                          <li><a class="toggle-IfSmallScreen" ui-sref="ChangePassword" ui-sref-active="active">Change Password</a></li>
                       </ul>
                   </li>  
                   <li>
-                      <a class="" ui-sref="sms" ui-sref-active="active">
+                      <a class="toggle-IfSmallScreen" ui-sref="sms" ui-sref-active="active">
                           <i class="far fa-envelope"></i>
                           <span>SMS</span>
                       </a>
                   </li> 
                   
                   <li>
-                      <a class="" ui-sref="sns" ui-sref-active="active">
+                      <a class="toggle-IfSmallScreen" ui-sref="sns" ui-sref-active="active">
                           <i class="far fa-envelope"></i>
                           <span>SNS testing</span>
                       </a>
