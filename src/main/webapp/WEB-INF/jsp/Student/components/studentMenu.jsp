@@ -12,7 +12,7 @@
                   </li>
                 
                   <li>
-                      <a class="toggle-IfSmallScreen" href="Schedule">
+                      <a class="toggle-IfSmallScreen" ui-sref="Schedule" >
                           <i class="icon_genius"></i>
                           <span>Schedule</span>
                       </a>

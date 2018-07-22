@@ -1,0 +1,45 @@
+		<style type="text/css"> 
+			
+						.googleCalendar{
+									  position: relative;
+									  height: 0;
+									  width: 100%;
+									  padding-bottom: 100% ;
+									}
+									
+				.googleCalendar iframe{
+									  position: absolute;
+									  top: 0;
+									  left: 0;
+									  width: 100%;
+									  height: 100%;
+									}
+   		
+   		
+   		</style>
+   		
+   		<h1> Student Schedule</h1>  
+	          	    <div class="alert alert-block alert-danger fade in" ng-show="scheduleError">
+                                  <button data-dismiss="alert" class="close close-sm" type="button">
+                                      <i class="icon-remove"></i>
+                                  </button>
+                                  <strong>{{ErrorMessage}}</strong> 
+                              </div>
+             
+              
+  						
+				
+         
+		  <div class="alert alert-success fade in" ng-show="scheduleSuccess">
+                                  <button data-dismiss="alert" class="close close-sm" type="button">
+                                      <i class="icon-remove"></i>
+                                  </button>
+                                  <strong>{{SuccessMessage}}</strong> 
+                              </div>
+              
+			
+			  <div id="show_calender" class="googleCalendar" style="text-align: center;" ng-bind-html="calender"></div>
+			  
+			
+	                  	
+	          	            
