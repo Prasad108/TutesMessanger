@@ -38,13 +38,13 @@ public class StudentController {
 	StudentService studentService;
 	private static final Logger LOGGER = Logger.getLogger(StudentController.class);
 	 
-	 @RequestMapping(value="/Home",method = RequestMethod.GET)  
+	 @RequestMapping(value="/",method = RequestMethod.GET)  
 	    public String  ViewInstitueStructure(Model model,@ModelAttribute("student") Student student) {  
 	    	
 		 LOGGER.info("**********this is from Student Home Controller controller**********");	    	
 		
 		 		 
-	        return "Student/Home";
+	        return "Student/index";
 	    }
 	 @RequestMapping(value="/getSchedule",method=RequestMethod.POST)
 	 @ResponseBody

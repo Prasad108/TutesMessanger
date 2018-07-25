@@ -5,14 +5,14 @@
               <!-- sidebar menu start-->
               <ul class="sidebar-menu">                
                   <li class="active">
-                      <a class="toggle-IfSmallScreen" href="Home">
+                      <a class="toggle-IfSmallScreen" ui-sref="Home" >
                           <i class="icon_house_alt"></i>
-                          <span>Home</span>
+                          <span>Home{{4+4}}</span>
                       </a>
                   </li>
                 
                   <li>
-                      <a class="toggle-IfSmallScreen" href="Schedule">
+                      <a class="toggle-IfSmallScreen" ui-sref="Schedule" >
                           <i class="icon_genius"></i>
                           <span>Schedule</span>
                       </a>
