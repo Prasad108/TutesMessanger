@@ -77,10 +77,10 @@ function initializeJS() {
     
     jQuery('.toggle-IfSmallScreen').click(function () {
     	
-    	console.log("Im called toggle-IfSmallScreen");
+    	//console.log("Im called toggle-IfSmallScreen");
     	var width = $(window).width(); 
     	var height = $(window).height(); 
-    	console.log("widath:"+width+" : height:"+height)
+    	//console.log("widath:"+width+" : height:"+height)
     	if ((width <= 768  )) {
     	 //do something
     		
