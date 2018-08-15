@@ -66,6 +66,7 @@
  		<script src="${pageContext.request.contextPath}/app/teacher/SMS/SelectExam/selectExam.js"></script> 		
         <script src="${pageContext.request.contextPath}/app/teacher/SMS/SelectExam/selectSubject/smsExamSubjects.js"></script>
         <script src="${pageContext.request.contextPath}/app/teacher/SMS/SelectExam/selectSubject/selectStudent/selectStudent.js"></script>
+        <script src="${pageContext.request.contextPath}/app/commanDirectives/DisplayChallange/DisplayChallange.js"></script>
 
  		<script src="${pageContext.request.contextPath}/app/teacher/paginationTest/pagination.js"></script>
    			
@@ -91,7 +92,7 @@
           <section class="wrapper">
           <div class="row" >
 	        <!--   <h1>this is from index page </h1> -->
-	         
+	        
 	          <ui-view></ui-view>
           </div>
           </section>

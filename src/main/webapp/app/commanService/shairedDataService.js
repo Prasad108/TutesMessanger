@@ -7,10 +7,12 @@
 		var teacher={};
 		var permissions={};
 		var institute={};
+		var student={}
 		var service={
 				teacher :teacher,
 				permissions :permissions,
 				institute :institute,
+				student :student,
 				
 		}
 		

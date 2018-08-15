@@ -53,7 +53,6 @@ import com.app.service.StudentService;
 import com.app.service.SubjectDivCompositService;
 import com.app.service.SubjectService;
 import com.app.service.TeacherService;
-import com.app.service.impl.CloudWatchLogService;
 import com.app.service.impl.SnsService;
 /*import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;*/
@@ -74,8 +73,6 @@ public class TeacherController {
 	@Autowired
 	SnsService snsService;
 	
-	@Autowired
-	CloudWatchLogService cloudWatchLogService;
 
 	@Autowired
 	BranchService branchService;
@@ -136,7 +133,6 @@ public class TeacherController {
 	public String IndexController(Model model, @ModelAttribute("Branch") Branch branch1,
 			@ModelAttribute("teacher") Teacher teacher) {
 		LOGGER.info("**********this is IndexController controller**********");
-		cloudWatchLogService.GetFiltered_logs();
 
 
 		return "Teacher/index";
