@@ -8,18 +8,42 @@ module.exports = function(grunt) {
 					options : {
 						separator : ';',
 					},
-					dist : {
+					appAdmin : {
 						src : [ 'src/main/webapp/app/appAdmin/app.js',
 								'src/main/webapp/app/appAdmin/**/*.js' ],
 						dest : 'src/main/webapp/app/appAdmin/appAdminCompomentsAndControllers.js',
 					},
+					commanDirectives : {
+						src : [ 'src/main/webapp/app/commanDirectives/**/*.js' ],
+						dest : 'src/main/webapp/app/commanDirectives/AllcommanDirectives.js',
+					},
+					commanService : {
+						src : [ 'src/main/webapp/app/commanService/**/*.js' ],
+						dest : 'src/main/webapp/app/commanService/AllcommanService.js',
+					},
+					student : {
+						src : [ 'src/main/webapp/app/student/app.js',
+							'src/main/webapp/app/student/**/*.js' ],
+						dest : 'src/main/webapp/app/student/appStudentCompomentsAndControllers.js',
+					},
+					teacher : {
+						src : [ 'src/main/webapp/app/teacher/app.js',
+							'src/main/webapp/app/teacher/**/*.js' ],
+						dest : 'src/main/webapp/app/teacher/appTeacherCompomentsAndControllers.js',
+					},
+
 				},
 				clean : {
 					build : {
 						options : {
 							force : true
 						},
-						src : [ 'src/main/webapp/app/appAdmin/appAdminCompomentsAndControllers.js' ]
+						src : [
+								'src/main/webapp/app/appAdmin/appAdminCompomentsAndControllers.js',
+								'src/main/webapp/app/commanDirectives/AllcommanDirectives.js',
+								'src/main/webapp/app/commanService/AllcommanService.js',
+								'src/main/webapp/app/student/appStudentCompomentsAndControllers.js',
+								'src/main/webapp/app/teacher/appTeacherCompomentsAndControllers.js']
 					}
 				},
 			});

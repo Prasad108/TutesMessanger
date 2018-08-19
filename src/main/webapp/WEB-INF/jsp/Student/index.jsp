@@ -13,13 +13,17 @@
    	
    		<script src="<c:url value="/js/ivh_treeViewscript.js" />"></script>
    		<script type="text/javascript" src="${pageContext.request.contextPath}/js/pikaday.js"></script>
+   		<script src="${pageContext.request.contextPath}/js/angular/angular-spinner.min.js"></script>
    		
+   		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+		
    		
    		
    		
    		  
  		<script src="${pageContext.request.contextPath}/app/student/app.js"></script>
- 		<script src="${pageContext.request.contextPath}/js/angular/node_modules/angular-spinner/dist/angular-spinner.min.js"></script>
+ 		
  
 		
 		<script src="${pageContext.request.contextPath}/app/commanService/shairedDataService.js"></script>
@@ -28,8 +32,8 @@
 		<script src="${pageContext.request.contextPath}/app/student/home/homeController.js"></script>
    		<script src="${pageContext.request.contextPath}/app/student/home/homeCompoent.js"></script>
    		
-   		<script src="${pageContext.request.contextPath}/app/student/schedule/scheduleCtrl.js"></script>
-   		<script src="${pageContext.request.contextPath}/app/student/schedule/ScheduleComp.js"></script>
+   		<script src="${pageContext.request.contextPath}/app/student/schedule/ScheduleCtrl.js"></script>
+   		
    			
    		   		<jsp:include page="/WEB-INF/jsp/Student/components/initStudent.jsp" /> 
    		   			

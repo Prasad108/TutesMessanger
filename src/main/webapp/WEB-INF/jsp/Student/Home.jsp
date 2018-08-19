@@ -36,7 +36,7 @@
 <section id="main-content">
           <section class="wrapper">
           <div class="row" >
-	        <!--   <h1>this is from index page </h1> -->
+	          <h1>this is from index page </h1> 
 	          <ui-view></ui-view>
           </div>
           </section>
