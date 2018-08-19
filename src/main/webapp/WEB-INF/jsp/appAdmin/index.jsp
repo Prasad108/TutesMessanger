@@ -16,14 +16,18 @@
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
 		<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
 		<script src="${pageContext.request.contextPath}/app/angular-ui-router.js"></script>
-		<script src="${pageContext.request.contextPath}/app/appAdmin/app.js"></script>
+		 <%-- <script src="${pageContext.request.contextPath}/app/appAdmin/app.js"></script> --%>
+		 <script src="${pageContext.request.contextPath}/app/appAdmin/appAdminCompomentsAndControllers.js"></script>
+		 
 		
-		<script src="${pageContext.request.contextPath}/app/appAdmin/addNewInstitute/addNewIsntituteController.js"></script>
+		
+		<%-- <script src="${pageContext.request.contextPath}/app/appAdmin/addNewInstitute/addNewIsntituteController.js"></script>
 		<script src="${pageContext.request.contextPath}/app/appAdmin/existingInstitute/existingInstituteController.js"></script>
 		<script src="${pageContext.request.contextPath}/app/appAdmin/addNewInstitute/addNewIsntituteComponent.js"></script>
 		<script src="${pageContext.request.contextPath}/app/appAdmin/existingInstitute/existingInstituteComponent.js"></script>
 		<script src="${pageContext.request.contextPath}/app/appAdmin/menu/menuController.js"></script>
-		<script src="${pageContext.request.contextPath}/app/appAdmin/menu/menuComponent.js"></script>
+		<script src="${pageContext.request.contextPath}/app/appAdmin/menu/menuComponent.js"></script> 
+		 --%>
 		
 
 </head>

@@ -16,7 +16,7 @@
    		
    		  
  		<script src="${pageContext.request.contextPath}/app/teacher/app.js"></script>
- 		<script src="${pageContext.request.contextPath}/js/angular/node_modules/angular-spinner/dist/angular-spinner.min.js"></script>
+ 		<script src="${pageContext.request.contextPath}/js/angular/angular-spinner.min.js"></script>
  
 		
 		<script src="${pageContext.request.contextPath}/app/commanService/shairedDataService.js"></script>
