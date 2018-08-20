@@ -100,7 +100,7 @@ public class LoginController {
 				int roleId = userRole.getId();
 				switch (roleId) {
 				case 1:
-					output = "Student/Home";// student
+					output = "Student/";// student
 					Student student= StudentService.findByLoginId(userLogin.getId());
 					student.setLogin(userLogin);
 					Institute inst= StudentService.GetInstitute(student.getId());

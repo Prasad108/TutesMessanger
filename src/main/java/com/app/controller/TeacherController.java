@@ -72,6 +72,7 @@ public class TeacherController {
 	
 	@Autowired
 	SnsService snsService;
+	
 
 	@Autowired
 	BranchService branchService;
@@ -131,10 +132,8 @@ public class TeacherController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String IndexController(Model model, @ModelAttribute("Branch") Branch branch1,
 			@ModelAttribute("teacher") Teacher teacher) {
-
-		//LOGGER.info("**********this is IndexController controller**********");
 		LOGGER.info("**********this is IndexController controller**********");
-		branch1.setInstitute(teacher.getInstitute());
+
 
 		return "Teacher/index";
 	}
