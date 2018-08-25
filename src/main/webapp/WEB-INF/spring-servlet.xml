@@ -76,7 +76,24 @@
 		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean"
 		p:packagesToScan="com.app.pojo" p:dataSource-ref="dataSource">
 		<property name="hibernateProperties">
-			<value>
+		<props>  
+				<prop key="hibernate.dialect">${dialect}</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="connection.autoReconnect">true</prop>
+				<prop key="	connection.autoReconnectForPools">true</prop>
+				<prop key="connection.is-connection-validation-required">true</prop>
+				<prop key="hibernate.c3p0.validate">true</prop>
+				<prop key="connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</prop>
+				<prop key="hibernate.c3p0.min_size">5</prop>
+				<prop key="hibernate.c3p0.max_size">20</prop>
+				<prop key="hibernate.c3p0.timeout">60</prop>
+				<prop key="hibernate.c3p0.max_statements">50</prop>
+				<prop key="hibernate.c3p0.preferredTestQuery">SELECT 1</prop>
+				<prop key="hibernate.c3p0.testConnectionOnCheckout">true</prop>  
+       </props>  
+		<!-- 	<value>
 				hibernate.dialect=${dialect}
 				hibernate.format_sql=true
 				hibernate.show_sql=true
@@ -92,7 +109,7 @@
 				hibernate.c3p0.max_statements=50
 				hibernate.c3p0.preferredTestQuery=SELECT 1;
 				hibernate.c3p0.testConnectionOnCheckout=true
-			</value>
+			</value> -->
 			
 			
 		</property>
