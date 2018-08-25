@@ -39,11 +39,11 @@ module.exports = function(grunt) {
 							force : true
 						},
 						src : [
-								'src/main/webapp/app/appAdmin/appAdminCompomentsAndControllers.js',
+								'src/main/webapp/app/appAdmin/appAdminAllCompomentsAndControllers.js',
 								'src/main/webapp/app/commanDirectives/AllcommanDirectives.js',
 								'src/main/webapp/app/commanService/AllcommanService.js',
-								'src/main/webapp/app/student/appStudentCompomentsAndControllers.js',
-								'src/main/webapp/app/teacher/appTeacherCompomentsAndControllers.js']
+								'src/main/webapp/app/student/appStudentAllCompomentsAndControllers.js',
+								'src/main/webapp/app/teacher/appTeacherAllCompomentsAndControllers.js']
 					}
 				},watch: {
 				    files: ['src/main/webapp/app/**/*.js','!src/main/webapp/app/**/*All*.js'],

@@ -11,24 +11,12 @@
    		<link href="<c:url value="/css/ivh-treeview.min.css" />" rel="stylesheet">
    	
    		<script src="<c:url value="/js/ivh_treeViewscript.js" />"></script>
-   		<script type="text/javascript" src="${pageContext.request.contextPath}/js/pikaday.js"></script>
-   		
-   			
    		  
- 		<script src="${pageContext.request.contextPath}/app/student/app.js"></script>
+ 		<script src="${pageContext.request.contextPath}/app/student/appStudentAllCompomentsAndControllers.js"></script>
  		
- 
-		
-	<%-- 	<script src="${pageContext.request.contextPath}/app/commanService/shairedDataService.js"></script>
-		<script src="${pageContext.request.contextPath}/app/commanService/forResolveService.js"></script>		 --%>	
-		
-		<script src="${pageContext.request.contextPath}/app/student/home/homeController.js"></script>
-   		<script src="${pageContext.request.contextPath}/app/student/home/homeCompoent.js"></script>
-   		
-   		<%-- <script src="${pageContext.request.contextPath}/app/student/schedule/ScheduleCtrl.js"></script> --%>
    		<script src="${pageContext.request.contextPath}/js/angular/angular-spinner.min.js"></script>
    			
-   		   		<jsp:include page="/WEB-INF/jsp/Student/components/initStudent.jsp" /> 
+   		<jsp:include page="/WEB-INF/jsp/Student/components/initStudent.jsp" /> 
    		   			
 		
    	</head>
@@ -49,8 +37,6 @@
           <section class="wrapper">
           <div class="row" >
 	        <!--   <h1>this is from index page </h1> -->
-	         <h1>Hello Student hI index+++++++++++++++++++++</h1>
-<h1>Hello Student hI index+++++++++++++++++++++</h1>
 	          <ui-view></ui-view>
           </div>
           </section>

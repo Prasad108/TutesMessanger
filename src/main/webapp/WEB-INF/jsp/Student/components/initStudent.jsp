@@ -1,5 +1,5 @@
 	<script>
-  		var app = angular.module('myApp', []);
+  		var app = angular.module('myApp');
    		app.controller('studentCtrl',["$scope","$http","shairedDataService", function($scope, $http,shairedDataService) {
 
    		
