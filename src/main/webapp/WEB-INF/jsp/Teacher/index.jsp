@@ -9,80 +9,16 @@
    		<jsp:include page="/WEB-INF/jsp/components/defaultHead.jsp" /> 
    		<link href="<c:url value="/css/ivh-treeview.css" />" rel="stylesheet">
    		<link href="<c:url value="/css/ivh-treeview.min.css" />" rel="stylesheet">
-   		<link rel="stylesheet" href="${pageContext.request.contextPath}/css/pikaday.css">
    	
    		<script src="<c:url value="/js/ivh_treeViewscript.js" />"></script>
-   		<script type="text/javascript" src="${pageContext.request.contextPath}/js/pikaday.js"></script>
-   	
-   	
-   		<script src="${pageContext.request.contextPath}/app/teacher/appTeacherCompomentsAndControllers.js"></script>
+  	
+   		<script src="${pageContext.request.contextPath}/app/teacher/appTeacherAllCompomentsAndControllers.js"></script>
    		<script src="${pageContext.request.contextPath}/app/commanService/shairedDataService.js"></script>
 		<script src="${pageContext.request.contextPath}/app/commanService/forResolveService.js"></script>	
-   		<%-- <script src="${pageContext.request.contextPath}/app/commanService/AllcommanService.js"></script>
-   		<script src="${pageContext.request.contextPath}/app/commanDirectives/AllcommanDirectives.js"></script>  
-   		 --%>
-<%--  		<script src="${pageContext.request.contextPath}/app/teacher/app.js"></script>
- 		
-		<script src="${pageContext.request.contextPath}/app/commanService/shairedDataService.js"></script>
-		<script src="${pageContext.request.contextPath}/app/commanService/forResolveService.js"></script>			
-   		<script src="${pageContext.request.contextPath}/app/teacher/home/homeController.js"></script>
-   		<script src="${pageContext.request.contextPath}/app/teacher/home/homeCompoent.js"></script>
-   		<script src="${pageContext.request.contextPath}/app/teacher/instituteStructure/existingInstituteStructure/existingInstituteStructureController.js"></script>
-   		<script src="${pageContext.request.contextPath}/app/teacher/appManger/studentRequest/studentRequestController.js"></script>
-   		<script src="${pageContext.request.contextPath}/app/teacher/appManger/studentRequest/studentRequestComponent.js"></script>
-   		
-   		<script src="${pageContext.request.contextPath}/app/teacher/appManger/teacherRequest/teacherRequestController.js"></script>
-   		<script src="${pageContext.request.contextPath}/app/teacher/appManger/teacherRequest/teacherRequestComponent.js"></script>
-   		
-   		<script src="${pageContext.request.contextPath}/app/teacher/appManger/addStudentToDivision/addStudentToDivisionController.js"></script>
-   		<script src="${pageContext.request.contextPath}/app/teacher/appManger/addStudentToDivision/addStudentToDivisionComponent.js"></script>
-   		
-   		<script src="${pageContext.request.contextPath}/app/teacher/appManger/divisionsStudent/divisionsStudentController.js"></script>
-   		<script src="${pageContext.request.contextPath}/app/teacher/schedule/scheduleController.js"></script>
-   		
-   		<script src="${pageContext.request.contextPath}/app/teacher/result/exam/ResultsExamsController.js"></script>
-   		<script src="${pageContext.request.contextPath}/app/teacher/Exam/addEdit/addEditComponent.js"></script>
-   		<script src="${pageContext.request.contextPath}/app/teacher/Exam/addEdit/addEditController.js"></script>
+   		<script src="${pageContext.request.contextPath}/js/angular/angular-spinner.min.js"></script>
 
-   		<script src="${pageContext.request.contextPath}/app/teacher/subjectManager/addEditSubject/addEditSubjectController.js"></script>
- 		<script src="${pageContext.request.contextPath}/app/teacher/subjectManager/divisionSubjects/divisionSubjects.js"></script>
- 		<script src="${pageContext.request.contextPath}/app/teacher/profile/viewProfile/viewProfile.js"></script>
- 		<script src="${pageContext.request.contextPath}/app/teacher/profile/editProfile/editProfileController.js"></script>
- 		<script src="${pageContext.request.contextPath}/app/teacher/SNS/sns.js"></script>
- 		<script src="${pageContext.request.contextPath}/app/teacher/result/examSubjects/examSubjects.js"></script>
- 		<script src="${pageContext.request.contextPath}/app/teacher/result/examSubjectStudents/examSubjectStudentController.js"></script>
- 		<script src="${pageContext.request.contextPath}/app/teacher/Exam/addEdit/ExistingExams/ExistingExamsComponent.js"></script>
- 		<script src="${pageContext.request.contextPath}/app/teacher/Exam/addEdit/createExam/createExamDirective.js"></script>
- 		<script src="${pageContext.request.contextPath}/app/teacher/Exam/addEdit/modifyExamSubjects/modifyExamSubjectsDirective.js"></script>
- 		<script src="${pageContext.request.contextPath}/app/teacher/Exam/addEdit/addRemoveStudent/addRemoveStudentDirective.js"></script>
- 		<script src="${pageContext.request.contextPath}/app/teacher/Exam/addEdit/modifyExamSubjects/addNewSubjectsToExam/addNewSubjects.js"></script>
- 		<script src="${pageContext.request.contextPath}/app/teacher/Exam/addEdit/modifyExamSubjects/deleteSubjectsFromExam/deleteSubjects.js"></script>
- 		<script src="${pageContext.request.contextPath}/app/teacher/instituteStructure/ModifyInstituteStructure/ModifyInstituteStructure.js"></script>
- 		<script src="${pageContext.request.contextPath}/app/teacher/instituteStructure/ModifyInstituteStructure/Branch/Add/addBranch.js"></script>
- 		<script src="${pageContext.request.contextPath}/app/teacher/instituteStructure/ModifyInstituteStructure/Branch/Rename/renameBranch.js"></script>
- 		<script src="${pageContext.request.contextPath}/app/teacher/instituteStructure/ModifyInstituteStructure/Branch/Delete/deleteBranch.js"></script>
- 		<script src="${pageContext.request.contextPath}/app/teacher/instituteStructure/ModifyInstituteStructure/Class/Add/addClass.js"></script>
- 		<script src="${pageContext.request.contextPath}/app/teacher/instituteStructure/ModifyInstituteStructure/Class/Rename/renameClass.js"></script>
- 		<script src="${pageContext.request.contextPath}/app/teacher/instituteStructure/ModifyInstituteStructure/Class/Delete/deleteClass.js"></script>
- 		<script src="${pageContext.request.contextPath}/app/teacher/instituteStructure/ModifyInstituteStructure/Division/Add/addDivision.js"></script>
- 		<script src="${pageContext.request.contextPath}/app/teacher/instituteStructure/ModifyInstituteStructure/Division/Rename/renameDivision.js"></script>
- 		<script src="${pageContext.request.contextPath}/app/teacher/instituteStructure/ModifyInstituteStructure/Division/Delete/deleteDivision.js"></script>
-		<script src="${pageContext.request.contextPath}/app/teacher/profile/ChangeUsername/ChangeUsername.js"></script>
- 		<script src="${pageContext.request.contextPath}/app/teacher/profile/ChangePassword/ChangePassword.js"></script>
- 		<script src="${pageContext.request.contextPath}/app/teacher/SMS/sms.js"></script>
- 		<script src="${pageContext.request.contextPath}/app/teacher/SMS/SelectExam/selectExam.js"></script> 		
-        <script src="${pageContext.request.contextPath}/app/teacher/SMS/SelectExam/selectSubject/smsExamSubjects.js"></script>
-        <script src="${pageContext.request.contextPath}/app/teacher/SMS/SelectExam/selectSubject/selectStudent/selectStudent.js"></script>
-        
- 		<script src="${pageContext.request.contextPath}/app/teacher/paginationTest/pagination.js"></script> --%>
- 		
- 		
- 		<script src="${pageContext.request.contextPath}/js/angular/angular-spinner.min.js"></script>
- 
-		
- 		
-   			
-   		   		<jsp:include page="/WEB-INF/jsp/Teacher/components/angular.jsp" /> 
+
+   		<jsp:include page="/WEB-INF/jsp/Teacher/components/angular.jsp" /> 
    		   			
    			
 		
