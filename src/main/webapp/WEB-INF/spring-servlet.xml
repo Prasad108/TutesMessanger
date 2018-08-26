@@ -80,9 +80,8 @@
 				<prop key="hibernate.dialect">${dialect}</prop>
 				<prop key="hibernate.hbm2ddl.auto">update</prop>
 				<prop key="hibernate.show_sql">true</prop>
-				<prop key="hibernate.show_sql">true</prop>
 				<prop key="connection.autoReconnect">true</prop>
-				<prop key="	connection.autoReconnectForPools">true</prop>
+				<prop key="connection.autoReconnectForPools">true</prop>
 				<prop key="connection.is-connection-validation-required">true</prop>
 				<prop key="hibernate.c3p0.validate">true</prop>
 				<prop key="connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</prop>
@@ -92,6 +91,15 @@
 				<prop key="hibernate.c3p0.max_statements">50</prop>
 				<prop key="hibernate.c3p0.preferredTestQuery">SELECT 1</prop>
 				<prop key="hibernate.c3p0.testConnectionOnCheckout">true</prop>  
+				
+<!-- new values for fixing the DB issues with Jboss7 -->
+				<prop key="hibernate.c3p0.idle_test_period">40</prop>
+				<prop key="hibernate.c3p0.unreturnedConnectionTimeout">400</prop>
+<!-- new properties that fix the DB issues we have in Jboss 7 -->
+				<prop key="hibernate.c3p0.debugUnreturnedConnectionStackTraces">true</prop>
+				<prop key="hibernate.show_sql">true</prop>
+
+<!-- new properties that fix the DB issues we have in Jboss 7 -->
        </props>  
 		<!-- 	<value>
 				hibernate.dialect=${dialect}
