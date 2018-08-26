@@ -305,8 +305,26 @@
 		</dependency>
 
 
+		<!-- https://mvnrepository.com/artifact/c3p0/c3p0 -->
+		<dependency>
+			<groupId>c3p0</groupId>
+			<artifactId>c3p0</artifactId>
+			<version>0.9.1.2</version>
+		</dependency>
 
-
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-c3p0</artifactId>
+			<version>4.2.20.Final</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/com.mchange/mchange-commons-java -->
+<dependency>
+    <groupId>com.mchange</groupId>
+    <artifactId>mchange-commons-java</artifactId>
+    <version>0.2.15</version>
+</dependency>
+		
 
 	</dependencies>
 	<build>
@@ -393,7 +411,7 @@
 						<goals>
 							<goal>grunt</goal>
 						</goals>
-						
+
 					</execution>
 
 				</executions>
