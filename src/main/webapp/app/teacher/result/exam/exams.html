@@ -1,4 +1,37 @@
-				    <div class="table-responsive">
+	<style type="text/css">
+.error {
+	border: 2px solid red;
+}
+
+#subStrong {
+	display: inline-block;
+	color: maroon;
+}
+
+input[type="checkbox"] {
+
+	width: 15px;
+	height: 15px;
+
+}
+</style>
+<div class="col-lg-12">
+					<h3 class="page-header"><i class="fas fa-graduation-cap"></i> Result</h3>
+					<ol class="breadcrumb">
+						<li><i class="fa fa-home"></i><a ui-sref="Home">Home</a></li>
+						<li><i class="fas fa-graduation-cap"></i></i></i>Result</li>	
+						<li><i class="fab fa-etsy"></i></i>Exams</li>						  	
+					</ol>
+				</div>
+				
+				<div class="col-lg-12">
+                      <section class="panel">
+                          <header class="panel-heading">
+                             Select Exam
+                          </header>
+                          <div class="panel-body">
+	
+				    			<div class="table-responsive">
 								                            <table class="table">
 								                              <thead>
 								                                <tr>
@@ -15,7 +48,8 @@
 								                              <tbody>
 								                              	<tr ng-repeat="exam in examList | orderBy:'id'">
 								                                  <td>{{exam.id}}</td>
-								                                  <td><a href="#"> {{exam.discription}} </a></td>
+								                                  <td><a ui-sref="examSubjects({id :exam.id})"> {{exam.discription}} </a></td>
+								                                  <!-- (examID : {{exam.id}}}) -->
 								                                  <td>{{exam.outOf}}</td>
 								                                  <td>{{exam.passingMarks}}</td>
 								                               		<td> </td>
@@ -28,3 +62,8 @@
 								                              </tbody>
 								                            </table>
 								                          </div>
+								                       </div>
+								                       </section>
+								                       </div>
+								                       
+								                          <ui-view></ui-view>

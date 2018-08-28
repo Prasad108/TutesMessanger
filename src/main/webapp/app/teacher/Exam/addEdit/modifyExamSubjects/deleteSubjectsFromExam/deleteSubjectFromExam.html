@@ -1,0 +1,82 @@
+<!--Delete Subjects from Exam-->
+<section class="panel" ng-show="DeleteSubjectsFromExam || deledeSubjectMessage">                          
+		<div class="panel-heading">
+		        <h2><strong>Delete Subjects from Exam</strong></h2>			               
+		</div>
+		<div class="panel-body">
+			<div ><h1>This is  body</h1></div>	
+			<div id="ShowTreeStrct" ng-show="ShowTreeStructDeleteSubjetcs" >													
+				<div>Search <input type="text" ng-model="deleteSearch" /></div>											
+				  	<div
+					    ivh-treeview="InstTreeStructureWithSubjectOfExam"
+					    ivh-treeview-filter="deleteSearch"
+						ivh-treeview-validate="true"
+					    ivh-treeview-default-selected-state="false"
+					    ivh-treeview-on-cb-change="OnSelectCallbackForDelete(ivhNode, ivhIsSelected, ivhTree)"
+						>
+				  	</div>
+				  	
+				<div class="alert alert-warning fade in"  ng-show="!selectedSubjectForDelete.length">
+				
+					<button data-dismiss="alert" class="close close-sm" type="button"><i class="icon-remove"></i></button>
+					<strong>Select Subjects!</strong> To add new Subjects to it.		
+				</div>
+				
+				<button  ng-show="selectedSubjectForDelete.length>0" class="btn btn-primary  btn-sm" ng-click="ShowSubjectToBeDeletedTable()">Delete Subjects</button>
+
+         </div>
+         <div ng-show="ShowDeleteSubjectTable || deledeSubjectMessage">
+		        
+		         <div ng-show="deledeSubjectMessage">
+		         	    
+                    
+                    <div class="alert alert-info fade in" ng-show="DeleteSubjectSuceessMessages">
+                     <button data-dismiss="alert" class="close close-sm" type="button"><i class="icon-remove"></i></button>
+                     <strong>{{DeleteSuccessCount}} Subjects Deleted</strong>   from Exam
+                     
+                 	</div>    
+                 	
+                 	<div class="alert alert-block alert-danger fade in "  for="inputSuccess" ng-show="DeleteSubjectSuceessMessages && DeleteFailureList.length >1">
+                               <button data-dismiss="alert" class="close close-sm" type="button"><i class="icon-remove"></i></button>
+                            	 <strong>following Subjects Failed to delete</strong>
+                            	 <div ng-repeat="subdivId in DeleteFailureList">
+                            	 	{{subdivId}}
+                            	 </div>
+                    </div>
+                 	
+                 	 <div class="alert alert-block alert-danger fade in "  for="inputSuccess" ng-show="SubjectDeletionfailed">
+                               <button data-dismiss="alert" class="close close-sm" type="button"><i class="icon-remove"></i></button>
+                            	 <strong>Failed to Delete subjects from Exam  to Exam</strong>
+                    </div>	
+                
+		         </div>
+         
+         	<div class="table-responsive" ng-show="ShowDeleteSubjectTable" ng-mouseover="datepickerActivate()">
+                        			
+              	
+                  <button type="button" class="btn btn-info" ng-click="ShowTreeAddDeleteSubjects()"> < Select Subjects to Delete</button>
+                         			
+                   <form class="form-inline" role="form" name="AddSubjectToExamForm">
+                         			
+	                			<table class="table">
+	                				<tr>
+	                					<th>Sr. No </th>
+	                					<th>Subjects Tpo be Deleted</th>
+	                				</tr>
+	                					<tr ng-repeat="subject in selectedSubjectForDelete" >
+	                							<td>{{$index +1}}
+	                							</td>
+	                							<td> 
+													 {{subject.label}}
+									            </td>
+									             
+	                						</tr>
+	                				
+	                				</table>
+                         			<button type="submit" id="submitBtnAddSub" class="btn btn-primary" ng-click="DeleteSelectedSubjects()">Delete Subjects From Exam</button>
+                         	</form>
+                     </div>
+                  </div>
+		</div>					
+</section>
+<!--Delete Subjects from Exam end-->

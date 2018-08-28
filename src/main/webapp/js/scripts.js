@@ -74,6 +74,37 @@ function initializeJS() {
             jQuery("#container").removeClass("sidebar-closed");
         }
     });
+    
+    jQuery('.toggle-IfSmallScreen').click(function () {
+    	
+    	//console.log("Im called toggle-IfSmallScreen");
+    	var width = $(window).width(); 
+    	var height = $(window).height(); 
+    	//console.log("widath:"+width+" : height:"+height)
+    	if ((width <= 768  )) {
+    	 //do something
+    		
+    		if (jQuery('#sidebar > ul').is(":visible") === true) {
+                jQuery('#main-content').css({
+                    'margin-left': '0px'
+                });
+                jQuery('#sidebar').css({
+                    'margin-left': '-180px'
+                });
+                jQuery('#sidebar > ul').hide();
+                jQuery("#container").addClass("sidebar-closed");
+            } else {
+                jQuery('#main-content').css({
+                    'margin-left': '180px'
+                });
+                jQuery('#sidebar > ul').show();
+                jQuery('#sidebar').css({
+                    'margin-left': '0'
+                });
+                jQuery("#container").removeClass("sidebar-closed");
+            }
+    	}      
+    });
 
     //bar chart
     if (jQuery(".custom-custom-bar-chart")) {

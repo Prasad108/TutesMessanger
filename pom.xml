@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>TutesMessanger</groupId>
@@ -17,39 +18,11 @@
 		<org.hibernate.version>5.2.5.Final</org.hibernate.version>
 	</properties>
 	<dependencies>
-
-
-		<!-- <dependency> <groupId>com.amazonaws</groupId> <artifactId>aws-java-sdk-sns</artifactId> 
-			<version>1.11.250</version> </dependency> https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-sqs 
-			<dependency> <groupId>com.amazonaws</groupId> <artifactId>aws-java-sdk-sqs</artifactId> 
-			<version>1.11.250</version> </dependency> https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-core 
-			<dependency> <groupId>com.amazonaws</groupId> <artifactId>aws-java-sdk-core</artifactId> 
-			<version>1.11.250</version> </dependency> https://mvnrepository.com/artifact/com.amazonaws/jmespath-java 
-			<dependency> <groupId>com.amazonaws</groupId> <artifactId>jmespath-java</artifactId> 
-			<version>1.11.250</version> </dependency> -->
-
-		<!-- <dependency> <groupId>com.amazonaws</groupId> <artifactId>aws-java-sdk</artifactId> 
-			<version>1.11.280</version> </dependency> -->
-
-		<!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-aws -->
 		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-aws</artifactId>
-			<version>1.2.2.RELEASE</version>
-			<type>pom</type>
+			<groupId>com.amazonaws</groupId>
+			<artifactId>aws-java-sdk-sns</artifactId>
+			<version>1.11.313</version>
 		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-aws-context -->
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-aws-context</artifactId>
-			<version>1.0.0.RELEASE</version>
-		</dependency>
-
-
-
-		<!-- https://mvnrepository.com/artifact/com.sun.istack/maven-istack-commons-plugin -->
-
 
 		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
 		<dependency>
@@ -58,12 +31,7 @@
 			<version>2.9.4</version>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
-			<version>2.9.4</version>
-		</dependency>
+
 
 
 		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-core -->
@@ -241,7 +209,7 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
-			<version>5.2.10.Final</version>
+			<version>5.1.13.Final</version>
 		</dependency>
 
 
@@ -337,8 +305,26 @@
 		</dependency>
 
 
+		<!-- https://mvnrepository.com/artifact/c3p0/c3p0 -->
+		<dependency>
+			<groupId>c3p0</groupId>
+			<artifactId>c3p0</artifactId>
+			<version>0.9.1.2</version>
+		</dependency>
 
-
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-c3p0</artifactId>
+			<version>4.2.20.Final</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/com.mchange/mchange-commons-java -->
+<dependency>
+    <groupId>com.mchange</groupId>
+    <artifactId>mchange-commons-java</artifactId>
+    <version>0.2.15</version>
+</dependency>
+		
 
 	</dependencies>
 	<build>
@@ -385,9 +371,60 @@
 					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>com.github.eirslett</groupId>
+				<artifactId>frontend-maven-plugin</artifactId>
+				<version>1.6</version>
+
+				<executions>
+
+					<execution>
+						<id>install node and npm</id>
+						<goals>
+							<goal>install-node-and-npm</goal>
+						</goals>
+						<configuration>
+							<nodeVersion>v0.10.36</nodeVersion>
+							<npmVersion>2.4.1</npmVersion>
+						</configuration>
+					</execution>
+
+					<execution>
+						<id>npm install</id>
+						<goals>
+							<goal>npm</goal>
+						</goals>
+
+						<configuration>
+							<srcdir>${basedir}/src/main/webapp</srcdir>
+							<outputdir>${basedir}/src/main/webapp</outputdir>
+							<triggerfiles>
+								<triggerfile>Gruntfile.js</triggerfile>
+								<triggerfile>package.json</triggerfile>
+							</triggerfiles>
+							<arguments>install</arguments>
+						</configuration>
+					</execution>
+
+					<execution>
+						<id>grunt build</id>
+						<goals>
+							<goal>grunt</goal>
+						</goals>
+
+					</execution>
+
+				</executions>
+			</plugin>
+
 
 		</plugins>
 	</build>
+
+
+
+
+
 	<profiles>
 		<profile>
 			<!-- When built in OpenShift the 'openshift' profile will be used when 

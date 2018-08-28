@@ -1,0 +1,58 @@
+<div class="col-lg-12">
+	<h3 class="page-header">
+		<i class="fa fa-address-card-o" aria-hidden="true"></i> Change UserName
+	</h3>
+	<ol class="breadcrumb">
+	<li><i class="fa fa-home"></i><a ui-sref="Home">Home</a></li>
+		<li><i class="fa fa-address-card-o" aria-hidden="true"></i>Change User Name</li>				
+
+	</ol>
+</div>
+<div class="row">
+	<div class="col-lg-12">
+		<section class="panel">
+			<!-- <header class="panel-heading"> Change UserName Password </header> -->
+			<br />
+			  <div class="panel-body">
+                 
+                 <div class="alert alert-block alert-danger fade in "  ng-show="NameisSame">
+                          <button data-dismiss="alert" class="close close-sm" type="button">
+                              <i class="icon-remove"></i>
+                          </button>
+                        <strong>{{message}}</strong>
+                     </div>
+          			
+                      <div class="alert alert-info fade in" ng-show="UpdatedName">
+                          <button data-dismiss="alert" class="close close-sm" type="button">
+                              <i class="icon-remove"></i>
+                          </button>
+                          <strong>{{message}}</strong>
+                           
+                      </div>
+                      
+                      <div class="alert alert-block alert-danger fade in "  ng-show="NotUpdatedName">
+                          <button data-dismiss="alert" class="close close-sm" type="button">
+                              <i class="icon-remove"></i>
+                          </button>
+                        <strong>{{message}}</strong>
+                     </div>
+                     
+
+			<form name="ChangeusernameForm" method="POST" ng-submit="changeUsername()">
+				<div class="form-group">
+					<label class="col-sm-2 control-label">CurrentUsername</label> <input ng-model="CurrentUserName"
+						type="text" class="form-control"  required>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">NewUserName</label> <input ng-model="NewUserName"
+						type="text" class="form-control" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}" title="Username contains 1 lowercase,uppercase,special character and digit." required/>
+				</div>
+				<button type="submit" class="btn btn-success">Submit</button>
+			</form>
+			
+	</div>
+	</section>
+
+</div>
+</div>
+

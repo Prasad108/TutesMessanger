@@ -1,15 +1,24 @@
- <div class="col-lg-12"> 
+<div class="col-lg-12">
+					<h3 class="page-header"><i class="fa fa-book" aria-hidden="true"></i> Add/Edit Subject</h3>
+					<ol class="breadcrumb">
+						<li><i class="fa fa-home"></i><a ui-sref="Home">Home</a></li>
+						<li><i class="fa fa-book" aria-hidden="true"></i>Add/Edit Subject</li>
+						
+				</div>  
+  
+  
+  <div class="col-lg-12"> 
                
                 <!-- -----------------------------  Start :  Add subject to Institute  ---------------------------------->  
-                <div><h2>Add</h2></div>
+                <div><h2>Add new Subject to Institute</h2></div>
                    <section class="panel">
                       <div class="panel-group m-bot20" id="accordion">
                           <div class="panel panel-primary">
                               <div class="panel-heading">
                                   <h4 class="panel-title">
-                                      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                      <div class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" data-target="#collapseOne">
                                           Add Subject to Institute <span class="menu-arrow arrow_carrot-down"></span>
-                                      </a>
+                                      </divs>
                                   </h4>
                               </div>
                               <div id="collapseOne" class="panel-collapse collapse">
@@ -105,8 +114,8 @@
 									<td> {{ subject.name }}</td>
    							 		<td> {{ subject.discription }}</td>
    							 		<td>
+   							 		    <a class="btn btn-primary tooltips" title="Update Subject" data-toggle="modal" data-placement="left" data-original-title="Update Subject"  ng-click="updateSubjectLoad(subject)" data-target="#updateSubjectModal"><i class="icon_plus_alt2"></i></a>
    							 		 
-   							 		    <a class="btn btn-primary tooltips" title="Update Subject" data-toggle="modal" data-placement="left" data-original-title="Update Subject"  ng-click="updateSubjectLoad(subject)" href="#updateSubjectModal"><i class="icon_plus_alt2"></i></a>
                                         <a class="btn btn-danger tooltips" title="Delete Subject" data-toggle="tooltip" data-placement="right" data-original-title="Delete Subject" ng-click="deleteSubject(subject)"><i class="icon_close_alt2"></i></a>
                                       <!-- <a class="btn btn-danger" ng-click="deleteSubject(subject)" style="margin-left: 10%"><i class="icon_close_alt2"></i></a> -->
                                         
@@ -168,9 +177,9 @@
                   </table>
                   
             
-                    <pagination ng-model="currentPage" total-items="totallenght" max-size="maxSize" boundary-links="true"
-                    ng-show="ShowSubjectTable" ng-hide="!filteredTodos.length">
-				</pagination> 
+                
+				<ul uib-pagination  ng-model="currentPage" total-items="totallenght" max-size="maxSize" boundary-links="true"
+                    ng-show="ShowSubjectTable" ng-hide="!filteredTodos.length"></ul>
 					                  
                   <div class="alert alert-block alert-danger fade in" ng-show="!subjectOfInstituteList.length">
                                   <button data-dismiss="alert" class="close close-sm" type="button">
@@ -181,4 +190,4 @@
    </div> 
   </section>
             </div>           
-        
+          

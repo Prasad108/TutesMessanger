@@ -1,0 +1,151 @@
+ <div class="row">
+	    <div class="col-lg-12">
+	        <section class="panel">
+	            <header class="panel-heading">
+	                Existing Exams
+	            </header>
+	             <div class="alert alert-info fade in" ng-show="ExamDeleteSuccess">
+	                   <button data-dismiss="alert" class="close close-sm" type="button">
+	                       <i class="icon-remove"></i>
+	                   </button>
+	                   <strong>Exam Delete Successfully</strong> 
+	               </div>
+	               
+	               
+	                <div class="alert alert-block alert-danger fade in "  for="inputSuccess" ng-show="ExamDeleteError">
+	                   <button data-dismiss="alert" class="close close-sm" type="button">
+	                       <i class="icon-remove"></i>
+	                   </button>
+	                 <strong>Error in Deleting Exam</strong>
+	               </div>
+	               
+	               <div class="alert alert-info fade in" ng-show="ExamUpdateSuccess">
+	                   <button data-dismiss="alert" class="close close-sm" type="button">
+	                       <i class="icon-remove"></i>
+	                   </button>
+	                   <strong>Exam Updated Successfully</strong> 
+	               </div>
+	               
+	            <div class="table-responsive">
+	              <table class="table">
+	                <thead>
+	                  <tr>
+	                    <th>#</th>
+	                    <th>Discription</th>
+	                    <th>Max Marks</th>
+	                    <th>Passing Marks<th>
+	                	  <th>Exam Mode</th> 
+	                    <th>Exam Type</th>
+	                    <th>Repeat/Regular</th>
+	                   
+	                    <th><i class="icon_cogs"></i> Action</th>
+	                  </tr>
+	                </thead>
+	                <tbody>
+	                	<tr ng-repeat="exam in examList | orderBy:'id'">
+	                    <td>{{exam.id}}</td>
+	                    <td>{{exam.discription}}</td>
+	                    <td>{{exam.outOf}}</td>
+	                    <td>{{exam.passingMarks}}</td>
+	                 		<td> </td>
+	                    <td>{{examMode[exam.examMode.id -1].modeName}}</td>
+	                    <td>{{examType[exam.examType.id-1].typeName}}</td>
+	                    <td>{{ExamRegularArray[exam.regular].discription}}</td>
+	                 	 	<td>	
+	                 	 		 <a class="btn btn-primary"  data-toggle="modal" ng-click="LoadEditExam(exam)" data-target="#myModal" ><i  class="icon_plus_alt2"  ></i></a>     	
+	                									 <a class="btn btn-danger" ng-click="DeleteExam(exam)" ><i   class="icon_close_alt2"></i></a>
+	                									 
+	                									  <!-- Modal -->
+	                   <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	                       <div class="modal-dialog">
+	                           <div class="modal-content">
+	                               <div class="modal-header">
+	                                   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	                                   <h4 class="modal-title">Edit Exam</h4>
+	                               </div>
+	                               <div class="modal-body">
+	
+	                                   
+	                                    <form class="form-horizontal " name="EditExamForm" method="get">
+	                            <div class="form-group">
+	                                <label class="col-sm-2 control-label">Discription <span class="required">*</span></label>
+	                                <div class="col-sm-10">
+	                                    <input ng-model="$parent.discriptionEditExam" type="text" class="form-control" required="required">
+	                                </div>
+	                              
+	                                  
+	                            </div>
+	                             <div class="form-group">
+	                                <label class="col-sm-2 control-label">Out Of<span class="required">*</span></label>
+	                                <div class="col-sm-10">
+	                                    <input ng-model="$parent.outOfEditExam" type="number" class="form-control" required="required">
+	                                </div>
+	                            </div>
+	                             <div class="form-group">
+	                                <label class="col-sm-2 control-label">Passing Marks<span class="required">*</span></label>
+	                                <div class="col-sm-10">
+	                                    <input ng-model="$parent.passingMarksEditExam"  ng-class="{error : passingMarksEditExam>outOfEditExam }" type="number" class="form-control" required="required">
+	                                </div>
+	                            </div>
+	                            <div class="form-group">
+	                              <div class="form-group">
+	                                 <label class="col-sm-2 control-label">Examination Type<span class="required">*</span></label>
+	                                 <div class="col-sm-10">
+	                                     <select class="form-control m-bot15"  ng-model="$parent.selectedExamTypeEditExam" ng-options="examType.typeName for (x,examType) in examType"  required="required" required="required" required> </select>
+	                                 </div>
+	                             </div>
+	                            </div>
+	                            
+	                            <div class="form-group">
+	                              <div class="form-group">
+	                                 <label class="col-sm-2 control-label">Examination Mode<span class="required">*</span></label>
+	                                 <div class="col-sm-10">
+	                                     <select class="form-control m-bot15"  ng-model="$parent.selectedExamModeEditExam" ng-options="examMode.modeName for (x,examMode) in examMode"  required="required" required="required" required> </select>
+	                                 </div>
+	                             </div>
+	                            </div>
+	                            <div class="form-group">
+	                              <div class="form-group">
+	                                 <label class="col-sm-2 control-label">Regular/ Repeat<span class="required">*</span></label>
+	                                 <div class="col-sm-10">
+	                                     <select ng-model="$parent.selectedRegularEditExam" class="form-control m-bot15" ng-options="ExamRegularArray.discription for (x,ExamRegularArray) in ExamRegularArray"  required="required" required>                                              
+	                                      </select>
+	                                 </div>
+	                             </div>
+	                            </div>
+	                            
+	                             
+	                              <div class="form-group">
+	                                <div class="col-lg-offset-2 col-lg-10">
+	                                    <button type="submit" data-dismiss="modal" class="btn btn-primary" ng-click="EditExamForm.$valid && UpdateExam()" ng-disabled="passingMarksEditExam>outOfEditExam || !EditExamForm.$valid || !EditExamForm.$dirty">Update Exam</button>
+	                                </div>
+	                            </div>
+	                     
+	                        </form>
+	                                   
+	                                   
+	                                   
+	                                   
+	
+	                               </div>
+	                               <div class="modal-footer">
+	                                   <button data-dismiss="modal" class="btn btn-default" type="button">Close</button>
+	                                  <!--  <button class="btn btn-success" type="button">Save changes</button> -->
+	                               </div>
+	                           </div>
+	                       </div>
+	                   </div>
+	                   <!-- modal -->
+	                								</td>
+	                  </tr>
+	                 
+	                </tbody>
+	              </table>
+	            </div>
+	            
+	
+	        </section>
+	    </div>
+</div>
+	    
+								           

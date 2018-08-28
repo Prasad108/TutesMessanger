@@ -62,4 +62,9 @@ public class Schedule implements java.io.Serializable {
 		this.string = string;
 	}
 
+	@Override
+	public String toString() {
+		return "Schedule [id=" + id + ", string=" + string + "]";
+	}
+
 }

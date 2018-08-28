@@ -79,4 +79,13 @@ public class SubjectDivCompositDAOImpl implements SubjectDivCompositDAO{
 		query.executeUpdate();
 	}
 
+	@Override
+	@Transactional
+	public String findSubjectName(int subDivCompId) {
+		Query query=currentSession().createQuery("SELECT sub.name FROM Subject sub WHERE sub.id = (SELECT subDivComp.subject.id FROM SubjectDivComposit subDivComp WHERE subDivComp.id= :subDivCompId)");
+		query.setParameter("subDivCompId",subDivCompId);
+		
+		return query.uniqueResult().toString();
+	}
+
 }

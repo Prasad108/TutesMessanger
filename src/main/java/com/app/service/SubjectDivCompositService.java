@@ -17,4 +17,5 @@ public interface SubjectDivCompositService {
     public List<Subject> findByDivId(int divId);
 	
 	public void deleteByDivId(int subId,int divId);
+	public String findSubjectName(int subDivCompId);
 }

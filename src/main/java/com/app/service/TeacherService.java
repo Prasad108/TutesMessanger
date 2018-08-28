@@ -21,8 +21,7 @@ public interface TeacherService {
 	public void changePassword(String newPassword , Login login);
 	public Boolean checkPassword(String oldPassword, Integer id);
 	
-	public String InstituteStucture(Teacher teacher);
-	public String InstituteStuctureForSchedule(Teacher teacher);
+	
 	public void changeUserName(String newUserName, Login login);
 	
 

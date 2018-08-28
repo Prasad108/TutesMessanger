@@ -116,7 +116,7 @@
 	   	                 console.log("error response came");    	
 	   	                    
 	   	        });
-			} ;
+			};
 			
 //--------------------------------------------- For getting dynamic division on change class angular js----------------------------   			
 		$scope.selectedClass=function(){

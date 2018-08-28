@@ -130,13 +130,65 @@ public class instituteDAOImpl implements InstituteDAO {
 	@Transactional
 	public String GetSubjectTree(int InstId) {
 		
-		System.out.println("institute id is :"+InstId);
-		
-
 		ProcedureCall procedure1=currentSession().createStoredProcedureCall("TreeViewInstitute");
 		
 		procedure1.registerParameter("InstID", Integer.class, ParameterMode.IN).bindValue(InstId);
-		procedure1.registerParameter("depth", Integer.class, ParameterMode.IN).bindValue(5);
+		procedure1.registerParameter("spMode", Integer.class, ParameterMode.IN).bindValue(1);
+		procedure1.registerParameter("param", Integer.class, ParameterMode.IN).bindValue(0);
+		procedure1.registerParameter("JSON", String.class, ParameterMode.OUT);
+			
+		ProcedureOutputs procedureResult=procedure1.getOutputs();
+		
+		String JSON=(String) procedureResult.getOutputParameterValue("JSON");
+		
+		return JSON;
+	}
+
+
+	@Override
+	@Transactional
+	public String GetInstituteTree(int InstId) {
+		ProcedureCall procedure1=currentSession().createStoredProcedureCall("TreeViewInstitute");
+		
+		procedure1.registerParameter("InstID", Integer.class, ParameterMode.IN).bindValue(InstId);
+		procedure1.registerParameter("spMode", Integer.class, ParameterMode.IN).bindValue(2);
+		procedure1.registerParameter("param", Integer.class, ParameterMode.IN).bindValue(0);
+		procedure1.registerParameter("JSON", String.class, ParameterMode.OUT);
+			
+		ProcedureOutputs procedureResult=procedure1.getOutputs();
+		
+		String JSON=(String) procedureResult.getOutputParameterValue("JSON");
+		
+		return JSON;
+	}
+
+
+	@Override
+	@Transactional
+	public String TreeStructureSujectsNotInExam(int InstId, int ExamId) {
+		ProcedureCall procedure1=currentSession().createStoredProcedureCall("TreeViewInstitute");
+		
+		procedure1.registerParameter("InstID", Integer.class, ParameterMode.IN).bindValue(InstId);
+		procedure1.registerParameter("spMode", Integer.class, ParameterMode.IN).bindValue(3);
+		procedure1.registerParameter("param", Integer.class, ParameterMode.IN).bindValue(ExamId);
+		procedure1.registerParameter("JSON", String.class, ParameterMode.OUT);
+			
+		ProcedureOutputs procedureResult=procedure1.getOutputs();
+		
+		String JSON=(String) procedureResult.getOutputParameterValue("JSON");
+		
+		return JSON;
+	}
+
+
+	@Override
+	@Transactional
+	public String TreeStructureSujectsOFExam(int InstId, int ExamId) {
+		ProcedureCall procedure1=currentSession().createStoredProcedureCall("TreeViewInstitute");
+		
+		procedure1.registerParameter("InstID", Integer.class, ParameterMode.IN).bindValue(InstId);
+		procedure1.registerParameter("spMode", Integer.class, ParameterMode.IN).bindValue(4);
+		procedure1.registerParameter("param", Integer.class, ParameterMode.IN).bindValue(ExamId);
 		procedure1.registerParameter("JSON", String.class, ParameterMode.OUT);
 			
 		ProcedureOutputs procedureResult=procedure1.getOutputs();

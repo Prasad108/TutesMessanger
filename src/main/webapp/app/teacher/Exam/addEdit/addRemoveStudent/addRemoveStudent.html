@@ -1,0 +1,170 @@
+<section class="panel">
+                    <div class="panel-body">
+                         <form class="form-horizontal "  name="SelectExamFormToAddStudent"  method="get">
+                             <div class="form-group">
+                                 <label class="control-label col-lg-2" for="inputSuccess">Select Exam To Add Students</label>
+                                 <div class="col-lg-10">
+
+                                     <select class="form-control input-lg m-bot15" ng-model="selectedExamForAddStudent" ng-options="exam.discription for (x,exam) in examList"  required="required" required="required" required ng-change="selectExam()"></select>
+                                    
+                                 </div>
+                             </div>
+                         </form>
+                          <button id="add-max" class="btn btn-primary  btn-sm" ng-disabled="SelectExamFormToAddStudent.$invalid" ng-click="ShowSelectedSubject()" >Show Selected Subjects</button>
+                       <!--  <button id="add-without-image" class="btn btn-info  btn-sm" ng-disabled="SelectExamForm.$invalid" ng-click="ShowSubjectList()">Add Subject From Subject List</button> -->
+                       </div>
+</section>
+                                  		  
+                                 		  <div ng-show="subjectNotInExam" class="alert alert-block alert-danger fade in">
+						               		<button data-dismiss="alert" class="close close-sm" type="button"><i class="icon-remove"></i></button>
+								      		<strong>There is no subject selected for this exam</strong> 
+								   		</div>
+                         
+                                   <section class="panel" ng-show="ShowSelectedSubjectTable">
+				                        <div class="panel-body">	
+				                             <div id="ShowSelectedSubjectTable" >
+				                             <h2>Selected Subject List</h2>
+				                           <div class="panel-group m-bot20" id="accordion"> 
+				                                   
+													  <div ng-repeat="sub in SubjectDivCompIDList" ng-class="{selectedrow:sub.Selected}">
+														 <div class="panel panel-default">
+														      <div class="panel-heading">
+																 <h4 class="panel-title">
+																      <i style="display: none;">{{ sub.div.value }}</i>{{ sub.inst.label }}>{{ sub.branch.label }}>{{ sub.classes.label }}>{{ sub.div.label }}><strong id="subStrong">{{ sub.subject.label }}</strong>
+																	<span style="position: relative;top: -30px">
+																	  <button type="button" class="btn btn-success btn-sm pull-right" ng-click="OpenShow(sub,SubjectDivCompIDList)" style="margin-right: 10px">Exam's Students</button>
+																	  <button type="button" class="btn btn-success btn-sm pull-right" ng-click="OpenAdd(sub,SubjectDivCompIDList)" style="margin-right: 10px">Add Student</button>
+																    </span> 
+																 </h4>   
+															  </div>
+															 
+															   <div id="add{{sub.id}}" class="collapse">
+																	<div class="panel-body">
+																	
+																	<div ng-show="!studentNotInExamList.length" class="alert alert-block alert-danger fade in">
+													                     <button data-dismiss="alert" class="close close-sm" type="button">
+													                          <i class="icon-remove"></i>
+													                     </button>
+													                     <strong>Selected division does not contain any student or All student are added in Exam</strong> 
+													                 </div>
+																	
+																	<div ng-show="studentNotInExamList.length">
+																	     <div class="row">
+									                                          <div class="col-lg-3">
+									                                            
+									                                              <input type="text"  placeholder="Search Student"  ng-model="sub.student_filter" ng-change="filterStudent(sub);disableSuccessMessage()">
+									                                               <button class="btn btn-primary" ng-click="addStudentToExam(sub);disableSuccessMessage()" id="addStudentSubmitBTN" type="submit">Add To Exam</button>
+									                                          </div>
+									                                          
+																	     </div>
+																	     <br>
+																	     <div class="alert alert-block alert-danger fade in col-lg-6" ng-show="selectStudentFirstMessage">
+			                                                               <button data-dismiss="alert" class="close close-sm" type="button">
+			                                                               <i class="icon-remove"></i>
+			                                                               </button>
+			                                                               <strong>No Student Selected</strong>
+			                                                             </div>
+																	     <br>
+																	    <table  class="table">
+													                           <tbody>
+													                             <tr>
+													                             	<th>
+													                             	   <label ng-show="ShowSelectAll">                              <!-- ;disableSuccessMessage() -->
+                                                                                       <input type="checkbox" ng-model="sub.IsAllChecked" ng-change="CheckUncheckAll(sub)" /> Select All</label>
+                                                                                       <label ng-show="!ShowSelectAll">
+                                                                                       <input type="checkbox" ng-model="sub.IsFilteredAllChecked" ng-change="filterCheckUncheckAll(sub);disableSuccessMessage()" /> Select Filtered All</label>
+                                                                                    </th>
+																				    <th>
+																				       <i class=""></i>Student Name
+																				   </th>                                                          
+													                               
+													                             </tr>
+													                             <tr ng-repeat="student in filteredTodos | orderBy : 'fname' | filter : sub.student_filter" ng-class="{selectedrow:student.Selected}">
+																						<td><input  type="checkbox" ng-model="student.Selected" ng-change="CheckUncheckHeader(sub);filteredCheckUncheckHeader(sub);disableSuccessMessage()" /></td>
+																						<td> {{ student.fname }} {{ student.father }} {{ student.lname }}</td>
+													   							 </tr>
+													                          </tbody>
+												                      </table> 
+												                      
+																     									                      
+														              <pagination  ng-hide="!studentNotInExamList.length"
+																	      ng-model="$parent.currentPage"
+																	      total-items="$parent.totallenght"
+																	      max-size="$parent.maxSize"  
+																	      boundary-links="true">
+																	    </pagination>
+																	
+																	</div>
+																	</div>
+															  </div>
+															 
+															  <div id="show{{sub.id}}" class="collapse">
+																 <div class="panel-body">
+																	
+																	<div ng-show="!studentInExamList.length" class="alert alert-block alert-danger fade in">
+													                     <button data-dismiss="alert" class="close close-sm" type="button">
+													                          <i class="icon-remove"></i>
+													                     </button>
+													                     <strong>Selected division does not contain any student added for selected Exam</strong> 
+													                 </div>
+																	
+																	<div ng-show="studentInExamList.length">
+																	     <div class="row">
+									                                          <div class="col-lg-3 ">
+									                                            
+									                                              <input type="text"  placeholder="Search Student"  ng-model="sub.student_filter1" ng-change="filterStudent1(sub);disableSuccessMessage()">
+									                                              <button class="btn btn-primary" ng-click="deleteStudentFromExam(sub);disableSuccessMessage()" id="deleteStudentSubmitBTN" type="submit" >Remove</button>
+									                                          </div>
+									                                         
+																	     </div>
+																	     <br>
+																	     <div class="alert alert-block alert-danger fade in col-lg-6" ng-show="selectStudentFirstMessage">
+			                                                               <button data-dismiss="alert" class="close close-sm" type="button">
+			                                                               <i class="icon-remove"></i>
+			                                                               </button>
+			                                                               <strong>No Student Selected</strong>
+			                                                             </div>
+																	     <br>
+																	    <table  class="table">
+													                           <tbody>
+													                             <tr>
+													                             	<th>
+													                             	   <label ng-show="ShowSelectAll1">                              <!-- ;disableSuccessMessage() -->
+                                                                                       <input type="checkbox" ng-model="sub.IsAllChecked1" ng-change="CheckUncheckAll1(sub)" /> Select All</label>
+                                                                                       <label ng-show="!ShowSelectAll1">
+                                                                                       <input type="checkbox" ng-model="sub.IsFilteredAllChecked1" ng-change="filterCheckUncheckAll1(sub);disableSuccessMessage()" /> Select Filtered All</label>
+                                                                                    </th>
+																				    <th>
+																				       <i class=""></i>Student Name
+																				   </th>                                                          
+													                               
+													                             </tr>
+													                             <tr ng-repeat="student in filteredTodos1 | orderBy : 'fname' | filter : sub.student_filter1" ng-class="{selectedrow:student.Selected1}">
+																						<td><input  type="checkbox" ng-model="student.Selected1" ng-change="CheckUncheckHeader1(sub);filteredCheckUncheckHeader1(sub);disableSuccessMessage()" /></td>
+																						<td> {{ student.fname }} {{ student.father }} {{ student.lname }}</td>
+													   							 </tr>
+													                          </tbody>
+												                      </table> 
+												                      
+																     									                      
+														              <pagination  ng-hide="!studentInExamList.length"
+																	      ng-model="$parent.currentPage"
+																	      total-items="$parent.totallenght"
+																	      max-size="$parent.maxSize"  
+																	      boundary-links="true">
+																	    </pagination>
+																	
+																	</div>
+																	</div>
+															  </div> 
+														</div>
+													</div> 
+													
+								     
+                                  
+				                                    </div>      
+				                                
+				                              </div>    
+				                          </div>
+				                      </section>
+                    
