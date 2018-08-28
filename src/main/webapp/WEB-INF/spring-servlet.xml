@@ -67,7 +67,7 @@
 
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		p:driverClassName="${driver}"
-		p:url="jdbc:mysql://${ip}:${port}/${database}"
+		p:url="jdbc:mysql://${ip}:${port}/${database}?autoReconnect=true"
 		p:username="${username}" p:password="${password}"
 		p:initialSize="1" p:maxActive="2" destroy-method="close">
 	</bean>
