@@ -3,7 +3,7 @@
 Hi all following is the link op our app deployed on openshift, with help of webhook we have CICD
 u can check the running code on link plz find out the link 
 
-http://tutem-tutesmessanger.7e14.starter-us-west-2.openshiftapps.com
+http://softus-in-sunrisebasket.7e14.starter-us-west-2.openshiftapps.com/WEB-INF/jsp/redirectToHome
 
 			
 	UserType 	    UserName 	          Password
