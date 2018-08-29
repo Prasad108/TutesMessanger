@@ -11,7 +11,7 @@ module.exports = function(grunt) {
 					appAdmin : {
 						src : [ 'src/main/webapp/app/appAdmin/app.js',
 								'src/main/webapp/app/appAdmin/**/*.js' ],
-						dest : 'src/main/webapp/app/appAdmin/appAdminCompomentsAndControllers.js',
+						dest : 'src/main/webapp/app/appAdmin/appAdminAllCompomentsAndControllers.js',
 					},
 					commanDirectives : {
 						src : [ 'src/main/webapp/app/commanDirectives/**/*.js' ],
@@ -23,13 +23,13 @@ module.exports = function(grunt) {
 					},
 					student : {
 						src : [ 'src/main/webapp/app/student/app.js',
-								'src/main/webapp/app/student/**/*.js' ],
-						dest : 'src/main/webapp/app/student/appStudentCompomentsAndControllers.js',
+							'src/main/webapp/app/student/**/*.js' ],
+						dest : 'src/main/webapp/app/student/appStudentAllCompomentsAndControllers.js',
 					},
 					teacher : {
 						src : [ 'src/main/webapp/app/teacher/app.js',
-								'src/main/webapp/app/teacher/**/*.js' ],
-						dest : 'src/main/webapp/app/teacher/appTeacherCompomentsAndControllers.js',
+							'src/main/webapp/app/teacher/**/*.js' ],
+						dest : 'src/main/webapp/app/teacher/appTeacherAllCompomentsAndControllers.js',
 					},
 
 				},
@@ -39,21 +39,16 @@ module.exports = function(grunt) {
 							force : true
 						},
 						src : [
-								'src/main/webapp/app/appAdmin/appAdminCompomentsAndControllers.js',
+								'src/main/webapp/app/appAdmin/appAdminAllCompomentsAndControllers.js',
 								'src/main/webapp/app/commanDirectives/AllcommanDirectives.js',
 								'src/main/webapp/app/commanService/AllcommanService.js',
-								'src/main/webapp/app/student/appStudentCompomentsAndControllers.js',
-								'src/main/webapp/app/teacher/appTeacherCompomentsAndControllers.js' ]
+								'src/main/webapp/app/student/appStudentAllCompomentsAndControllers.js',
+								'src/main/webapp/app/teacher/appTeacherAllCompomentsAndControllers.js']
 					}
-				},
-				watch : {
-
-					JsAndCss : {
-						files : [ 'src/main/webapp/**/*.js',
-								'src/main/webapp/**/*.css' ],
-						tasks : [ 'default' ]
-					}
-				},
+				},watch: {
+				    files: ['src/main/webapp/app/**/*.js','!src/main/webapp/app/**/*All*.js'],
+				    tasks: ['default'],
+				  },
 			});
 
 	// These plugins provide necessary tasks.
