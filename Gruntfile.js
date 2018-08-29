@@ -23,12 +23,12 @@ module.exports = function(grunt) {
 					},
 					student : {
 						src : [ 'src/main/webapp/app/student/app.js',
-							'src/main/webapp/app/student/**/*.js' ],
+								'src/main/webapp/app/student/**/*.js' ],
 						dest : 'src/main/webapp/app/student/appStudentCompomentsAndControllers.js',
 					},
 					teacher : {
 						src : [ 'src/main/webapp/app/teacher/app.js',
-							'src/main/webapp/app/teacher/**/*.js' ],
+								'src/main/webapp/app/teacher/**/*.js' ],
 						dest : 'src/main/webapp/app/teacher/appTeacherCompomentsAndControllers.js',
 					},
 
@@ -43,7 +43,15 @@ module.exports = function(grunt) {
 								'src/main/webapp/app/commanDirectives/AllcommanDirectives.js',
 								'src/main/webapp/app/commanService/AllcommanService.js',
 								'src/main/webapp/app/student/appStudentCompomentsAndControllers.js',
-								'src/main/webapp/app/teacher/appTeacherCompomentsAndControllers.js']
+								'src/main/webapp/app/teacher/appTeacherCompomentsAndControllers.js' ]
+					}
+				},
+				watch : {
+
+					JsAndCss : {
+						files : [ 'src/main/webapp/**/*.js',
+								'src/main/webapp/**/*.css' ],
+						tasks : [ 'default' ]
 					}
 				},
 			});
@@ -51,6 +59,7 @@ module.exports = function(grunt) {
 	// These plugins provide necessary tasks.
 	grunt.loadNpmTasks('grunt-contrib-clean');
 	grunt.loadNpmTasks('grunt-contrib-concat');
+	grunt.loadNpmTasks('grunt-contrib-watch');
 	// grunt.loadNpmTasks('grunt-contrib-jshint');
 
 	// Default task.
