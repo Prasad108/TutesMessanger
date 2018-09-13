@@ -1,5 +1,5 @@
 (function() {
-	var app=angular.module("myApp",['ui.router',"ngSanitize",'ui.bootstrap','ivh.treeview','angularSpinner']);
+	var app=angular.module("myApp",['ui.router',"ngSanitize",'ui.bootstrap','ivh.treeview','commanModule']);
 	
 	app
 	.config(function(ivhTreeviewOptionsProvider) {
@@ -98,4 +98,5 @@
 		
 	}]);
 	
+		
 }())

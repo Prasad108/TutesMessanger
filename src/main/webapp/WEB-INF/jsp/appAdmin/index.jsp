@@ -12,6 +12,7 @@
 		<jsp:include page="/WEB-INF/jsp/components/defaultHead.jsp" />
 			
 		 <script src="${pageContext.request.contextPath}/app/appAdmin/appAdminAllCompomentsAndControllers.js"></script>
+		 <script src="${pageContext.request.contextPath}/app/Comman_Module/Comman_module.js"></script>
 		 
 		
 
@@ -28,7 +29,7 @@
 		
 	  	<jsp:include page="/WEB-INF/jsp/appAdmin/components/appAdminMenu.jsp" /> - 
 	
-	 
+	 <loading us-spinner="{radius:30, width:8, length: 16}" ></loading>
   
 		 <section id="main-content">
 			   <section class="wrapper">	

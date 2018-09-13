@@ -13,8 +13,7 @@
    		<script src="<c:url value="/js/ivh_treeViewscript.js" />"></script>
    		  
  		<script src="${pageContext.request.contextPath}/app/student/appStudentAllCompomentsAndControllers.js"></script>
- 		
-   		<script src="${pageContext.request.contextPath}/js/angular/angular-spinner.min.js"></script>
+ 		<script src="${pageContext.request.contextPath}/app/Comman_Module/Comman_module.js"></script>
    			
    		<jsp:include page="/WEB-INF/jsp/Student/components/initStudent.jsp" /> 
    		   			
@@ -32,6 +31,8 @@
 <div >
 <jsp:include page="/WEB-INF/jsp/Student/components/studentMenu.jsp" />  
 </div>
+
+<loading us-spinner="{radius:30, width:8, length: 16}" ></loading>
 
  <section id="main-content">
           <section class="wrapper">

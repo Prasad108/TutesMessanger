@@ -11,6 +11,7 @@
 	<script src="${pageContext.request.contextPath}/js/angular/angular-sanitize.min.js"></script>
 	<script src="${pageContext.request.contextPath}/js/angular/angular-ui-router.min.js"></script>
 	<script src="${pageContext.request.contextPath}/js/angular/ui-bootstrap-tpls-2.5.0.min.js"></script> 
+	<script src="${pageContext.request.contextPath}/js/angular/angular-spinner.min.js"></script>
 	
 	
 

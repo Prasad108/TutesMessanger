@@ -1,5 +1,5 @@
 (function(){
-	var app=angular.module('myApp',['ui.router']);
+	var app=angular.module('myApp',['ui.router','commanModule']);
 		
 	app.config(['$stateProvider','$urlRouterProvider',function($stateProvider,$urlRouterProvider) {
 		  
@@ -8,6 +8,7 @@
 		$stateProvider.state({name : 'Schedule', url : '/Schedule', templateUrl: '../app/student/schedule/Schedule.html', controller: 'ScheduleCtrl'});
 		
 	}]);
+	
 
 
 }())

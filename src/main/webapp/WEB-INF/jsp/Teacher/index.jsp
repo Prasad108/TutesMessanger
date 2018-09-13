@@ -15,8 +15,8 @@
    		<script src="${pageContext.request.contextPath}/app/teacher/appTeacherAllCompomentsAndControllers.js"></script>
    		<script src="${pageContext.request.contextPath}/app/commanService/shairedDataService.js"></script>
 		<script src="${pageContext.request.contextPath}/app/commanService/forResolveService.js"></script>	
-   		<script src="${pageContext.request.contextPath}/js/angular/angular-spinner.min.js"></script>
-
+   		<script src="${pageContext.request.contextPath}/app/Comman_Module/Comman_module.js"></script>
+   		
 
    		<jsp:include page="/WEB-INF/jsp/Teacher/components/angular.jsp" /> 
    		   			
@@ -31,16 +31,17 @@
 
 
  <!-- Default Menue -->
-<!-- <menu-component></menu-component> -->
 <div ng-controller="teacherCtrl">
 <jsp:include page="/WEB-INF/jsp/Teacher/components/teacherMenu.jsp" />  
 </div>
+
+<loading us-spinner="{radius:30, width:8, length: 16}" ></loading>
 
  <section id="main-content">
           <section class="wrapper">
           <div class="row" >
 	        <!--   <h1>this is from index page </h1> -->
-	        
+
 	          <ui-view></ui-view>
           </div>
           </section>
