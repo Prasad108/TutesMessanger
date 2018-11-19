@@ -1770,13 +1770,13 @@ div[data-role="editor-toolbar"] {
 
   border-radius: 0px;
 
-  height: 34px;
-
   position: relative;  
 
   margin: 0 0 19px 0;
 
   overflow: hidden;
+  
+  height: 50px;
 
 }
 
