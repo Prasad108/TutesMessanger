@@ -26,11 +26,13 @@
 				                             <h2>Selected Subject List</h2>
 				                           <div class="panel-group m-bot20" id="accordion"> 
 				                                   
+				                                     
 													  <div ng-repeat="sub in SubjectDivCompIDList" ng-class="{selectedrow:sub.Selected}">
 														 <div class="panel panel-default">
 														      <div class="panel-heading">
 																 <h4 class="panel-title">
-																      <i style="display: none;">{{ sub.div.value }}</i>{{ sub.inst.label }}>{{ sub.branch.label }}>{{ sub.classes.label }}>{{ sub.div.label }}><strong id="subStrong">{{ sub.subject.label }}</strong>
+																      <i ts-new-subject-info style="display: none;">{{ sub.div.value }}</i>{{ sub.inst.label }}>{{ sub.branch.label }}>{{ sub.classes.label }}>{{ sub.div.label }}><strong id="subStrong">{{ sub.subject.label }}</strong>
+																   <!--  <ts-new-subject-info></ts-new-subject-info> -->
 																	<span style="position: relative;top: -30px">
 																	  <button type="button" class="btn btn-success btn-sm pull-right" ng-click="OpenShow(sub,SubjectDivCompIDList)" style="margin-right: 10px">Exam's Students</button>
 																	  <button type="button" class="btn btn-success btn-sm pull-right" ng-click="OpenAdd(sub,SubjectDivCompIDList)" style="margin-right: 10px">Add Student</button>
@@ -82,6 +84,7 @@
 													                             <tr ng-repeat="student in filteredTodos | orderBy : 'fname' | filter : sub.student_filter" ng-class="{selectedrow:student.Selected}">
 																						<td><input  type="checkbox" ng-model="student.Selected" ng-change="CheckUncheckHeader(sub);filteredCheckUncheckHeader(sub);disableSuccessMessage()" /></td>
 																						<td> {{ student.fname }} {{ student.father }} {{ student.lname }}</td>
+																						
 													   							 </tr>
 													                          </tbody>
 												                      </table> 

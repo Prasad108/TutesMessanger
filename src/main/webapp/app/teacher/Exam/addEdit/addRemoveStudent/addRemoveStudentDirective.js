@@ -1,7 +1,7 @@
 (function(){
 	
 	angular.module("myApp").directive("tsAddRemoveStudentFromExamSubjects",function(){
-		return {
+		return { 
 		
 		 templateUrl: '../app/teacher/Exam/addEdit/addRemoveStudent/addRemoveStudent.html',	
 		 
@@ -33,7 +33,7 @@
 					
 					//------------------------------------To show selected subject for exam----------------------------------------------------
 					$scope.ShowSelectedSubject = function() {
-						console.log($scope.selectedExamForAddStudent.id);
+						//console.log($scope.selectedExamForAddStudent.id);
 
 						//*************************http post request to get subDiv composit id of selected exam***************** 
 						$http(
@@ -50,36 +50,34 @@
 											$scope.ShowSelectedSubjectTable = true;
 											$scope.subjectNotInExam = false;
 
-											for (var j = 0; j < $scope.SubjectDivCompIDList.length; j++) {
-												$scope.flag = 0;
-												$scope.inst = {};
-												$scope.branch = {};
-												$scope.classes = {};
-												$scope.div = {};
-												$scope.subject = {};
-
-												$scope.flag = 0;
-
-												traverseTillsubDivId(
-														$scope.InstTreeStructureWithSubject,
-														$scope.SubjectDivCompIDList[j].id);
-
-												if ($scope.flag > 0) {
-													$scope.SubjectDivCompIDList[j].inst = $scope.inst;
-													$scope.SubjectDivCompIDList[j].branch = $scope.branch;
-													$scope.SubjectDivCompIDList[j].classes = $scope.classes;
-													$scope.SubjectDivCompIDList[j].div = $scope.div;
-													$scope.SubjectDivCompIDList[j].subject = $scope.subject;
-												}
-												console
-														.log($scope.SubjectDivCompIDList[j]);
-											}
+//											for (var j = 0; j < $scope.SubjectDivCompIDList.length; j++) {
+//												$scope.flag = 0;
+//												$scope.inst = {};
+//												$scope.branch = {};
+//												$scope.classes = {};
+//												$scope.div = {};
+//												$scope.subject = {};
+//
+//												$scope.flag = 0;
+//
+//												traverseTillsubDivId(
+//														$scope.InstTreeStructureWithSubject,
+//														$scope.SubjectDivCompIDList[j].id);
+//
+//												if ($scope.flag > 0) {
+//													$scope.SubjectDivCompIDList[j].inst = $scope.inst;
+//													$scope.SubjectDivCompIDList[j].branch = $scope.branch;
+//													$scope.SubjectDivCompIDList[j].classes = $scope.classes;
+//													$scope.SubjectDivCompIDList[j].div = $scope.div;
+//													$scope.SubjectDivCompIDList[j].subject = $scope.subject;
+//												}
+//												//console.log($scope.SubjectDivCompIDList[j]);
+//											}
 										},
 										function(data) { // optional // if failed
 											$scope.subjectNotInExam = true;
 											$scope.ShowSelectedSubjectTable = false;
-											console
-													.log(" failed to get the ids");
+											console.log(" failed to get the ids");
 										});
 					};
 					

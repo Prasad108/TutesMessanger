@@ -15,6 +15,7 @@
    		<script src="${pageContext.request.contextPath}/app/teacher/appTeacherAllCompomentsAndControllers.js"></script>
    		<script src="${pageContext.request.contextPath}/app/commanService/shairedDataService.js"></script>
 		<script src="${pageContext.request.contextPath}/app/commanService/forResolveService.js"></script>	
+		<script src="${pageContext.request.contextPath}/app/commanDirectives/subjectInfo/newSubjectInfo.js"></script>
    		<script src="${pageContext.request.contextPath}/app/Comman_Module/Comman_module.js"></script>
    		
 

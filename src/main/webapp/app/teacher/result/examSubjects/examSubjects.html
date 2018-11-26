@@ -27,7 +27,7 @@
 								                              <tbody>
 								                              	<tr ng-repeat="sub in SubjectDivCompIDList">
 								                                  <td>{{$index+1}}</td>
-								                                  <td><a ui-sref="examSubjectsStudents({id:examId,subjectId:sub.id})">{{ sub.inst.label }}>{{ sub.branch.label }}>{{ sub.classes.label }}>{{ sub.div.label }}><strong id="subStrong">{{ sub.subject.label }}</strong> </a></td>
+								                                  <td><a ts-new-subject-info ui-sref="examSubjectsStudents({id:examId,subjectId:sub.id})">{{ sub.inst.label }}>{{ sub.branch.label }}>{{ sub.classes.label }}>{{ sub.div.label }}><strong id="subStrong">{{ sub.subject.label }}</strong> </a></td>
 								                                  <!-- (examID : {{exam.id}}}) ui-sref="examSubjects({id :exam.id})" -->
 								                                  
 								                               	 	
